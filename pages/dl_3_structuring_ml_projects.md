@@ -2,7 +2,7 @@
 layout: article
 title: "Deep Learning (3/5): Structuring ML projects"
 intro: | 
-    This course focuses on conceptual aspects and workflow planning rather than introducing new algorihms or frameworks. The goal of this course is to equip you with knowledge you would otherwise have to earn through experience. Therefore, despite being the shortes of all, this course can make a huge difference for you when you start out with your own project. In fact, it can save you from going in the wrong direction for months and then realizing your work was all for nothing. Due to the less technical nature of this course there are no quizzes or programming assignments. Instead you get to sit in a _“Machine Learning flight simulator”_, where you are presented with a real-world problem and then have to decide how to act next.
+    This course focuses on conceptual aspects and workflow planning rather than introducing new algorihms or frameworks. The goal of this course is to equip you with knowledge you would otherwise have to earn through experience. Therefore, despite being the shortes of all in the DL specialization, this course can make a huge difference for you when you start out with your own project. In fact, it can save you from going in the wrong direction for months and then realizing your work was all for nothing. Due to the less technical nature of this course there are no quizzes or programming assignments. Instead you get to sit in a _“Machine Learning flight simulator”_, where you are presented with a real-world problem and then have to decide how to act next.
 permalink: /ml/deep-learning/3
 tags:
     - Orthogonalization
@@ -126,6 +126,8 @@ When starting out with an ML project there are usually a lot of directions to go
 When trainin data is scarce you can try to apply the results from one NN to another. To do this you can download a pre-trained NN and try to tune it into your desired direction. If for instance you train a classifier for X-ray images, you could download a pre-trained NN that performs well on photographic images and then optimize it for x-ray images. This is called **transfer learning**.
 
 Transfer learning usually involves replacing the last layer of a NN and optimize only this. If you have more training data you can also replace/optimize the last few layers. This way you don't need to optimize _all_ the parameters of your NN and can focus on optimizing only the parameters of the replaced layers with your training data.
+
+By replacing the last (few) layer(s) the previous layers can be considered _frozen_. A lot of DL frameworks support this by providing corresponding parameteres (e.g. `freeze=1` or `trainableParameter=0`.
 
 Transfer learning makes sense if...
 

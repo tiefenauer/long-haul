@@ -72,7 +72,7 @@ The following image shows typical graphs for the error on the training set and t
 In context of over- or underfitting there are two other terms often used: **bias** and **variance**.  We speak of **high bias** when your model is underfitting, i.e. it is not trained enough and biased too much towards the training data. In contrast, we speak of **high variance** if your model is trying too hard and is therefore overfitting. The following picture visualizes how a model with high bias or high variance might classify the instances:
 
 <figure>
-	<img src="{% link assets/img/articles/ml/dl_2/bias_variance.png %}" alt="Logistic Regression">
+	<img src="{% link assets/img/articles/ml/dl_2/bias_variance.png %}" alt="Example: Models with high bias or variance">
 	<figcaption>Example: Models with high bias or variance (Credits: Coursera, with adjustments)</figcaption>
 </figure>
 
@@ -200,10 +200,20 @@ Dropout regularization works surprisingly well for certain domains such as compu
 Minimizing the costs and preventing overfitting should be treated as separate tasks. This principle is also referred to as **orthogonalization**. There are several other techniques you can try to reduce overfitting.
 
 #### Data augmentation
-The most common approach to reduce overfitting is to use more training data. But sometimes it is impossible or very expensive to get additional labelled data. We then can try to generate new synthetic data from the old. If we e.g. train an image classifier, we can easily generate new images from the old by mirroring, rotating or shifting existing images or add some noise to them. However, this can only be done to some extent because the underlying image information is factually still the same and using more of "the same" will not improve the model significantly anymore at some point.
+The most common approach to reduce overfitting is to use more training data. But sometimes it is impossible or very expensive to get additional labelled data. We then can try to generate new synthetic data from the old. If we e.g. train an image classifier, we can easily generate new images from the old by applying one or more of the following operations:
+
+* mirroring
+* rotation
+* random cropping
+* shifting
+* tilting
+* local warping / adding some noise
+* color shifting
+
+There are tools and libraries to help with data augmentation (e.g. [Agumentor](http://augmentor.readthedocs.io/en/master/) for image data). However, this can only be done to some extent because the underlying image information is factually still the same and using more of "the same" will not improve the model significantly anymore at some point.
 
 #### Early stopping
-Another very simple method to prevent overfitting is to abort training as soon as we observe the test error increasing again. However, this is problematic because we prevent the model from exploring the whole label space. it also violates the principle of orthogonalization.
+Another very simple method to prevent overfitting is to abort training as soon as we observe the test error increasing again. However, this is problematic because we prevent the model from exploring the whole label space. It also violates the principle of orthogonalization.
 
 ## Input normalization
 A very useful technique to speed up the learning process is to normalize the NN's input. We can do this in three steps:
