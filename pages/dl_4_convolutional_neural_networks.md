@@ -24,7 +24,7 @@ tags:
     - Landmark and object detection
     - Sliding Windows
     - YOLO-Algorithm
-    - Intersection over Unit (IoU)
+    - Intersection over Union (IoU)
     - Non-Max Suppression
     - Anchor- & Bounding-Boxes
     - Region Proposal (R-CNN)
@@ -56,7 +56,11 @@ ConvNets are widely used in computer vision. The possible appliances reach far b
 CNN reduce these pain-points by using special operations (**convolution** and **pooling**).
 
 ### Convolution by example (edge detection)
-A convolution operation is usually denoted by an asterisk `*`. A convolution operation reduces an image (or generally: a previous layer) by applying a **filter** (a.k.a. _kernel_). This filter is a matrix that is being moved step by step over tha image. In each step, all the elements of the image matrix that are being covered by the filter are multiplied with the corresnponding elements in the filter matrix. The products are then added up and the filter is moved into the next position. This process is repeated until all the pixels have been captured.
+A convolution layer can generally be understood as a layer which transformation an input volume to an output volume of different size, as shown below:
+
+![convolution]({% link assets/img/articles/ml/dl_4/conv_nn.png %})
+
+A convolution operation reduces an image (or generally: a previous layer) by applying a **filter** (a.k.a. _kernel_). This filter is a matrix that is being moved step by step over the image. In each step, all the elements of the image matrix that are being covered by the filter are multiplied with the corresnponding elements in the filter matrix. The products are then added up and the filter is moved into the next position. This process is repeated until all the pixels have been captured. A convolution operation is usually denoted by an asterisk `*`.
 
 <figure>
 	<img src="{% link assets/img/articles/ml/dl_4/convolution.gif %}" alt="Convolution animation">
@@ -66,9 +70,9 @@ A convolution operation is usually denoted by an asterisk `*`. A convolution ope
 As you can see from above animation, the convolution operation results in a smaller matrix when no padding is used (we'll talk about padding later). The parameters in the filter determine what feature is detected. For example consider the following picture (big matrix) and the filter (small matrix). High values in the image matrix mean brighter colors, and low values darker colors. By multiplying with the filter weights and adding the products up we get high values in a single convolution step if the values are big in the left partof the covered area and small on the right side. This filter is therefore able to detect vertical edges where the pixels on the left are bright and the pixels on the left and dark pixels on the right.
 
 <figure>
-	<img src="{% link assets/img/articles/ml/dl_4/edge_detection.png %}" alt="edge detection">
-	<figcaption>Edge detection by example (Credits: Coursera)</figcaption>
-</figure>
+         	<img src="{% link assets/img/articles/ml/dl_4/edge_detection.png %}" alt="edge detection">
+         	<figcaption>Edge detection by example (Credits: Coursera)</figcaption>
+         </figure>
 
 This example illustrates how the kernel encompasses a specific features. In the above examples vertical edges could be detected regardless of whether the bright pixels are on the left or right by using absolute values. Similarly, horizontal edges or generally edges of arbitrary angle could be detected with a suitable filter. However, the kernels are not usually set by hand but rather learned by the network. They can detect far more than straight edges, especially in deeper layer when the detected features can get very complex. We will see this in a later example.
 
@@ -83,7 +87,15 @@ $$
 \end{equation}
 $$
 
-CNNs usually contain several convolution layers. However though, if we apply additional convolutions, the resulting matrices would become smaller and smaller. Additionally, we would lose the information from the matrix entries at the edges. This behavior is often not desired and can be corrected by using **padding**. By using padding we add additional pixels (more generally: matrix entries) around the image matrix. The values of those matrix entries can either be set to zero or calculated by some other logic (e.g. average of the neighboring pixels). If we use a frame of $$p$$ pixels width for padding, formula $$\ref{valid_convolution}$$ can be rewritten to the following formula to calculate the new matrix size.
+CNNs usually contain several convolution layers. However though, if we apply additional convolutions, the resulting matrices would become smaller and smaller. Additionally, we would lose the information from the matrix entries at the edges. This behavior is often not desired and can be corrected by using **padding**. By using padding we add additional $$p$$ pixels (more generally: matrix entries) around the image matrix. The values of those matrix entries can either be set to zero (**zero-padding**) or calculated by some other logic (e.g. average of the neighboring pixels). The following picture shows an example for zero-padding.
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/zero_padding.png %}" alt="zero-padding (example)">
+	<figcaption>Zero-Padding (example for p=2) (Credits: Coursera)</figcaption>
+</figure>
+
+
+If we use a frame of $$p$$ pixels width for padding, formula $$\ref{valid_convolution}$$ can be rewritten to the following formula to calculate the new matrix size.
 
 $$
 \begin{equation}
@@ -152,6 +164,11 @@ The second layer type in a CNN is the **pooling layer**. This layer is similar t
 * **Max-Pooling (POOL)**: The value in the output matrix corresponds to the maximum value in the covered area
 * **Average-Pooling (AVG)**: The value in the output matrix corresponds to the average value in the covered area
 
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/max_avg_pooling.png %}" alt="Max- and Avg-Pooling (example)">
+	<figcaption>Max- and Avg-Pooling (example) (Credits: Coursera)</figcaption>
+</figure>
+
 The pooling operation can be performed similar to the convolution operation by using different values for the stride. However, in contrast to the convolution operation, padding is usually not applied for pooling layers. Since there are no weights in the pooling filter there are no parameters to learn. Therefore, pooling layers usually reduce the input image in one or more dimensions. This is intentional because that way the CNN is forced to keep only the most important parameters.
 
 ### Fully connected layers (FC)
@@ -217,7 +234,11 @@ VGG-16 was a 16-Layer CNN with approximately 138M trainable parameters. The conv
 </figure>
 
 ### Residual Networks (ResNets)
-Recent Networks have become very deep. The CNN [Microsoft used to win the ImageNet competition in 2015](https://blogs.microsoft.com/ai/microsoft-researchers-win-imagenet-computer-vision-challenge/) was as deep as 152 layers!
+Recent Networks have become very deep. The CNN [Microsoft used to win the ImageNet competition in 2015](https://blogs.microsoft.com/ai/microsoft-researchers-win-imagenet-computer-vision-challenge/) was as deep as 152 layers! We have seen in [part 2]({% link pages/dl_1_neural_networks.md %}#initialization) that such a network usually suffers from vanishing (or in rare cases exploding) gradients and thus the gradient for the earlier layers decreases to zero very rapidly as training proceeds:
+
+![vanishing gradient]({% link assets/img/articles/ml/dl_4/vanishing_grad.png %})
+
+
 In order to train such very deep CNN that don't suffer from exploding/vanishing gradient, we use special building blocks known as **residual blocks**. Those residual blocks consist of two conventional layer together with a shortcut (called **skip-connection**):
 
 ![skip connection]({% link assets/img/articles/ml/dl_4/residual-block.png %})
@@ -228,7 +249,19 @@ $$
 a^{[l+2]} = g(W^{[l+2]} g(W^{[l+1]} a^{[l]} + b^{[l+1]}) + b^{[l+2]} + a^{[l]})
 $$
 
-If the weights inside the residual blocks become very small because of vanishing gradients, the activation of the previous layer dominates over the cell state during the calculation of the activation of the second layer. Therefore skip connections allow the forward propagation in a ResNet to learn some kind of identity function if the weights become too small. This makes learning the optimal parameters much simpler.
+If the weights inside the residual blocks become very small because of vanishing gradients, the activation of the previous layer dominates over the cell state during the calculation of the activation of the second layer. Therefore skip connections allow the forward propagation in a ResNet to learn some kind of **identity function** if the weights become too small. This makes learning the optimal parameters much simpler. If the input activation $$ a^{[l]} $$ has the same dimensions as the output activation $$ a^{[l+2]}$$ we call te residual block an **identity block**:
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/identity-block.png %}" alt="identity block">
+	<figcaption><strong>Identity block</strong>: Skip connection "skips over" 2 layers (Credits: Coursera)</figcaption>
+</figure>
+
+The upper path is the _shortcut path_, the lower the _main path_. However, the dimensions of the input and output activations do not neccessarily need to be the same. This is often the case when a skip-connection spans over more than 2 layers. In such cases we need the shortcut path to resize the input activation accordingly by applying a convolution operation to the input activation. Since the only purpose of this convolution is matching up the dimensions, the shortcut path does not use any non-linear activation function.
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/convolution-block.png %}" alt="convolution block">
+	<figcaption><strong>Convolution block</strong>: Skip connection "skips over" 3 layers (Credits: Coursera)</figcaption>
+</figure>
 
 By stacking several of those residual blocks we get a ResNet that does not suffer from vanishing gradients anymore. In such a ResNet the danger of overfitting becomes much smaller. I.e. the error on the training data will gradually decrease whereas in contrast to conventional CNN it would increas again after a certain point.
 
@@ -240,7 +273,7 @@ It can sometimes make sense to use a convolution layer with a kernel of dimensio
 CONV- and POOL-operations can be applied simultaneiously in an **inception module**. The results of the individual operations can be stacked to appear as separate channels in the next layer.
 
 <figure>
-	<img src="{% link assets/img/articles/ml/dl_4/inception-module.png %}" alt="simple inception module">
+	<img src="{% link assets/img/articles/ml/dl_4/inception-module-simple.png %}" alt="simple inception module">
 	<figcaption>simple inception module (Credits: Coursera)</figcaption>
 </figure>
 
@@ -249,7 +282,7 @@ The values for $$n_H$$ and $$n_W$$ in the next layer are the same, but there are
 An inception module can also apply multiple CONV- and/or POOL-operations in a row to compute a batch of channels:
 
 <figure>
-	<img src="{% link assets/img/articles/ml/dl_4/inception-module_2.png %}" alt="complex inception module">
+	<img src="{% link assets/img/articles/ml/dl_4/inception-module-complex.png %}" alt="complex inception module">
 	<figcaption>complex inception module (Credits: Coursera)</figcaption>
 </figure>
 
@@ -296,6 +329,11 @@ To localize an object on an image we can use a **bounding box** with the followi
 * $$b_x, b_y \in [0, 1]$$: coordinates of the center of the bounding box (with the zero point being at the top left corner of the image)
 * $$b_H, b_W \in [0, 1]$$: height and width of the bounding box (as ratios of the image size, i.e. a value of $$b_W = 0.3$$ means the box' with is 30% of the image width)
 * $$p_c$$: binary value whether the object is inside the picture or not
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/bounding-box.png %}" alt="definition of a bounding box">
+	<figcaption>Definition of a bounding box (Credits: Coursera)</figcaption>
+</figure>
 
 So far we used a one-hot representation to encode each object. The parameters of the bounding box can now be added to this encoding to get the vector representation of a single object:
 
@@ -378,7 +416,14 @@ One disadvantage of the sliding windows method (even with a convolutional implem
 
 The basic idea is to then apply the sliding window process as described above to each of the cells. For this there must be labels for each grid cell encoded as label vectors as described in $$\ref{label_vector}$$. Whether an object belongs to a specific image segment or not is determined by the coordinates of the center of the bounding box. That way an object can only ever belong to exactly one segment.
 
-In contrast to previously seen CNN the output for YOLO-networks is a volume, not a two-dimensional matrix. If we have for example 3 classes, the label vector would consist of 8 elements ($$p_c, b_x, b_y, b_H, b_W, c_1, c_2, c_3$$). If we divide the image into 9 segments as in the picture above we can detect one object per segment resulting in a label matrix (and therefore also the output matrix $$Y$$ of the CNN) of dimensions $$ ( 3 \times 3 \times 8 ) $$. Note that the coordinates $$b_x, b_y$$ are relative to the grid cell, not the image. Therefore their values need to lie between 0 and 1. Likewise, the size of the bounding box (specified by $$b_H$$ and $$b_W$$) is relative to the size of the grid cell, but since the bounding box may overlap several grid cells those values can become greater than 1 (whereas in a different algorithm without segmentation the size of the bounding box cannot be greater than than the image).
+In contrast to previously seen CNN the output for YOLO-networks is a volume, not a two-dimensional matrix. If we have for example 3 classes, the label vector would consist of 8 elements ($$p_c, b_x, b_y, b_H, b_W, c_1, c_2, c_3$$). If we divide the image into 9 segments as in the picture above we can detect one object per segment resulting in a label matrix (and therefore also the output matrix $$Y$$ of the CNN) of dimensions $$ ( 3 \times 3 \times 8 ) $$. The following picture shows an example of a CNN that uses YOLO to divide an image into $$19 \times 19$$ segments and distinguishes between 80 classes and shows how it encodes an image:
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/yolo-architecture.png %}" alt="Encoding architecture for YOLO">
+	<figcaption>Encoding architecture for YOLO (Credits: Coursera)</figcaption>
+</figure>
+
+Note that the coordinates $$b_x, b_y$$ are relative to the grid cell, not the image. Therefore their values need to lie between 0 and 1. Likewise, the size of the bounding box (specified by $$b_H$$ and $$b_W$$) is relative to the size of the grid cell, but since the bounding box may overlap several grid cells those values can become greater than 1 (whereas in a different algorithm without segmentation the size of the bounding box cannot be greater than than the image).
 
 The YOLO algorithm is a convolutional implementation of the sliding window method which makes it performant by sharing a lot of the computation. In fact, the YOLO algorithm is so performant that it can be used for real-time object detection.
 
@@ -405,6 +450,8 @@ $$
 IoU = \frac{ \text{size of the overlapping part (intersection)} }{ \text{size of the combined bounding boxes (union)} }
 \end{equation}
 $$
+
+![IoU formula]({% link assets/img/articles/ml/dl_4/iou-formula.png %})
 
 The IoU can be used to evaluate the accuracy of the localization. When $$IoU > 0.5$$ (or any reasonable value) the localization could be marked as _correct_.
 
@@ -438,6 +485,22 @@ $$
 
 The term $$(5 + n_c)$$ stems from the five components needed to indicate the confidence and the coordinates/size of a bounding box ($$p_c, b_x, b_y, b_H, b_W$$) together with the $$n_c$$ components needed to form a one-hot vector of a class.
 
+A CNN that uses YOLO can therefore do the following:
+
+1. divide the picture into a grid of equally sized segments by using the **YOLO-algorithm**
+2. detect and locate several objects in an image by applying a convolutional implementation of a **sliding window**
+3. calculate the **bounding boxes** by training on the labelled data
+4. use **anchor-boxes** to detect multiple different objects within the same grid cell
+5. apply **non-max suppression** to keep only one bounding box per object
+6. output a matrix of dimensions $$ dim(y)$$ which represents the **encoding of the information**
+
+If we visualize the output matrix from the last step it might look something like this:
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_4/yolo-output-example.png %}" alt="Example of a CNN applying YOLO">
+	<figcaption>Example of a CNN applying YOLO (19x19 grid, multiple classes, non-max-suppression) (Credits: Coursera)</figcaption>
+</figure>
+
 ## Face Recognition
 One possible appliance of a CNN or Computer Vision in general is the **face recognition**. In face recognition we want to identify a person from a database of $$K$$ persons, i.e. we want a single input image to map to the ID of one of the $$K$$ persons in the database (or no output if the person was not recognized). This is different from **face verification** where we compare the input image only to a single persona and verify whether the input image is that of the claimed person.
 
@@ -455,7 +518,11 @@ d(x^{(i)} , x^{(j)})
 $$
 
 ### Siamese networks
-One way to implement this similarity function is a **siamese network**. Such a network encodes an input image as a vector of arbitrary dimensions (e.g. 128 components). The network can be understood as a function $$f(x)$$ that encodes an image $$x$$ whereas similar pictures lead to similar encodings. The similarity function can then be implemented as the vector norm of two image vectors:
+One way to implement this similarity function is a **siamese network**. Such a network encodes an input image as a vector of arbitrary dimensions (e.g. 128 components). The network can be understood as a function $$f(x)$$ that encodes an image $$x$$ whereas similar pictures lead to similar encodings.
+
+![Siamese Network function]({% link assets/img/articles/ml/dl_4/siamese-network-function.png %})
+
+The similarity function can then be implemented as the vector norm of two image vectors:
 
 $$
 d(x^{(i)} , x^{(j)}) = \lVert f(x^{(i)}) - f(x^{(j)})\rVert^2_2
@@ -487,6 +554,8 @@ $$
 $$
 
 The parameter $$\alpha$$ is also called **margin**. The effect of this margin is that the value of $$\tau$$ for pictures of the same person differs a lot from pictures of different persons (i.e. $$d(A,P)$$ is separated from $$d(A,N)$$ by a big margin).
+
+![TLF distance matrix]({% link assets/img/articles/ml/dl_4/tlf-distance-matrix.png %})
 
 Considering all the points mentioned above we can define the TLF as follows:
 
@@ -563,11 +632,17 @@ To calculate the similarity between the styles of two images we can define style
 
 Let's visualize this with an example. Consider the two high-level style properties "contains vertical lines" and "has an orange tint" which are reflected in different channels. If the two properties are highly correlated it means the original style image $$G$$ often contains vertical lines in conjunction with an orange tint. We can therefore measure the similarity in style of the generated image $$G$$ by checking if the correlation between these properties (channels) is high too.
 
-This can be expressed more formal as follows: Let $$ a^{[l]}_{i,j,k} $$ be the activation of neuron $$i$$ in layer $$l$$ for the pixel at position $$j,k$$ in the style image $$S$$. We can represent the correlation between the $$n_C$$ channels in this layer as a style matrix G (a.k.a. **Gram-Matrix**) which has the dimensions $$(n_c \times n_c)$$. The elements of this matrix can be calculated as follows:
+This can be expressed more formal as follows: Let $$ a^{[l]}_{i,j,k} $$ be the activation of neuron $$i$$ in layer $$l$$ for the pixel at position $$j,k$$ in the style image $$S$$. We can represent the correlation between the $$n_C$$ channels in this layer as a style matrix G (a.k.a. **Gram-Matrix**) which has the dimensions $$(n_c \times n_c)$$. This is easiest if the image matrix is unrolled into a 2-dimensional matrix:
+
+![unrolling an image]({% link assets/img/articles/ml/dl_4/nst-unrolling.png %})
+
+The elements of this matrix can thenbe calculated as follows:
 
 $$
 G^{[l]}_{kk'} = \sum^{n^{[l]}_H}_{i=1} \sum^{n^{[l]}_W}_{j=1} a^{[l]}_{i,j,k} \cdot a^{[l]}_{i,j,k'}
 $$
+
+![unrolling an image]({% link assets/img/articles/ml/dl_4/gram-matrix.png %})
 
 This style matrix can be computed separately for both the style image $$S$$ and the generated image $$G$$. The SCF can then be defined as:
 
