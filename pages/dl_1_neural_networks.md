@@ -33,7 +33,7 @@ In the **second week** you will learn how to see Logistic Regression with one un
 The **third week** will introduce shallow neural networks, i.e. NN with one hidden layer. You will get to know alternative activation functions. You will see how forward- and backpropagation can be implemented in a vectorized manner as well as why parameters should be initialized randomly. In the programming assignment you will implement a first "real" NN, although it only has one hidden layer (i.e. not a Deep-NN).
 Finally in **week four** you will implement your first Deep-NN step by step. The network will be used in a follow-up assignment for a binary classifier that can recognize cat pictures with fairly high accuracy. You can even test it with your own pictures!
 
-## Introduction to Deep Learning (DL)
+## Introduction to Deep Learning
 Deep Learning has really become a household name in recent years because the methods and techniques outperformed a lot of what was state of the art before. A lot of problems became solvable or learnable by means of Neural Networks - especially but not limited to Computer Vision, Audio Processing, language/translation tasks, and so on. NN became really popular when they undercut then-standard algorithms on unstructured data (images, audio, text). It is sometimes forgotten that NN can also be applied on structured data, too.
 A possible cause for the sudden hype of NN is twofold:
 

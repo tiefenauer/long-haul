@@ -89,7 +89,7 @@ To assess the quality of a model the **difference** between bias and variance is
 ## Regularization
 We can prevent overfitting by applying one or more regularization techniques which are presented in this chapter.
 
-### Regularizing the cost function
+### Regularizing the cost
 A common approach for regularization is to add a regularization term to the cost function. For example, we can add regularize the cost function for **Logistic Regression** when optimizing the parameters $$w$$ and $$b$$:
 
 $$
@@ -189,8 +189,8 @@ Another reason is that the activation function $$g$$ is roughly linear for value
 
 Because the values in $$W^{[l]}$$ become close to zero, the cell value $$Z^{[l]} = W^{[l]} a^{[l-1]} + b^{[l]}$$ (before activation) is also close to zero. Therefore, the values after activation mostly lie in the linear region of the activation function. Therefore the NN calculates something more or less close to a linear function. As we have seen in [part one]({% link pages/dl_1_neural_networks.md %}), linear classifiers can only calculate linear boundaries. Therefore the higher the value for  $$\lambda$$ the more we force the NN to become close to a linear function and prevent it to calculate over-complicated boundaries. This consequently reduces overfitting.
 
-### Dropout regularization
-Another technique to reduce overfitting is using Dropouts. With dropouts we mean completely **cancelling out individual neurons** during test time by multiplying their weights by zero. By doing this we prevent single neurons in the NN to become too important for learning. In other words: We force the NN to learn from other features too.
+### Dropout
+Another technique to reduce overfitting is using **Dropouts**. With dropouts we mean completely **cancelling out individual neurons** during test time by multiplying their weights by zero. By doing this we prevent single neurons in the NN to become too important for learning. In other words: We force the NN to learn from other features too.
 To make this work, we must cancel out different units in each iteration **during training time**. When doing this, the ratio of cancelled out neurons in each layer should not be more than 50%.
 Dropout regularization works surprisingly well for certain domains such as computer vision. On the downside we can't really rely on the costs calculated by $$J$$ anymore because different units are cancelled out in each iteration. To get around this you should plot your costs without and then with dropout regularization to make sure they are really decreasing.
 **Important: during test time we mustn't use dropout regularization anymore because we want to see the performance of the full network!**
@@ -269,7 +269,7 @@ The following picture illustrate the different results for different initializat
 ## Model Optimization
 It is often hard to find the best model because model training is time-intensive and it can therefore take some time before you get some feedback. To speed up the training process there are a few algorithms.
 
-### Mini Batch Gradient Descent (MBGD)
+### Mini Batch Gradient Descent
 We have learned in [part one]({% link pages/dl_1_neural_networks.md %}) how vectorization can reduce computation time because all the samples are processed in one go. However, this does not work well for very large datasets anymore because the sample matrix $$X$$ would simply become too large. We can therefore partition the training set in **mini batches**, which are processed one by one. Usually, the training data is shuffled prior to partitioning to get randomized batches.
 
 We can identify an individual batch from a set of $$T$$ batches by adding the superscript $$\{t\}$$. The processing per batch is than as before for the whole training set:
@@ -301,7 +301,7 @@ There are two extrema for choosing the size $$s$$ of a single mini-batch:
 
 Generally you should choose a value between 1 and $$m$$ for $$s$$. Powers of 2 (64, 128, 256, ...) are often chosen because they offer some computational advantages. But more important is that a single mini-batch fits into your computer's memory.
 
-### Exponentially weighted average (EWA)
+### Exponentially weighted average
 There are more sophisticated optimization algorithms than GD. They often make use of something called **exponentially weighted (moving) average**. An EWA $$v_t$$ can be calculated by recursively by using the previous average $$v_{t-1}$$, a parameter $$\beta$$ and the current parameter value $$\Theta$$:
 
 $$
@@ -329,9 +329,9 @@ v_t = \frac{\beta v_{t-1} + (1 - \beta) \Theta_t}{1-\beta^t}
 \end{equation}
 $$
 
-### GD with momentum (GDM)
+### Momentum
 
-GDM is a variant of GD which converges faster by using moving averages. GDM can be best understood by observing the convergence of the cost function over a contour plot:
+**Gradient Descent with momentum (GDM)** is a variant of GD which converges faster by using moving averages. GDM can be best understood by observing the convergence of the cost function over a contour plot:
 
 <figure>
   <img src="{% link assets/img/articles/ml/dl_2/gdm.png %}" alt="Gradient Descent with momentum">
@@ -415,7 +415,7 @@ To sum up, ADAM uses the following hyperparameters:
 | $$\beta_2$$ | damping rate to calculate moving average of $$dW^2, db^2$$ (second moment) | 0.999 is a reasonable value |
 | $$\epsilon$$ | term to prevent division by zero | is usually not tuned, but $$10^{-8}$$ is a reasonable value |
 
-### Learning Rate decay (LRD)
+### Learning Rate decay
 
 It can sometimes make sense to keep the learning rate large at the beginning and then gradually reduce it the more the algorithm converges towards the optimum. This process is called **learning rate decay** (LRD). The reason LRD can make sense is that during the initial steps of optimization the algorithm can take larger steps whereas at the end it should take only small steps in order to oscillate within a smaller region around the optimum.
 
@@ -444,7 +444,7 @@ When tuning hyperparameters, there are generally two paradigms:
 
 These terms are derived from zoology because pandas usually have only one cub whereas sturgeons produce a lot of eggs (caviar).
 
-## Batch Normalization (BN)
+## Batch Normalization
 
 We have seen that normalizing the input can lead to faster learning in the individual units. We can do this for any hidden layer by performing the following steps:
 

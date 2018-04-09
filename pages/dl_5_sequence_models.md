@@ -40,10 +40,16 @@ tags:
 
 {% include toc.md %}
 
-## Course overview
+## Coursera Course overview
 In the **first week** you know Recurrent Neural Networks (RNN) as a special form of NN and what types of problems they’re good at. You also learn why a traditional NN is not suitable for these kinds of problems. In the first week’s assignment you will implement two generative models: a RNN that can generate music that sounds like improvized Jazz. You also implement another form of an RNN that deals with textual data which can generate random names for dinosaurs.
 The **second week** is all about NLP. You learn how word embeddings can help you with NLP tasks and how you can deal with bias. In the second week you will implement some core functions of NLP models such as calculating the similarity between two words or removing the gender bias. You will also implement a RNN that can classify an arbitrary text with a suitable Emoji.
 The last and **final week** of this specialization introduces the concept of Attention Models as a special form of Sequence-to-Sequence models and how they can be used for machine translation. You will put your newly learned knowledge about Attention Models into practice by implementing some functions of an RNN that can be used for machine translation. You will also learn how to implement a model that is able to detect trigger words from audio clips.
+
+## Other resources
+
+| Description | Link |
+|---|---|
+| Adam Coates giving a lecture about speech recognition. Some topics of this page are covered. If you're not in the mood for reading, watch this! Fun fact: at 0:13 you can see Andrew Ng sneak in :smile: | [Youtube](https://www.youtube.com/watch?v=g-sndkf7mCs) |
 
 ## Sequence models
 The previously seen models processed some sort of input (e.g. images) which exhibited following properties:

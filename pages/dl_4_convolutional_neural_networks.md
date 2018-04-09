@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Deep Learning (4/5): Convolutional Neural Networks (CNN)"
+title: "Deep Learning (4/5): Convolutional Neural Networks"
 intro: | 
     In this course you get to know more about Convolutional Neural Networks (CNN, or _ConvNet_). Because CNNs are often used in computer vision, the key concepts are often illustrated with image processing problems. The course contains a few case studies as well as practical advices for using ConvNets.
 permalink: /ml/deep-learning/4
@@ -47,6 +47,7 @@ In the **second week** you get to know a few classic NN-architectures. You learn
 The **last week** introduces face recognition as a DL problem for CNN. Additionally you get to know Neural Style Transfer (NST) as a special application of CNNs. In the last week you will implement a CNN that is able to generate art images from photos (Neural Style Transfer) and also a face recognition system that can identify people.
 
 ## CNN in computer vision
+
 ConvNets are widely used in computer vision. The possible appliances reach far beyond image classification. ConvNets have been trained not only to detect different objects inside a picture, but also classify the object, producing a statement about the image composition (image captioning) or generating new images by learning from artwork (Neural Style Transfer). Such CNN usually require lots training data, as do most NN. However, in constrast to a conventional NN, a CNN must (or should) be able to cope with big, high-resolution images. Processing such data witha  conventional NN would not be feasible for several reasons:
 
 * The weight matrices to optimize would become huge
@@ -55,7 +56,8 @@ ConvNets are widely used in computer vision. The possible appliances reach far b
 
 CNN reduce these pain-points by using special operations (**convolution** and **pooling**).
 
-### Convolution by example (edge detection)
+### Convolution by example
+
 A convolution layer can generally be understood as a layer which transformation an input volume to an output volume of different size, as shown below:
 
 ![convolution]({% link assets/img/articles/ml/dl_4/conv_nn.png %})
@@ -132,7 +134,7 @@ We have seen how convolution works for two-dimensional data. This would work for
 
 Applying the convolution operation on three-dimensional matrices can be done by using a filter which is also three-dimensional. Generally speaking, in a convolution layer the filter dimensions should match the dimensions of the input matrices. This means if we apply a $$5\times 5$$-filter onto a $$14 \times 14 \times 16$$ matrix the filter's dimension are by convention $$ ( 5 \times 5 \times 16 ) $$. Such a filter can detect different features for the individual color channels. The convolution operation however works as seen above by moving the filter over the image, multiplying the elements and summing the products up. The resulting matrix is then again a two-dimensional matrix. However, we could apply more than one filter and stack the resulting matrices to get a multidimensional output matrix.
 
-### Convolutional layers (CONV)
+### CONV-Layers
 
 The first type of layer a CNN can have is the **convolution layer**, which applies the convolution operation as seen above. A convolution layer $$l$$ can therefore apply one or more filters to an input matrix. This gives us the following parameters for the layers:
 
@@ -157,7 +159,7 @@ Several convolutional layers can be combined to a **Deep-CNN**. The hyperparamet
 * the size of the input matrices (and therefore also the size of the output matrix should become smaller with increasing layer depth
 * the number of channels should also decrease with each increasing layer depth
 
-### Pooling layers (POOL and AVG)
+### POOL-Layers
 
 The second layer type in a CNN is the **pooling layer**. This layer is similar to the CONV layer in that a filter is slid over the input matrix. However, instead of multiplying the elements and summing up, the values for the output matrix are determined in a different way. There are two sub-types of this layer:
 
@@ -171,7 +173,7 @@ The second layer type in a CNN is the **pooling layer**. This layer is similar t
 
 The pooling operation can be performed similar to the convolution operation by using different values for the stride. However, in contrast to the convolution operation, padding is usually not applied for pooling layers. Since there are no weights in the pooling filter there are no parameters to learn. Therefore, pooling layers usually reduce the input image in one or more dimensions. This is intentional because that way the CNN is forced to keep only the most important parameters.
 
-### Fully connected layers (FC)
+### FC-Layers
 
 Usually when talking about the number of layers in a CNN only the layers with parameters (weights) are taken into account. Therefore, a pooling layer does not add to the network depth and can be considered belonging to the previous layer.
 
@@ -233,7 +235,7 @@ VGG-16 was a 16-Layer CNN with approximately 138M trainable parameters. The conv
 	<figcaption>VGG-16 architecture (Credits: Coursera)</figcaption>
 </figure>
 
-### Residual Networks (ResNets)
+### Residual Networks
 Recent Networks have become very deep. The CNN [Microsoft used to win the ImageNet competition in 2015](https://blogs.microsoft.com/ai/microsoft-researchers-win-imagenet-computer-vision-challenge/) was as deep as 152 layers! We have seen in [part 2]({% link pages/dl_1_neural_networks.md %}#initialization) that such a network usually suffers from vanishing (or in rare cases exploding) gradients and thus the gradient for the earlier layers decreases to zero very rapidly as training proceeds:
 
 ![vanishing gradient]({% link assets/img/articles/ml/dl_4/vanishing_grad.png %})
@@ -585,7 +587,7 @@ $$
 \hat{y} = \sigma \left( \sum_{k=1}^K w_i \cdot \frac{\left( f( x^{(i)}_k ) - f( x^{(j)}_k \right)^2}{f( x^{(i)}_k ) + f( x^{(j)}_k} \right)
 $$
 
-## Neural Style Transfer (NST)
+## Neural Style Transfer
 
 Another interesting task in the field of Computer Vision is **Neural Style Transfer (NST)**. NST takes a style image $$S$$ (e.g. a painting) and applies its style to a content image $$C$$ to produce a new image $$G$$. Because a new image is generated, a model that persforms NST is called a **generative model**.
 
@@ -607,7 +609,7 @@ $$
 
 This cost function can be minimized the same way as in regular NN. To do this, the image $$G$$ is initialized with random noise and then optimized by applying gradient descent to minimize the costs.
 
-### Content Cost Function (CCF)
+### Content Cost
 
 To understand how the content cost function works we can visualize what a deep NN is learning by inspecting the activations of neurons in different layers. By visualizing the image patches that maximally activate a neuron we can get a sense for what the neurons are learning. It turns out that the NN usually learns abstract things like "_vertical edges_", "_bright/dark_" etc. in higher layers and more complex things like "_water_", "_dogs_" etc. in deeper layers:
 
@@ -624,7 +626,7 @@ $$
 J_{CONTENT}^{[l]}(C,G) = \frac{1}{2} \lVert a^{[l](C)} - a^{[l](G)} \rVert^2
 $$
 
-### Style Cost Function (SCF)
+### Style Cost
 To calculate the similarity between the styles of two images we can define style as the correlation between the activation across channels in a layer $$l$$. This correlation can be understood as follows:
 
 * **High correlation**: An image patch which has a high value in both channel A and channel B contains a style property in both channels

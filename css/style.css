@@ -887,7 +887,7 @@ POST STYLING
 .post .featuredImage {
   position: relative;
   margin-top: 2rem; }
-  .post .featuredImage img {
+  .post .featuredImage img, .emoji {
     margin-bottom: 0; }
 
 /***************
