@@ -1,4 +1,7 @@
 /* Bootstrap styles */
+.post .emoji {
+  margin-bottom: 0;
+}
 
 /* =====================================
 Badges
