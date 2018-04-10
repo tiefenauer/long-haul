@@ -339,7 +339,7 @@ The advantage of such an encoding is that the calculation of a word vector and l
 
 ### Properties of word embeddings
 
-Word embeddings have become hugely popular in NLP and can for example be used for NER. Oftentimes an existing model can be adjusted for a specific task by performing additional training on  suitable training data (transfer learning). This training set and also the dimensionality of the word vectors can be much smaller. The relevance of a word embedding $$e$$ is simliar to the vector of a face in face recognition in computer vision: It is a vectorized representation of the underlying data. An important distinction howeve is that in order to get word embeddings a model needs to learn a fixed-size vocabulary. Vectors for words outside this vocabulary can not be calculated. In contrast a CNN could calculate a vector for a face it has never seen before.
+Word embeddings have become hugely popular in NLP and can for example be used for NER. Oftentimes an existing model can be adjusted for a specific task by performing additional training on  suitable training data (transfer learning). This training set and also the dimensionality of the word vectors can be much smaller. The relevance of a word embedding $$e$$ is simliar to the vector of a face in face recognition in computer vision: It is a vectorized representation of the underlying data. An important distinction however is that in order to get word embeddings a model needs to learn a fixed-size vocabulary. Vectors for words outside this vocabulary can not be calculated. In contrast a CNN could calculate a vector for a face it has never seen before.
 
 Word embeddings are useful to model analogies and relationships between words. The best known example for this is the one from [the original paper](https://arxiv.org/abs/1310.4546):
 
@@ -350,7 +350,14 @@ e_{man} - e_{woman} \approx e_{king} - e_{queen}
 \end{equation}
 $$
 
-The distance between the vectors for "man" and "woman" is similar to the distance between the vectors for "king" and "queen", because those two pairs of words are related in the same way. Therefore we could get the following equation by rearranging formula $$\ref{word2vec_1}$$
+The distance between the vectors for "man" and "woman" is similar to the distance between the vectors for "king" and "queen", because those two pairs of words are related in the same way. We can also observe that a trained model has learned the relationship between these two pairs of words because the vector representations of their distances is approximately parallel. This also applies to other kinds of word pairings, like verbs in different tenses or the relationship between a country and its capital:
+
+<figure>
+	<img src="{% link assets/img/articles/ml/dl_5/word-embeddings.png %}" alt="word embeddings">
+	<figcaption>Example of word embeddings (Credits: <a href="https://www.tensorflow.org/tutorials/word2vec" target="_blank">Tensorflow</a>)</figcaption>
+</figure>
+
+Therefore we could get the following equation by rearranging formula $$\ref{word2vec_1}$$:
 
 $$
 \begin{equation}
@@ -359,7 +366,7 @@ e_{king} - e_{man} + e_{woman} \approx e_{queen}
 \end{equation}
 $$
 
-This way the word embedding for "queen" can be calculated using the embeddings of the other words. To get the word for its embedding we can use a similarity function $$sim$$, which measures the similarity between two embeddings $$u$$ and $$v$. Often the **cosine similarity** is used for this function:
+This way the word embedding for "queen" can be calculated using the embeddings of the other words. To get the word for its embedding we can use a similarity function $$sim$$, which measures the similarity between two embeddings $$u$$ and $$v$$. Often the **cosine similarity** is used for this function:
 
 $$
 sim(u,v) = \frac{u^T v}{\lVert u\rVert_2 \lVert v \rVert_2}
@@ -368,7 +375,7 @@ $$
 With the help of the similarity function we can find the word for "queen" by comparing the embedding $$e_{queen}$$ against the embeddings of all other word from the vocabulary:
 
 $$
-w = argmax_w sim(e_{queen}, e_{king} - e_{man} + e_{woman})
+w = \underset{w}{\operatorname{argmax}} sim(e_{queen}, e_{king} - e_{man} + e_{woman})
 $$
 
 ### Embedding matrix
