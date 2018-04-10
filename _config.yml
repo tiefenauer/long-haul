@@ -24,6 +24,24 @@ navigation:
  - title: Contact
    url: /contact
 
+# http://damonbauer.me/organizing-jekyll-pages/
+include: ["_pages"]
+
+# https://jekyllrb.com/docs/configuration/#front-matter-defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
 # plugins:
 #   - jemoji
  

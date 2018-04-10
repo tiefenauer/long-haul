@@ -236,7 +236,7 @@ VGG-16 was a 16-Layer CNN with approximately 138M trainable parameters. The conv
 </figure>
 
 ### Residual Networks
-Recent Networks have become very deep. The CNN [Microsoft used to win the ImageNet competition in 2015](https://blogs.microsoft.com/ai/microsoft-researchers-win-imagenet-computer-vision-challenge/) was as deep as 152 layers! We have seen in [part 2]({% link pages/dl_1_neural_networks.md %}#initialization) that such a network usually suffers from vanishing (or in rare cases exploding) gradients and thus the gradient for the earlier layers decreases to zero very rapidly as training proceeds:
+Recent Networks have become very deep. The CNN [Microsoft used to win the ImageNet competition in 2015](https://blogs.microsoft.com/ai/microsoft-researchers-win-imagenet-computer-vision-challenge/) was as deep as 152 layers! We have seen in [part 2]({% link _pages/dl_1_neural_networks.md %}#initialization) that such a network usually suffers from vanishing (or in rare cases exploding) gradients and thus the gradient for the earlier layers decreases to zero very rapidly as training proceeds:
 
 ![vanishing gradient]({% link assets/img/articles/ml/dl_4/vanishing_grad.png %})
 
@@ -303,7 +303,7 @@ Surprisingly the predictive performance of the CNN does not suffer significantly
 
 ### Practical advices for using ConvNets
 
-It is sometimes useful to start out from the results of other researchers. Often however it is difficult to re-build a CNN from a paper from scratch. Luckily, the authors provide the pre-trained models and/or labelled data sets to train on for download. You can (and should) use those models for [transfer learning]({% link pages/dl_3_structuring_ml_projects.md %}#transfer-learning). Additionally, if you only have little own training data to train on, you can use [data augmentation]({% link pages/dl_2_improving_deep_neural_networks.md %}#data-augmentation) to synthethizsize additional training data.
+It is sometimes useful to start out from the results of other researchers. Often however it is difficult to re-build a CNN from a paper from scratch. Luckily, the authors provide the pre-trained models and/or labelled data sets to train on for download. You can (and should) use those models for [transfer learning]({% link _pages/dl_3_structuring_ml_projects.md %}#transfer-learning). Additionally, if you only have little own training data to train on, you can use [data augmentation]({% link _pages/dl_2_improving_deep_neural_networks.md %}#data-augmentation) to synthethizsize additional training data.
 
 ### State of Computer Vision
 

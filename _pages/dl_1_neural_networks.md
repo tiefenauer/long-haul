@@ -45,14 +45,14 @@ The reason, why NN usually dominate over traditional ML algorithms ([SVM](https:
 So Neural Networks (NN) are at the core of what Deep Learning is. NN can be used in supervised or unsupervised learning settings, although I think they are still more often applied in the former while unsupervised learning is often referred to as the _holy grail_ of ML. One can roughly distinguish the following NN types:
 
 * **Deep-NN (NN)**: This is the standard form of a NN and can be seen as a prototype for other variations of NN. This part is all about Deep-NN.
-* **Convolutional Neural Networks (CNN)**: These networks are often used for Computer Vision task (image recognition, image classification, ...). You can read about them in [part 4 of this article series]({% link pages/dl_4_convolutional_neural_networks.md %}).
-* **Recurrent Neural Networks (RNN)**: These networks are often used for one-dimensional, sequential data such as speech/audio, text and so on. You can read about them in [part 5 about sequence models]({% link pages/dl_5_sequence_models.md %})
+* **Convolutional Neural Networks (CNN)**: These networks are often used for Computer Vision task (image recognition, image classification, ...). You can read about them in [part 4 of this article series]({% link _pages/dl_4_convolutional_neural_networks.md %}).
+* **Recurrent Neural Networks (RNN)**: These networks are often used for one-dimensional, sequential data such as speech/audio, text and so on. You can read about them in [part 5 about sequence models]({% link _pages/dl_5_sequence_models.md %})
 
 There's a zoo of other forms and combinations of NN, like [Generative Adversarial Networks (GAN)](https://en.wikipedia.org/wiki/Generative_adversarial_network), [Variational Autoencoders (VAE)](https://en.wikipedia.org/wiki/Autoencoder) and many more, which have gained momentum in the past years. However, I only know them conceptually and will refrain therefore of including them in this list (for now).
 
 ## Logistic Regression as a NN
 
-As seen in [Andrew's introductory course in ML]({% link pages/ml_intro.md %}) a binary classification problem can be solved with Logistic Regression (LR). By observing features $$x=(x_1, x_2, ..., x_n)$$ we try to **predict** whether a given sample instance $$x^{(i)}$$ belongs to a certain class or not. This can be visualized by treating the features as coordinates, plotting the sample instances as points and then drawing a line that optimally separates these points into two groups or _classes_ (of course this kind of visualization only makes sense when there's not more than two or three features, because we can't plot in more than three dimensions):
+As seen in [Andrew's introductory course in ML]({% link _pages/ml_intro.md %}) a binary classification problem can be solved with Logistic Regression (LR). By observing features $$x=(x_1, x_2, ..., x_n)$$ we try to **predict** whether a given sample instance $$x^{(i)}$$ belongs to a certain class or not. This can be visualized by treating the features as coordinates, plotting the sample instances as points and then drawing a line that optimally separates these points into two groups or _classes_ (of course this kind of visualization only makes sense when there's not more than two or three features, because we can't plot in more than three dimensions):
 
 (example image here)
 
@@ -94,7 +94,7 @@ Let's say for example that we want to predict housing prices by observing the fe
   3. implement backward propagation to get the gradients
   4. update the parameters with gradient descent
 
-This process is usually iterative, empirical process in that we try to find the optimal hyperparameters (e.g. network architecture) by trial and error. We will learn some tricks to make this a guided process in [part 2]({% link pages/dl_2_improving_deep_neural_networks.md %}).
+This process is usually iterative, empirical process in that we try to find the optimal hyperparameters (e.g. network architecture) by trial and error. We will learn some tricks to make this a guided process in [part 2]({% link _pages/dl_2_improving_deep_neural_networks.md %}).
 
 ![Sigmoid-Function]({% link assets/img/articles/ml/dl_1/dl_iterative.png %})
 
@@ -165,7 +165,7 @@ value for $$\alpha$$ is reasonable             |  $$\alpha$$ is too large
 :-------------------------:|:-------------------------:
 ![Sigmoid-Function]({% link assets/img/articles/ml/dl_1/sgd.gif %}) | ![Sigmoid-Function]({% link assets/img/articles/ml/dl_1/sgd_bad.gif %})
 
-We learn more on it in [part 2 about hyperparameter tuning]({% link pages/dl_2_improving_deep_neural_networks.md %}). For now let's assume we chose a reasonable value for $$\alpha$$ and can therefore update the parameters as follows:
+We learn more on it in [part 2 about hyperparameter tuning]({% link _pages/dl_2_improving_deep_neural_networks.md %}). For now let's assume we chose a reasonable value for $$\alpha$$ and can therefore update the parameters as follows:
 
 $$
 \Theta=\Theta - \alpha d\Theta

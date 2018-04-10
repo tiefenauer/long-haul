@@ -40,7 +40,7 @@ toc: true
 
 ## Hyperparameter tuning
 
-We have learned in [part 1]({% link pages/dl_1_neural_networks.md %}) that setting up a NN is a highly **iterative and empirical** process. There is no algorithm that can calculate the optimal values for the hyperparameters (e.g. number of layers, hidden units or learning rate) for you. Sometimes there are a few rule of thumbs you can use. But more often the values for the hyperparameters are chosen more or less intuitively.
+We have learned in [part 1]({% link _pages/dl_1_neural_networks.md %}) that setting up a NN is a highly **iterative and empirical** process. There is no algorithm that can calculate the optimal values for the hyperparameters (e.g. number of layers, hidden units or learning rate) for you. Sometimes there are a few rule of thumbs you can use. But more often the values for the hyperparameters are chosen more or less intuitively.
 
 It is also true that results from one domain can seldom be transferred to another. So if you have a NN that works well in computer vision, it is not guaranteed that this NN also works well for audio or language processing tasks. Most of the time it is impossible to "guess" the optimal values in the first try. They have to be manually adjusted to improve learning. This requires **experience** which can be obtained through practice - or by someone who tells you what works (and what not). And this is exactly what this course is aimed at.
 
@@ -187,7 +187,7 @@ Another reason is that the activation function $$g$$ is roughly linear for value
 	<figcaption>Linearity of Tanh in the middle region(Credits: <a href="https://commons.wikimedia.org/wiki/File:Hyperbolic_Tangent.svg" target="_blank">Wikipedia</a>) (with adjustments)</figcaption>
 </figure>
 
-Because the values in $$W^{[l]}$$ become close to zero, the cell value $$Z^{[l]} = W^{[l]} a^{[l-1]} + b^{[l]}$$ (before activation) is also close to zero. Therefore, the values after activation mostly lie in the linear region of the activation function. Therefore the NN calculates something more or less close to a linear function. As we have seen in [part one]({% link pages/dl_1_neural_networks.md %}), linear classifiers can only calculate linear boundaries. Therefore the higher the value for  $$\lambda$$ the more we force the NN to become close to a linear function and prevent it to calculate over-complicated boundaries. This consequently reduces overfitting.
+Because the values in $$W^{[l]}$$ become close to zero, the cell value $$Z^{[l]} = W^{[l]} a^{[l-1]} + b^{[l]}$$ (before activation) is also close to zero. Therefore, the values after activation mostly lie in the linear region of the activation function. Therefore the NN calculates something more or less close to a linear function. As we have seen in [part one]({% link _pages/dl_1_neural_networks.md %}), linear classifiers can only calculate linear boundaries. Therefore the higher the value for  $$\lambda$$ the more we force the NN to become close to a linear function and prevent it to calculate over-complicated boundaries. This consequently reduces overfitting.
 
 ### Dropout
 Another technique to reduce overfitting is using **Dropouts**. With dropouts we mean completely **cancelling out individual neurons** during test time by multiplying their weights by zero. By doing this we prevent single neurons in the NN to become too important for learning. In other words: We force the NN to learn from other features too.
@@ -270,7 +270,7 @@ The following picture illustrate the different results for different initializat
 It is often hard to find the best model because model training is time-intensive and it can therefore take some time before you get some feedback. To speed up the training process there are a few algorithms.
 
 ### Mini Batch Gradient Descent
-We have learned in [part one]({% link pages/dl_1_neural_networks.md %}) how vectorization can reduce computation time because all the samples are processed in one go. However, this does not work well for very large datasets anymore because the sample matrix $$X$$ would simply become too large. We can therefore partition the training set in **mini batches**, which are processed one by one. Usually, the training data is shuffled prior to partitioning to get randomized batches.
+We have learned in [part one]({% link _pages/dl_1_neural_networks.md %}) how vectorization can reduce computation time because all the samples are processed in one go. However, this does not work well for very large datasets anymore because the sample matrix $$X$$ would simply become too large. We can therefore partition the training set in **mini batches**, which are processed one by one. Usually, the training data is shuffled prior to partitioning to get randomized batches.
 
 We can identify an individual batch from a set of $$T$$ batches by adding the superscript $$\{t\}$$. The processing per batch is than as before for the whole training set:
 

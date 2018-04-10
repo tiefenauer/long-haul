@@ -28,7 +28,7 @@ The **first week** focuses on setting up a strategy when working on a DL task. I
 The **second week** introduces common errors that can lead to poor performance. It also shows how to find those errors and how to deal with them.
 
 ## ML Strategy
-There comes a point in every ML project where you have trained your Deep-NN and you are still not satisfied with its performance. You therefore want to improve it. You have learned a few methods to do this in [part 2]({% link pages/dl_2_improving_deep_neural_networks.md %}):
+There comes a point in every ML project where you have trained your Deep-NN and you are still not satisfied with its performance. You therefore want to improve it. You have learned a few methods to do this in [part 2]({% link _pages/dl_2_improving_deep_neural_networks.md %}):
 
 * Gather more training data
 * try a different optimizer
@@ -38,7 +38,7 @@ Deciding on what action to take next is not trivial. However, where are a few st
 
 ### Orthogonalization
 
-I have introduced the term **orthogonalization** in [part 2]({% link pages/dl_2_improving_deep_neural_networks.md %}) quickly. I am going to lay it out in more detail here.
+I have introduced the term **orthogonalization** in [part 2]({% link _pages/dl_2_improving_deep_neural_networks.md %}) quickly. I am going to lay it out in more detail here.
 Training a NN in ML usually involves the following steps:
 
 * Optimize the cost function on the training set
@@ -85,7 +85,7 @@ Mismatched training and dev/test-sets often root in the nature of DL algorithms,
 
 As mentionned, option 1 does usually not work very well. Option 2 has the disadvantage that the different sets have different distributions, but there are methods to handle that (see below)
 
-As mentioned in [part one]({% link pages/dl_1_neural_networks.md %}), a common split of labelled data into training-, dev- and test set was 60/20/20. However, with the availability of big data this has gradually shifted to the proportion of 98/1/1. Sometimes it may be OK to have no validation set at all. When doing this you should make sure not to use data from the test set to optimize the parameters because the test set should in any case only contain data the NN has never seen before.
+As mentioned in [part one]({% link _pages/dl_1_neural_networks.md %}), a common split of labelled data into training-, dev- and test set was 60/20/20. However, with the availability of big data this has gradually shifted to the proportion of 98/1/1. Sometimes it may be OK to have no validation set at all. When doing this you should make sure not to use data from the test set to optimize the parameters because the test set should in any case only contain data the NN has never seen before.
 
 #### Bias and variance with mismatched data distributions.
 

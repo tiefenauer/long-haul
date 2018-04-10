@@ -18,13 +18,13 @@ toc: true
 eta: true
 ---
 
-* [Introduction to Machine Learning]({% link pages/ml_intro.md %}) (11 weeks)
+* [Introduction to Machine Learning]({% link _pages/ml_intro.md %}) (11 weeks)
 * Deep Learning (16 weeks)
-    * [Neural Networks and Deep Learning]({% link pages/dl_1_neural_networks.md %}) (weeks 1-4)
-    * [Improving Deep Neural Networks]({% link pages/dl_2_improving_deep_neural_networks.md %}) (weeks 5-7)
-    * [Structuring ML projects]({% link pages/dl_3_structuring_ml_projects.md %}) (weeks 8-9)
-    * [Convolutional Neural Networks]({% link pages/dl_4_convolutional_neural_networks.md %}) (weeks 10-13)
-    * [Sequence Models]({% link pages/dl_5_sequence_models.md %}) (weeks 14-16)
+    * [Neural Networks and Deep Learning]({% link _pages/dl_1_neural_networks.md %}) (weeks 1-4)
+    * [Improving Deep Neural Networks]({% link _pages/dl_2_improving_deep_neural_networks.md %}) (weeks 5-7)
+    * [Structuring ML projects]({% link _pages/dl_3_structuring_ml_projects.md %}) (weeks 8-9)
+    * [Convolutional Neural Networks]({% link _pages/dl_4_convolutional_neural_networks.md %}) (weeks 10-13)
+    * [Sequence Models]({% link _pages/dl_5_sequence_models.md %}) (weeks 14-16)
 
 ## Why the hassle?
 
