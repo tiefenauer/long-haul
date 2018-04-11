@@ -24,7 +24,7 @@ tags:
     - Skip-Gram
     - CBOW
     - Negative Sampling
-    - Context & Target-Wort
+    - Context & Target-Word
     - Sentiment Classification
     - Debiasing
     - Sequence-to-Sequence Models
