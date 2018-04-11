@@ -1,5 +1,5 @@
 <p style="text-align:center">
 {% for tag in include.tags %}
-    <span class="badge badge-secondary">{{tag}}</span>
+    <span class="badge badge-secondary">{{tag | capitalize_all}}</span>
 {% endfor %}
 </p>
