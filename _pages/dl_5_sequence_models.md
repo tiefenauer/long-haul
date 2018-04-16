@@ -2,7 +2,7 @@
 layout: article
 title: "Deep Learning (5/5): Sequence Models"
 intro: | 
-    The last course introduces a special form of neural networkthat take their input as a sequence of tokens. Starting with Recurrent Neural Networks (RNN) for speech/text processing you get to know word embeddings as a special form of Natural Language Processing (NLP). Finally, you learn about Sequence-to-Sequence Models that take a sequence as an input and also produce a sequence as an output.
+    Sequence models are a special form of neural networks that take their input as a sequence of tokens. They are often applied in ML tasks such as speech recognition, Natural Language Processing or bioinformatics (like processing DNA sequences).
 permalink: /ml/deep-learning/5
 tags:
     - Recurrent Neural Networks (RNN)
@@ -41,37 +41,40 @@ tags:
 {% include toc.md %}
 
 ## Coursera Course overview
-In the **first week** you know Recurrent Neural Networks (RNN) as a special form of NN and what types of problems they’re good at. You also learn why a traditional NN is not suitable for these kinds of problems. In the first week’s assignment you will implement two generative models: a RNN that can generate music that sounds like improvized Jazz. You also implement another form of an RNN that deals with textual data which can generate random names for dinosaurs.
-The **second week** is all about NLP. You learn how word embeddings can help you with NLP tasks and how you can deal with bias. In the second week you will implement some core functions of NLP models such as calculating the similarity between two words or removing the gender bias. You will also implement a RNN that can classify an arbitrary text with a suitable Emoji.
+In the **first week** you know Recurrent Neural Networks (RNN) as a special form of NN and what types of problems they’re good at. You also learn why a traditional NN is not suitable for these kinds of problems. In the first week’s assignment you will implement two generative models: a RNN that can generate music that sounds like a Jazz improvisation. You also implement another form of an RNN that uses textual input to generate random names for dinosaurs.
+The **second week** is all about Natural Language Processing (NLP). You learn how word embeddings can help you with NLP tasks and how you can deal with bias. In the second week you will implement some core functions of NLP models such as calculating the similarity between two words or removing the gender bias. You will also implement a RNN that can classify an arbitrary text with a suitable Emoji.
 The last and **final week** of this specialization introduces the concept of Attention Models as a special form of Sequence-to-Sequence models and how they can be used for machine translation. You will put your newly learned knowledge about Attention Models into practice by implementing some functions of an RNN that can be used for machine translation. You will also learn how to implement a model that is able to detect trigger words from audio clips.
 
 ## Other resources
 
 | Description | Link |
 |---|---|
-| Adam Coates giving a lecture about speech recognition. Some topics of this page are covered. If you're not in the mood for reading, watch this! Fun fact: at 0:13 you can see Andrew Ng sneak in :smile: | [Youtube](https://www.youtube.com/watch?v=g-sndkf7mCs) |
+| Adam Coates giving a lecture about speech recognition. Some topics of this page are covered. If you're not in the mood for reading, watch this! Fun fact: at `0:13` you can see Andrew Ng sneak in :smile: | [YouTube](https://www.youtube.com/watch?v=g-sndkf7mCs) |
 
 ## Sequence models
 The previously seen models processed some sort of input (e.g. images) which exhibited following properties:
-- it is uniform (e.g. an image of a certain size)
+- it was uniform (e.g. an image of a certain size)
 - it was processed as a whole (i.e. an image was not partially processed)
-- it was often multidimensional (e.g. an image with 3 color chanels)
+- it was often multidimensional (e.g. an image with 3 color channels yields a matrix of $$B \times H \times 3 $$)
 
-Sequence models are a bit different in that they require their input to be a sequence of tokens. The length of the individual input elements (i.e. the number of tokens) does not need to be of the same length, neither for training nor prediction. These input tokens are processed one by one and processing can be stopped at any point. A form of sequence models are **Recurrent Neural Networks (RNN)** which are often used to process speech data (e.g. speech recognition, machine translation), generating data (e.g. generating music) or NLP (e.g. sentiment analysis, named entity recognition (NER), ...). Sequences can therefore be:
+Sequence models are a bit different in that they require their input to be a sequence of tokens. Examples for such sequences could be:
 
 - audio data (sequence of sounds)
 - text (sequence of words)
 - video (sequence of images)
 - ...
 
+
+The length of the individual input elements (i.e. their number of tokens) does not need to be of the same length, neither for training nor prediction. These input tokens are processed one after the other, whereas at each time step a certain token is processed. Processing can be stopped at any point. A form of sequence models are **Recurrent Neural Networks (RNN)** which are often used to process speech data (e.g. speech recognition, machine translation), generative models (e.g. generating music) or NLP (e.g. sentiment analysis, named entity recognition (NER), ...).
+
 The notation for an input sequence $$x$$ of length $$T_x$$ or an output sequence $$y$$ of length $$T_y$$ is as follows (note the new notation with chevrons around the indices to enumerate the tokens):
 
 $$
-x = x^{<1>}, x^{<2>}, ..., x^{<t>}, ..., x^{<T_x>}
+x = x^{<1>}, x^{<2>}, ..., x^{<t>}, ..., x^{<T_x>} \\
 y = y^{<1>}, y^{<2>}, ..., y^{<t>}, ..., y^{<T_y>}
 $$
 
-$$T_y$$ and $$T_y$$ don't need to be the same, i.e. the input and the output sequence don't need to be of the same length. Also the length of the individual training samples can vary.
+As stated above, the input and the output sequence don't need to be of the same length ($$T_x^{(i)} \neq T_y^{(i)} $$). Also the length of the individual training samples can vary ($$ T_y^{(i)} \neq T_y^{(j)} $$).
 
 ## Recurrent Neural Networks
 
@@ -688,13 +691,17 @@ The problem in speech recognition is that there is usually much more input than 
 	<figcaption>Example of a spectrogram (Credits: Coursera)</figcaption>
 </figure>
 
-To solve this problem a technique called *Connectionist Temporal Classification (CTC)** is used. The underlying principle is that the input is reduced by passing it through a CTC-cost function. This allows the RNN to output a sequence of characters that is much shorter than the sequence of input tokens. For the above sentence, such an output sequence could look something like this:
+Traditional approaches to get the transcription for a piece of audio involved aligning individual sounds (_phonemes_) with the audio signal. For this, a phonetic transcription of the text using the [International Phonetic alphabet (IPA)](http://www.internationalphoneticalphabet.org/ipa-sounds/ipa-chart-with-sounds/) was needed. The alignment process then involved detecting individual phonemes in the audio signal and matching them up with the phonetic transcription. To do this, [Hidden Markov Models (HMM)](https://en.wikipedia.org/wiki/Hidden_Markov_model) were often used. This method was state of the art for a long time, however it requires an exact phonetic transcription of the speech and is prone to features of the audio like pitch, gender of the speaker or speed.
+
+A more recent approach for speech recognition is a technique called [**Connectionist Temporal Classification (CTC)**](ftp://ftp.idsia.ch/pub/juergen/icml2006.pdf). In contrast to HMM, CTC does not need an exact phonetic transcription of the speech audio (i.e. it is _alignment-free_). The CTC method allows for directly transforming an input signal using an RNN. This is constrasting to the HMM approach where the transcript first had to be mapped to a phonetic translation and the audio signal was then mapped to the individual phonemes. The whole process allows the RNN to output a sequence of characters that is much shorter than the sequence of input tokens.
+
+The underlying principle of CTC is that the input (i.e. spectrograms) are each mapped not only to a single character, but to all characters of the alphabet at the same time (with different probabilities). This may output in a sequence of characters like this:
 
 ```ttt_h_eee_____ _____q___...```
 
-Repeated character could then be collapsed to form the transcript for the audio.
+This process usually generates a whole bunch of possible output sequences, which can then be further reduced by passing it through a CTC-cost function, which collapses repeated characters. By doing this, we get a set of possible transcriptions, which can then be evaluated by means of a language model, which yields the most likely sequence to form the transcript for the audio.
 
-The CTC method allows for directly transforming an input signal to a transcript in speech recognition. This is constrasting to the traditional approach where a transcript first had to be mapped to a phonetic translation and the audio signal was then mapped to the individual phonemes.
+The main advantage of CTC is that it not only outpeforms all previous models but also that it does not require an intermediate phonetic transcription (i.e. it is an _end-to-end_ model). If you want to know more about CTC, read the [original paper](ftp://ftp.idsia.ch/pub/juergen/icml2006.pdf) or pay a visit to [this wonderful explanation ond Distill](https://distill.pub/2017/ctc/).
 
 ### Trigger word detection
 
