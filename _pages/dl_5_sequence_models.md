@@ -50,6 +50,8 @@ The last and **final week** of this specialization introduces the concept of Att
 | Description | Link |
 |---|---|
 | Adam Coates giving a lecture about speech recognition. Some topics of this page are covered. If you're not in the mood for reading, watch this! Fun fact: at `0:13` you can see Andrew Ng sneak in :smile: | [YouTube](https://www.youtube.com/watch?v=g-sndkf7mCs) |
+| _**What does it really mean for a robot to be racist?**_: Why bias can become a problem in language models | [thegradient.pub](https://thegradient.pub/ai-bias/) |
+| Why bias matters and how to mitigate it. | [Google Developers Blog](https://developers.googleblog.com/2018/04/text-embedding-models-contain-bias.html) |
 
 ## Sequence models
 The previously seen models processed some sort of input (e.g. images) which exhibited following properties:
@@ -151,23 +153,29 @@ $$
 
 #### RNN architectures
 
-In the example above we have seen an RNN where the length of the input $$T_x$$ was equal to the length of the output $$T_y$$. This is called a **many-to-many** architecture. However, input and output sequences do not need to be of the same length.
-
-![Many-to-many architecture]({% link assets/img/articles/ml/dl_5/many-to-many.png %})
-
-This is especially important for tasks like machine translation where the translated text might be longer or shorter than the original text. Such a network might be implemented with an **encoder-decoder** architecture, where the encoder part first reads in a whole sentence before the decoder part starts making predictions.
-
-![encoder-decoder architecture]({% link assets/img/articles/ml/dl_5/encoder-decoder.png %})
-
-An alternative architecture would be a RNN which takes a sequence as an input but only produces a single value as an output. Such an architecture is called **many-to-one** and is used for tasks like sentiment analysis where the RNN e.g. tries to predict a movie rating based on a textual description of the critics.
+There are different types of network architectures for RNN in terms of how the length of the input relates to the length of the output. A RNN can take a sequence of several tokens as an input and only produce a single value as an output. Such an architecture is called **many-to-one** and is used for tasks like sentiment analysis where the RNN e.g. tries to predict a movie rating based on a textual description of the critics.
 
 ![Many-to-one architecture]({% link assets/img/articles/ml/dl_5/many-to-one.png %})
 
-Finally there are RNN with a **one-to-many** architecture which take only a single value as input and produce a sequence as an output by re-using the outputs as input for the next prediction. Such an architecture could for example be used in a RNN that generates music by taking a genre as an input and generates a sequence of notes as an output.
+The opposite is also possible: A RNN can take only a single value as input and produce a sequence as an output by re-using the previous outputs to make the next prediction. Such an architecture is called **one-to-many**. It could be used for example in a RNN that generates music by taking a genre as an input and generates a sequence of notes as an output.
 
 ![One-to-many architecture]({% link assets/img/articles/ml/dl_5/one-to-many.png %})
 
-There is also a **one-to-one** architecture, but that corresponds to a standard NN.
+There is theoretically also a **one-to-one** architecture. However, such an architecture is rarely encountered since it essentially corresponds to a standard NN.
+
+Finally, there are networks which take an input sequence of length $$T_x$$ and produce an output of length $$T_y$$. This is called a **many-to-many** architecture. In the above example, the length of the input was equal to the length of the output. However, input and output sequences need not to be of the same length. This property is especially important for tasks like machine translation where the translated text might be longer or shorter than the original text.
+
+![Many-to-many architecture]({% link assets/img/articles/ml/dl_5/many-to-many.png %})
+
+##### Encoder-Decoder Networks
+Models with a many-to-one architecture might be implemented as **encoder-decoder** models. This is perhaps the most commonly used framework for sequence modelling with neural networks. Like the name suggests, an Encoder-Decoder model consists of two RNNs. The **encoder** maps the input sequence $$X$$ to a hidden representation $$H$$ of the same length as the input. The **decoder** then consumes this hidden representation to produce $$Y$$, i.e. make a prediction.
+
+$$
+H = encode(X) \\
+Y=p(Y \vert X) = decode H
+$$
+
+![encoder-decoder architecture]({% link assets/img/articles/ml/dl_5/encoder-decoder.png %})
 
 #### Language model and sequence generation
 
@@ -485,7 +493,7 @@ The key idea behind equalization is to make sure that a particular pair of words
 
   ![Equalizing]({% link assets/img/articles/ml/dl_5/debiasing-equalize.png %})
 
-In the above steps we used gender bias as an example, but the same steps can be applied to eliminate other types of bias too.
+In the above steps we used gender bias as an example, but the same steps can be applied to eliminate other types of bias too. Word embedding will almost alway suffer from bias that is intrinsically contained in the corpora they wore learned from.   
 
 ## Sequence-to-sequence models
 
@@ -682,6 +690,8 @@ To sum up, here are the most important parameters in an attention model
 
 The advantage of an attention model is that it does not process individual words one by one, but rather pays different degrees of attention to different parts of a sentence during processing. This makes them a good fit for tasks like machine translation or image captioning. On the downside the model takes quadratic time to train because for $$T_x$$ input tokens and $$T_y$$ output tokens the number of trainable parameters is $$T_x\cdot T_y$$ (i.e. it has quadratic cost).
 
+If you want to know more about Attention Models, there is a wonderful [explanation on Distill](https://distill.pub/2016/augmented-rnns/).
+
 ## Speech recognition
 
 The problem in speech recognition is that there is usually much more input than output data. Take for example the sentence "_The quick brown fox jumps over the lazy dog._" which consists of 35 letters. An audio clip of a recording of this sentence which 10s length and was recorded with a sampling rate of 100Hz (100 samples per second) however has 1000 input samples! The samples of an audio clip can be visualized using a spectrogram.
@@ -691,7 +701,7 @@ The problem in speech recognition is that there is usually much more input than 
 	<figcaption>Example of a spectrogram (Credits: Coursera)</figcaption>
 </figure>
 
-Traditional approaches to get the transcription for a piece of audio involved aligning individual sounds (_phonemes_) with the audio signal. For this, a phonetic transcription of the text using the [International Phonetic alphabet (IPA)](http://www.internationalphoneticalphabet.org/ipa-sounds/ipa-chart-with-sounds/) was needed. The alignment process then involved detecting individual phonemes in the audio signal and matching them up with the phonetic transcription. To do this, [Hidden Markov Models (HMM)](https://en.wikipedia.org/wiki/Hidden_Markov_model) were often used. This method was state of the art for a long time, however it requires an exact phonetic transcription of the speech and is prone to features of the audio like pitch, gender of the speaker or speed.
+Traditional approaches to get the transcription for a piece of audio involved aligning individual sounds (_phonemes_) with the audio signal. For this, a phonetic transcription of the text using the [International Phonetic alphabet (IPA)](http://www.internationalphoneticalphabet.org/ipa-sounds/ipa-chart-with-sounds/) was needed. The alignment process then involved detecting individual phonemes in the audio signal and matching them up with the phonetic transcription. To do this, [Hidden Markov Models (HMM)](https://en.wikipedia.org/wiki/Hidden_Markov_model) were often used. This method was state of the art for a long time, however it requires an exact phonetic transcription of the speech and is prone to features of the audio signal (e.g. sampling rate, background noise, number of speakers), the text being spoken (intonation, pronunciation, language, speaking rate) or the speaker itself (pitch of the voice, gender, accent).
 
 A more recent approach for speech recognition is a technique called [**Connectionist Temporal Classification (CTC)**](ftp://ftp.idsia.ch/pub/juergen/icml2006.pdf). In contrast to HMM, CTC does not need an exact phonetic transcription of the speech audio (i.e. it is _alignment-free_). The CTC method allows for directly transforming an input signal using an RNN. This is constrasting to the HMM approach where the transcript first had to be mapped to a phonetic translation and the audio signal was then mapped to the individual phonemes. The whole process allows the RNN to output a sequence of characters that is much shorter than the sequence of input tokens.
 
