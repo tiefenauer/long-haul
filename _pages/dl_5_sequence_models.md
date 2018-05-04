@@ -52,7 +52,7 @@ The last and **final week** of this specialization introduces the concept of Att
 | Adam Coates giving a lecture about speech recognition. Some topics of this page are covered. If you're not in the mood for reading, watch this! Fun fact: at `0:13` you can see Andrew Ng sneak in :smile: | [YouTube](https://www.youtube.com/watch?v=g-sndkf7mCs) |
 | _**What does it really mean for a robot to be racist?**_: Why bias can become a problem in language models | [thegradient.pub](https://thegradient.pub/ai-bias/) |
 | Why bias matters and how to mitigate it. | [Google Developers Blog](https://developers.googleblog.com/2018/04/text-embedding-models-contain-bias.html) |
-| The Unreasonable Effectiveness of Recurrent Neural Networks | [karpathy.github.io](http://karpathy.github.io/2015/05/21/rnn-effectiveness/) |
+| _**The Unreasonable Effectiveness of Recurrent Neural Networks**_: Why RNNs are cool | [karpathy.github.io](http://karpathy.github.io/2015/05/21/rnn-effectiveness/) |
 
 ## Sequence models
 The previously seen models processed some sort of input (e.g. images) which exhibited following properties:
