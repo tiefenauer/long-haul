@@ -5,6 +5,7 @@ url: https://tiefenauer.github.io
 baseurl: ""
 paginate_path: "blog/page:num/"
 permalink: blog/:title/
+future: true
 
 markdown: kramdown
 highlighter: rouge
