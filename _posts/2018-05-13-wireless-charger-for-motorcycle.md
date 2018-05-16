@@ -6,30 +6,30 @@ Since the weather was not terribly good on ascension this year, I tried to make 
 
 I often go for shorter or longer rides with [my motorbike](https://www.yamaha-motor.eu/ch/de/produkte/motorrad/sport-touring/tracer-900.aspx) using a [mobile phone](https://en.wikipedia.org/wiki/Moto_G4) for navigation or tracking my rout (I have grown fond of [Calimoto](http://calimoto.eu) btw. which I can heartily recommend). For the ride I usually attach my phone to the  motorbike using the [Ram Mount X-Grip](https://www.rammount.com/products/x-grip), which is rock solid and holds the phone in position no matter the speed or terrain.
  
-However, the problem with using GPS on your phone to do so is that it can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. But since I am a lazy rider I got tired of having to unplug the phone everytime I parked the bike only to plug it in again when I continue my ride. I looked for a more time-saving option thad didn't require fiddling with wrapping cables around the handlebar or making sure I entered the USB port the right way. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well, even if your phone does not support wireless charging (like mine).
+However, the problem with using GPS on your phone to do so is that it can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. But since I am a lazy rider I got tired of having to unplug the phone everytime I parked the bike only to plug it in again when I continue my ride. I looked for a more time-saving option thad didn't involve wrapping cables around the handlebar or fiddling with the tiny USB ports on the phone. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well, even if your phone does not support wireless charging (like mine).
  
 ## Shopping list
  
 I used the following parts, most of which can be purchased from your trused ~~local~~ [Chinese wholesale store](http://wish.com). Click on the links to see exactly which parts I used.
 
 * a [wireless charger](https://www.wish.com/product/5a449a3adaa5c75cc80b8efa)
-* (optional) a [wireless adapter](https://www.wish.com/product/5991599991c5c93d55d942bf) if your phone does not support wireless charging out of the box (like mine)
 * a [USB car charger](https://www.wish.com/product/55bb70799e42592de0f327e0)
 * some [Shrink-Wrap tubes](https://www.wish.com/product/59928e978d28360ab7e8a51c) to 
 * [Plasti Dip](http://plastidip-sale.com/) to make everything wateproof
+* (optional) a [wireless adapter](https://www.wish.com/product/5991599991c5c93d55d942bf) if your phone does not support wireless charging out of the box (like mine)
 * (optional) a USB cable to attach to your motorbike permanently (you can use the one that came with your phone if you can spare it)
-* (optional) a [Y-cable](https://www.wish.com/product/565fb962c8e6990453bf2349) for faster charging if you have two USB ports available
+* (optional) a [Y-cable](https://www.wish.com/product/565fb962c8e6990453bf2349) for faster charging if your USB charger has two ports
  
 ## Let the crafting begin
  
-I first snapped open the wireless charger to expose its internal parts. Turned out it only consisted of a inductor which was glued to a thin, round metal plate and a small circuit board, both connected by two short cables. The metal plate was broken (probably when I opened the case), but that did not seem to affect the functionality. 
+I first snapped open the wireless charger to expose its internal parts. Turned out it only consisted of a inductor which was glued to a thin, round metal plate and a small circuit board, both connected with two short cables. The metal plate was broken (probably when I opened the case), but that did not seem to affect functionality. 
 
 <figure>
 	<img src="{{ '/assets/img/posts/motorcycle_wireless_charging/wireless_charger.jpg' | prepend: site.baseurl }}" alt=""> 
 	<figcaption>The opened wireless charger</figcaption>
 </figure> 
  
-I first removec the round plastic sticker which covered the base plate of the mount. I then first glued the metal plate to the mount and then the inductor to it. The sizes matched perfectly, so it almost looked like the parts were made for exactly this mount :smile:.
+I first removed the round plastic sticker which covered the base plate of the mount. I then first glued the metal plate to the mount and then the inductor to it. The sizes matched perfectly, so it almost looked like the parts were made for exactly this mount :smile:.
  
 <figure>
     <img src="{{ '/assets/img/posts/motorcycle_wireless_charging/ram_mount_collage.png' | prepend: site.baseurl }}" alt=""> 
@@ -41,7 +41,7 @@ I first removec the round plastic sticker which covered the base plate of the mo
     </figcaption>
 </figure> 
 
-After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). A small test run indicated that everything worked as expected. This was important to know before I would make the thing waterproof.
+After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). A small test run indicated that everything worked as expected. This was important to know before I would make the whole thing waterproof.
 
 ## Making it waterproof
 
@@ -63,4 +63,4 @@ The modified mount was then reattached to the handlebar and the cables were fixe
 
 ## Bottom line
 
-After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn't go on a ride with an almost empty battery though. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that's not much of a problem though since I always returned from a days drive with more than 90% battery left. The usability is now also great: Put your phone into the mount and you're done!
+After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn't go on a ride with an almost empty battery though. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that's not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you're done! :thumbsup:
