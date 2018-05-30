@@ -61,6 +61,11 @@ Since the modified mount will be permanently attached to the motorcycle (includi
 
 The modified mount was then reattached to the handlebar and the cables were fixed with some straps. The loose end of the charging cable was covered with a protective cap and the USB charger stoved away unter the socius seat. To get a bit more power from my USB charger I also connected the Y-cable with both ports of the USB charger. I put the wireless adapter under the back cover of my phone and tested it with on a short test ride. Everything looked fine.
 
+<figure>
+    <img src="{{ '/assets/img/posts/motorcycle_wireless_charging/phone_mounted.jpg' | prepend: site.baseurl }}" alt=""> 
+    <figcaption>The phone mounted on the modified cradle. You can see it's charging :smile:</figcaption>
+</figure> 
+
 ## Bottom line
 
 After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn't go on a ride with an almost empty battery though. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that's not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you're done! :thumbsup:
