@@ -1,19 +1,19 @@
 ---
 layout: page
-title: Switzerland
-image: switzerland_title.jpg
+title: Swiss Frenzy
+image: frenzy_title.jpg
 intro: | 
     My wife and I like to travel and although there are still many white spots on our world map we can say with confidence we have seen a bit of the world. Each year we try to do at least one trip, often leading us abroad. Travelling to other countries made me realize two things:
     
     * There are a lot of beautiful places in the world
     * I don't need to go far away to see some of them 
     
-permalink: /switzerland
+permalink: /frenzy
 eta: false
 hypothesis: false
 ---
 
-{% google_map src="_posts/switzerland" width="100%" height="400" %}
+{% google_map src="_posts/frenzy" width="100%" height="400" %}
 
 Having become aware of this, we decided to spend our holidays at home one year, travelling along the [Grand Tour of Switzerland](http://grandtour.myswitzerland.com/de/) by car during two weeks (which I can only recommend if you happen to be/live in Switzerland). The route lead us to some stunning views and reinfoced us in our belief: Behold, the good lies so close at hand. Knowing this we started making excursions during the weekend, some small, some big, sometimes by motorbike, often including hiking. What we needed were some destionations. They did not not need to be super-fancy, but take me to nice places all over the country. For this, I found it helpful if I got a tip from a friend or in a newspaper.  
 

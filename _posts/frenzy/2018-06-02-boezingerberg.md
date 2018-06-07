@@ -1,7 +1,7 @@
 ---
 title: Bözingerberg and Taubenlochschlucht
 layout: frenzy
-category: [travel, switzerland]
+category: [travel, frenzy]
 location:
     latitude: 47.1721091
     longitude: 7.2754052
