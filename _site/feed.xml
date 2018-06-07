@@ -1,0 +1,1405 @@
+<script type='text/javascript'>
+  /* global google */
+/* global MarkerClusterer */
+// eslint-disable-next-line no-unused-vars
+var jekyllMaps = (function() {
+  'use strict'
+  var clusterSettings = {}
+  var clusterReady = false
+  var mapReady = false
+  var options = {}
+  var data = []
+  var maps = []
+
+  return {
+    initializeMap: initializeMap,
+    initializeCluster: initializeCluster,
+    register: register
+  }
+
+  /**
+   * Setup Google Maps options and call renderer.
+   */
+  function initializeMap() {
+    options = {
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      center: new google.maps.LatLng(0, 0)
+    }
+    mapReady = true
+    render()
+  }
+
+  /**
+   * Register map data to be rendered once Google Maps API is loaded.
+   *
+   * @param string id
+   * @param Array locations
+   * @param Object settings
+   */
+  function register(id, locations, options) {
+    data.push({ id: id, locations: locations, options: options })
+    render()
+  }
+
+  /**
+   * Render maps data if Google Maps API is loaded.
+   */
+  function render() {
+    if (!mapReady) return
+
+    while (data.length > 0) {
+      var item = data.pop()
+      var bounds = new google.maps.LatLngBounds()
+      var mapOptions = Object.assign({}, options, item.options)
+      var map = new google.maps.Map(
+        document.getElementById(item.id),
+        mapOptions
+      )
+      var infoWindow = new google.maps.InfoWindow()
+      var markers = item.locations.map(createMarker)
+
+      map.fitBounds(bounds)
+      google.maps.event.addListenerOnce(map, 'idle', function() {
+        if (this.customZoom) this.setZoom(this.customZoom)
+      })
+      if (mapOptions.useCluster) {
+        maps.push({ map: map, markers: markers })
+        processCluster()
+      }
+    }
+
+    function createMarker(location) {
+      var position = new google.maps.LatLng(
+        location.latitude,
+        location.longitude
+      )
+      bounds.extend(position)
+      if (!mapOptions.showMarker) return false
+
+      var marker = new google.maps.Marker({
+        position: position,
+        title: location.title,
+        image: location.image,
+        icon: location.icon || mapOptions.markerIcon,
+        url: markerUrl(mapOptions.baseUrl, location.url),
+        url_text: location.url_text,
+        map: map
+      })
+      if (mapOptions.showMarkerPopup) marker.addListener('click', markerPopup)
+
+      return marker
+    }
+
+    function markerUrl(baseUrl, url) {
+      if (/^(https?|\/\/)/.test(url)) return url
+
+      return url.length > 0 ? baseUrl + url : ''
+    }
+
+    function markerPopup() {
+      var content = '<div class="map-info-window"><h5>' + this.title + '</h5>'
+      var imageTag =
+        this.image.length > 0 &&
+        '<img src="' + this.image + '" alt="' + this.title + '"/>'
+      if (this.url.length > 0) {
+        var linkContent = imageTag || this.url_text || 'View'
+        content += '<a href="' + this.url + '">' + linkContent + '</a>'
+      } else if (imageTag) {
+        content += imageTag
+      }
+      content += '</div>'
+      infoWindow.setContent(content)
+      infoWindow.open(map, this)
+    }
+  }
+
+  function initializeCluster(settings) {
+    clusterReady = true
+    clusterSettings = settings || {}
+    processCluster()
+  }
+
+  function processCluster() {
+    if (!clusterReady) return
+
+    while (maps.length > 0) {
+      var obj = maps.pop()
+      // eslint-disable-next-line no-new
+      new MarkerClusterer(obj.map, obj.markers, {
+        gridSize: clusterSettings.grid_size || 25,
+        imagePath:
+          'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+      })
+    }
+  }
+})()
+/* Object.assign polyfill */
+if (typeof Object.assign !== 'function') {
+  Object.assign = function(target) {
+    'use strict'
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object')
+    }
+
+    target = Object(target)
+    for (var index = 1; index < arguments.length; index++) {
+      var source = arguments[index]
+      if (source != null) {
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+    }
+    return target
+  }
+}
+
+</script>
+<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCZVdrcBRuum7_QAIrsU1Ph726_-jX9rok&callback=jekyllMaps.initializeMap'></script>
+
+<script async defer src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'
+        onload='jekyllMaps.initializeCluster({})'></script>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dani's Braindump</title>
+    <description>My thoughts about the world</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 07 Jun 2018 13:12:24 +0200</pubDate>
+    <lastBuildDate>Thu, 07 Jun 2018 13:12:24 +0200</lastBuildDate>
+    <generator>Jekyll v3.7.3</generator>
+    
+      
+      <item>
+        <title>Bözingerberg and Taubenlochschlucht</title>
+        <description>&lt;p&gt;This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.&lt;/p&gt;
+
+&lt;p&gt;The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which was good considering the hot and humid weather. The path leads you through a small park where you can have a picnic and watch/feed domestic animals (deer, ibex, marmots and the like). On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good :stuck_out_tongue:). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps.&lt;/p&gt;
+
+&lt;p&gt;The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (&lt;em&gt;Pigeon Hole Gorge&lt;/em&gt;). Back in Biel you can relax in the public seaside bath, which is very nice.&lt;/p&gt;
+
+&lt;h2 id=&quot;facts-and-figures&quot;&gt;Facts and Figures&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Trip length: 3-4 hours&lt;/li&gt;
+  &lt;li&gt;climbing distance: 500m&lt;/li&gt;
+  &lt;li&gt;Highest point: 929m&lt;/li&gt;
+  &lt;li&gt;Best season: April - November&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;where-to-park&quot;&gt;Where to park&lt;/h2&gt;
+
+&lt;h2 id=&quot;what-to-do-and-see&quot;&gt;What to do and see&lt;/h2&gt;
+
+&lt;h2 id=&quot;what-to-bring&quot;&gt;What to bring&lt;/h2&gt;
+
+&lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
+
+&lt;div id=&quot;e2cebf28-05cf-427a-83e6-1405d96cf17a&quot; style=&quot;width:100%;height:400px;&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  jekyllMaps.register(
+    'e2cebf28-05cf-427a-83e6-1405d96cf17a',
+    [{&quot;latitude&quot;:47.1721091,&quot;longitude&quot;:7.2754052,&quot;title&quot;:&quot;Bözingerberg and Taubenlochschlucht&quot;,&quot;icon&quot;:null,&quot;url&quot;:&quot;/blog/boezingerberg/&quot;,&quot;url_text&quot;:null,&quot;image&quot;:&quot;&quot;}],
+    {&quot;baseUrl&quot;:&quot;&quot;,&quot;useCluster&quot;:true,&quot;showMarker&quot;:true,&quot;showMarkerPopup&quot;:true,&quot;markerIcon&quot;:null}
+  );
+&lt;/script&gt;
+
+</description>
+        
+          <description>&lt;p&gt;This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 02 Jun 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/boezingerberg/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/boezingerberg/</guid>
+        
+        
+        <category>travel</category>
+        
+        <category>switzerland</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Charging your phone wirelessly on your motorbike</title>
+        <description>&lt;p&gt;Since the weather was not terribly good on ascension this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
+
+&lt;p&gt;I often go for shorter or longer rides with &lt;a href=&quot;https://www.yamaha-motor.eu/ch/de/produkte/motorrad/sport-touring/tracer-900.aspx&quot;&gt;my motorbike&lt;/a&gt; using a &lt;a href=&quot;https://en.wikipedia.org/wiki/Moto_G4&quot;&gt;mobile phone&lt;/a&gt; for navigation or tracking my rout (I have grown fond of &lt;a href=&quot;http://calimoto.eu&quot;&gt;Calimoto&lt;/a&gt; btw. which I can heartily recommend). For the ride I usually attach my phone to the  motorbike using the &lt;a href=&quot;https://www.rammount.com/products/x-grip&quot;&gt;Ram Mount X-Grip&lt;/a&gt;, which is rock solid and holds the phone in position no matter the speed or terrain.&lt;/p&gt;
+
+&lt;p&gt;However, the problem with using GPS on your phone to do so is that it can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. But since I am a lazy rider I got tired of having to unplug the phone everytime I parked the bike only to plug it in again when I continue my ride. I looked for a more time-saving option thad didn’t involve wrapping cables around the handlebar or fiddling with the tiny USB ports on the phone. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well, even if your phone does not support wireless charging (like mine).&lt;/p&gt;
+
+&lt;h2 id=&quot;shopping-list&quot;&gt;Shopping list&lt;/h2&gt;
+
+&lt;p&gt;I used the following parts, most of which can be purchased from your trused &lt;del&gt;local&lt;/del&gt; &lt;a href=&quot;http://wish.com&quot;&gt;Chinese wholesale store&lt;/a&gt;. Click on the links to see exactly which parts I used.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;a &lt;a href=&quot;https://www.wish.com/product/5a449a3adaa5c75cc80b8efa&quot;&gt;wireless charger&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;a &lt;a href=&quot;https://www.wish.com/product/55bb70799e42592de0f327e0&quot;&gt;USB car charger&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;some &lt;a href=&quot;https://www.wish.com/product/59928e978d28360ab7e8a51c&quot;&gt;Shrink-Wrap tubes&lt;/a&gt; to&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://plastidip-sale.com/&quot;&gt;Plasti Dip&lt;/a&gt; to make everything wateproof&lt;/li&gt;
+  &lt;li&gt;(optional) a &lt;a href=&quot;https://www.wish.com/product/5991599991c5c93d55d942bf&quot;&gt;wireless adapter&lt;/a&gt; if your phone does not support wireless charging out of the box (like mine)&lt;/li&gt;
+  &lt;li&gt;(optional) a USB cable to attach to your motorbike permanently (you can use the one that came with your phone if you can spare it)&lt;/li&gt;
+  &lt;li&gt;(optional) a &lt;a href=&quot;https://www.wish.com/product/565fb962c8e6990453bf2349&quot;&gt;Y-cable&lt;/a&gt; for faster charging if your USB charger has two ports&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;let-the-crafting-begin&quot;&gt;Let the crafting begin&lt;/h2&gt;
+
+&lt;p&gt;I first snapped open the wireless charger to expose its internal parts. Turned out it only consisted of a inductor which was glued to a thin, round metal plate and a small circuit board, both connected with two short cables. The metal plate was broken (probably when I opened the case), but that did not seem to affect functionality.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/wireless_charger.jpg&quot; alt=&quot;&quot; /&gt; 
+	&lt;figcaption&gt;The opened wireless charger&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I first removed the round plastic sticker which covered the base plate of the mount. I then first glued the metal plate to the mount and then the inductor to it. The sizes matched perfectly, so it almost looked like the parts were made for exactly this mount :smile:.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/ram_mount_collage.png&quot; alt=&quot;&quot; /&gt; 
+    &lt;figcaption&gt;
+        &lt;strong&gt;Top left:&lt;/strong&gt; The mount with the plastic cover removed.
+        &lt;strong&gt;Top right:&lt;/strong&gt; Gluing the metal plate to the mount... 
+        &lt;strong&gt;Bottom left:&lt;/strong&gt; ... then the inductor on top... 
+        &lt;strong&gt;Bottom right:&lt;/strong&gt; Fits like a glove!
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). A small test run indicated that everything worked as expected. This was important to know before I would make the whole thing waterproof.&lt;/p&gt;
+
+&lt;h2 id=&quot;making-it-waterproof&quot;&gt;Making it waterproof&lt;/h2&gt;
+
+&lt;p&gt;Since the modified mount will be permanently attached to the motorcycle (including the cable, circuit board and inductor, but without the USB charger) I had to make sure the damn thing won’t be affected by the weather. To protect the connections I used the shrink wrap tube (be sure not to let it get too hot as the electronics may be quite sensitive). The circuit board was covered with three layers of Plasti Dip which (apart from being waterproof) has the nice property of also acting as an insulator. I also covered the shrink wrap tube, the cable between circuit board and inductor and the area between plasic lid and inductor with some Plasti Dip to make sure it is absolutely weather-proof.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/plasti-dip.png&quot; alt=&quot;&quot; /&gt; 
+    &lt;figcaption&gt;
+        &lt;strong&gt;Top left:&lt;/strong&gt; Plasti Dip bottle.
+        &lt;strong&gt;Top right:&lt;/strong&gt; Circuit board with Plasti Dip partially applied 
+        &lt;strong&gt;Bottom left:&lt;/strong&gt; protecting the connections with s shrink wrap tube
+        &lt;strong&gt;Bottom right:&lt;/strong&gt; the covered circuit board
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;The modified mount was then reattached to the handlebar and the cables were fixed with some straps. The loose end of the charging cable was covered with a protective cap and the USB charger stoved away unter the socius seat. To get a bit more power from my USB charger I also connected the Y-cable with both ports of the USB charger. I put the wireless adapter under the back cover of my phone and tested it with on a short test ride. Everything looked fine.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/phone_mounted.jpg&quot; alt=&quot;&quot; /&gt; 
+    &lt;figcaption&gt;The phone mounted on the modified cradle. You can see it's charging :smile:&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;bottom-line&quot;&gt;Bottom line&lt;/h2&gt;
+
+&lt;p&gt;After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn’t go on a ride with an almost empty battery though. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that’s not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you’re done! :thumbsup:&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;Since the weather was not terribly good on ascension this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sun, 13 May 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/wireless-charger-for-motorcycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/wireless-charger-for-motorcycle/</guid>
+        
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Bye bye, Wordpress. Hello Jekyll!</title>
+        <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/assets/img/posts/synology_109_nas.jpg&quot; alt=&quot;&quot; /&gt; 
+	&lt;figcaption&gt;My devoted workhorse which has been hosting my blog until now...&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To make things worse, Synology has stopped shipping major software updates for my NAS. It hasn’t received any update (apart from security patches) for a long time and still runs DiskStation 4.2 at the time, which includes an outdated PHP version.&lt;/p&gt;
+
+&lt;h1 id=&quot;exit-wordpress&quot;&gt;Exit Wordpress&lt;/h1&gt;
+
+&lt;p&gt;Apart from the long page loadsall I didn’t deem this to be much of a problem for me. Especially considering I use this blog as my personal braindump which has only got small attention (although I did receive some comments or E-Mails from all around the world). Until recently, when warnings started to pile up in the Wordpress Admin-Dashboard, urging me to update to the newest PHP version. I wasn’t even able to install or upgrade certain plugins anymore since they require a higher version of PHP. Upgrading the PHP version would be possible in theory, but this would mean fiddling with the internals of the DiskStation software and potentially running into compatibility issues. Not my idea of fun. So I had to decide between two paths: Staying with the current state (with the danger of the site becoming inoperable due to deprecated software) or going for the radical path and migrating everything to a new host. I went for the latter.&lt;/p&gt;
+
+&lt;p&gt;Since I didn’t find any solutions for free Wordpress Hosting that met my requirements I looked around for something simpler, less resource hungry, without a zillion plugins. Something lightweight and sleek. At the same time it should support some key features that I often use:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Syntax highlighting for various languages&lt;/li&gt;
+  &lt;li&gt;support for LaTeX&lt;/li&gt;
+  &lt;li&gt;support for advanced text formatting&lt;/li&gt;
+  &lt;li&gt;customizable design (without having to handcraft everything)&lt;/li&gt;
+  &lt;li&gt;open and extendable (to some point)&lt;/li&gt;
+  &lt;li&gt;Possibility to write online or offline&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To make the search harder, it all should be free (as hosting on my own NAS is). And yeah, the page speed should also be higher. Dear Santa Clause…&lt;/p&gt;
+
+&lt;h1 id=&quot;enter-jekyll&quot;&gt;Enter Jekyll&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/posts/jekyll_logo.png&quot; alt=&quot;Jekyll logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then came &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Jekyll is a static site generator and the underlying technology used by &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;. It does not need a database and you can write your content using &lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot;&gt;Markdown&lt;/a&gt;. Jekyll uses the &lt;a href=&quot;http://shopify.github.io/liquid/&quot;&gt;Liquid Templating Language&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/frontmatter/&quot;&gt;Front Matter&lt;/a&gt; that you can use to add some logic to your site. Your files are then compiled by GH Pages and served as plain old HTML pages. And since all the files reside in a normal GitHub repository, I don’t have to worry about things like backup or versioning anymore. I can even apply the same workflow for blogging like I apply for coding (or as Tom Preston-Warner expressed it: &lt;a href=&quot;http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html&quot;&gt;Blogging Like a Hacker&lt;/a&gt;). The few dynamic features I used, like comments, can easily be replaced by third-party services like &lt;a href=&quot;disqus.com&quot;&gt;Disqus&lt;/a&gt;. Having never used Jekyll before, I found &lt;a href=&quot;https://www.smashingmagazine.com/2014/08/build-blog-jekyll-github-pages/&quot;&gt;this tutorial&lt;/a&gt; insightful. I don’t have any long-term experience yet. Time will show how it all turns out, but what I have seen so far looks promising.&lt;/p&gt;
+
+&lt;h1 id=&quot;migrating-from-wp-to-gh-pages&quot;&gt;Migrating from WP to GH Pages&lt;/h1&gt;
+&lt;p&gt;Migration is never an easy endeavour, especially considering all the assets (text, images, code blocks, CSS,…). So I tried to automate as much as possible. Jekyll is really trying to help out here by providing a &lt;a href=&quot;http://import.jekyllrb.com/&quot;&gt;wide range of available importers&lt;/a&gt;. Alas, the provided Wordpress-Importer was only able to generate HTML files, not Markdown. And it only imports posts and pages, no assets!&lt;/p&gt;
+
+&lt;p&gt;Luckily I found a &lt;a href=&quot;https://github.com/benbalter/wordpress-to-jekyll-exporter&quot;&gt;WP plugin&lt;/a&gt; which did a fantastic job of converting all my posts and pages to Markdown files (including all the images in them). Unfortunately, the images are linked with their absolute paths (i.e. an URL pointing to the old location of the image). The pages also do not always look as expected when displayed in the new blog, but this is not neccessarily the plugin’s fault. Some content like automatic table of contents (TOC) on pages is generated on the fly by a plugin and can not be migrated easily. So there still is a lot of work do be done by hand. But at least I was able to move moste of the content in one go without major hiccups.&lt;/p&gt;
+
+&lt;p&gt;Next step was the site’s new design. I was looking for something sleek and minimal. Luckily, Jekyll is themeable and there are a &lt;a href=&quot;http://jekyllthemes.org/&quot;&gt;lot of readily available themes&lt;/a&gt; out there. I went for the &lt;a href=&quot;https://github.com/brianmaierjr/long-haul&quot;&gt;Long-Haul&lt;/a&gt; theme by Brian Maier Jr., which seems to be a goot compromise between focus on the content while still being visually appealing. I had to touch up on the CSS, the Layouts and the Gems a bit to fit the appearance my needs, but I was able to keep the theme in its original design without too much tweaking.&lt;/p&gt;
+
+&lt;p&gt;Since the new Jekyll Blog is basically just a bunch of Markdown files blogging can be done locally by creating/updating the Markdown files and/or fiddling with the configuration files. The changes can be tested locally and then be pushed to GitHub. Testing the pages locally requires you to install &lt;a href=&quot;https://www.ruby-lang.org/de/&quot;&gt;Ruby&lt;/a&gt; and a few gems. But since Windows &lt;a href=&quot;https://jekyllrb.com/docs/windows/&quot;&gt;is not officially supported by Jekyll&lt;/a&gt; and I sometimes only want to make a few quick changes (typos or the like) I looked for an alternative solutions which lets me edit the content online without having to install anything. Of course I can always edit the files directly on GitHub, but I was looking for something more practical, maybe even something WYSIWYG. I found two alternatives:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://prose.io/&quot;&gt;Prose.io&lt;/a&gt;, a free which is explicitly targeted at Jekyll sites and lets you edit your content with a simple online editor.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cloudcannon.com/&quot;&gt;CloudCannon&lt;/a&gt; which is a somewhat more sophisticated solution targeted for professional CMS providers.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I am currently using CloudCannon, which is free for basic use and a bit more powerful than Prose.io. It even features nice things like shortcuts while editing (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL + D &lt;/code&gt; to delete a line). Let’s see if I stick with it.&lt;/p&gt;
+
+&lt;p&gt;The aftermath of the migration is not over. There is still a lot to do, especially in making sure all the links work, the images all show up and the content is properly aligned. But so far I’m quite happy with my decision to move to GH Pages. I’m still trying to migrate all the comments to Disqus, but that might take a bit longer than expected…&lt;/p&gt;
+
+&lt;!--
+---
+**Update**
+Migration is over and I hope everything is in its right place now. The Simplicity of Jekyll/GitHub makes blogging is a breeze, so I don't miss my old Wordpress-Setup at all. I guess I should rename this post's title to _&quot;Bye bye, sluggish performance, security issues, database administration, data backup, plugin incompabilities, ... Hello Markdown, integrated version control, statelessness, ...&quot;_, but I guess that would be a bit too long... ;)
+--&gt;
+</description>
+        
+          <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 22 Feb 2018 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</guid>
+        
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Machine Learning</title>
+        <description>&lt;p&gt;It has been a looong time since my last post… :frowning:&lt;/p&gt;
+
+&lt;p&gt;Meanwhile, I have started my master’s degree with a focus on Machine Learning. For preparation I have finished &lt;a href=&quot;https://www.coursera.org/learn/machine-learning/&quot;&gt;Andrew Ng’s course in ML&lt;/a&gt;. If you have never heard of this course and want to break into ML I think this is a fantastic starting point. The explanations are concise and clear even without prior knowledge. The course consists of a series of videos and accompanying programming assignments, for which you’ll need &lt;a href=&quot;https://www.mathworks.com/products/matlab.html&quot;&gt;Matlab&lt;/a&gt; (or its open-source twin &lt;a href=&quot;https://www.gnu.org/software/octave/&quot;&gt;Octave&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;To be able to come back to what I have learned and revisit individual topics I decided to write a summary in my own words. This also helped me to get my thoughts straight and memorize the content better. I figured someone else might be interested in it too, so I put it all online for you to read.&lt;/p&gt;
+
+&lt;p&gt;You can find the summary &lt;a href=&quot;http://www.tiefenauer.info/ml_de&quot;&gt;here&lt;/a&gt;. Note it’s only available in German. Maybe I will translate it to English someday if I have the time.&lt;/p&gt;
+
+&lt;p&gt;Please drop me a comment if you find anything unclear or (god forbid!) you find a mistake. :thumbsup:&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;It has been a looong time since my last post… :frowning:&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 02 Oct 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/new-series-machine-learning/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/new-series-machine-learning/</guid>
+        
+        <category>coursera</category>
+        
+        <category>machine learning</category>
+        
+        
+        <category>Machine Learning</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>BDD with JBehave (2/2): Advanced tests</title>
+        <description>&lt;p&gt;This entry is part 2 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the previous article about BDD with JBehave, we learned about how to create a test using the JBehave story pattern that describes preconditions, events and the expected behavior. Due to its natural language, the story can even be understood by non-technical users. The test described the behavior of a digital radio when the on/off switch is being pressed.&lt;/p&gt;
+
+&lt;p&gt;This test was very basic, but sufficient to illustrate the basic functionality. More often however, it is neccessary to describe behavior in a more complex manner, e.g. by specifying and evaluating parameters, chaining preconditions and so on.&lt;/p&gt;
+
+&lt;p&gt;In this second part of the article series about BDD and JBehave we will explore some of the more advanced functionalities of JBehave to create more sophisticated behavior driven tests.&lt;/p&gt;
+
+&lt;h1 id=&quot;parameterized-tests&quot;&gt;Parameterized Tests&lt;/h1&gt;
+
+&lt;p&gt;When describing events and expected behavior, it is often useful to evaluate certain parts of the expectation description in the story. We did this implicitly before by stating the following expectation&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Then the radio should be turned on&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;and evaluating the expecation in Java to a boolean:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But what if we wanted to evaluate the expectation in a more complex manner, e.g. by specifying the following test:&lt;/p&gt;
+
+&lt;p&gt;For this test we need to evaluate a part of the &lt;code class=&quot;highlighter-rouge&quot;&gt;When...&lt;/code&gt; part of the story in Java to use it to set the frequency (&lt;code class=&quot;highlighter-rouge&quot;&gt;103.8&lt;/code&gt;) of the radio. We also have to evaluate a part of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Then...&lt;/code&gt; part of the story in Java to assert the fulfillment of our expectation (displayed value should be &lt;code class=&quot;highlighter-rouge&quot;&gt;103.80 FM&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Luckily, extracting parameters from textual descriptions is not hard at all with JBehave. As you remember from part 1 of the series, it is important that the String handed over to the annotation matches the string in the story. JBehave finds the annotated Java method for a textual description by &lt;a href=&quot;http://jbehave.org/reference/stable/annotations.html&quot; target=&quot;_blank&quot;&gt;regex-matching this string &lt;/a&gt;with the one found in the story file. Since a regex is used for matching, the annotation string can contain special characters that will translate to parameter names. The parameter values can be injected in Java by specifying method arguments of the same name:&lt;/p&gt;
+
+&lt;p&gt;Parameters are defined as Strings in the story file, but can be any other type in Java, including object types. Type conversion is done automatically by JBehave, where possible using &lt;a href=&quot;http://jbehave.org/reference/stable/parameter-converters.html&quot; target=&quot;_blank&quot;&gt;built-in parameter converters&lt;/a&gt;. If this is not possible, you can write your own parameter converter, but this is not in scope for this article.&lt;/p&gt;
+
+&lt;p&gt;Usually, the method parameters carry the same names and occur in the same order as specified in the annotation string. This is good practice but there may be cases where naming and/or order of parameters in Java may be different. That’s why JBehave includes the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Named&lt;/code&gt;-annotation for parameter values:&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Named&lt;/code&gt;-annotation both name and/or order of parameter can become independent of the description in the story. However, having parameter names and order the same is good practice and also less verbose. I suggest keeping them in sync unless there’s absolutely no way to avoid it.&lt;/p&gt;
+
+&lt;p&gt;Let’s update our Radio so that the user can tune to a frequency by adding the following code:&lt;/p&gt;
+
+&lt;p&gt;Now run your test and voilà: The test succeeds! 🙂&lt;/p&gt;
+
+&lt;h1 id=&quot;example-tables&quot;&gt;Example tables&lt;/h1&gt;
+
+&lt;p&gt;In certain cases it can become necessary to feed different parameter values to the test in order to check different behaviour. For example: Let’s assume our radio has a display which can display the current station name, but which is limited to 10 characters. If a station name is longer than 10 characters, the name should be truncated down to 7 characters and appended with three dots.&lt;/p&gt;
+
+&lt;p&gt;This is actually an extension of a parameterized test and can be formulated similarly in the story by using an example table:&lt;/p&gt;
+
+&lt;p&gt;The test will then be executed once for each row in the example table, having the parameter values set to their respective value from the table.&lt;/p&gt;
+
+&lt;p&gt;Let’s try this out and extend our &lt;code class=&quot;highlighter-rouge&quot;&gt;RadioSteps.java&lt;/code&gt; with appropriate methods to match the story:&lt;/p&gt;
+
+&lt;p&gt;Also add the following methods to &lt;code class=&quot;highlighter-rouge&quot;&gt;Radio.java&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;If we run our test now, it will fail with the following message:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;org.junit.ComparisonFailure: 
+Expected :A reall...
+Actual :A really long station name which will definitely not fit into the display&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts – all in the name of test-driven development. 🙂 So let’s change the previously added &lt;code class=&quot;highlighter-rouge&quot;&gt;getDisplay()&lt;/code&gt;-method to the following:&lt;/p&gt;
+
+&lt;p&gt;Now run the test again! It should become green like a cucumber.&lt;/p&gt;
+
+&lt;h1 id=&quot;composite-steps&quot;&gt;Composite steps&lt;/h1&gt;
+
+&lt;p&gt;Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let’s revisit our first test:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given a digital radio
+When I press the on/off switch
+Then the radio should be turned on&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now let’s assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given a digital radio
+And the radio is already turned on
+When I press the on/off switch
+Then the radio should be turned off&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Let’s also extend our RadioSteps.java with an additional method:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;nd&quot;&gt;@Given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;the radio is already turned on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;theRadioIsTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;aDigitalRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The two preconditions are now chained together i.e. executed in sequence in the order given by the story file. Composition of steps can also be achieved by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Composite&lt;/code&gt;-annotation in Java. We could use the following test&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given the radio is already turned on
+When I press the on/off switch
+Then the radio should be turned off&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;with the following step:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;nd&quot;&gt;@Given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;the radio is already turned on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Composite&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;&quot;Given a digital radio&quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;theRadioIsTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;aDigitalRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The result would be identical.&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;This entry is part 2 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 08 Dec 2015 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</guid>
+        
+        <category>BDD</category>
+        
+        <category>Java</category>
+        
+        <category>JBehave</category>
+        
+        <category>TDD</category>
+        
+        
+        <category>Coding</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>BDD with JBehave (1/2): Setup and basic tests</title>
+        <description>&lt;p&gt;This entry is part 1 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;In an earlier article series I showed how to use Mockito together with JUnit in order to write good unit tests. While this tool is good for &lt;a href=&quot;https://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;Test Driven Development (TDD)&lt;/a&gt;, it falls short when it comes to &lt;a href=&quot;https://en.wikipedia.org/wiki/Behavior-driven_development&quot;&gt;Behavior Driven Development (BDD)&lt;/a&gt;. In this article, I’m going to introduce another tool that has caught my attention and leverages your testing facilities to make use of the BDD-paradigms. But first, let’s see what we mean when we talk about BDD.&lt;/p&gt;
+
+&lt;h2 id=&quot;preface&quot;&gt;Preface&lt;/h2&gt;
+
+&lt;p&gt;There are a lot of posts and tutorials about JBehave, but none have satisfied my expectations so far. If you’ve never heard of JBehave before, it might be a bit hard to start out as a complete beginner, since most of the magic is happening under the hood and not transparent to the user.&lt;/p&gt;
+
+&lt;p&gt;A very good introduction to JBehave can be found in &lt;a href=&quot;https://blog.codecentric.de/en/2012/06/jbehave-configuration-tutorial&quot;&gt;this blog post&lt;/a&gt; on Codecentric.com. However, this post takes you only to a certain point, without covering the full capabilities of JBehave. This article series is intended to pick up where Codecentric.com left off.&lt;/p&gt;
+
+&lt;p&gt;All code to the sample project built in this tutorial is available in my &lt;a href=&quot;https://github.com/tiefenauer/jbehave-tutorial&quot;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;a-short-introduction-into-bdd-and-jbehave&quot;&gt;A short introduction into BDD and JBehave&lt;/h1&gt;
+
+&lt;p&gt;Behavior Driven Development (or BDD in short) is often referred to as the successor of Test Driven Development (TDD) and should strip away all technical details and special knowlege of how code should be tested. It does so by defining communication as central means of how collaborators should define what the system should do and what the expected result is. This also means that language becomes universally important in BDD, since not all collaborators have the same knowledge of technologies, tools and processes. BDD uses a domain-specific language (DSL) to describe behaviors of and expectations from a system.&lt;/p&gt;
+
+&lt;p&gt;JBehave is the link between this DSL and Java by enabling software developers to incorporate expected behavior in to their test suite and run them automatically – similar to Unit Tests but based on tests formulated in natural language. The description of expected behaviour can (or should) even come from a non-technical person with extensive knowledge of the problem domain.&lt;/p&gt;
+
+&lt;p&gt;Going into details of the principles of BDD and technical details JBehave would be fairly out of scope of this article series. There is a vast number of articles on BDD – read the &lt;a href=&quot;http://behaviourdriven.org/Introduction&quot;&gt;introductory article by Dan North&lt;/a&gt; or google it if you want to know more. Also, JBehave is extensiveley documented. What this article series tries to do is to give you a general idea of how BDD tests can be written using JBehave and get you started as quickly as possible.&lt;/p&gt;
+
+&lt;h1 id=&quot;getting-started-with-jbehave&quot;&gt;Getting started with JBehave&lt;/h1&gt;
+
+&lt;p&gt;Ok, now it’s time to get our hands dirty. Let’s build our first project which is tested following the BDD approach. For this setup we will use the following setup:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;a &lt;a href=&quot;http://maven.apache.org/&quot;&gt;Maven&lt;/a&gt; project&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;IntelliJ IDEA&lt;/a&gt; (Community edition)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/witspirit/IntelliJBehave&quot;&gt;JBehave Suppor&lt;/a&gt;t installed as plugin&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you’re using another IDE, you may have to undertake additional steps. I know that there’s a &lt;a href=&quot;http://jbehave.org/eclipse-integration.html&quot;&gt;JBehave plugin for Eclipse&lt;/a&gt;, too. However, this tutorial does only cover setup with IntelliJ.&lt;/p&gt;
+
+&lt;p&gt;We will use a very simple example as use case for our tests. We will write Java code which implements a digital radio. Of course we will not have a real radio (i.e. you won’t hear any sound coming out of your speakers), since we only need some code to run our test against.&lt;/p&gt;
+
+&lt;p&gt;The radio The radio will need a power source in order to play and should have some basic functionalities, such as:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;playing music&lt;/li&gt;
+  &lt;li&gt;selecting a station&lt;/li&gt;
+  &lt;li&gt;saving a station&lt;/li&gt;
+  &lt;li&gt;showing the currently selected station&lt;/li&gt;
+  &lt;li&gt;… and so on&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The radio will be implemented in a single class &lt;code class=&quot;highlighter-rouge&quot;&gt;Radio.java&lt;/code&gt;, which will be tested using BDD principles. This means we will define the radio’s behaviour first, before adding any logic to the class.&lt;/p&gt;
+
+&lt;h2 id=&quot;include-jbehave-as-a-dependency&quot;&gt;Include JBehave as a dependency&lt;/h2&gt;
+
+&lt;p&gt;Setup your project with Maven (or directly in the IDE). Of course, in order to use the functionalities of JBehave, we must add JBehave as a dependency:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.jbehave&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;jbehave-core&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.0.4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.hamcrest&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;hamcrest-all&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note I have also included a dependency to &lt;a href=&quot;http://hamcrest.org/&quot;&gt;Hamcrest&lt;/a&gt; in order to use their really useful matchers. This should be enough for now to write our first JBehave test.&lt;/p&gt;
+
+&lt;h2 id=&quot;our-first-jbehave-test&quot;&gt;Our first JBehave test&lt;/h2&gt;
+
+&lt;p&gt;JBehave needs three things to run a test:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;a story, which will describe the expected behavior of the test candidate in a user friendly manner. The story is contained in a &lt;code class=&quot;highlighter-rouge&quot;&gt;*.story&lt;/code&gt; file.&lt;/li&gt;
+  &lt;li&gt;a test, which contains the steps to execute the described behavior. This test is usually just a Java file with some special annotations.&lt;/li&gt;
+  &lt;li&gt;a mapping between the story and the steps, so that JBehave knows what steps to execute for what parts of the story. This is usually a class containing a configuration to automate the test. The class can be executed as a JUnit test and output results in various formats.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;the-story&quot;&gt;The story&lt;/h3&gt;
+
+&lt;p&gt;Let’s start with the most simple use case. Let’s say I have a digital radio, which I want to turn on to listen to music. The expected behavior could be decribed as follows:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given a digital radio
+When I turn on the radio
+Then the radio should be turned on&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Easy to read, huh? This is not a free text. It is acutally code being executed by JBehave! That’s the good thing about BDD: Since the behavior is language agnostic, expectations can be formulated almost entirely in natural language. You only have to follow a basic &lt;a href=&quot;http://jbehave.org/&quot;&gt;syntax pattern&lt;/a&gt; with the following keywords:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Given&lt;/strong&gt;: Decribe the starting position for the behavior (preconditions)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;When&lt;/strong&gt;: Describe what is happening in the test&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Then&lt;/strong&gt;: Describe the expected behavior&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Of course there’s more and the descriptions can also be parameterized. But this should be enough for us to take in for now.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-steps&quot;&gt;The Steps&lt;/h3&gt;
+
+&lt;p&gt;As said, JBehave needs the steps corresponding with the story description. This can be done using a POJO with some JBehave-annotated methods:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RadioSteps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Radio&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;a digital radio&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;aDigitalRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@When&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I turn on the radio&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iTurnOnTheRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Then&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;the radio should be turned on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;theRadioShouldBeTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As you can see, the annotations carry the same namings like keywords described above. It is important that the string passed in as an argument matches the text following the keyword.&lt;/p&gt;
+
+&lt;p&gt;The more perceptive of you might have noted that we’re still missing a radio that contains the actual behavior to be tested, so let’ts add that, too:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stationName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;the-mapping&quot;&gt;The Mapping&lt;/h3&gt;
+
+&lt;p&gt;Now, in order for JBehave to know what steps to execute for what parts of the story, we must provide it with some basic configuration. I won’t dig into the details of what else could be configured, but this should be enough for the moment.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TurnRadioOn&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JUnitStory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;MostUsefulConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// where to find the stories&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;useStoryLoader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LoadFromClasspath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()))&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// CONSOLE and TXT reporting&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;useStoryReporterBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StoryReporterBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;withDefaultFormats&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;withFormats&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;CONSOLE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TXT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Here we specify the steps classes&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InjectableStepsFactory&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stepsFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// varargs, can have more that one steps classes&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InstanceStepsFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;configuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RadioSteps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;What this code does is tell JBehave the classpath to load stories from and write the results to the console in text format.&lt;/p&gt;
+
+&lt;h3 id=&quot;all-set&quot;&gt;All set&lt;/h3&gt;
+
+&lt;p&gt;Now let’s try it out. Right click on the mapping class (&lt;code class=&quot;highlighter-rouge&quot;&gt;TurnRadioOn.java&lt;/code&gt;) and run it as a Unit Test. You should get the following output:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;java.lang.AssertionError
+ at org.junit.Assert.fail&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Assert.java:86&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at org.junit.Assert.assertTrue&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Assert.java:41&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at org.junit.Assert.assertTrue&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Assert.java:52&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at info.tiefenauer.tutorials.jbehave.RadioSteps.theRadioShouldBeTurnedOn&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;RadioSteps.java:30&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at sun.reflect.NativeMethodAccessorImpl.invoke0&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Native Method&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at sun.reflect.NativeMethodAccessorImpl.invoke&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;NativeMethodAccessorImpl.java:62&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ at sun.reflect.DelegatingMethodAccessorImpl.invoke&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;DelegatingMethodAccessorImpl.java:43&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Uh-oh. Our test has failed. But that’s actually a good thing, since we can fix it now and will immediately know whether our fix has produced the expected behavior. So let’s complete the &lt;code class=&quot;highlighter-rouge&quot;&gt;switchOnOff&lt;/code&gt;-Method to simulate the radio’s behavior:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Let’s run our test again and we should see the following test result:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/img/wp-content/uploads/2015/10/img_5631e65b002a7.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;good-to-know&quot;&gt;Good to know&lt;/h3&gt;
+
+&lt;p&gt;If you’re (like me) keeping your stories and other test-related files in the test folder created by maven, you can do so but you need to tell Maven to also load your story files. By default, maven does not copy &lt;code class=&quot;highlighter-rouge&quot;&gt;.story&lt;/code&gt; files to the classpath unless you explicitly tell it so. This can be achieved by adding additional information to the build step:&lt;/p&gt;
+
+&lt;p&gt;Also, JBehave will run all your stories as a single unit test by default. if you want the results of the individual tests to be shown separately and neatly like in the screenshot above, you should add a dependency to &lt;a href=&quot;http://mvnrepository.com/artifact/de.codecentric/jbehave-junit-runner&quot;&gt;a custom test runner like the one below&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;After that you can update your test file to be run with the custom test runner:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JUnitReportingRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TurnRadioOn&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JUnitStory&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;congratulations&quot;&gt;Congratulations!&lt;/h2&gt;
+
+&lt;p&gt;You have just run your first BDD test using JBehave. But wait, there’s more! Let’s see how we can extend our BDD-tests in order so test behavior in a more sophisticated manner.&lt;/p&gt;
+
+&lt;div id=&quot;ffs-tabbed-2&quot; class=&quot;ffs-tabbed-nav&quot;&gt;&lt;ul class=&quot;resp-tabs-list&quot; data-closed=&quot;closed&quot;&gt;&lt;li&gt;Setup with Maven&lt;/li&gt;&lt;/ul&gt;&lt;div class=&quot;resp-tabs-container&quot;&gt;&lt;div class=&quot;fruitful_tab tab-setup-with-maven&quot;&gt;&lt;p&gt;If you&amp;rsquo;re very lazy and you dont want to go over all the boilerplate code of including dependencies, creating story files, steps and mapping class, you can use one of the &lt;a href=&quot;http://jbehave.org/reference/stable/archetypes.html&quot;&gt;Maven archetypes provided by JBehave&lt;/a&gt;. To do this simply choose the archetype when generating the project structure. For example, if you use the command line, you could just run&lt;/p&gt;&lt;pre&gt;mvn archetype:generate -Dfilter=org.jbehave:jbehave&lt;/pre&gt;&lt;p&gt;to generate your project in interactive mode and then select the&amp;nbsp;&lt;code&gt;jbehave-simple-archetype&lt;/code&gt;&amp;nbsp;, provide your project details and then hit enter to generate a simple maven project (including a sample story and steps) that can be imported into the IDE of your choice.&lt;/p&gt;&lt;p&gt;For this tutorial, we&amp;rsquo;re doing the setup by hand, to help you understand the inner workings and prerequisites needed for JBehave.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;clearfix&quot;&gt;&amp;nbsp;&lt;/div&gt;
+</description>
+        
+          <description>&lt;p&gt;This entry is part 1 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 29 Oct 2015 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/blog/bdd-with-jbehave-12-setup-and-basic-tests/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bdd-with-jbehave-12-setup-and-basic-tests/</guid>
+        
+        <category>BDD</category>
+        
+        <category>Java</category>
+        
+        <category>JBehave</category>
+        
+        <category>TDD</category>
+        
+        
+        <category>Coding</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Mobile App Development with Xamarin and MvvmCross &amp;#8211; Part 6: iOS UI with Storyboard</title>
+        <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 5 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;fruitful_description_box&quot;&gt;
+  &lt;div class=&quot;fruitful_description shadow-type-1 &quot; id=&quot;desc-box-65&quot;&gt;
+    &lt;span class=&quot;top_line&quot;&gt;&lt;/span&gt;
+    
+    &lt;div class=&quot;text&quot; style=&quot; font-size: 40px; text-transform : uppercase; text-align: center; font-weight: 300; line-height: 1.2;&quot;&gt;
+      iOS UI with Storyboard 
+    &lt;/div&gt;
+    
+    &lt;span class=&quot;bottom_line&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;clearfix&quot;&gt;
+&lt;/div&gt;
+
+&lt;p id=&quot;xGKzoFm&quot;&gt;
+  &lt;a href=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard.png&quot; rel=&quot;lightbox[639]&quot;&gt;&lt;img class=&quot;alignnone wp-image-728 size-medium&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard-224x300.png&quot; alt=&quot;&quot; width=&quot;224&quot; height=&quot;300&quot; srcset=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard-224x300.png 224w, http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard.png 583w&quot; sizes=&quot;(max-width: 224px) 100vw, 224px&quot; /&gt;&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;In the last article, we saw how to programatically create iOS-Views using nothing but C#-code. However, this way of creating user interfaces is often quite cumbersome and prone to errors. An alternative and much more intuitive approach to design user interfaces for iOS (which is also advertised by Apple as the standard way) is the usage of so-called &lt;em&gt;Storyboards&lt;/em&gt;. Storyboards provide a set of UI-Views, which can be populated with other UI elements like buttons, labels, lists and so on by drag’n’dropping them using a visual editor. Transitions between views can be modelled by using &lt;em&gt;Segues&lt;/em&gt;. Luckily, Xamarin comes with its own UI designer for iOS in the form of a  Visual Studio plugin. This means you can create your native iOS-UI directly on your Windows machine like in the screenshot above.&lt;/p&gt;
+
+&lt;p&gt;In this article we are going to explore various ways of creating beautiful UI views using storyboards while using MvvmCross as the underlying framework at the same time.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;However, there’s (as always) a catch in using storyboards: Navigating with segues (the previewed way of navigating between views when working with storyboards) means navigation is being done in the view layer (i.e. the iOS UI-Project when using Xamarin). This differs fundamentally from the navigation concept of MvvmCross, where navigation is done in the ViewModel layer (i.e. the core project when using Xamarin). Luckily, there are ways to use storyboards and MvvmCross side by side without sacrificing any of the advantages of either.&lt;/p&gt;
+
+&lt;h2 id=&quot;behind-the-scenes&quot;&gt;Behind the scenes&lt;/h2&gt;
+
+&lt;p&gt;We will see what steps are needed to use storyboards in Xamarin below. However, it may be helpful to gain a certain insight in what’s being done in the background instead of strictly following guides without really knowing what you’re doing or why. This section should provide you with the most important conceptual information.&lt;/p&gt;
+
+&lt;p&gt;The iOS designer shipped with Xamarin is basically an extension for VisualStudio that imitates the &lt;a href=&quot;https://developer.apple.com/xcode/interface-builder/&quot; target=&quot;_blank&quot;&gt;Interface Builder&lt;/a&gt; that comes with Xcode. When using storyboards, the views are designed with this iOS designer ins VisualStudio and are then sent to the iOS build host. This will result in an XML-based &lt;code class=&quot;highlighter-rouge&quot;&gt;.storyboard&lt;/code&gt;-file, whose contents should normally never be touched by hand. UI elements that you want to access from your custom can also be defined resulting in so-called &lt;em&gt;outlets&lt;/em&gt;. Views defined in a storyboard result in an equivalent C# class where the outlets can be accessed as properties.&lt;/p&gt;
+
+&lt;p&gt;As said, Xamarin will automatically create a class for each view defined in the storyboard, as soon as you set the class identifier for the view (you will see later how this is done). This class will inherit from one of the ones included in the Xamarin-SDK, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;UITableViewController&lt;/code&gt; and so on. Like in Android, there is a C#-equivalent for every view type and UI element trying to mimick what’s being done in the corresponding Objective-C class from the native SDK.&lt;/p&gt;
+
+&lt;p&gt;However, MvvmCross comes with its own set of base classes classes for the most important iOS view types (not for every single UI element). The MvX-view classes inherit indirectly from one of the standard Xamarin.iOS-classes, adding framework functionality to it. If you’re using MvX as the framework of your choice, you must use the MvX view classes as base class, not the Xamarin.iOS class if you want to make use of advanced framework features such as data binding between View and ViewModel. This means you will have to change the generated class to inherit from the MvX-class to take advantage of framework functionalities like two-way data binding and ViewModel-navigation. You will see see the details on how to do so below in the next section.&lt;/p&gt;
+
+&lt;p&gt;When navigating Views are loaded by MvX using a &lt;em&gt;container&lt;/em&gt;, which is responsible for looking up the correct view class by its name, creating (i.e. instantiating or recycling) it and connecting it to its ViewModel. This match between View and ViewModel is normally done automagically in the background by the framework using reflection. However, if the navigation between is not done in the ViewModel layer (i.e. by the framework), MvX is not informed about view changes and can therefore not match the View to its ViewModel. That’s why every MvX-View has a &lt;code class=&quot;highlighter-rouge&quot;&gt;Request&lt;/code&gt;-property which can be overridden to tell the framework what ViewModel it wants to be connected to. We will see one case where this must be done in the last section.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started-with-storyboardy&quot;&gt;Getting started with storyboardy&lt;/h2&gt;
+
+&lt;p&gt;A storyboard is normally included in every iOS mobile project when starting out with Xamarin and VisualStudio. The following descriptions describe the steps to setup a Xamarin solution from scratch which uses MvvmCross as the framework and storyboards as means of creating the user interface. The individual steps are illustrated with corresponding pictures below.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a new project in VisualStudio (e.g. “Blank App Portable”) by choosing &lt;code class=&quot;highlighter-rouge&quot;&gt;File &amp;gt; new &amp;gt; Project&lt;/code&gt; or pressing CTRL-Shift-N (picture 1). This will result in a project structure similar to the one in picture 2.&lt;/li&gt;
+  &lt;li&gt;Set the iOS project as startup project by right-clicking on the iOS-Project and choosing &lt;em&gt;Set as startup project&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Configure the core project to be built together with the iOS project in each desired launch configuration like &lt;em&gt;iPhone&lt;/em&gt;, &lt;em&gt;iPhone Simulator&lt;/em&gt;, etc. by right-clicking on the solution and choosing &lt;em&gt;Properties&lt;/em&gt; (picture 3). If you don’t do this, you will not be able to start your project because the DLL from the core project is missing. This is a bug in VisualStudio which hopefully will be corrected in the near future.&lt;/li&gt;
+  &lt;li&gt;Add MvvmCross NuGet-package to both the core project and your iOS project (picture 4). This will result in a bunch of assemblies added as a reference to your projects as well as a number of files automatically generated to illustrate the usage of ViewModels and Views in MvX.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Delete the following files in each project&amp;lt;/p&amp;gt; 
+  * **Core project:** _ViewModel_-Folder, _ToDo-MvvmCross_-Folder, MyClass.cs
+  * **iOS UI project**: _Views_-Folder, _ToDo-MvvmCross_-Folder, ViewController.cs   5. Create a new class (e.g. named `StoryboardContainer`) which inherits from MvxTouchViewsContainer. Override the CreateViewOfType function as follows: &amp;lt;span style=&quot;line-height: 1.5;&quot;&amp;gt; &amp;lt;/span&amp;gt;This will result in a new view container loading the views directly from the storyboard. The name of the storyboard is hardcoded here (_&amp;amp;#8220;Main&amp;amp;#8221;_ for `Main.storyboard`), so make sure you update this string if you rename your storyboard file.   6. Open the `Setup.cs` class in the iOS project and replace the generated constructor with this one:
+
+  
+Also, override the following method to return the new views container created in the previous step.
+
+  
+This will result in the newly created views container being constructed and used by the framework during the bootstrapping phase.   7. Open `AppDelegate.cs` in the iOS project and change it so that it inherits from MvxApplicationDelegate:
+
+  
+Also override the FinishedLaunching function as follows (the other, overloaded FinishedLaunching-function can be deleted):
+
+  
+This will result in the bootstrapping being executed in the correct order.   8. Add/create your storyboard file in the iOS project (if it doesn&amp;amp;#8217;t exist yet). Make sure the file name corresponds to the string hardcoded in step 5. Open this storyboard file with the iOS designer in VisualStudio and layout your views.
+  
+Don&amp;amp;#8217;t define any view transitions (i.e. _Segues_) yet. Just make sure the the root ViewController is set.   9. For each view that you want to be managed by MvX (which should be all in most cases) set the `Class` property using VisualStudio&amp;amp;#8217;s property inspector (picture 6). This will result in a generated class with exactly the same name. Also set the Storyboard ID to the same value like the `Class` property. **The match of Storyboard ID and the class name is crucial or MvX will not be able to load the layout for a view from the storyboard when navigating!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;** If you have UI elements that you want to reference in your C# code (like for example a button that you want to attach a click listener to) you can select the element and set its &lt;code class=&quot;highlighter-rouge&quot;&gt;Name&lt;/code&gt;-property to an value (picture 7). The value can be an arbitrary string, however I suggest you use a suffix that indicates the type of the element you’re referencing (i.e. “…Button” for UIButtons).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The generated class is partial and consists of two generated files (suppose we created a view called _MyView_) which will be combined to form the actual class:&amp;lt;/p&amp;gt; 
+  * `MyView.cs`: This file contains the user defined portion of the view class. Changes to the view like attaching listeners, updating UI elements and so on must be done in this class.
+  * `MyView.designer.cs`: This file contains the generated portion of the view  class. Any changes made in this class will be overwritten when the storyboard is updated, so don&amp;amp;#8217;t touch this file.  10. Create a ViewModel by making a class `MyViewModel.cs` in the core project. Make sure the class name matches the view it will be backing (plus the `Model`-Suffix) and that it extends `MvxViewModel`.  11. Change the newly created view class (in the above example: `MyView.cs`) so that the view inherits from `Mvx...ViewController` instead of `UI...ViewController`.  There is a corresponding view class in MvX for each Xamarin SDK class, so replace the dots with the corresponding view types. For example: 
+  1. `UIViewController` becomes `MvxViewController`
+  2. `UI&amp;lt;strong&amp;gt;Table&amp;lt;/strong&amp;gt;ViewController` becomes `Mvx&amp;lt;strong&amp;gt;Table&amp;lt;/strong&amp;gt;viewController`
+  3. `UI&amp;lt;strong&amp;gt;TabBar&amp;lt;/strong&amp;gt;ViewController` becomes `Mvx&amp;lt;strong&amp;gt;TabBar&amp;lt;/strong&amp;gt;ViewController`
+  4. &amp;amp;#8230; and so on&amp;amp;#8230;  12. Add additional views and (optionally) segues between views by dragging the ViewControllers from the VisualStudio Toolbox onto the storyboard (picture 8) and repeating the steps above (setting `Class` property, Storyboard-ID, creating ViewModel, defining outlets, &amp;amp;#8230;).  13. Set the storyboard file as the main interface under _project properties_.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div id=&quot;gallery-10&quot; class=&quot;gallery galleryid-639 gallery-columns-3 gallery-size-thumbnail&quot;&gt;
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/1_new_project/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/1_new_project-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-734&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-734&quot;&gt;
+      Creating a blank app project
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon portrait&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/2_project-structure/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/2_project-structure-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-735&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-735&quot;&gt;
+      The generated project structure before adding MvX as NuGet package
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/3_configuration_manager/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/3_configuration_manager-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-736&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-736&quot;&gt;
+      Configuring launch options to build core project together with iOS UI
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/4_nuget/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/4_nuget-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-737&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-737&quot;&gt;
+      Adding MvX as NuGet package to both core and iOS UI project
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/5_launch_options/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/5_launch_options-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-738&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-738&quot;&gt;
+      Setting Main.storyboard as main interface
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/6_storyboard/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/6_storyboard-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-739&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-739&quot;&gt;
+      Setting class name and Storyboard ID for our first view
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/7_outlet/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/7_outlet-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-732&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-732&quot;&gt;
+      Setting the name property on a UI element. This will result in a corresponding outlet.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/8_segue/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/8_segue-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-10-733&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-10-733&quot;&gt;
+      Two sample views connected through a button. The segue will be triggered by clicking the third button.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;navigation&quot;&gt;Navigation&lt;/h2&gt;
+
+&lt;p&gt;With storyboards and MvX combined there are usually three slightly different variants of how navigation can be done between views, which will be described separately in individual sub-sections below:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ViewModel-Properties of type &lt;code class=&quot;highlighter-rouge&quot;&gt;ICommand&lt;/code&gt; in the core project can be bound to UI elements in the view project&lt;/li&gt;
+  &lt;li&gt;Listeners can be attached to events of UI elements in the view project, which then trigger some action (like navigating between views) on the ViewModel in the core project.&lt;/li&gt;
+  &lt;li&gt;Navigation can be done by using segues, skipping the ViewModel-to-ViewModel approach of MvX altogether. MvX must then be informed manually of view changes in the UI.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;variant-1-binding-to-viewmodel-properties&quot;&gt;Variant 1: Binding to ViewModel properties&lt;/h3&gt;
+
+&lt;p&gt;This is the variant that follows the navigation paradigm of MvX the closest. Immediately after loading the view the binding can be made by calling the &lt;code class=&quot;highlighter-rouge&quot;&gt;CreateBinding&lt;/code&gt;-method of the MvX base class of the view to bind the default event of an UI element (e.g. a click on a button) to a command property on the ViewModel. This can be done as follows by overriding the &lt;code class=&quot;highlighter-rouge&quot;&gt;ViewDidLoad&lt;/code&gt;-method.&lt;/p&gt;
+
+&lt;p&gt;The command property on the ViewModel could be defined as follows:&lt;/p&gt;
+
+&lt;p&gt;Following this variant will allow for binding the default event assumed by MvX to a specific command in the ViewModel. If you want to trigger navigation on a different event type, let’s say’ when double-tapping the button, you will need the next variant.&lt;/p&gt;
+
+&lt;h3 id=&quot;variant-2-attaching-listeners&quot;&gt;Variant 2: Attaching listeners&lt;/h3&gt;
+
+&lt;p&gt;This is actually a sub-variant of the above variant. Navigation is also done in the ViewModel, but instead of directly binding to a property on the ViewModel, an event listener is registered on the UI element which will trigger the corresponding command on the ViewModel programmatically.&lt;/p&gt;
+
+&lt;p&gt;This variant allows to add some logic between user interaction and view navigation. Event listener can also be defined very easily by double-clicking an UI element of the storyboard in the iOS designer, but the result will also be more verbose because execution of the command must be triggered programmatically and is not done automatically by the framework.&lt;/p&gt;
+
+&lt;h3 id=&quot;variant-3-using-segues&quot;&gt;Variant 3: Using segues&lt;/h3&gt;
+
+&lt;p&gt;This variant follows Apple’s recommendations and makes use of the full potential of storyboards, because not only the views can be visually represented in the storyboard, but also the navigation between them. It is Apple’s recommended way of designing user interfaces and represents a 1:1 match to how UIs are designed in Xcode. On the other hand, it results also in a fundamentally different navigation concept because navigation is done entirely in the view, skipping MvX’ ViewModel layer entirely. Because of this, MvX must be informed of the view change and the corresponding ViewModel of the destination view must be set manually before making the transition. This is done indirectly by setting the &lt;code class=&quot;highlighter-rouge&quot;&gt;Request&lt;/code&gt;-Attribute on the destination view as follows:&lt;/p&gt;
+
+&lt;p&gt;This also requires defining a segue between the views by holding CTRL and clicking a UI element on the first view (e.g. a button) and then dragging the segue to the second view. The segue must also be named by setting its &lt;code class=&quot;highlighter-rouge&quot;&gt;Identifier&lt;/code&gt;-property to an arbitrary value using VisualStudio’s Property inspector, whereas it is (again) crucial that the name matches the one defined in code (in the above example &lt;em&gt;showOtherView&lt;/em&gt;).&lt;/p&gt;
+
+&lt;h3 id=&quot;comparison&quot;&gt;Comparison&lt;/h3&gt;
+
+&lt;p&gt;The following table shows advantages and disadvantages of for variant of navigating between views:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;caption&gt;Comparison of pros and cons of variant2:&lt;/caption&gt; &lt;tr&gt;
+    &lt;td&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;strong&gt;Pro&lt;/strong&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;strong&gt;Contra&lt;/strong&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Variant 1&lt;/strong&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          Consistent with MvX programming paradigms
+        &lt;/li&gt;
+        &lt;li&gt;
+          Less verbose than variant 2
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          No visual representation of view transitions
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Variant 2&lt;/strong&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          Easier to define in code (double-click on UI element in storyboard)
+        &lt;/li&gt;
+        &lt;li&gt;
+          Registration of event types other than the default assumed by MvX
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          Does not make use of data binding functionality of MvX
+        &lt;/li&gt;
+        &lt;li&gt;
+          more verbose than variant 1
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Variant 3&lt;/strong&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          Visual representation of transitions in the storyboard
+        &lt;/li&gt;
+        &lt;li&gt;
+          Makes full use of the potential of storyboards
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;ul style=&quot;list-style-type: circle;&quot;&gt;
+        &lt;li&gt;
+          Link to ViewModel must be done manually before making the transition
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h2&gt;
+
+&lt;p&gt;Xamarin’s iOS designer provides a helpful and much more intuitive way for creating iOS interfaces or transitions in a single file. Having said that, unfortunately the iOS designer is far from being bug-free and can be quite a PITA at times. For example exat positioning of UI elements can become damn near impossible depending on the zoom level selected. Further, changes in the Storyboard do not always reflect in the app immediately.&lt;/p&gt;
+
+&lt;p&gt;Sources for failures are – as always with Xamarin – manifold and often the time needed to track down a certain error is not worth the effort. Often, it is enough to clean/rebuild the project or the whole solution. Sometimes it is even necessary to restart VisualStudio.&lt;/p&gt;
+
+&lt;h3 id=&quot;sample-code&quot;&gt;Sample code&lt;/h3&gt;
+
+&lt;p&gt;If all else fails, you can find the code for a (very basic) sample application in the follwing GitHub-Repository:&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;ffs-bs&quot;&gt;&lt;a href=&quot;https://github.com/tiefenauer/MyStoryboardApp&quot; class=&quot;btn btn-small btn-primary &quot; style=&quot;color:#fff;&quot;&gt;&lt;span class=&quot;ffs-icon-container left&quot;&gt;&lt;i class=&quot;fa github-square&quot;&gt;&lt;/i&gt;&lt;/span&gt;Go to Sample-App on GitHub&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-we-have-done-so-far&quot;&gt;What we have done so far&lt;/h2&gt;
+
+&lt;p&gt;In this chapter we haved learned how to use Storyboards in Xamarin/VisualStudio together with the MvX-Framework. We have also reviewed the differences between a Segue-based navigation in Storyboards and the navigation concept in MvX.&lt;/p&gt;
+</description>
+        
+          <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 5 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+</description>
+        
+        <pubDate>Mon, 26 Oct 2015 09:59:42 +0100</pubDate>
+        <link>http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/</link>
+        <guid isPermaLink="true">http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/</guid>
+        
+        <category>Android</category>
+        
+        <category>iOS</category>
+        
+        <category>mobile</category>
+        
+        <category>MvvMCross</category>
+        
+        <category>Storyboard</category>
+        
+        <category>Xamarin</category>
+        
+        
+        <category>Coding</category>
+        
+        <category>Mobile</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Mobile App Development with Xamarin and MvvmCross &amp;#8211; Part 4: Android UI</title>
+        <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 4 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;fruitful_description_box&quot;&gt;
+  &lt;div class=&quot;fruitful_description shadow-type-1 &quot; id=&quot;desc-box-38&quot;&gt;
+    &lt;span class=&quot;top_line&quot;&gt;&lt;/span&gt;
+    
+    &lt;div class=&quot;text&quot; style=&quot; font-size: 40px; text-transform : uppercase; text-align: center; font-weight: 300; line-height: 1.2;&quot;&gt;
+      Android UI 
+    &lt;/div&gt;
+    
+    &lt;span class=&quot;bottom_line&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;clearfix&quot;&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this article we are going to create our first Android view. To do this, we will create an AXML file, which will hold the layout of the individual UI components. This AXML file will also create bindings to the ViewModel, so that the view is automatically updated when the data in the ViewModel changes. Additionally, we will create a backing C#-class, which will hold the view logic for our layout.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h1 id=&quot;android-view-layer&quot;&gt;Android view layer&lt;/h1&gt;
+
+&lt;p&gt;Android separates its view layer into two types of assets:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;AXML-Files&lt;/strong&gt;, which will define the layout, size and constraints of the individual UI components with an XML-based syntax&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Activities&lt;/strong&gt;, which load AXML-defined layouts, access the contained UI elements and connect them with the application code&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;axml-files&quot;&gt;AXML files&lt;/h2&gt;
+
+&lt;p&gt;AXML is an XML dialect for files to define both whole views as well as individual, reusable UI components. Android comes with a set of ready-made standard components, which can be extended and combined in order to create new components. Traditionally, AXML files are of static nature, but the contained components can be programmatically changed at runtime e.g. by changing their size, adding or removing components or registering event listeners.&lt;/p&gt;
+
+&lt;p&gt;MvX introduces its own tags to include framework functionality such as two-way data binding already in the AXML-layout. However, currently VisualStudio does not support content assist for these tags. To use the tags, their namespace must be imported with an arbitrary name. The following example illustrates using the &lt;em&gt;MvxItemTemplate&lt;/em&gt;-Tag by including the MvX-namespace under the &lt;em&gt;local&lt;/em&gt; prefix.&lt;/p&gt;
+
+&lt;p&gt;The following table shows a selection of commonly used MvX-tags in AXML along with a usage example: [table id=2 /]&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-the-activity&quot;&gt;Creating the Activity&lt;/h1&gt;
+
+&lt;p&gt;In order to use the newly defined AXML-layout we need to create an Activity, which is any class that extends &lt;em&gt;Android.App.Activity&lt;/em&gt;. The Activity represents the UI logic of the layout and can be used for example to register event handlers. When using MvX, every Activity must be extended from &lt;em&gt;Cirrious.MvvmCross.Droid.Views.MvxActivity (_which extends _Android.App.Activity&lt;/em&gt;) and follow a strict naming convention to be loaded by MvX when navigating to a ViewModel. MvX will load the Android activity based on its class name. That’s why a class must be named like the corresponding ViewModel, without the …&lt;em&gt;Model&lt;/em&gt;-suffix (e.g. for &lt;em&gt;MyViewModel.cs&lt;/em&gt; the corresponding Android activity must be named &lt;em&gt;MyView.cs&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;In Xamarin/MvX, every displayed view in Android can be created by following three simple steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Define the view’s layout by creating an AXML file. The AXML file syntax is identical with the one of a standard Android application written in Java with the exception of the special MvX tags.&lt;/li&gt;
+  &lt;li&gt;Create an Activity class extending MvxActivity which is annotated with [Activity]. If the view serves as entry point when the app starts, the MainLauncher-attribute must be set to true. This is the case if the view belongs to the ViewModel that was registered with the AppStart (see previous article).&lt;/li&gt;
+  &lt;li&gt;Override the onCreate() function to load the layout when the activity is created.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The following code snipped shows a very basic implementation of MyView.cs, which can be used as view in the Android UI project for the MyViewModel-ViewModel.&lt;/p&gt;
+
+&lt;div id=&quot;gallery-9&quot; class=&quot;gallery galleryid-635 gallery-columns-3 gallery-size-thumbnail&quot;&gt;
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/android_view_1/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/Android_View_1-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-9-694&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-9-694&quot;&gt;
+      Step 1: Create AXML file for layout
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/android_view_2/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/Android_View_2-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-9-691&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-9-691&quot;&gt;
+      Step 2: Create layout using Xamarin toolbox (drag&amp;#038;drop)
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/android_view_3/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/Android_View_3-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-9-692&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-9-692&quot;&gt;
+      The AXML-representation of the created layout
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+  
+  &lt;dl class=&quot;gallery-item&quot;&gt;
+    &lt;dt class=&quot;gallery-icon landscape&quot;&gt;
+      &lt;a href=&quot;http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/android_view_4/#main&quot;&gt;&lt;img width=&quot;150&quot; height=&quot;150&quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/Android_View_4-150x150.png&quot; class=&quot;attachment-thumbnail size-thumbnail&quot; alt=&quot;&quot; aria-describedby=&quot;gallery-9-693&quot; /&gt;&lt;/a&gt;
+    &lt;/dt&gt;
+    
+    &lt;dd class=&quot;wp-caption-text gallery-caption&quot; id=&quot;gallery-9-693&quot;&gt;
+      Step 4: Create Activity as ordinary C#-class
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  
+  &lt;br style=&quot;clear: both&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;additional-views&quot;&gt;Additional Views&lt;/h2&gt;
+
+&lt;p&gt;Any other Android view can be created just the way it was described above. Any activity can have the &lt;em&gt;MainLauncher&lt;/em&gt; attribute set to true, whether its ViewModel is registered as main ViewModel upon app start or not. The &lt;em&gt;MainLauncher&lt;/em&gt; attribute simply defines that the activity can serve as an entry point (for example when launching from another app via Intent).&lt;/p&gt;
+
+&lt;h1 id=&quot;navigating-between-views-activities&quot;&gt;Navigating between views (activities)&lt;/h1&gt;
+
+&lt;p&gt;As stated before, navigation in MvX happens over ViewModels, not views. This is to ensure the navigation logic has to be implemented only once and is consistent across platforms. A view can be changed by calling _ShowView&lt;ViewModel&gt;(View)_ on the ViewModel. Because the method is protected, it must be wrapped in an _ICommand_-property which is made public. This _ICommand_ property can be used for data binding with MvX (for example upon a click on a UI element) and will be triggered by MvX when the bound event occurs.&lt;/ViewModel&gt;&lt;/p&gt;
+
+&lt;p&gt;MvX uses reflection also for command binding. The ICommand property name must end in …&lt;em&gt;Command&lt;/em&gt; and the bound property in the AXML file must match the name exactly (without the &lt;em&gt;Command&lt;/em&gt;-suffix). The following example illustrates binding a navigation from &lt;em&gt;MyViewModel.cs&lt;/em&gt; to &lt;em&gt;OtherViewModel.cs&lt;/em&gt; upon click on a button in &lt;em&gt;MyViewLayout.axml&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-we-have-done-so-far&quot;&gt;What we have done so far&lt;/h1&gt;
+
+&lt;p&gt;In this chapter we have defined an Android view by defining its layout in AXML and creating the corresponding Activity as a C# class. We have connected some of the displayed data with the data in the ViewModel by using MvX-tags in the layout.&lt;/p&gt;
+</description>
+        
+          <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 4 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+</description>
+        
+        <pubDate>Sun, 11 Oct 2015 20:00:30 +0200</pubDate>
+        <link>http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/</link>
+        <guid isPermaLink="true">http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/</guid>
+        
+        <category>Android</category>
+        
+        <category>iOS</category>
+        
+        <category>mobile</category>
+        
+        <category>MvvMCross</category>
+        
+        <category>Storyboard</category>
+        
+        <category>Xamarin</category>
+        
+        
+        <category>Coding</category>
+        
+        <category>Mobile</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>5 things I hate about Xamarin</title>
+        <description>&lt;p&gt;While it’s probably not a terribly good idea to rant about &lt;a href=&quot;https://xamarin.com/&quot; target=&quot;_blank&quot;&gt;Xamarin &lt;/a&gt;when you’re in the middle of writing an article series about Xamarin, I just need to get this off my chest.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Its lack of documentation&lt;/strong&gt;: Sure, there’s the &lt;a href=&quot;https://developer.xamarin.com/api/&quot; target=&quot;_blank&quot;&gt;official API reference&lt;/a&gt; for Xamarin.Android, Xamarin.iOS, Xamarin.Forms and the rest of the pack. But has anybody ever really been able to use it?  Clicking on some links leads to a 404-page and some of the descriptions are simply missing (see &lt;a href=&quot;https://developer.xamarin.com/api/namespace/Android.Service.Media/&quot; target=&quot;_blank&quot;&gt;this example&lt;/a&gt;). It doesn’t look like the missing parts are ever being delivered at a later stage. Together with the confusing layout it makes the documentation unusable for me. I often found myself searching on &lt;a href=&quot;http://stackoverflow.com/&quot; target=&quot;_blank&quot;&gt;Stackoverflow&lt;/a&gt; rather than the official documentation, whose best use case is probably the &lt;a href=&quot;http://developer.xamarin.com/&quot; target=&quot;_blank&quot;&gt;different tutorials&lt;/a&gt; and inspect the sample projects found there. But don’t you dare to try something that’s not included there… You may end up with grey hair. All in all not what I expect when signing up for an expensive membership, that has to be renewed yearly.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The lack of a proper IDE&lt;/strong&gt;: Xamarin comes shipped with &lt;a href=&quot;https://xamarin.com/studio&quot; target=&quot;_blank&quot;&gt;Xamarin Studio&lt;/a&gt;, a kind of reduced version of &lt;a href=&quot;https://www.visualstudio.com/&quot; target=&quot;_blank&quot;&gt;Visual Studio&lt;/a&gt;. Thing is: If you’re (like me) used to working in Windows, it’s not really an option, because it can’t be used to develop iOS apps. For Windows PCs, this is only possible with VS2012+. Visual Studio is a hugely popular among .NET developers (probably &lt;em&gt;the&lt;/em&gt; IDE for C#.NET), who won’t stop praising the alleged superiority of VS over other IDEs almost religiously. But don’t you get me started about VS… For my taste it is by far too slow and unresponsive to be used productively (I have VS2013 with Resharper installed). Seeing the different views pop up and populate one after each other after opening a solution is just not what a developer should get used to nowadays. VS has grown too big and complex to be used nowadays. This is also reflected in the disk space consumtion (9.64 GB (!!!) ofr VS2013) and the startup time (45 seconds on my not-so-old machine, making it the Godzilla of all IDEs I have come to know so far. What on earth are you doing, Microsoft?&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;This little fellow&lt;/strong&gt;: &amp;lt;p id=&quot;jIHmKkK&quot;&amp;gt;
+ &lt;img class=&quot;alignnone size-full wp-image-712 &quot; src=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/img_5613b3dc0b251.png&quot; alt=&quot;&quot; srcset=&quot;http://www.tiefenauer.info/wp-content/uploads/2015/10/img_5613b3dc0b251.png 379w, http://www.tiefenauer.info/wp-content/uploads/2015/10/img_5613b3dc0b251-300x135.png 300w&quot; sizes=&quot;(max-width: 379px) 100vw, 379px&quot; /&gt;
+    &amp;lt;/p&amp;gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;I frequently encountered this problem when trying to debug an app in the iOS simulator. Apparently VS keeps waiting until kingdom come for something background operation to finish. The only way to get around this is kill the process in the process explorer. Just one of many examples that make VS2013 crash when developing with Xamarin&amp;amp;#8230;&amp;lt;/li&amp;gt; 
+
+  * **The lack of a mature framework**: Sure, there&amp;amp;#8217;s &amp;lt;a href=&quot;https://mvvmcross.wordpress.com/&quot; target=&quot;_blank&quot;&amp;gt;MvvmCross&amp;lt;/a&amp;gt; and  &amp;lt;a href=&quot;https://xamarin.com/forms&quot; target=&quot;_blank&quot;&amp;gt;Xamarin.Forms&amp;lt;/a&amp;gt; out there. But while MvvmCross&amp;amp;#8217; documentation is just too rudimentary for a beginner to get started (forcing you to watch an endless series of YouTube videos and digging into the sample projects, hoping to find the solution for your problem there), Xamarin.Forms suffers the disadvantages of a &amp;lt;a href=&quot;https://en.wikipedia.org/wiki/Convention_over_configuration&quot; target=&quot;_blank&quot;&amp;gt;Convention over Configuration&amp;lt;/a&amp;gt; framework: You have to make sure the documentation is up to date, complete and easy enough to understand, even for beginners. I&amp;amp;#8217;m talking about general concepts here, not sample tutorials that document one specific aspect how to use the framework. And documentation is clearly not one of the points where Xamarin excels (see first point).
+  * **The cryptic console output**: There are endless possibilities that can make your app crash. While most of the time this may be your fault (you probably used the framework the wrong way, because out of pure desperation and in lack of a proper documentation you had to try something out), the console output is neither formatted (syntax highlighting, links to code, &amp;amp;#8230;) nor written in a way to easily find out what went wrong. There&amp;amp;#8217;s no other way than scrolling through the whole log by hand, trying to make sense what&amp;amp;#8217;s relevant and what isn&amp;amp;#8217;t. After all, the cause for the crash may be buried deep inside the logged output&amp;amp;#8230;&amp;lt;/ol&amp;gt; 
+
+I have rarely seen a combination of such an immature product with such a high price. Probably FlexBuilder (from my good ol&amp;amp;#8217; days with &amp;lt;a href=&quot;http://flex.apache.org/&quot; target=&quot;_blank&quot;&amp;gt;Apache Flex&amp;lt;/a&amp;gt;) is a worthy competitor, considering that Adobe even had the nerve to build its own IDE on top of Eclipse (which is open source) and sell it for more than 700 bucks. Blame it on the developer not being smart enough to handle the tool given, but the learning curve for Xamarin is far too steep for beginners to pick up. I&amp;amp;#8217;d rather expect products like Xamarin to be a low-threshold service &amp;amp;#8211; and that&amp;amp;#8217;s clearly not the case today!
+
+EDIT: Apparently I&amp;amp;#8217;m not the only one struggling with Xamarin. According to [this post](https://www.reddit.com/r/dotnet/comments/3dpqwu/how_good_is_xamarin/) a lot of fellow programmers had expectations way too high for Xamarin to fulfill. After an update, I spent the an entire afternoon trying to get a Xamarin app to work on iOS (that used to work before), without success. There&amp;amp;#8217;s simply no efficient way to work with a product that seems to be stuck in pre-beta stadium. Dear Xamarin Developers, please finish Xamarin and do your homework before charging people hundreds of bucks for a SINGLE license (not to speak of Xamarin University, which will only set you back $2000)!!
+
+**Conclusion:** Buggy as hell, crappy documentation and ridiculously expensive.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        
+          <description>&lt;p&gt;While it’s probably not a terribly good idea to rant about &lt;a href=&quot;https://xamarin.com/&quot; target=&quot;_blank&quot;&gt;Xamarin &lt;/a&gt;when you’re in the middle of writing an article series about Xamarin, I just need to get this off my chest.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 06 Oct 2015 13:54:12 +0200</pubDate>
+        <link>http://localhost:4000/5-things-i-hate-about-xamarin/</link>
+        <guid isPermaLink="true">http://localhost:4000/5-things-i-hate-about-xamarin/</guid>
+        
+        <category>visual studio</category>
+        
+        <category>Xamarin</category>
+        
+        
+        <category>Personal</category>
+        
+        <category>Technical</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Mobile App Development with Xamarin and MvvmCross &amp;#8211; Part 3: Core project</title>
+        <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 3 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;fruitful_description_box&quot;&gt;
+  &lt;div class=&quot;fruitful_description shadow-type-1 &quot; id=&quot;desc-box-45&quot;&gt;
+    &lt;span class=&quot;top_line&quot;&gt;&lt;/span&gt;
+    
+    &lt;div class=&quot;text&quot; style=&quot; font-size: 40px; text-transform : uppercase; text-align: center; font-weight: 300; line-height: 1.2;&quot;&gt;
+      Core project 
+    &lt;/div&gt;
+    
+    &lt;span class=&quot;bottom_line&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;clearfix&quot;&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this article we are going to add some classes to our PCL project. These classes will contain the business logic for our app.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h1 id=&quot;create-new-viewmodel&quot;&gt;Create new ViewModel&lt;/h1&gt;
+
+&lt;p&gt;ViewModels are the foundation for MvX-based apps and represent the connection between the views in the UI projects and the business logic. To do their task, ViewModels often rely on the help of services, which contain shared logic between different ViewModels, such as reading and writing from/to a database. Additionally, ViewModels are at the core of navigation: Navigation in MvX is done over ViewModels, not views (we will see that this can be changed by using Storyboards in a later article). For each view in a UI project there is a corresponding ViewModel. MvX connects these two parts over reflection based on the class name. That means that for each view class called MyView.cs there must be a corresponding ViewModel class called MyViewModel.cs, which must inherid from MvxViewModel. in MvX, a view in a UI project can not be used without corresponding ViewModel.&lt;/p&gt;
+
+&lt;p&gt;A new ViewModel can be created by creating a class that extends MvxViewModel. This class can hold additional logic, properties and methods as required. The following class is just an example:&lt;/p&gt;
+
+&lt;h1 id=&quot;define-app-start&quot;&gt;Define app start&lt;/h1&gt;
+
+&lt;p&gt;You can define as many ViewModels as needed. One specific ViewModel however must be defined as the main ViewModel and serve as central point of entry for the first app start. After adding MvvmCross as NuGet package you should have a file called App.cs in your PCL project. In this class you register the ViewModel used when starting the app as follows:&lt;/p&gt;
+
+&lt;p&gt;This will result in MvX selecting MyViewModel.cs as the main ViewModel for the first app start. MvX will load this ViewModel and search for a view called MyView.cs, which must exist in each of the UI projects. Lookup will be done in the MyProject.Droid or MyProject.iOS project, depending on the target platform, but a class with this name must exist, otherways app start will fail. We will see in the following articles, how such a view can be defined in each UI project.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-we-have-done-so-far&quot;&gt;What we have done so far&lt;/h1&gt;
+
+&lt;p&gt;In this article we have created our first ViewModel and defined it as the main ViewModel for app starts.&lt;/p&gt;
+</description>
+        
+          <description>&lt;div class=&quot;seriesmeta&quot;&gt;
+  This entry is part 3 of 5 in the series &lt;a href=&quot;http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/&quot; class=&quot;series-47&quot; title=&quot;Mobile App Development with Xamarin and MvvMCross&quot;&gt;Mobile App Development with Xamarin and MvvMCross&lt;/a&gt;
+&lt;/div&gt;
+
+</description>
+        
+        <pubDate>Tue, 06 Oct 2015 12:18:29 +0200</pubDate>
+        <link>http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-3-core-project/</link>
+        <guid isPermaLink="true">http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-3-core-project/</guid>
+        
+        <category>Android</category>
+        
+        <category>iOS</category>
+        
+        <category>mobile</category>
+        
+        <category>MvvMCross</category>
+        
+        <category>Storyboard</category>
+        
+        <category>Xamarin</category>
+        
+        
+        <category>Coding</category>
+        
+        <category>Mobile</category>
+        
+      </item>
+      
+    
+  </channel>
+</rss>

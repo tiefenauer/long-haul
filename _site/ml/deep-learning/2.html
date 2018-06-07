@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Deep Learning (2/5): Improving Deep Neural Networks</title>
+
+    <!-- Open Graph Meta -->
+    <meta content="Dani's Braindump" property="og:site_name">
+    
+      <meta content="Deep Learning (2/5): Improving Deep Neural Networks" property="og:title">
+    
+    
+      <meta content="article" property="og:type">
+    
+    
+      <meta content="My thoughts about the world" property="og:description">
+    
+    
+      <meta content="http://localhost:4000/ml/deep-learning/2" property="og:url">
+    
+    
+    
+      <meta content="http://localhost:4000/assets/img/touring.jpg" property="og:image">
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@danitiefenauer">
+    <meta name="twitter:creator" content="@danitiefenauer">
+    
+      <meta name="twitter:title" content="Deep Learning (2/5): Improving Deep Neural Networks">
+    
+    
+      <meta name="twitter:url" content="http://localhost:4000/ml/deep-learning/2">
+    
+    
+      <meta name="twitter:description" content="My thoughts about the world">
+    
+    
+      <meta name="twitter:image:src" content="http://localhost:4000/assets/img/touring.jpg">
+    
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+
+    <!-- Come and get me RSS readers -->
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="http://localhost:4000/feed.xml" />
+
+    <!-- Bootstrap: include before theme CSS so styles are overridden -->
+    <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="http://localhost:4000/ml/deep-learning/2">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
+
+
+
+     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56931568-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+ 
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Dani's Braindump</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 <li class="element first  ">
+                     <a href="/index.html">Home</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/about">About</a>
+                 </li> 
+                 
+                 <li class="element  current ">
+                     <a href="/ml">Machine Learning</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/switzerland">Swiss Frenzy</a>
+                 </li> 
+                 
+                 <li class="element   last">
+                     <a href="/contact">Contact</a>
+                 </li> 
+                 
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post">
+    
+
+    <h1 class="postTitle">Deep Learning (2/5): Improving Deep Neural Networks</h1>
+
+    
+        <p class="meta"><span class="time">29</span> Minute Read</p>
+    
+
+    
+        <p class="alert alert-primary alert-dismissible fade show" role="alert">
+    This page uses <strong><a href="https://web.hypothes.is/" target="_blank">Hypothes.is</a></strong>. You can annotate or highlight text directly on this page by expanding the bar on the right. If you find any errors, typos or you think some explanation is not clear enough, please feel free to add a comment. This helps me improving the quality of this site. <strong>Thank you!</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</p>
+    
+
+    
+        <p style="text-align:center">
+
+    <span class="badge badge-secondary">Probability Distributions</span>
+
+    <span class="badge badge-secondary">Bias/variance</span>
+
+    <span class="badge badge-secondary">Over-/underfitting</span>
+
+    <span class="badge badge-secondary">Regularization</span>
+
+    <span class="badge badge-secondary">L2-Regularization</span>
+
+    <span class="badge badge-secondary">Dropout</span>
+
+    <span class="badge badge-secondary">Early Stopping</span>
+
+    <span class="badge badge-secondary">Data Augmentation</span>
+
+    <span class="badge badge-secondary">Input Normalization</span>
+
+    <span class="badge badge-secondary">Weight Decay</span>
+
+    <span class="badge badge-secondary">Exploding/vanishing Gradient</span>
+
+    <span class="badge badge-secondary">Mini-Batch Gradient Descent</span>
+
+    <span class="badge badge-secondary">Exponentially Weighted Average</span>
+
+    <span class="badge badge-secondary">Momentum</span>
+
+    <span class="badge badge-secondary">RMSprop</span>
+
+    <span class="badge badge-secondary">Adam</span>
+
+    <span class="badge badge-secondary">Learning Rate Decay</span>
+
+    <span class="badge badge-secondary">Local Optima</span>
+
+    <span class="badge badge-secondary">Softmax</span>
+
+    <span class="badge badge-secondary">Pandas & Caviar</span>
+
+    <span class="badge badge-secondary">Hyperparameter Tuning</span>
+
+    <span class="badge badge-secondary">Batch Norm</span>
+
+    <span class="badge badge-secondary">TensorFlow</span>
+
+</p>
+    
+
+    
+        <p class="intro">
+    <span class="dropcap">T</span>
+    <p>his course focuses on common problems you might encounter when working on DL-projects. The course includes some useful recipes that might help you where to tune your algorithm when it does not perform the way it should. It also introduces some best practices for training your own NN and also some useful techniques to speed up the learning process.</p>
+
+</p>
+    
+
+    <div><h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
+
+<ul id="markdown-toc">
+  <li><a href="#course-overview" id="markdown-toc-course-overview">Course overview</a></li>
+  <li><a href="#hyperparameter-tuning" id="markdown-toc-hyperparameter-tuning">Hyperparameter tuning</a></li>
+  <li><a href="#training--validation--and-test-set" id="markdown-toc-training--validation--and-test-set">Training-, Validation- and Test-Set</a>    <ul>
+      <li><a href="#bias-and-variance" id="markdown-toc-bias-and-variance">Bias and variance</a></li>
+    </ul>
+  </li>
+  <li><a href="#regularization" id="markdown-toc-regularization">Regularization</a>    <ul>
+      <li><a href="#regularizing-the-cost" id="markdown-toc-regularizing-the-cost">Regularizing the cost</a>        <ul>
+          <li><a href="#regularization-term-for-nn" id="markdown-toc-regularization-term-for-nn">Regularization term for NN</a></li>
+          <li><a href="#adjusting-parameter-update" id="markdown-toc-adjusting-parameter-update">Adjusting parameter update</a></li>
+          <li><a href="#why-adding-the-regularization-term-reduces-overfitting" id="markdown-toc-why-adding-the-regularization-term-reduces-overfitting">Why adding the regularization term reduces overfitting</a></li>
+        </ul>
+      </li>
+      <li><a href="#dropout" id="markdown-toc-dropout">Dropout</a></li>
+      <li><a href="#other-regularization-techniques" id="markdown-toc-other-regularization-techniques">Other regularization techniques</a>        <ul>
+          <li><a href="#data-augmentation" id="markdown-toc-data-augmentation">Data augmentation</a></li>
+          <li><a href="#early-stopping" id="markdown-toc-early-stopping">Early stopping</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#input-normalization" id="markdown-toc-input-normalization">Input normalization</a></li>
+  <li><a href="#initialization" id="markdown-toc-initialization">Initialization</a></li>
+  <li><a href="#model-optimization" id="markdown-toc-model-optimization">Model Optimization</a>    <ul>
+      <li><a href="#mini-batch-gradient-descent" id="markdown-toc-mini-batch-gradient-descent">Mini Batch Gradient Descent</a>        <ul>
+          <li><a href="#understanding-mbgd" id="markdown-toc-understanding-mbgd">Understanding MBGD</a></li>
+        </ul>
+      </li>
+      <li><a href="#exponentially-weighted-average" id="markdown-toc-exponentially-weighted-average">Exponentially weighted average</a></li>
+      <li><a href="#momentum" id="markdown-toc-momentum">Momentum</a></li>
+      <li><a href="#rmsprop" id="markdown-toc-rmsprop">RMSprop</a></li>
+      <li><a href="#adam" id="markdown-toc-adam">Adam</a></li>
+      <li><a href="#learning-rate-decay" id="markdown-toc-learning-rate-decay">Learning Rate decay</a></li>
+    </ul>
+  </li>
+  <li><a href="#hyperparameter-tuning-1" id="markdown-toc-hyperparameter-tuning-1">Hyperparameter tuning</a></li>
+  <li><a href="#batch-normalization" id="markdown-toc-batch-normalization">Batch Normalization</a>    <ul>
+      <li><a href="#why-does-bn-work" id="markdown-toc-why-does-bn-work">Why does BN work?</a></li>
+    </ul>
+  </li>
+  <li><a href="#multiclass-classification" id="markdown-toc-multiclass-classification">Multiclass classification</a></li>
+</ul>
+
+<h2 id="course-overview">Course overview</h2>
+<p><strong>Week 1</strong> introduces the various hyperparameters of a model and how to choose reasonable values for them. You will also learn how to identify problematic behavior of algorithm and where it may be rooted.
+<strong>Week 2</strong> introduces some optimization algorithms that may speed up the overall learning process.
+<strong>Week 3</strong> wraps up on hyperparameters and how to find optimal values for them. It also introduces Softmax as an alternative activation function for multiclass-classification. This is also the week where you get to know a DL-Framework (TensorFlow) for the first time.</p>
+
+<h2 id="hyperparameter-tuning">Hyperparameter tuning</h2>
+
+<p>We have learned in <a href="/ml/deep-learning/1">part 1</a> that setting up a NN is a highly <strong>iterative and empirical</strong> process. There is no algorithm that can calculate the optimal values for the hyperparameters (e.g. number of layers, hidden units or learning rate) for you. Sometimes there are a few rule of thumbs you can use. But more often the values for the hyperparameters are chosen more or less intuitively.</p>
+
+<p>It is also true that results from one domain can seldom be transferred to another. So if you have a NN that works well in computer vision, it is not guaranteed that this NN also works well for audio or language processing tasks. Most of the time it is impossible to “guess” the optimal values in the first try. They have to be manually adjusted to improve learning. This requires <strong>experience</strong> which can be obtained through practice - or by someone who tells you what works (and what not). And this is exactly what this course is aimed at.</p>
+
+<h2 id="training--validation--and-test-set">Training-, Validation- and Test-Set</h2>
+<p>The available labelled data is usually split into three parts:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Purpose</th>
+      <th>Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>training set</strong></td>
+      <td>for the actual training of the model</td>
+      <td>&gt;90%</td>
+    </tr>
+    <tr>
+      <td><strong>validation set</strong> (sometimes also called <em>dev-set</em>)</td>
+      <td>for parameter optimization</td>
+      <td>&lt;5%</td>
+    </tr>
+    <tr>
+      <td><strong>test set</strong></td>
+      <td>for modelevaluation</td>
+      <td>&lt;5%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In earlier years of ML a usual split was 60/20/20% (training/test/validation). You can sometimes still see these numbers in textbooks. This split was valid for times when labelled data was scarce and you had to make sure to have enough instances in your validation or test set. However, for a lot of DL tasks nowadays there is enough data available, so we can use a lot bigger portion for training while optimizing/testing with a comparatively small validation/test set.
+The suggested ratios in the table above apply to scenarios where a lot of training data is available. This is kind of a precondition for DL models in order to achieve a good performance. However, we live in an imperfect world and labelled data might still not always be readily available. In such situations your split ratios may vary in favor of a larger validation and/or training set. It really depends on your specific setting.</p>
+
+<p>The reason we split into different set is that we can optimize the model by using data it has <strong>never seen before</strong>. We do this to reduce overfitting. We can later evaluate the model with another set of instances it has - again - never seen before and therefore get a <strong>realistic sense</strong> for how the model will perform in the real world for unseen data.</p>
+
+<p>If not much labelled data is available, people sometimes use only a training and a test set and then optimize their model by using the test set. In fact, this is sometimes done regardless of the amount of labelled data. But be aware: <strong>this is actually wrong!</strong> If you optimize your model on your test set, your model has (implicitly) already seen this data (indirectly, through optimization) and you’re left with no more unseen data to evaluate your model on. When evaluating your model with the same test data you used for optimizing the parameters <strong>the results might be too optimistic</strong>!</p>
+
+<h3 id="bias-and-variance">Bias and variance</h3>
+<p>A well known problem in ML is <strong>overfitting</strong>. Overfitting means you trained your model applies very wellon the training data but does not generalize well for unseen data. In contrast, you can also train your model too little. We then speak of <strong>underfitting</strong>.
+The following image shows typical graphs for the error on the training set and the error on the test set with a model that is overfitting. Notice how the error on the training and test data decrease up to some point when the error on the test data starts to increase again. <strong>That’s the point when your model starts to overfit</strong>!</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/regularization-overfitting.png" alt="Overfitting" />
+	<figcaption>Example: Models with high bias or variance (Credits: <a href="http://gluon.mxnet.io/chapter02_supervised-learning/regularization-scratch.html" target="_blank">Gluon</a>)</figcaption>
+</figure>
+
+<p>In context of over- or underfitting there are two other terms often used: <strong>bias</strong> and <strong>variance</strong>.  We speak of <strong>high bias</strong> when your model is underfitting, i.e. it is not trained enough and biased too much towards the training data. In contrast, we speak of <strong>high variance</strong> if your model is trying too hard and is therefore overfitting. The following picture visualizes how a model with high bias or high variance might classify the instances:</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/bias_variance.png" alt="Example: Models with high bias or variance" />
+	<figcaption>Example: Models with high bias or variance (Credits: Coursera, with adjustments)</figcaption>
+</figure>
+
+<p>The following table shows the different combinations of high/low bias and variance and what they mean (<em>train set error</em> means your cost on the training set and <em>dev-set error</em> means the error when optimizing on the dev set):</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>dev-set error <strong>high</strong></td>
+      <td>DevSet error <strong>low</strong></td>
+    </tr>
+    <tr>
+      <td>train set error <strong>high</strong></td>
+      <td>high bias and variance</td>
+      <td>you got lucky (unrealistic case)</td>
+    </tr>
+    <tr>
+      <td>train set error <strong>low</strong></td>
+      <td>high bias</td>
+      <td>your model performs well</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>If your model suffers of high bias, you could train a bigger network, train loner (i.e. more iterations) or choose a different architecture. If your model suffers of high variance you should try to get more training data or apply some of the regularization techniques presented below.</p>
+
+<p>To assess the quality of a model the <strong>difference</strong> between bias and variance is relevant. Generally, we try to keep this difference as small as possible.</p>
+
+<h2 id="regularization">Regularization</h2>
+<p>We can prevent overfitting by applying one or more regularization techniques which are presented in this chapter.</p>
+
+<h3 id="regularizing-the-cost">Regularizing the cost</h3>
+<p>A common approach for regularization is to add a regularization term to the cost function. For example, we can add regularize the cost function for <strong>Logistic Regression</strong> when optimizing the parameters <script type="math/tex">w</script> and <script type="math/tex">b</script>:</p>
+
+<script type="math/tex; mode=display">\require{color}
+\begin{equation}
+J(w,b) = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(\hat{y}^{(i)}, y^{(i)})
+\colorbox{yellow} {$
+    + \frac{\lambda}{2m} \lVert w \rVert^2_2
+$}
+\label{regularization_lr}
+\end{equation}</script>
+
+<p>The last term <script type="math/tex">\frac{\lambda}{2m}\ \lVert w \rVert^2_2</script> is called the <strong>regularization term</strong> and uses the regularization hyperparameter <script type="math/tex">\lambda</script>, which determines the degree of the regularization. In this case, we use <script type="math/tex">\lVert w \rVert^2_2</script> in the regularization term, which is called the <strong>L2-norm</strong> and is defined as follows:</p>
+
+<script type="math/tex; mode=display">\lVert w \rVert^2_2 = \sum_{j=1}^{n_x} w_j^2 = w^Tw</script>
+
+<p>However, we could also use the <strong>L1-norm</strong> which is less common but would be defined as follows:</p>
+
+<script type="math/tex; mode=display">\lVert w \rVert_1 = \sum_{j=1}^{n_x} \vert w_j \vert</script>
+
+<h4 id="regularization-term-for-nn">Regularization term for NN</h4>
+
+<p>We have seen now how we can regularize the cost in Logistic Regression by using a regularization term (see <script type="math/tex">\ref{regularization_lr}</script>). We can regularize the cost in a a NN with several hidden layers (and therefore several weight matrices <script type="math/tex">W^{[l]}</script>) the same way using a similar regularization term:</p>
+
+<script type="math/tex; mode=display">\require{color}
+
+\begin{equation}
+J(W^{[1]},b^{[1]}, ..., W^{[l]},b^{[l]}) = \frac{1}{m} \sum_{i=1}^m \mathcal{L}(\hat{y}^{(i)}, y^{(i)})
+\colorbox{yellow} {$
+    + \frac{\lambda}{2m} \sum_{l=1}^L \lVert W^{[l]} \rVert^2_F
+$}
+\label{regularization_nn}
+\end{equation}</script>
+
+<p>Note that the term <script type="math/tex">\lVert W^{[l]} \rVert^2_F</script> is basically just the L2-norm, but is often called the <strong>Frobenius norm</strong> for historical reasons.  It calculates the values by iterating over the rows and columns of a weight matrix <script type="math/tex">W^{[l]}</script> for Layer <script type="math/tex">l</script> with dimension <script type="math/tex">(n^{[l]} \times n^{[l-1]})</script> and is defined as follows::</p>
+
+<script type="math/tex; mode=display">\lVert W^{[l]} \rVert^2_F = \sum_{i=1}^{n^{[l]}} \sum_{j=1}^{n^{[l-1]}} (w_{ij}^{[l]})^2</script>
+
+<p>So adding a regularization term to the cost function leads to higher costs. Therefore high values in <script type="math/tex">W</script> are penalized when calculating the cost. Note that the bias parameter <script type="math/tex">b</script> is usually not regularized. This is because <script type="math/tex">W</script> is usually a high dimensional matrix with lots of values and <script type="math/tex">b</script> just a scalar, so regularizing <script type="math/tex">b</script> won’t make much of a difference.</p>
+
+<h4 id="adjusting-parameter-update">Adjusting parameter update</h4>
+
+<p>Because we changed the calculation of the cost by using a regularization term, we also need to adjust the derivative when updating the weights:</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+\require{color}
+dW^{[l]} = \frac{\partial J}{\partial W^{[l]}} =
+\textit{\{value from backprop\}}
+\colorbox{yellow}{$
+    + \frac{\lambda}{m} W^{[l]}
+$} \\
+
+\rightarrow W^{[l]} = W^{[l]} - \alpha dW^{[l]}
+\label{regularization_parameter_update}
+\end{equation}</script>
+
+<p>Re-writing the above equation <script type="math/tex">\ref{regularization_parameter_update}</script> a bit gives us the following equation:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+W^{[l]} & = W^{[l]} - \alpha dW^{[l]} \\
+        & = W^{[l]} - \alpha ( \textit{\{value from backprop\}} + \frac{\lambda}{m} W^{[l]} ) \\
+        & = W^{[l]} - \frac{\alpha\lambda}{m} W^{[l]} - \alpha(\textit{\{value from backprop\}}) \\
+        & = (1 - \frac{\alpha\lambda}{m}) W^{[l]} - \alpha(\textit{\{value from backprop\}})
+\end{align*} %]]></script>
+
+<p>We see in the last form that the weight matrix <script type="math/tex">W^{[l]}</script> is multiplied with <script type="math/tex">(1 - \frac{\alpha\lambda}{m})</script>, which is a value smaller than one. Cosequently, the values of the weight matrix become a bit smaller in each iteration. That’s why L2-Regularization in NN is sometimes also referred to as <strong>weight decay</strong>.</p>
+
+<h4 id="why-adding-the-regularization-term-reduces-overfitting">Why adding the regularization term reduces overfitting</h4>
+
+<p>The reason why a regularization term leads to a better model is that with weight decay single weights in a weight matrix can become very small. The weight matrix is then in fact a sparse matrix. This  leads to single nodes virtually being cancelled out in the NN and effectively to a simpler NN.</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/regularization_simple_nn.png" alt="Simpler NN with regularization" />
+	<figcaption>Simpler NN with regularization (Credits: Coursera (with adjustments)</figcaption>
+</figure>
+
+<p>Another reason is that the activation function <script type="math/tex">g</script> is roughly linear for values close to zero. We can observe this when using <script type="math/tex">tanh</script> as our activation function:</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/regularization_tanh.png" alt="Tanh linearity in center" />
+	<figcaption>Linearity of Tanh in the middle region(Credits: <a href="https://commons.wikimedia.org/wiki/File:Hyperbolic_Tangent.svg" target="_blank">Wikipedia</a>) (with adjustments)</figcaption>
+</figure>
+
+<p>Because the values in <script type="math/tex">W^{[l]}</script> become close to zero, the cell value <script type="math/tex">Z^{[l]} = W^{[l]} a^{[l-1]} + b^{[l]}</script> (before activation) is also close to zero. Therefore, the values after activation mostly lie in the linear region of the activation function. Therefore the NN calculates something more or less close to a linear function. As we have seen in <a href="/ml/deep-learning/1">part one</a>, linear classifiers can only calculate linear boundaries. Therefore the higher the value for  <script type="math/tex">\lambda</script> the more we force the NN to become close to a linear function and prevent it to calculate over-complicated boundaries. This consequently reduces overfitting.</p>
+
+<h3 id="dropout">Dropout</h3>
+<p>Another technique to reduce overfitting is using <strong>Dropouts</strong>. With dropouts we mean completely <strong>cancelling out individual neurons</strong> during test time by multiplying their weights by zero. By doing this we prevent single neurons in the NN to become too important for learning. In other words: We force the NN to learn from other features too.
+To make this work, we must cancel out different units in each iteration <strong>during training time</strong>. When doing this, the ratio of cancelled out neurons in each layer should not be more than 50%.
+Dropout regularization works surprisingly well for certain domains such as computer vision. On the downside we can’t really rely on the costs calculated by <script type="math/tex">J</script> anymore because different units are cancelled out in each iteration. To get around this you should plot your costs without and then with dropout regularization to make sure they are really decreasing.
+<strong>Important: during test time we mustn’t use dropout regularization anymore because we want to see the performance of the full network!</strong></p>
+
+<h3 id="other-regularization-techniques">Other regularization techniques</h3>
+
+<p>Minimizing the costs and preventing overfitting should be treated as separate tasks. This principle is also referred to as <strong>orthogonalization</strong>. There are several other techniques you can try to reduce overfitting.</p>
+
+<h4 id="data-augmentation">Data augmentation</h4>
+<p>The most common approach to reduce overfitting is to use more training data. But sometimes it is impossible or very expensive to get additional labelled data. We then can try to generate new synthetic data from the old. If we e.g. train an image classifier, we can easily generate new images from the old by applying one or more of the following operations:</p>
+
+<ul>
+  <li>mirroring</li>
+  <li>rotation</li>
+  <li>random cropping</li>
+  <li>shifting</li>
+  <li>tilting</li>
+  <li>local warping / adding some noise</li>
+  <li>color shifting</li>
+</ul>
+
+<p>There are tools and libraries to help with data augmentation (e.g. <a href="http://augmentor.readthedocs.io/en/master/">Agumentor</a> for image data). However, this can only be done to some extent because the underlying image information is factually still the same and using more of “the same” will not improve the model significantly anymore at some point.</p>
+
+<h4 id="early-stopping">Early stopping</h4>
+<p>Another very simple method to prevent overfitting is to abort training as soon as we observe the test error increasing again. However, this is problematic because we prevent the model from exploring the whole label space. It also violates the principle of orthogonalization.</p>
+
+<h2 id="input-normalization">Input normalization</h2>
+<p>A very useful technique to speed up the learning process is to normalize the NN’s input. We can do this in three steps:</p>
+
+<ul>
+  <li>subtract the <strong>mean</strong>:
+<script type="math/tex">\mu = \frac{1}{m} \sum_{i=1}^m x^{(i)} \\
+x = x - \mu</script></li>
+  <li>divide by the <strong>variance</strong>:
+<script type="math/tex">\sigma^2 = \frac{1}{m} \sum_{i=1}^m {x^{(i)}}^2 \\
+x = \frac{x}{\sigma}^2</script></li>
+</ul>
+
+<p>Normalizing the inputs leads to the input features being on a similar scale and the cost function converge more quickly. However, when performing input normalization this way you should make sure to use <strong>the same values</strong> for <script type="math/tex">\mu</script> and <script type="math/tex">\sigma</script> to normalize the training and the test set!</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/input_normalization.png" alt="Cost convergence with and without input normalization" />
+	<figcaption>Cost convergence with and without input normalization (Credits: Coursera (with adjustments)</figcaption>
+</figure>
+
+<h2 id="initialization">Initialization</h2>
+
+<p>The problem with very deep NN is that for each layer <script type="math/tex">l</script> we have a weight matrix <script type="math/tex">W^{[l]}</script> with values that can be big (greater than 1) or small (less than 1). Because each layer multiplies the previous layer’s activation with its own weight matrix, this can lead to very high or very small values for <script type="math/tex">\hat{y}</script>. This applies if all (or a lot) of the weight matrices contain big values and consequently the value for <script type="math/tex">\hat{y}</script> exponentially increases/decreases. A similar argument can be used to show that also the gradients will exonentially increase/decrease (<strong>exploding or vanishing gradients</strong>).</p>
+
+<p>A partial solution for this problem is a careful initialization of the parameters for the NN. To better understand this let’s observe the following example of a single neuron:</p>
+
+<p><img src="/assets/img/articles/ml/dl_2/single_neuron_example.png" alt="Single neuron example" /></p>
+
+<p>Calculating the cell state <script type="math/tex">z</script> is done as follows:</p>
+
+<script type="math/tex; mode=display">z = w^T x = w_1x_1 + w_2x_2 + ... + w_nx_n</script>
+
+<p>To prevent <script type="math/tex">z</script> from becoming very large we have to make sure the single summands don’t become too large. We can do this by multiplying the weight matrix with its variance:</p>
+
+<script type="math/tex; mode=display">W^{[l]} = W^{[l]} \cdot \sqrt{\frac{2}{n^{[l-1]}})}</script>
+
+<p>This variant is called <strong>He initialization</strong> is often used in conjunction with a ReLU activation function. There are other variants for other activation functions, such as  <strong>Xavier initialization</strong> for <script type="math/tex">tanh</script> activation function:</p>
+
+<script type="math/tex; mode=display">W^{[l]} = W^{[l]} \cdot \sqrt{\frac{1}{n^{[l-1]}}}</script>
+
+<p>The following picture illustrate the different results for different initializations. Note that for zero-initialization the classifier predicted <script type="math/tex">0</script> (does not belong to class) for all instances!</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/assets/img/articles/ml/dl_2/initialization_zero.png" alt="Zero initialization" /></td>
+      <td><img src="/assets/img/articles/ml/dl_2/initialization_random.png" alt="Random initialization" /></td>
+      <td><img src="/assets/img/articles/ml/dl_2/initialization_he.png" alt="He initialization" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="model-optimization">Model Optimization</h2>
+<p>It is often hard to find the best model because model training is time-intensive and it can therefore take some time before you get some feedback. To speed up the training process there are a few algorithms.</p>
+
+<h3 id="mini-batch-gradient-descent">Mini Batch Gradient Descent</h3>
+<p>We have learned in <a href="/ml/deep-learning/1">part one</a> how vectorization can reduce computation time because all the samples are processed in one go. However, this does not work well for very large datasets anymore because the sample matrix <script type="math/tex">X</script> would simply become too large. We can therefore partition the training set in <strong>mini batches</strong>, which are processed one by one. Usually, the training data is shuffled prior to partitioning to get randomized batches.</p>
+
+<p>We can identify an individual batch from a set of <script type="math/tex">T</script> batches by adding the superscript <script type="math/tex">\{t\}</script>. The processing per batch is than as before for the whole training set:</p>
+
+<ol>
+  <li>forward-propagation: <script type="math/tex">A^{[l]} = g(W^{[l]} X^{\{t\}} + b^{\{t\}})</script></li>
+  <li>calculate costs: <script type="math/tex">J^{\{t\}} = \frac{1}{T} \sum_{i=1}^l \mathcal{L} (\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{2T} \sum_l \lVert W^{[l]} \rVert^2_F</script></li>
+  <li>backprop to compute gradients w.r.t. <script type="math/tex">J^{\{t\}}</script></li>
+  <li>parameter update: <script type="math/tex">W^{[l]} = W^{[l]} - \alpha dW^{[l]} \\ b^{[l]} = b^{[l]} - \alpha db^{[l]}</script></li>
+</ol>
+
+<p>You can see that in fact we are doing exactly the same thing as before, but with a single batch <script type="math/tex">(X^{\{t\}}, Y^{\{t\}})</script> instead of the whole training set. A single iteration over all batches of the training set is called <strong>epoch</strong>. Like before, training one the whole training set is done with more than 1 iteration. You can thereefore think of MBGD as nesting the existing loop for the training in an additional loop over the batches.</p>
+
+<h4 id="understanding-mbgd">Understanding MBGD</h4>
+<p>Despite having an additional loop, training with MBGD is usually much faster than processing all the training data at once. Because the batches contain different samples, it is very likely that the costs will not always monotonically decrease from one batch to the next. They usually oscillate a bit, but generally the costs go down:</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/mbgd.png" alt="MBGD cost convergence" />
+	<figcaption>Convergence of cost without and with MBGD (Credits: Coursera, with adjustments)</figcaption>
+</figure>
+
+<p>There are two extrema for choosing the size <script type="math/tex">s</script> of a single mini-batch:</p>
+
+<ul>
+  <li><script type="math/tex">s=m</script>: This corresponds to <strong>normal Gradient Descent</strong> whereas each training sample is processed individually. This is not recommended because one epoch would take too long.</li>
+  <li><script type="math/tex">s=1</script>: This is called <strong>stochastic Gradient Descent</strong>, which is sometimes done, but we lose the performance advantage of a vectorized implementation</li>
+</ul>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/gd_stochastic_mbgdm.png" alt="Exponentially weighted average" />
+	<figcaption>Stochastic gradient descent vs. gradient descent vs. mini-batch gradient descent (Credits: Coursera)</figcaption>
+</figure>
+
+<p>Generally you should choose a value between 1 and <script type="math/tex">m</script> for <script type="math/tex">s</script>. Powers of 2 (64, 128, 256, …) are often chosen because they offer some computational advantages. But more important is that a single mini-batch fits into your computer’s memory.</p>
+
+<h3 id="exponentially-weighted-average">Exponentially weighted average</h3>
+<p>There are more sophisticated optimization algorithms than GD. They often make use of something called <strong>exponentially weighted (moving) average</strong>. An EWA <script type="math/tex">v_t</script> can be calculated by recursively by using the previous average <script type="math/tex">v_{t-1}</script>, a parameter <script type="math/tex">\beta</script> and the current parameter value <script type="math/tex">\Theta</script>:</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+v_t = \beta v_{t-1} + (1 - \beta) \Theta_t
+\label{ewa}
+\end{equation}</script>
+
+<p>For example consider the following plot of temperatures over different days (blue dots).</p>
+
+<figure>
+	<img src="/assets/img/articles/ml/dl_2/ewa.png" alt="Exponentially weighted average" />
+	<figcaption>Exponentially weighted average (Credits: Coursera)</figcaption>
+</figure>
+
+<p>The parameter <script type="math/tex">\beta</script> can here be somehow seen as the window size that is used to calculate the approximate average. A value of <script type="math/tex">\beta=0.9</script> would correspond to <script type="math/tex">\frac{1}{1-\beta} = 10</script> days (red line). A larger value of <script type="math/tex">\beta = 0.98</script> would lead to a larger window of 50 days and consequently to a smoother line, which adapts more slowly to temperature changes and is therefore shifted to the right (green line). In contrast, a smaller value for <script type="math/tex">\beta</script> would consider fewer days and be more wiggly.</p>
+
+<p>When implementing the EWA and initializing <script type="math/tex">v_0 = 0</script> you can observe that the graph of the EWA is too small because the value for the first average is too low. To come around this, one can simply divide the calculated average by <script type="math/tex">(1-\beta^t)</script>. This is called <strong>bias correction</strong>. So formula <script type="math/tex">\ref{ewa}</script> can be adjusted as follows:</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+v_t = \frac{\beta v_{t-1} + (1 - \beta) \Theta_t}{1-\beta^t}
+\label{ewa_bias_correction}
+\end{equation}</script>
+
+<h3 id="momentum">Momentum</h3>
+
+<p><strong>Gradient Descent with momentum (GDM)</strong> is a variant of GD which converges faster by using moving averages. GDM can be best understood by observing the convergence of the cost function over a contour plot:</p>
+
+<figure>
+  <img src="/assets/img/articles/ml/dl_2/gdm.png" alt="Gradient Descent with momentum" />
+  <figcaption>Gradient Descent with momentum (Credits: Coursera)</figcaption>
+</figure>
+
+<p>In this figure convergence without GM would follow the blue line, which oscillates quite a bit. This oscillation prevents us from choosing a larger learning rate, because then we would overshoot and maybe even diverge from the optimal costs (purple line). What we want is the oscillation in vertical direction (e.g. the direction for  parameter <script type="math/tex">b</script>) to damp out because it slows down the learning progress. On the other hand we want learning to go fast in the horizontal direction (e.g. the direction for parameter <script type="math/tex">W</script>). By computing the moving averages over the derivatives <script type="math/tex">dW</script> and <script type="math/tex">db</script> GDM smoothes out the steps of GD by cancelling out positive and negative values of the GD (which are responsible for the oscillation in the first place). This makes the GD being more directed towards the optimum and using fewer steps.</p>
+
+<p>So what GDM tries to do is use the learning rate’s momentum for faster convergence in horizontal direction. You can think of the plot above as the contours of a bowl where we roll a ball to its bottom. The averages <script type="math/tex">v_{dW}/v_{db}</script> is responsible for its velocity, and the derivatives <script type="math/tex">dW/db</script> for its acceleration. GDM tries to do this by using a parameter <script type="math/tex">\beta</script>. To better understand this, remember how we updated the parameters in GD:</p>
+
+<script type="math/tex; mode=display">W = W - \alpha dW \\
+b = b - \alpha db</script>
+
+<p>GDM calculates the EWA of the derivatives first and then uses the result to update the parameters:</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+v_{dW} = \beta v_{dW} + (1 - \beta) dW \\
+v_{db} = \beta v_{db} + (1 - \beta) db \\
+W = W - \alpha v_{dW} \\
+b = b - \alpha v_{db}
+\label{gdm}
+\end{equation}</script>
+
+<p>Note that bias correction is not usually done in practice because after a few iterations the moving average will have moved up enough to produce good values.</p>
+
+<h3 id="rmsprop">RMSprop</h3>
+
+<p>Another algorithm to increase learning speed that makes use of momentum is <strong>Root Mean Square prop</strong> (RMSprop). The calculation is similiar to GDM (see <script type="math/tex">\ref{gdm}</script>), however the derivatives are squared (element-wise) and the update is a bit different.</p>
+
+<script type="math/tex; mode=display">\begin{equation}
+s_{dW} = \beta s_{dW} + (1 - \beta) dW^2 \\
+s_{db} = \beta s_{db} + (1 - \beta) db^2 \\
+W = W - \alpha \frac{dW}{\sqrt{s_{dW}} + \epsilon} \\
+b = b - \alpha \frac{db}{\sqrt{s_{db}} + \epsilon} \\
+\label{rmsprop}
+\end{equation}</script>
+
+<p>Note that the parameter <script type="math/tex">\epsilon</script> is used to prevent division by zero.</p>
+
+<p>In contrast to GDM, RMSprop tries to damp out the vertical oscillation. In other words, for equation <script type="math/tex">\ref{rmsprop}</script> we want <script type="math/tex">s_{dW}</script> to be small, because then we would divide by a small number, which results in a bigger update. On the other hand we expect <script type="math/tex">s_{db}</script> to be large, because then we divide by a large number which would make the update small.</p>
+
+<h3 id="adam">Adam</h3>
+
+<p>It turned out over time that a lot of optimization algorithms do not generalize well. Often a certain algorithm only performs well for one specific type of problem. <strong>Adaptive Moment Estimation</strong> (ADAM) is one of the few algorithms that can be applied to a wide range of learning problems. ADAM is a combination of both GDM and RMSprop. In order to not confuse the differet parameters we will use <script type="math/tex">\beta_1</script> for the parameter of GDM and <script type="math/tex">\beta_2</script> for the parameter of RMSprop. The algorithm can then calculate Gradient Descent for a given mini-batch as follows:</p>
+
+<ul>
+  <li>Initialization: <script type="math/tex">v_{dW}=s_{dW}=v_{db}=s_{db}=0</script></li>
+  <li>For each mini-batch in iteration <script type="math/tex">t</script> do:
+    <ul>
+      <li>calculate the <strong>derivatives</strong> <script type="math/tex">dW, db</script></li>
+      <li>calculate <strong>moving average with GDM</strong>: use <script type="math/tex">\beta_1</script> to determine the window size
+<script type="math/tex">v_{dW} = \beta_1 v_{dW} + (1-\beta_1) dW \\
+v_{db} = \beta_1 v_{db} + (1-\beta_1) db</script></li>
+      <li>calculate <strong>RMSprop</strong>: use <script type="math/tex">\beta_2</script> to determine damping
+<script type="math/tex">s_{dW} = \beta_2 s_{dW} + (1-\beta_2) dW^2 \\
+s_{db} = \beta_2 s_{db} + (1-\beta_2) db^2</script></li>
+      <li>apply bias correction:
+<script type="math/tex">v_{dW} = \frac{v_{dW}}{1-\beta_1^t }, v_{db} = \frac{v_{db}}{1-\beta_1^t } \\
+s_{dW} = \frac{s_{dW}}{1-\beta_1^t }, s_{db} = \frac{s_{db}}{1-\beta_1^t }</script></li>
+      <li>update parameters:
+<script type="math/tex">W = W - \alpha \frac{v_{dW}}{\sqrt{s_{dW}} + \epsilon},  b = b - \alpha \frac{v_{db}}{\sqrt{s_{db}} + \epsilon}</script></li>
+    </ul>
+  </li>
+</ul>
+
+<p>To sum up, ADAM uses the following hyperparameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>hyperparameter</th>
+      <th>meaning</th>
+      <th>comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><script type="math/tex">\alpha</script></td>
+      <td>learning rate</td>
+      <td>needs to be manually tuned (but ADAM allows for bigger values than GD!)</td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">\beta_1</script></td>
+      <td>window size to calculate moving average of <script type="math/tex">dW, db</script> (first moment)</td>
+      <td>0.9 is a reasonable value</td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">\beta_2</script></td>
+      <td>damping rate to calculate moving average of <script type="math/tex">dW^2, db^2</script> (second moment)</td>
+      <td>0.999 is a reasonable value</td>
+    </tr>
+    <tr>
+      <td><script type="math/tex">\epsilon</script></td>
+      <td>term to prevent division by zero</td>
+      <td>is usually not tuned, but <script type="math/tex">10^{-8}</script> is a reasonable value</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="learning-rate-decay">Learning Rate decay</h3>
+
+<p>It can sometimes make sense to keep the learning rate large at the beginning and then gradually reduce it the more the algorithm converges towards the optimum. This process is called <strong>learning rate decay</strong> (LRD). The reason LRD can make sense is that during the initial steps of optimization the algorithm can take larger steps whereas at the end it should take only small steps in order to oscillate within a smaller region around the optimum.</p>
+
+<p>To implement LRD the learning rate <script type="math/tex">\alpha</script> starts out with an initial value <script type="math/tex">\alpha_0</script> and is then reduced after each epoch by calculating:</p>
+
+<script type="math/tex; mode=display">\alpha =  \frac{1}{1 + \text{\{decay rate\}} \cdot \text{\{#epoch\}}} \cdot \alpha_0</script>
+
+<p>There are variations on this, for example:</p>
+
+<ul>
+  <li><script type="math/tex">\alpha = \text{\{decay rate\}}^{\text{\{#epoch\}}} \cdot \alpha_0</script> (<em>exponential decay</em>)</li>
+  <li><script type="math/tex">\frac{k}{ \sqrt{ \text{\{#epoch\}} } }</script> or <script type="math/tex">\frac{k}{ \sqrt{t} }</script> (<script type="math/tex">k</script> is a constant hyperparameter, <script type="math/tex">t</script> is the number of the mini-batch)</li>
+  <li>stepwise reduction after a few steps (<em>discrete decay</em>)</li>
+  <li><em>manual decay</em>: might work when only training a small number of models</li>
+</ul>
+
+<h2 id="hyperparameter-tuning-1">Hyperparameter tuning</h2>
+
+<p>Until now we have seen quite a lot of hyperparmeters (learning rate <script type="math/tex">\alpha</script>, number of layers, number of hidden units, learning rate decay, …). Trying out all possible combinations of these would be infeasible. It also would not make much sense to try out all different combinations, because some of the parameters are more important than others thus a lot of meaningless combinations would also be tried.
+In practice you usually start out with random values and see where there are regions of values that produce good results. Some of the hyperparameters like the number of layers or hidden units could actually be systematically tried out using grid search, if they are normally distributed. For other parameters like the learning rate it makes most sense only to search in the interval <script type="math/tex">[0.0001, 0.1]</script>. This is epsecially important for parameters like <script type="math/tex">\beta</script> that are more sensitive (i.e. small changes on them can have a high impact on the performance of an algorithm). Such parameters should periodically be re-evaluated to see if the original intuition is still justified.</p>
+
+<p>When tuning hyperparameters, there are generally two paradigms:</p>
+
+<ul>
+  <li><strong>Pandas</strong>: Only train one model on which you continuously fine-tune its hyperparameters. This is often done if computational power is scarce.</li>
+  <li><strong>Caviar</strong>: Train several models simultaneously and evaluate them. This is usually done if there is a lot of computational power available</li>
+</ul>
+
+<p>These terms are derived from zoology because pandas usually have only one cub whereas sturgeons produce a lot of eggs (caviar).</p>
+
+<h2 id="batch-normalization">Batch Normalization</h2>
+
+<p>We have seen that normalizing the input can lead to faster learning in the individual units. We can do this for any hidden layer by performing the following steps:</p>
+
+<ul>
+  <li>Compute the <strong>mean</strong> of layer <script type="math/tex">l</script>:</li>
+</ul>
+
+<script type="math/tex; mode=display">\mu = \frac{1}{m} \sum_i z^{[l](i)}</script>
+
+<ul>
+  <li>Compute the <strong>variance</strong> of layer <script type="math/tex">l</script>:</li>
+</ul>
+
+<script type="math/tex; mode=display">\sigma^2 = \frac{1}{m} \sum_i (z^{[l](i)} - \mu )^2</script>
+
+<ul>
+  <li>Compute the <strong>layer norm</strong>:</li>
+</ul>
+
+<script type="math/tex; mode=display">z_{norm}^{[l](i)} = \frac{z^{[l](i)} - \mu}{\sqrt{\sigma^2 + \epsilon}}</script>
+
+<ul>
+  <li>Compute the <strong>batch norm</strong>:</li>
+</ul>
+
+<script type="math/tex; mode=display">\tilde{z}^{[l](i)} = \gamma \cdot z_{norm}^{[l](i)} + \beta</script>
+
+<p>There is some debate whether to normalize the cell values before (<script type="math/tex">z</script>) or after activation (<script type="math/tex">a</script>). In practice, the former is more common. The parameters <script type="math/tex">\gamma</script> and <script type="math/tex">\beta</script> are learnable and can be <strong>different for each layer</strong>. They allow the mean and variance of <script type="math/tex">\tilde{z}^{[l](i)}</script> to any value. For example, choosing <script type="math/tex">\gamma = \sqrt{\sigma^2 + \epsilon}</script> and <script type="math/tex">\beta = \mu</script> would lead to the same value as before normalization (identity function):</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+\tilde{z}^{[l](i)} & = \gamma \cdot z_{norm}^{[l](i)} + \beta \\
+                   & = \gamma \cdot \frac{z^{[l](i)} - \mu}{\sqrt{\sigma^2 + \epsilon}} + \beta \\
+                   & = \sqrt{\sigma^2 + \epsilon} \cdot \frac{z^{[l](i)} - \mu}{\sqrt{\sigma^2 + \epsilon}} + \mu \\
+                   & = z_{norm}^{[l](i)}
+\end{align*} %]]></script>
+
+<p>Using BN can lead to a much more robust NN, a broader range of possible hyperparameters and easier training of deep NN. BN is implemented in most common DL-Frameworks like TensorFlow or Keras. Most of the time you don’t have to fiddle with <script type="math/tex">\gamma</script> and <script type="math/tex">\beta</script>. However, if you want to adjust the mean and/or variaince of your batch norm explicitly (i.e. to make use of some specific region of your activation function), there are parameters to do exactly that.</p>
+
+<h3 id="why-does-bn-work">Why does BN work?</h3>
+<p>BN can improve the learning process dramatically. The reason for this is BN reduces the degree, to which input values for a given hidden layers vary (known as <strong>covariant shift</strong>, because mean and variance always lie within a certain region.</p>
+
+<p>(to be extended)</p>
+
+<h2 id="multiclass-classification">Multiclass classification</h2>
+<p>Up to know we have only talked about binary classifiers. The output layer in these NN consisted of a single neuron whose Sigmoid activation function output the probability of an instance belonging to the target class (or not). However, we often have more than one target class, i.e. NN with more than one neuron.</p>
+
+<p>In such networks we distinguish <script type="math/tex">C</script> classes, i.e. <script type="math/tex">n^{[L]} = C</script>, whereas each node indicates the probability of an instance belonging to a specific class. We can then use an activation function which is known as <strong>softmax</strong> which calculates the activation of this output layer as follows:</p>
+
+<ul>
+  <li>calculate vector <script type="math/tex">t</script> by element-wise exponentiation</li>
+</ul>
+
+<script type="math/tex; mode=display">t = e^{z^{[L]}}</script>
+
+<ul>
+  <li>calculatae the activation <script type="math/tex">a^{[L]}</script> by dividing <script type="math/tex">t</script> by the sum of its elements:</li>
+</ul>
+
+<script type="math/tex; mode=display">a^{[L]} = \frac{e^{z^{[L]}}}{ \sum_{j=1}^C t_i }</script>
+
+<p>In contrast to the other activations (Sigmoid, Tanh, …) softmax is a function from vector to vector. The sum of all elements in the activation value is 1. The term <em>softmax</em> indicates the classifier’s ability to express membership of an instance with a class not just binary but by probability. In that respect, sigmoid is kind of a special form of softmax for only two classes.</p>
+
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">TLDR</h4>
+  <h5>Regularization</h5>
+  <ul>
+    <li>Regularization will help you reduce overfitting.</li>
+    <li>L2 regularization and Dropout are two very effective regularization techniques.</li>
+    <li>L2-regularization in cost computation: A regularization term is added to the cost</li>
+    <li>L2-regularization in backprop: There are extra terms in the gradients with respect to weight matrices</li>
+    <li>weight decay: Weights are pushed to smaller values</li>
+    <li>Dropout (randomly eliminate nodes): only use dropout during training. Don't use dropout during test time. Apply dropout both during forward and backward propagation</li>
+  </ul>
+  <h5>Initialization</h5>
+  <ul>
+    <li>Different initializations lead to different results</li>
+    <li>Random initialization is used to break symmetry and make sure different hidden units can learn different things</li>
+    <li>Don't intialize to values that are too large</li>
+    <li>He initialization works well for networks with ReLU activations.</li>
+  </ul>
+  <h5>Optimization</h5>
+  <ul>
+    <li>The difference between gradient descent, mini-batch gradient descent and stochastic gradient descent is the number of examples you use to perform one update step.</li>
+    <li>You have to tune a learning rate hyperparameter α</li>
+    <li>With a well-turned mini-batch size, usually it outperforms either gradient descent or stochastic gradient descent (particularly when the training set is large).</li>
+    <li>Shuffling and Partitioning are the two steps required to build mini-batches</li>
+    <li>Momentum takes past gradients into account to smooth out the steps of gradient descent. It can be applied with batch gradient descent, mini-batch gradient descent or stochastic gradient descent.</li>
+    <li>You have to tune a momentum hyperparameter  ββ  and a learning rate  αα .</li>
+  </ul>
+</div>
+</div>
+  
+    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "/ml/deep-learning/2"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
+      </p>
+
+      <div class="footer-links"> 
+         <ul class="noList"> 
+            
+            <li><a href="https://www.facebook.com/daniel.tiefenauer">
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://twitter.com/danitiefenauer">
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://github.com/tiefenauer">
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
+                  </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.linkedin.com/in/danieltiefenauer">
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                </svg>
+            </a></li>
+                         
+            
+            <li><a href="mailto:daniel@tiefenauer.info">
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
+                  </svg>
+            </a></li>
+            
+         </ul>
+      </div>
+   </div>
+</div><!-- end .footer -->
+
+
+   <!-- Add jQuery and other scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
+    <script src="https://hypothes.is/embed.js" async></script>
+
+
+<!-- Bootstrap scripts-->
+<script>
+    $('.alert').alert()
+</script>
+
+</body>
+
+</html>
