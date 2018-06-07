@@ -16,7 +16,6 @@ intro: |
     
 permalink: /ml
 toc: true
-eta: true
 ---
 
 * [Introduction to Machine Learning]({% link _pages/ml_intro.md %}) (11 weeks)

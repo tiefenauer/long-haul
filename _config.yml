@@ -9,11 +9,11 @@ future: true
 
 markdown: kramdown
 highlighter: rouge
-gems: [jekyll-paginate, jemoji]
+plugins: [jekyll-paginate, jemoji]
 paginate: 5
 
-# kramdown:
-#   parse_block_html: true
+#kramdown:
+#  parse_block_html: true
 
 navigation:
  - title: Home
@@ -22,6 +22,8 @@ navigation:
    url: /about
  - title: Machine Learning
    url: /ml
+ - title: Swiss Frenzy
+   url: /switzerland
  - title: Contact
    url: /contact
 
