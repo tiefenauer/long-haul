@@ -86,170 +86,6 @@ ga('send', 'pageview');
 
 </script>
  
-<script type='text/javascript'>
-  /* global google */
-/* global MarkerClusterer */
-// eslint-disable-next-line no-unused-vars
-var jekyllMaps = (function() {
-  'use strict'
-  var clusterSettings = {}
-  var clusterReady = false
-  var mapReady = false
-  var options = {}
-  var data = []
-  var maps = []
-
-  return {
-    initializeMap: initializeMap,
-    initializeCluster: initializeCluster,
-    register: register
-  }
-
-  /**
-   * Setup Google Maps options and call renderer.
-   */
-  function initializeMap() {
-    options = {
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      center: new google.maps.LatLng(0, 0)
-    }
-    mapReady = true
-    render()
-  }
-
-  /**
-   * Register map data to be rendered once Google Maps API is loaded.
-   *
-   * @param string id
-   * @param Array locations
-   * @param Object settings
-   */
-  function register(id, locations, options) {
-    data.push({ id: id, locations: locations, options: options })
-    render()
-  }
-
-  /**
-   * Render maps data if Google Maps API is loaded.
-   */
-  function render() {
-    if (!mapReady) return
-
-    while (data.length > 0) {
-      var item = data.pop()
-      var bounds = new google.maps.LatLngBounds()
-      var mapOptions = Object.assign({}, options, item.options)
-      var map = new google.maps.Map(
-        document.getElementById(item.id),
-        mapOptions
-      )
-      var infoWindow = new google.maps.InfoWindow()
-      var markers = item.locations.map(createMarker)
-
-      map.fitBounds(bounds)
-      google.maps.event.addListenerOnce(map, 'idle', function() {
-        if (this.customZoom) this.setZoom(this.customZoom)
-      })
-      if (mapOptions.useCluster) {
-        maps.push({ map: map, markers: markers })
-        processCluster()
-      }
-    }
-
-    function createMarker(location) {
-      var position = new google.maps.LatLng(
-        location.latitude,
-        location.longitude
-      )
-      bounds.extend(position)
-      if (!mapOptions.showMarker) return false
-
-      var marker = new google.maps.Marker({
-        position: position,
-        title: location.title,
-        image: location.image,
-        icon: location.icon || mapOptions.markerIcon,
-        url: markerUrl(mapOptions.baseUrl, location.url),
-        url_text: location.url_text,
-        map: map
-      })
-      if (mapOptions.showMarkerPopup) marker.addListener('click', markerPopup)
-
-      return marker
-    }
-
-    function markerUrl(baseUrl, url) {
-      if (/^(https?|\/\/)/.test(url)) return url
-
-      return url.length > 0 ? baseUrl + url : ''
-    }
-
-    function markerPopup() {
-      var content = '<div class="map-info-window"><h5>' + this.title + '</h5>'
-      var imageTag =
-        this.image.length > 0 &&
-        '<img src="' + this.image + '" alt="' + this.title + '"/>'
-      if (this.url.length > 0) {
-        var linkContent = imageTag || this.url_text || 'View'
-        content += '<a href="' + this.url + '">' + linkContent + '</a>'
-      } else if (imageTag) {
-        content += imageTag
-      }
-      content += '</div>'
-      infoWindow.setContent(content)
-      infoWindow.open(map, this)
-    }
-  }
-
-  function initializeCluster(settings) {
-    clusterReady = true
-    clusterSettings = settings || {}
-    processCluster()
-  }
-
-  function processCluster() {
-    if (!clusterReady) return
-
-    while (maps.length > 0) {
-      var obj = maps.pop()
-      // eslint-disable-next-line no-new
-      new MarkerClusterer(obj.map, obj.markers, {
-        gridSize: clusterSettings.grid_size || 25,
-        imagePath:
-          'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-      })
-    }
-  }
-})()
-/* Object.assign polyfill */
-if (typeof Object.assign !== 'function') {
-  Object.assign = function(target) {
-    'use strict'
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object')
-    }
-
-    target = Object(target)
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index]
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key]
-          }
-        }
-      }
-    }
-    return target
-  }
-}
-
-</script>
-<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCZVdrcBRuum7_QAIrsU1Ph726_-jX9rok&callback=jekyllMaps.initializeMap'></script>
-
-<script async defer src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'
-        onload='jekyllMaps.initializeCluster({})'></script>
-
 </head>
 
 
@@ -274,7 +110,7 @@ if (typeof Object.assign !== 'function') {
                  </li> 
                  
                  <li class="element   ">
-                     <a href="/switzerland">Swiss Frenzy</a>
+                     <a href="/frenzy">Swiss Frenzy</a>
                  </li> 
                  
                  <li class="element   last">
@@ -300,25 +136,25 @@ if (typeof Object.assign !== 'function') {
 
     
         <div class="featuredImage">
-            <img src="/assets/img/switzerland/2018-06-02-boezingerberg/title.jpg" alt="">
+            <img src="/assets/img/frenzy/2018-06-02-boezingerberg/title.jpg" alt="">
         </div>
     
 
     <h1 class="postTitle">Bözingerberg and Taubenlochschlucht</h1>
-    <p class="meta">June 02, 2018 | <span class="time">1</span> Minute Read</p>
+    <p class="meta">June 02, 2018 | <span class="time">2</span> Minute Read</p>
 
     <p>
     
-    <a href="/assets/img/switzerland/2018-06-02-boezingerberg/map.pdf" role="button" class="btn btn-primary btn-lg btn-block">
+    <a href="/assets/img/frenzy/2018-06-02-boezingerberg/map.pdf" role="button" class="btn btn-primary btn-lg btn-block">
         <i class="fas fa-map-signs" aria-hidden="true"></i> Download map
     </a>
 </p>
 
 <p>This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.</p>
 
-<p>The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which was good considering the hot and humid weather. The path leads you through a small park where you can have a picnic and watch/feed domestic animals (deer, ibex, marmots and the like). On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good <img class="emoji" title=":stuck_out_tongue:" alt=":stuck_out_tongue:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f61b.png" height="20" width="20">). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps.</p>
+<p>The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which was good considering the hot and humid weather. The path leads you through a small park (<a href="https://tierpark-biel.ch/">Tierpark Biel</a>) where you can watch/feed domestic animals (deer, ibex, marmots and the like) and have a picnic. On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good <img class="emoji" title=":stuck_out_tongue:" alt=":stuck_out_tongue:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f61b.png" height="20" width="20">). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps. If you get bored you can always watch the paragliders take of, since the Bözingerberg is a popular (even official) starting place.</p>
 
-<p>The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (<em>Pigeon Hole Gorge</em>). Back in Biel you can relax in the public seaside bath, which is very nice.</p>
+<p>The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (<em>Pigeon Hole Gorge</em>). Note that the gorge is rather short, but still offers some stunning views and a pretty decent waterfall. There are also many caves (the pigeon wholes), which some of them you can explore (be aware that in some of them there are actually live pigeons!. Also note that bathing is prohibited since there is a hydro station upstream which might open its gates suddenly. However, judging from   Back in Biel you can relax in the public seaside bath, which is very nice.</p>
 
 <h2 id="facts-and-figures">Facts and Figures</h2>
 
@@ -330,28 +166,37 @@ if (typeof Object.assign !== 'function') {
 </ul>
 
 <h2 id="where-to-park">Where to park</h2>
+<p>There is parking in Biel or (if you want to get out of the city a bit) near the park which is along the way. You can also try and find a parking spot in the nearby town of Frinvillier which is at the north entrance of the gorge.</p>
 
 <h2 id="what-to-do-and-see">What to do and see</h2>
 
+<ul>
+  <li>Relax in the Tierpark Biel</li>
+  <li>enjoy the view from Restaurant Bözingerberg</li>
+  <li>Explore the Taubenlochschlucht</li>
+  <li>Hang out in the <a href="http://www.ctsbiel-bienne.ch/">Seebad Biel</a>
+</li>
+</ul>
+
 <h2 id="what-to-bring">What to bring</h2>
+
+<ul>
+  <li>something to grill</li>
+  <li>binoculars</li>
+  <li>cash to buy food to feed the animals</li>
+  <li>bathing gear</li>
+</ul>
 
 <h2 id="pictures">Pictures</h2>
 
-<div id="4dd53263-d778-4677-ada5-3113b27634c9" style="width:100%;height:400px;"></div>
-<script type="text/javascript">
-  jekyllMaps.register(
-    '4dd53263-d778-4677-ada5-3113b27634c9',
-    [{"latitude":47.1721091,"longitude":7.2754052,"title":"Bözingerberg and Taubenlochschlucht","icon":null,"url":"/blog/boezingerberg/","url_text":null,"image":""}],
-    {"baseUrl":"","useCluster":true,"showMarker":true,"showMarkerPopup":true,"markerIcon":null}
-  );
-</script>
+<p><img src="http://localhost:4000/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg" alt="ice cream with a view"></p>
 
 
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">
      
-      <a class="prev" href="/blog/wireless-charger-for-motorcycle/"><span>« Charging your phone wirelessly on your motorbike</span>
+      <a class="prev" href="/blog/seleger-moor/"><span>« Seleger Moor</span>
       
     </a>
       
