@@ -9,10 +9,7 @@ future: true
 
 markdown: kramdown
 highlighter: rouge
-plugins:
-  - jekyll-paginate
-  - jemoji
-  - jekyll-maps
+plugins: [jekyll-paginate, jemoji]
 paginate: 5
 
 #kramdown:
@@ -60,7 +57,3 @@ social:
    email: daniel@tiefenauer.info
       
 google_analytics: "UA-56931568-3"
-
-maps:
-    google:
-      api_key: AIzaSyCZVdrcBRuum7_QAIrsU1Ph726_-jX9rok
