@@ -13,6 +13,8 @@ eta: false
 hypothesis: false
 ---
 
+{% google_map src="_posts/switzerland" width="100%" height="400" %}
+
 Having become aware of this, we decided to spend our holidays at home one year, travelling along the [Grand Tour of Switzerland](http://grandtour.myswitzerland.com/de/) by car during two weeks (which I can only recommend if you happen to be/live in Switzerland). The route lead us to some stunning views and reinfoced us in our belief: Behold, the good lies so close at hand. Knowing this we started making excursions during the weekend, some small, some big, sometimes by motorbike, often including hiking. What we needed were some destionations. They did not not need to be super-fancy, but take me to nice places all over the country. For this, I found it helpful if I got a tip from a friend or in a newspaper.  
 
 ## Why this page?
