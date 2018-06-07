@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard</title>
+
+    <!-- Open Graph Meta -->
+    <meta content="Dani's Braindump" property="og:site_name">
+    
+      <meta content="Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard" property="og:title">
+    
+    
+      <meta content="article" property="og:type">
+    
+    
+      <meta content="My thoughts about the world" property="og:description">
+    
+    
+      <meta content="http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/" property="og:url">
+    
+    
+      <meta content="2015-10-26T09:59:42+01:00" property="article:published_time">
+      <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+      <meta content="http://localhost:4000/assets/img/touring.jpg" property="og:image">
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@danitiefenauer">
+    <meta name="twitter:creator" content="@danitiefenauer">
+    
+      <meta name="twitter:title" content="Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard">
+    
+    
+      <meta name="twitter:url" content="http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/">
+    
+    
+      <meta name="twitter:description" content="My thoughts about the world">
+    
+    
+      <meta name="twitter:image:src" content="http://localhost:4000/assets/img/touring.jpg">
+    
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+
+    <!-- Come and get me RSS readers -->
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="http://localhost:4000/feed.xml" />
+
+    <!-- Bootstrap: include before theme CSS so styles are overridden -->
+    <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="http://localhost:4000/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
+
+
+
+     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56931568-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+ 
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Dani's Braindump</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 <li class="element first  ">
+                     <a href="/index.html">Home</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/about">About</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/ml">Machine Learning</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/switzerland">Swiss Frenzy</a>
+                 </li> 
+                 
+                 <li class="element   last">
+                     <a href="/contact">Contact</a>
+                 </li> 
+                 
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post editable">
+
+    <!-- Frenzy layout: dynamically set title image -->
+    
+
+    <!-- Overrides frenzy image if set -->
+    
+
+    
+
+    <h1 class="postTitle">Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard</h1>
+    <p class="meta">October 26, 2015 | <span class="time">15</span> Minute Read</p>
+
+    <div class="seriesmeta">
+  This entry is part 5 of 5 in the series <a href="http://www.tiefenauer.info/series/mobile-app-development-with-xamarin-and-mvvmcross/" class="series-47" title="Mobile App Development with Xamarin and MvvMCross">Mobile App Development with Xamarin and MvvMCross</a>
+</div>
+
+<div class="fruitful_description_box">
+  <div class="fruitful_description shadow-type-1 " id="desc-box-65">
+    <span class="top_line"></span>
+    
+    <div class="text" style=" font-size: 40px; text-transform : uppercase; text-align: center; font-weight: 300; line-height: 1.2;">
+      iOS UI with Storyboard 
+    </div>
+    
+    <span class="bottom_line"></span>
+  </div>
+</div>
+
+<div class="clearfix">
+</div>
+
+<p id="xGKzoFm">
+  <a href="http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard.png" rel="lightbox[639]"><img class="alignnone wp-image-728 size-medium" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard-224x300.png" alt="" width="224" height="300" srcset="http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard-224x300.png 224w, http://www.tiefenauer.info/wp-content/uploads/2015/10/example_storyboard.png 583w" sizes="(max-width: 224px) 100vw, 224px" /></a>
+</p>
+
+<p>In the last article, we saw how to programatically create iOS-Views using nothing but C#-code. However, this way of creating user interfaces is often quite cumbersome and prone to errors. An alternative and much more intuitive approach to design user interfaces for iOS (which is also advertised by Apple as the standard way) is the usage of so-called <em>Storyboards</em>. Storyboards provide a set of UI-Views, which can be populated with other UI elements like buttons, labels, lists and so on by drag’n’dropping them using a visual editor. Transitions between views can be modelled by using <em>Segues</em>. Luckily, Xamarin comes with its own UI designer for iOS in the form of a  Visual Studio plugin. This means you can create your native iOS-UI directly on your Windows machine like in the screenshot above.</p>
+
+<p>In this article we are going to explore various ways of creating beautiful UI views using storyboards while using MvvmCross as the underlying framework at the same time.</p>
+
+<!--more-->
+
+<p>However, there’s (as always) a catch in using storyboards: Navigating with segues (the previewed way of navigating between views when working with storyboards) means navigation is being done in the view layer (i.e. the iOS UI-Project when using Xamarin). This differs fundamentally from the navigation concept of MvvmCross, where navigation is done in the ViewModel layer (i.e. the core project when using Xamarin). Luckily, there are ways to use storyboards and MvvmCross side by side without sacrificing any of the advantages of either.</p>
+
+<h2 id="behind-the-scenes">Behind the scenes</h2>
+
+<p>We will see what steps are needed to use storyboards in Xamarin below. However, it may be helpful to gain a certain insight in what’s being done in the background instead of strictly following guides without really knowing what you’re doing or why. This section should provide you with the most important conceptual information.</p>
+
+<p>The iOS designer shipped with Xamarin is basically an extension for VisualStudio that imitates the <a href="https://developer.apple.com/xcode/interface-builder/" target="_blank">Interface Builder</a> that comes with Xcode. When using storyboards, the views are designed with this iOS designer ins VisualStudio and are then sent to the iOS build host. This will result in an XML-based <code class="highlighter-rouge">.storyboard</code>-file, whose contents should normally never be touched by hand. UI elements that you want to access from your custom can also be defined resulting in so-called <em>outlets</em>. Views defined in a storyboard result in an equivalent C# class where the outlets can be accessed as properties.</p>
+
+<p>As said, Xamarin will automatically create a class for each view defined in the storyboard, as soon as you set the class identifier for the view (you will see later how this is done). This class will inherit from one of the ones included in the Xamarin-SDK, e.g. <code class="highlighter-rouge">UIViewController</code>, <code class="highlighter-rouge">UITableViewController</code> and so on. Like in Android, there is a C#-equivalent for every view type and UI element trying to mimick what’s being done in the corresponding Objective-C class from the native SDK.</p>
+
+<p>However, MvvmCross comes with its own set of base classes classes for the most important iOS view types (not for every single UI element). The MvX-view classes inherit indirectly from one of the standard Xamarin.iOS-classes, adding framework functionality to it. If you’re using MvX as the framework of your choice, you must use the MvX view classes as base class, not the Xamarin.iOS class if you want to make use of advanced framework features such as data binding between View and ViewModel. This means you will have to change the generated class to inherit from the MvX-class to take advantage of framework functionalities like two-way data binding and ViewModel-navigation. You will see see the details on how to do so below in the next section.</p>
+
+<p>When navigating Views are loaded by MvX using a <em>container</em>, which is responsible for looking up the correct view class by its name, creating (i.e. instantiating or recycling) it and connecting it to its ViewModel. This match between View and ViewModel is normally done automagically in the background by the framework using reflection. However, if the navigation between is not done in the ViewModel layer (i.e. by the framework), MvX is not informed about view changes and can therefore not match the View to its ViewModel. That’s why every MvX-View has a <code class="highlighter-rouge">Request</code>-property which can be overridden to tell the framework what ViewModel it wants to be connected to. We will see one case where this must be done in the last section.</p>
+
+<h2 id="getting-started-with-storyboardy">Getting started with storyboardy</h2>
+
+<p>A storyboard is normally included in every iOS mobile project when starting out with Xamarin and VisualStudio. The following descriptions describe the steps to setup a Xamarin solution from scratch which uses MvvmCross as the framework and storyboards as means of creating the user interface. The individual steps are illustrated with corresponding pictures below.</p>
+
+<ol>
+  <li>Create a new project in VisualStudio (e.g. “Blank App Portable”) by choosing <code class="highlighter-rouge">File &gt; new &gt; Project</code> or pressing CTRL-Shift-N (picture 1). This will result in a project structure similar to the one in picture 2.</li>
+  <li>Set the iOS project as startup project by right-clicking on the iOS-Project and choosing <em>Set as startup project</em>.</li>
+  <li>Configure the core project to be built together with the iOS project in each desired launch configuration like <em>iPhone</em>, <em>iPhone Simulator</em>, etc. by right-clicking on the solution and choosing <em>Properties</em> (picture 3). If you don’t do this, you will not be able to start your project because the DLL from the core project is missing. This is a bug in VisualStudio which hopefully will be corrected in the near future.</li>
+  <li>Add MvvmCross NuGet-package to both the core project and your iOS project (picture 4). This will result in a bunch of assemblies added as a reference to your projects as well as a number of files automatically generated to illustrate the usage of ViewModels and Views in MvX.</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Delete the following files in each project&lt;/p&gt; 
+  * **Core project:** _ViewModel_-Folder, _ToDo-MvvmCross_-Folder, MyClass.cs
+  * **iOS UI project**: _Views_-Folder, _ToDo-MvvmCross_-Folder, ViewController.cs   5. Create a new class (e.g. named `StoryboardContainer`) which inherits from MvxTouchViewsContainer. Override the CreateViewOfType function as follows: &lt;span style="line-height: 1.5;"&gt; &lt;/span&gt;This will result in a new view container loading the views directly from the storyboard. The name of the storyboard is hardcoded here (_&amp;#8220;Main&amp;#8221;_ for `Main.storyboard`), so make sure you update this string if you rename your storyboard file.   6. Open the `Setup.cs` class in the iOS project and replace the generated constructor with this one:
+
+  
+Also, override the following method to return the new views container created in the previous step.
+
+  
+This will result in the newly created views container being constructed and used by the framework during the bootstrapping phase.   7. Open `AppDelegate.cs` in the iOS project and change it so that it inherits from MvxApplicationDelegate:
+
+  
+Also override the FinishedLaunching function as follows (the other, overloaded FinishedLaunching-function can be deleted):
+
+  
+This will result in the bootstrapping being executed in the correct order.   8. Add/create your storyboard file in the iOS project (if it doesn&amp;#8217;t exist yet). Make sure the file name corresponds to the string hardcoded in step 5. Open this storyboard file with the iOS designer in VisualStudio and layout your views.
+  
+Don&amp;#8217;t define any view transitions (i.e. _Segues_) yet. Just make sure the the root ViewController is set.   9. For each view that you want to be managed by MvX (which should be all in most cases) set the `Class` property using VisualStudio&amp;#8217;s property inspector (picture 6). This will result in a generated class with exactly the same name. Also set the Storyboard ID to the same value like the `Class` property. **The match of Storyboard ID and the class name is crucial or MvX will not be able to load the layout for a view from the storyboard when navigating!
+</code></pre></div></div>
+
+<p>** If you have UI elements that you want to reference in your C# code (like for example a button that you want to attach a click listener to) you can select the element and set its <code class="highlighter-rouge">Name</code>-property to an value (picture 7). The value can be an arbitrary string, however I suggest you use a suffix that indicates the type of the element you’re referencing (i.e. “…Button” for UIButtons).</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The generated class is partial and consists of two generated files (suppose we created a view called _MyView_) which will be combined to form the actual class:&lt;/p&gt; 
+  * `MyView.cs`: This file contains the user defined portion of the view class. Changes to the view like attaching listeners, updating UI elements and so on must be done in this class.
+  * `MyView.designer.cs`: This file contains the generated portion of the view  class. Any changes made in this class will be overwritten when the storyboard is updated, so don&amp;#8217;t touch this file.  10. Create a ViewModel by making a class `MyViewModel.cs` in the core project. Make sure the class name matches the view it will be backing (plus the `Model`-Suffix) and that it extends `MvxViewModel`.  11. Change the newly created view class (in the above example: `MyView.cs`) so that the view inherits from `Mvx...ViewController` instead of `UI...ViewController`.  There is a corresponding view class in MvX for each Xamarin SDK class, so replace the dots with the corresponding view types. For example: 
+  1. `UIViewController` becomes `MvxViewController`
+  2. `UI&lt;strong&gt;Table&lt;/strong&gt;ViewController` becomes `Mvx&lt;strong&gt;Table&lt;/strong&gt;viewController`
+  3. `UI&lt;strong&gt;TabBar&lt;/strong&gt;ViewController` becomes `Mvx&lt;strong&gt;TabBar&lt;/strong&gt;ViewController`
+  4. &amp;#8230; and so on&amp;#8230;  12. Add additional views and (optionally) segues between views by dragging the ViewControllers from the VisualStudio Toolbox onto the storyboard (picture 8) and repeating the steps above (setting `Class` property, Storyboard-ID, creating ViewModel, defining outlets, &amp;#8230;).  13. Set the storyboard file as the main interface under _project properties_.
+</code></pre></div></div>
+
+<div id="gallery-10" class="gallery galleryid-639 gallery-columns-3 gallery-size-thumbnail">
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/1_new_project/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/1_new_project-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-734" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-734">
+      Creating a blank app project
+    </dd>
+  </dl>
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon portrait">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/2_project-structure/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/2_project-structure-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-735" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-735">
+      The generated project structure before adding MvX as NuGet package
+    </dd>
+  </dl>
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/3_configuration_manager/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/3_configuration_manager-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-736" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-736">
+      Configuring launch options to build core project together with iOS UI
+    </dd>
+  </dl>
+  
+  <br style="clear: both" />
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/4_nuget/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/4_nuget-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-737" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-737">
+      Adding MvX as NuGet package to both core and iOS UI project
+    </dd>
+  </dl>
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/5_launch_options/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/5_launch_options-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-738" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-738">
+      Setting Main.storyboard as main interface
+    </dd>
+  </dl>
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/6_storyboard/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/6_storyboard-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-739" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-739">
+      Setting class name and Storyboard ID for our first view
+    </dd>
+  </dl>
+  
+  <br style="clear: both" />
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/7_outlet/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/7_outlet-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-732" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-732">
+      Setting the name property on a UI element. This will result in a corresponding outlet.
+    </dd>
+  </dl>
+  
+  <dl class="gallery-item">
+    <dt class="gallery-icon landscape">
+      <a href="http://www.tiefenauer.info/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/8_segue/#main"><img width="150" height="150" src="http://www.tiefenauer.info/wp-content/uploads/2015/10/8_segue-150x150.png" class="attachment-thumbnail size-thumbnail" alt="" aria-describedby="gallery-10-733" /></a>
+    </dt>
+    
+    <dd class="wp-caption-text gallery-caption" id="gallery-10-733">
+      Two sample views connected through a button. The segue will be triggered by clicking the third button.
+    </dd>
+  </dl>
+  
+  <br style="clear: both" />
+</div>
+
+<h2 id="navigation">Navigation</h2>
+
+<p>With storyboards and MvX combined there are usually three slightly different variants of how navigation can be done between views, which will be described separately in individual sub-sections below:</p>
+
+<ol>
+  <li>ViewModel-Properties of type <code class="highlighter-rouge">ICommand</code> in the core project can be bound to UI elements in the view project</li>
+  <li>Listeners can be attached to events of UI elements in the view project, which then trigger some action (like navigating between views) on the ViewModel in the core project.</li>
+  <li>Navigation can be done by using segues, skipping the ViewModel-to-ViewModel approach of MvX altogether. MvX must then be informed manually of view changes in the UI.</li>
+</ol>
+
+<h3 id="variant-1-binding-to-viewmodel-properties">Variant 1: Binding to ViewModel properties</h3>
+
+<p>This is the variant that follows the navigation paradigm of MvX the closest. Immediately after loading the view the binding can be made by calling the <code class="highlighter-rouge">CreateBinding</code>-method of the MvX base class of the view to bind the default event of an UI element (e.g. a click on a button) to a command property on the ViewModel. This can be done as follows by overriding the <code class="highlighter-rouge">ViewDidLoad</code>-method.</p>
+
+<p>The command property on the ViewModel could be defined as follows:</p>
+
+<p>Following this variant will allow for binding the default event assumed by MvX to a specific command in the ViewModel. If you want to trigger navigation on a different event type, let’s say’ when double-tapping the button, you will need the next variant.</p>
+
+<h3 id="variant-2-attaching-listeners">Variant 2: Attaching listeners</h3>
+
+<p>This is actually a sub-variant of the above variant. Navigation is also done in the ViewModel, but instead of directly binding to a property on the ViewModel, an event listener is registered on the UI element which will trigger the corresponding command on the ViewModel programmatically.</p>
+
+<p>This variant allows to add some logic between user interaction and view navigation. Event listener can also be defined very easily by double-clicking an UI element of the storyboard in the iOS designer, but the result will also be more verbose because execution of the command must be triggered programmatically and is not done automatically by the framework.</p>
+
+<h3 id="variant-3-using-segues">Variant 3: Using segues</h3>
+
+<p>This variant follows Apple’s recommendations and makes use of the full potential of storyboards, because not only the views can be visually represented in the storyboard, but also the navigation between them. It is Apple’s recommended way of designing user interfaces and represents a 1:1 match to how UIs are designed in Xcode. On the other hand, it results also in a fundamentally different navigation concept because navigation is done entirely in the view, skipping MvX’ ViewModel layer entirely. Because of this, MvX must be informed of the view change and the corresponding ViewModel of the destination view must be set manually before making the transition. This is done indirectly by setting the <code class="highlighter-rouge">Request</code>-Attribute on the destination view as follows:</p>
+
+<p>This also requires defining a segue between the views by holding CTRL and clicking a UI element on the first view (e.g. a button) and then dragging the segue to the second view. The segue must also be named by setting its <code class="highlighter-rouge">Identifier</code>-property to an arbitrary value using VisualStudio’s Property inspector, whereas it is (again) crucial that the name matches the one defined in code (in the above example <em>showOtherView</em>).</p>
+
+<h3 id="comparison">Comparison</h3>
+
+<p>The following table shows advantages and disadvantages of for variant of navigating between views:</p>
+
+<table>
+  <caption>Comparison of pros and cons of variant2:</caption> <tr>
+    <td>
+    </td>
+    
+    <td>
+      <strong>Pro</strong>
+    </td>
+    
+    <td>
+      <strong>Contra</strong>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <strong>Variant 1</strong>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          Consistent with MvX programming paradigms
+        </li>
+        <li>
+          Less verbose than variant 2
+        </li>
+      </ul>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          No visual representation of view transitions
+        </li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <strong>Variant 2</strong>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          Easier to define in code (double-click on UI element in storyboard)
+        </li>
+        <li>
+          Registration of event types other than the default assumed by MvX
+        </li>
+      </ul>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          Does not make use of data binding functionality of MvX
+        </li>
+        <li>
+          more verbose than variant 1
+        </li>
+      </ul>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <strong>Variant 3</strong>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          Visual representation of transitions in the storyboard
+        </li>
+        <li>
+          Makes full use of the potential of storyboards
+        </li>
+      </ul>
+    </td>
+    
+    <td>
+      <ul style="list-style-type: circle;">
+        <li>
+          Link to ViewModel must be done manually before making the transition
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>Xamarin’s iOS designer provides a helpful and much more intuitive way for creating iOS interfaces or transitions in a single file. Having said that, unfortunately the iOS designer is far from being bug-free and can be quite a PITA at times. For example exat positioning of UI elements can become damn near impossible depending on the zoom level selected. Further, changes in the Storyboard do not always reflect in the app immediately.</p>
+
+<p>Sources for failures are – as always with Xamarin – manifold and often the time needed to track down a certain error is not worth the effort. Often, it is enough to clean/rebuild the project or the whole solution. Sometimes it is even necessary to restart VisualStudio.</p>
+
+<h3 id="sample-code">Sample code</h3>
+
+<p>If all else fails, you can find the code for a (very basic) sample application in the follwing GitHub-Repository:</p>
+
+<p><span class="ffs-bs"><a href="https://github.com/tiefenauer/MyStoryboardApp" class="btn btn-small btn-primary " style="color:#fff;"><span class="ffs-icon-container left"><i class="fa github-square"></i></span>Go to Sample-App on GitHub</a></span></p>
+
+<h2 id="what-we-have-done-so-far">What we have done so far</h2>
+
+<p>In this chapter we haved learned how to use Storyboards in Xamarin/VisualStudio together with the MvX-Framework. We have also reviewed the differences between a Segue-based navigation in Storyboards and the navigation concept in MvX.</p>
+
+
+    <!-- POST NAVIGATION -->
+      <div class="postNav clearfix">
+     
+      <a class="prev" href="/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/"><span>&laquo;&nbsp;Mobile App Development with Xamarin and MvvmCross &#8211; Part 4: Android UI</span>
+      
+    </a>
+      
+      
+      <a class="next" href="/blog/bdd-with-jbehave-12-setup-and-basic-tests/"><span>BDD with JBehave (1/2): Setup and basic tests&nbsp;&raquo;</span>
+       
+      </a>
+     
+    
+    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+  
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
+      </p>
+
+      <div class="footer-links"> 
+         <ul class="noList"> 
+            
+            <li><a href="https://www.facebook.com/daniel.tiefenauer">
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://twitter.com/danitiefenauer">
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://github.com/tiefenauer">
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
+                  </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.linkedin.com/in/danieltiefenauer">
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                </svg>
+            </a></li>
+                         
+            
+            <li><a href="mailto:daniel@tiefenauer.info">
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
+                  </svg>
+            </a></li>
+            
+         </ul>
+      </div>
+   </div>
+</div><!-- end .footer -->
+
+
+   <!-- Add jQuery and other scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
+
+<!-- Bootstrap scripts-->
+<script>
+    $('.alert').alert()
+</script>
+
+</body>
+
+</html>

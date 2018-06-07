@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>BDD with JBehave (1/2): Setup and basic tests</title>
+
+    <!-- Open Graph Meta -->
+    <meta content="Dani's Braindump" property="og:site_name">
+    
+      <meta content="BDD with JBehave (1/2): Setup and basic tests" property="og:title">
+    
+    
+      <meta content="article" property="og:type">
+    
+    
+      <meta content="First part on my tutorial on BDD" property="og:description">
+    
+    
+      <meta content="http://localhost:4000/blog/bdd-with-jbehave-12-setup-and-basic-tests/" property="og:url">
+    
+    
+      <meta content="2015-10-29T00:00:00+01:00" property="article:published_time">
+      <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+      <meta content="http://localhost:4000/assets/img/touring.jpg" property="og:image">
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@danitiefenauer">
+    <meta name="twitter:creator" content="@danitiefenauer">
+    
+      <meta name="twitter:title" content="BDD with JBehave (1/2): Setup and basic tests">
+    
+    
+      <meta name="twitter:url" content="http://localhost:4000/blog/bdd-with-jbehave-12-setup-and-basic-tests/">
+    
+    
+      <meta name="twitter:description" content="First part on my tutorial on BDD">
+    
+    
+      <meta name="twitter:image:src" content="http://localhost:4000/assets/img/touring.jpg">
+    
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+
+    <!-- Come and get me RSS readers -->
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="http://localhost:4000/feed.xml" />
+
+    <!-- Bootstrap: include before theme CSS so styles are overridden -->
+    <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="http://localhost:4000/blog/bdd-with-jbehave-12-setup-and-basic-tests/">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
+
+
+
+     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56931568-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+ 
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Dani's Braindump</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 <li class="element first  ">
+                     <a href="/index.html">Home</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/about">About</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/ml">Machine Learning</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/switzerland">Swiss Frenzy</a>
+                 </li> 
+                 
+                 <li class="element   last">
+                     <a href="/contact">Contact</a>
+                 </li> 
+                 
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post editable">
+
+    <!-- Frenzy layout: dynamically set title image -->
+    
+
+    <!-- Overrides frenzy image if set -->
+    
+
+    
+
+    <h1 class="postTitle">BDD with JBehave (1/2): Setup and basic tests</h1>
+    <p class="meta">October 29, 2015 | <span class="time">10</span> Minute Read</p>
+
+    <p>This entry is part 1 of 2 in the series <em>BDD with JBehave</em>.</p>
+
+<p>In an earlier article series I showed how to use Mockito together with JUnit in order to write good unit tests. While this tool is good for <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development (TDD)</a>, it falls short when it comes to <a href="https://en.wikipedia.org/wiki/Behavior-driven_development">Behavior Driven Development (BDD)</a>. In this article, I’m going to introduce another tool that has caught my attention and leverages your testing facilities to make use of the BDD-paradigms. But first, let’s see what we mean when we talk about BDD.</p>
+
+<h2 id="preface">Preface</h2>
+
+<p>There are a lot of posts and tutorials about JBehave, but none have satisfied my expectations so far. If you’ve never heard of JBehave before, it might be a bit hard to start out as a complete beginner, since most of the magic is happening under the hood and not transparent to the user.</p>
+
+<p>A very good introduction to JBehave can be found in <a href="https://blog.codecentric.de/en/2012/06/jbehave-configuration-tutorial">this blog post</a> on Codecentric.com. However, this post takes you only to a certain point, without covering the full capabilities of JBehave. This article series is intended to pick up where Codecentric.com left off.</p>
+
+<p>All code to the sample project built in this tutorial is available in my <a href="https://github.com/tiefenauer/jbehave-tutorial">GitHub repository</a>.</p>
+
+<h1 id="a-short-introduction-into-bdd-and-jbehave">A short introduction into BDD and JBehave</h1>
+
+<p>Behavior Driven Development (or BDD in short) is often referred to as the successor of Test Driven Development (TDD) and should strip away all technical details and special knowlege of how code should be tested. It does so by defining communication as central means of how collaborators should define what the system should do and what the expected result is. This also means that language becomes universally important in BDD, since not all collaborators have the same knowledge of technologies, tools and processes. BDD uses a domain-specific language (DSL) to describe behaviors of and expectations from a system.</p>
+
+<p>JBehave is the link between this DSL and Java by enabling software developers to incorporate expected behavior in to their test suite and run them automatically – similar to Unit Tests but based on tests formulated in natural language. The description of expected behaviour can (or should) even come from a non-technical person with extensive knowledge of the problem domain.</p>
+
+<p>Going into details of the principles of BDD and technical details JBehave would be fairly out of scope of this article series. There is a vast number of articles on BDD – read the <a href="http://behaviourdriven.org/Introduction">introductory article by Dan North</a> or google it if you want to know more. Also, JBehave is extensiveley documented. What this article series tries to do is to give you a general idea of how BDD tests can be written using JBehave and get you started as quickly as possible.</p>
+
+<h1 id="getting-started-with-jbehave">Getting started with JBehave</h1>
+
+<p>Ok, now it’s time to get our hands dirty. Let’s build our first project which is tested following the BDD approach. For this setup we will use the following setup:</p>
+
+<ul>
+  <li>a <a href="http://maven.apache.org/">Maven</a> project</li>
+  <li><a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> (Community edition)</li>
+  <li><a href="https://github.com/witspirit/IntelliJBehave">JBehave Suppor</a>t installed as plugin</li>
+</ul>
+
+<p>If you’re using another IDE, you may have to undertake additional steps. I know that there’s a <a href="http://jbehave.org/eclipse-integration.html">JBehave plugin for Eclipse</a>, too. However, this tutorial does only cover setup with IntelliJ.</p>
+
+<p>We will use a very simple example as use case for our tests. We will write Java code which implements a digital radio. Of course we will not have a real radio (i.e. you won’t hear any sound coming out of your speakers), since we only need some code to run our test against.</p>
+
+<p>The radio The radio will need a power source in order to play and should have some basic functionalities, such as:</p>
+
+<ul>
+  <li>playing music</li>
+  <li>selecting a station</li>
+  <li>saving a station</li>
+  <li>showing the currently selected station</li>
+  <li>… and so on</li>
+</ul>
+
+<p>The radio will be implemented in a single class <code class="highlighter-rouge">Radio.java</code>, which will be tested using BDD principles. This means we will define the radio’s behaviour first, before adding any logic to the class.</p>
+
+<h2 id="include-jbehave-as-a-dependency">Include JBehave as a dependency</h2>
+
+<p>Setup your project with Maven (or directly in the IDE). Of course, in order to use the functionalities of JBehave, we must add JBehave as a dependency:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.jbehave<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>jbehave-core<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>4.0.4<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.hamcrest<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>hamcrest-all<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.3<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span></code></pre></figure>
+
+<p>Note I have also included a dependency to <a href="http://hamcrest.org/">Hamcrest</a> in order to use their really useful matchers. This should be enough for now to write our first JBehave test.</p>
+
+<h2 id="our-first-jbehave-test">Our first JBehave test</h2>
+
+<p>JBehave needs three things to run a test:</p>
+
+<ul>
+  <li>a story, which will describe the expected behavior of the test candidate in a user friendly manner. The story is contained in a <code class="highlighter-rouge">*.story</code> file.</li>
+  <li>a test, which contains the steps to execute the described behavior. This test is usually just a Java file with some special annotations.</li>
+  <li>a mapping between the story and the steps, so that JBehave knows what steps to execute for what parts of the story. This is usually a class containing a configuration to automate the test. The class can be executed as a JUnit test and output results in various formats.</li>
+</ul>
+
+<h3 id="the-story">The story</h3>
+
+<p>Let’s start with the most simple use case. Let’s say I have a digital radio, which I want to turn on to listen to music. The expected behavior could be decribed as follows:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Given a digital radio
+When I turn on the radio
+Then the radio should be turned on</code></pre></figure>
+
+<p>Easy to read, huh? This is not a free text. It is acutally code being executed by JBehave! That’s the good thing about BDD: Since the behavior is language agnostic, expectations can be formulated almost entirely in natural language. You only have to follow a basic <a href="http://jbehave.org/">syntax pattern</a> with the following keywords:</p>
+
+<ul>
+  <li><strong>Given</strong>: Decribe the starting position for the behavior (preconditions)</li>
+  <li><strong>When</strong>: Describe what is happening in the test</li>
+  <li><strong>Then</strong>: Describe the expected behavior</li>
+</ul>
+
+<p>Of course there’s more and the descriptions can also be parameterized. But this should be enough for us to take in for now.</p>
+
+<h3 id="the-steps">The Steps</h3>
+
+<p>As said, JBehave needs the steps corresponding with the story description. This can be done using a POJO with some JBehave-annotated methods:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RadioSteps</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Radio</span> <span class="n">radio</span><span class="o">;</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a digital radio"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">aDigitalRadio</span><span class="o">(){</span>
+        <span class="n">radio</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Radio</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"I turn on the radio"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">iTurnOnTheRadio</span><span class="o">(){</span>
+        <span class="n">radio</span><span class="o">.</span><span class="na">switchOnOff</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Then</span><span class="o">(</span><span class="s">"the radio should be turned on"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">theRadioShouldBeTurnedOn</span><span class="o">(){</span>
+        <span class="n">assertTrue</span><span class="o">(</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>As you can see, the annotations carry the same namings like keywords described above. It is important that the string passed in as an argument matches the text following the keyword.</p>
+
+<p>The more perceptive of you might have noted that we’re still missing a radio that contains the actual behavior to be tested, so let’ts add that, too:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Radio</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">stationName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">turnedOn</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Radio</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">switchOnOff</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isTurnedOn</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">turnedOn</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<h3 id="the-mapping">The Mapping</h3>
+
+<p>Now, in order for JBehave to know what steps to execute for what parts of the story, we must provide it with some basic configuration. I won’t dig into the details of what else could be configured, but this should be enough for the moment.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TurnRadioOn</span> <span class="kd">extends</span> <span class="n">JUnitStory</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Configuration</span> <span class="nf">configuration</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">MostUsefulConfiguration</span><span class="o">()</span>
+                <span class="c1">// where to find the stories</span>
+                <span class="o">.</span><span class="na">useStoryLoader</span><span class="o">(</span><span class="k">new</span> <span class="n">LoadFromClasspath</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">()))</span>
+                <span class="c1">// CONSOLE and TXT reporting</span>
+                <span class="o">.</span><span class="na">useStoryReporterBuilder</span><span class="o">(</span><span class="k">new</span> <span class="n">StoryReporterBuilder</span><span class="o">().</span><span class="na">withDefaultFormats</span><span class="o">().</span><span class="na">withFormats</span><span class="o">(</span><span class="n">Format</span><span class="o">.</span><span class="na">CONSOLE</span><span class="o">,</span> <span class="n">Format</span><span class="o">.</span><span class="na">TXT</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Here we specify the steps classes</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">InjectableStepsFactory</span> <span class="nf">stepsFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// varargs, can have more that one steps classes</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">InstanceStepsFactory</span><span class="o">(</span><span class="n">configuration</span><span class="o">(),</span> <span class="k">new</span> <span class="n">RadioSteps</span><span class="o">());</span>
+    <span class="o">}</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>What this code does is tell JBehave the classpath to load stories from and write the results to the console in text format.</p>
+
+<h3 id="all-set">All set</h3>
+
+<p>Now let’s try it out. Right click on the mapping class (<code class="highlighter-rouge">TurnRadioOn.java</code>) and run it as a Unit Test. You should get the following output:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">java.lang.AssertionError
+ at org.junit.Assert.fail<span class="o">(</span>Assert.java:86<span class="o">)</span>
+ at org.junit.Assert.assertTrue<span class="o">(</span>Assert.java:41<span class="o">)</span>
+ at org.junit.Assert.assertTrue<span class="o">(</span>Assert.java:52<span class="o">)</span>
+ at info.tiefenauer.tutorials.jbehave.RadioSteps.theRadioShouldBeTurnedOn<span class="o">(</span>RadioSteps.java:30<span class="o">)</span>
+ at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
+ at sun.reflect.NativeMethodAccessorImpl.invoke<span class="o">(</span>NativeMethodAccessorImpl.java:62<span class="o">)</span>
+ at sun.reflect.DelegatingMethodAccessorImpl.invoke<span class="o">(</span>DelegatingMethodAccessorImpl.java:43<span class="o">)</span>
+...</code></pre></figure>
+
+<p>Uh-oh. Our test has failed. But that’s actually a good thing, since we can fix it now and will immediately know whether our fix has produced the expected behavior. So let’s complete the <code class="highlighter-rouge">switchOnOff</code>-Method to simulate the radio’s behavior:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">switchOnOff</span><span class="o">(){</span>
+        <span class="n">turnedOn</span> <span class="o">=</span> <span class="o">!</span><span class="n">turnedOn</span><span class="o">;</span>
+    <span class="o">}</span></code></pre></figure>
+
+<p>Let’s run our test again and we should see the following test result:</p>
+
+<p><img src="assets/img/wp-content/uploads/2015/10/img_5631e65b002a7.png" /></p>
+
+<h3 id="good-to-know">Good to know</h3>
+
+<p>If you’re (like me) keeping your stories and other test-related files in the test folder created by maven, you can do so but you need to tell Maven to also load your story files. By default, maven does not copy <code class="highlighter-rouge">.story</code> files to the classpath unless you explicitly tell it so. This can be achieved by adding additional information to the build step:</p>
+
+<p>Also, JBehave will run all your stories as a single unit test by default. if you want the results of the individual tests to be shown separately and neatly like in the screenshot above, you should add a dependency to <a href="http://mvnrepository.com/artifact/de.codecentric/jbehave-junit-runner">a custom test runner like the one below</a>:</p>
+
+<p>After that you can update your test file to be run with the custom test runner:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">switchOnOff</span><span class="o">(){</span>
+        <span class="n">turnedOn</span> <span class="o">=</span> <span class="o">!</span><span class="n">turnedOn</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="nd">@RunWith</span><span class="o">(</span><span class="n">JUnitReportingRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TurnRadioOn</span> <span class="kd">extends</span> <span class="n">JUnitStory</span> <span class="o">{</span>
+<span class="o">...</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="congratulations">Congratulations!</h2>
+
+<p>You have just run your first BDD test using JBehave. But wait, there’s more! Let’s see how we can extend our BDD-tests in order so test behavior in a more sophisticated manner.</p>
+
+<div id="ffs-tabbed-2" class="ffs-tabbed-nav"><ul class="resp-tabs-list" data-closed="closed"><li>Setup with Maven</li></ul><div class="resp-tabs-container"><div class="fruitful_tab tab-setup-with-maven"><p>If you&rsquo;re very lazy and you dont want to go over all the boilerplate code of including dependencies, creating story files, steps and mapping class, you can use one of the <a href="http://jbehave.org/reference/stable/archetypes.html">Maven archetypes provided by JBehave</a>. To do this simply choose the archetype when generating the project structure. For example, if you use the command line, you could just run</p><pre>mvn archetype:generate -Dfilter=org.jbehave:jbehave</pre><p>to generate your project in interactive mode and then select the&nbsp;<code>jbehave-simple-archetype</code>&nbsp;, provide your project details and then hit enter to generate a simple maven project (including a sample story and steps) that can be imported into the IDE of your choice.</p><p>For this tutorial, we&rsquo;re doing the setup by hand, to help you understand the inner workings and prerequisites needed for JBehave.</p></div></div></div>
+
+<div class="clearfix">&nbsp;</div>
+
+
+    <!-- POST NAVIGATION -->
+      <div class="postNav clearfix">
+     
+      <a class="prev" href="/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/"><span>&laquo;&nbsp;Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard</span>
+      
+    </a>
+      
+      
+      <a class="next" href="/blog/bdd-with-jbehave-advanced-tests/"><span>BDD with JBehave (2/2): Advanced tests&nbsp;&raquo;</span>
+       
+      </a>
+     
+    
+    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "/blog/bdd-with-jbehave-12-setup-and-basic-tests/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+  
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
+      </p>
+
+      <div class="footer-links"> 
+         <ul class="noList"> 
+            
+            <li><a href="https://www.facebook.com/daniel.tiefenauer">
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://twitter.com/danitiefenauer">
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://github.com/tiefenauer">
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
+                  </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.linkedin.com/in/danieltiefenauer">
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                </svg>
+            </a></li>
+                         
+            
+            <li><a href="mailto:daniel@tiefenauer.info">
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
+                  </svg>
+            </a></li>
+            
+         </ul>
+      </div>
+   </div>
+</div><!-- end .footer -->
+
+
+   <!-- Add jQuery and other scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
+
+<!-- Bootstrap scripts-->
+<script>
+    $('.alert').alert()
+</script>
+
+</body>
+
+</html>

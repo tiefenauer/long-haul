@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>CI for Flex Mobile Applications &#8211; Part 0</title>
+
+    <!-- Open Graph Meta -->
+    <meta content="Dani's Braindump" property="og:site_name">
+    
+      <meta content="CI for Flex Mobile Applications &#8211; Part 0" property="og:title">
+    
+    
+      <meta content="article" property="og:type">
+    
+    
+      <meta content="My thoughts about the world" property="og:description">
+    
+    
+      <meta content="http://localhost:4000/ci-for-flex-mobile-applications-part-0-the-setup/" property="og:url">
+    
+    
+      <meta content="2014-03-04T22:22:35+01:00" property="article:published_time">
+      <meta content="http://localhost:4000/about/" property="article:author">
+    
+    
+      <meta content="http://localhost:4000/assets/img/touring.jpg" property="og:image">
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@danitiefenauer">
+    <meta name="twitter:creator" content="@danitiefenauer">
+    
+      <meta name="twitter:title" content="CI for Flex Mobile Applications &#8211; Part 0">
+    
+    
+      <meta name="twitter:url" content="http://localhost:4000/ci-for-flex-mobile-applications-part-0-the-setup/">
+    
+    
+      <meta name="twitter:description" content="My thoughts about the world">
+    
+    
+      <meta name="twitter:image:src" content="http://localhost:4000/assets/img/touring.jpg">
+    
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+
+    <!-- Come and get me RSS readers -->
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="http://localhost:4000/feed.xml" />
+
+    <!-- Bootstrap: include before theme CSS so styles are overridden -->
+    <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="http://localhost:4000/ci-for-flex-mobile-applications-part-0-the-setup/">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
+
+
+
+     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56931568-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+ 
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Dani's Braindump</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 <li class="element first  ">
+                     <a href="/index.html">Home</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/about">About</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/ml">Machine Learning</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/switzerland">Swiss Frenzy</a>
+                 </li> 
+                 
+                 <li class="element   last">
+                     <a href="/contact">Contact</a>
+                 </li> 
+                 
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post editable">
+
+    <!-- Frenzy layout: dynamically set title image -->
+    
+
+    <!-- Overrides frenzy image if set -->
+    
+
+    
+
+    <h1 class="postTitle">CI for Flex Mobile Applications &#8211; Part 0</h1>
+    <p class="meta">March 04, 2014 | <span class="time">18</span> Minute Read</p>
+
+    <div class="seriesmeta">
+  This entry is part 1 of 9 in the series <a href="http://www.tiefenauer.info/series/flex-ci/" class="series-35" title="Continuous Integration for Flex Apps">Continuous Integration for Flex Apps</a>
+</div>
+
+<div class="fruitful_description_box">
+  <div class="fruitful_description shadow-type-1 " id="desc-box-72">
+    <span class="top_line"></span>
+    
+    <div class="text" style=" font-size: 40px; text-transform : uppercase; text-align: center; font-weight: 300; line-height: 1.2;">
+      The setup 
+    </div>
+    
+    <span class="bottom_line"></span>
+  </div>
+</div>
+
+<div class="clearfix">
+</div>
+
+<p>This is the first in a series of posts where I’ll describe the process of setting up a Continuous Integration process to build a mobile app created with Flex. I will use Jenkins as a CI server and ANT for my build scripts.</p>
+
+<p>This first article is about getting started and setting up the right tools.</p>
+
+<!--more-->
+
+<h1 id="getting-started">Getting started</h1>
+
+<p>Before you get started you should make sure you have the following ready:</p>
+
+<ul>
+  <li>a server running Windows that you have administrator rights to and that you can access over your local network (or over the internet, if you prefer). <strong>It is important that your server runs on Windows, since Adobe has abandoned Linux support some time ago.</strong> An old PC will do for most cases, although the build process can get quire ressource intensive, especially when having multiple jobs. I used my old P4 with 1GB Ram and 2.53GHz for it, which was just enough.</li>
+  <li>your Code hosted on Github. The steps in this tutorial assume you have your code on GitHub, but you can also host your code on your own Git server. The steps should be similar.</li>
+  <li>An Android certificate in the <code class="highlighter-rouge">*.p12</code> format.</li>
+  <li>An iOS development certificate in the <code class="highlighter-rouge">*.p12</code> format</li>
+  <li>An iOS mobile provisioning profile in the <code class="highlighter-rouge">*.mobileprovision</code> format</li>
+</ul>
+
+<h1 id="tools-used-in-this-tutorial">Tools used in this tutorial</h1>
+
+<p>To accomplish what is described in the following articles you will need to install the following tools on your server.  I won’t go through the process of installing the tools. Please refer to the official documentation if you need further help with the installation. Make sure you download the latest version in each case (for Flex it is 4.12.0 and for AIR 4.0 as of the time of this writing).</p>
+
+<ul>
+  <li>
+    <p><strong>Apache Flex SDK</strong>: You need to download the SDK in the version you built your app with on your local machine. If you have multiple apps with different versions of Flex, you need to have a copy  of each version in separate folders (see description below for a proposed folder structure). The easiest way to do this is to use the Flex Installer, which lets you select the AIR version you wish to use (see next point).</p>
+
+    <p><a title="Apache Flex" href="http://flex.apache.org" target="_blank">http://flex.apache.org</a></p>
+  </li>
+  <li>
+    <p><strong>Adobe AIR SDK</strong>: You need to have the AIR ADK in the version you want to build your app with (generally the newest version). As stated above, the easiest way to get it is downloading Flex with the installer available at the Apache Flex homepage. However, should you wish to install the AIR SDK over an existing copy of the Flex SDK (e.g. if you want to build the bleeding edge version of the SDK manually or you have a very old version of Flex, which is not in available for download in the Flex Installer), you can get it from Adobe under the link below. To install the AIR SDK simply unzip the contents of the downloaded ZIP-file into the base folder of your Flex SDK. If you combine the same Flex version with different AIR versions, you need a separate folder for each combination.</p>
+
+    <p><a title="Adobe AIR SDK" href="http://www.adobe.com/devnet/air/air-sdk-download.html " target="_blank">http://www.adobe.com/devnet/air/air-sdk-download.html </a></p>
+  </li>
+  <li>
+    <p><strong>Jenkins</strong>: Jenkins is a CI server which will run all the automated tasks we are going to create later.</p>
+
+    <p><a title="Jenkins CI" href="http://www.jenkins-ci.org/" target="_blank">http://www.jenkins-ci.org/</a></p>
+  </li>
+  <li>
+    <p><strong>ant</strong>: We will use ANT as the scripting language to describe the tasks needed to run the automated tasks.</p>
+
+    <p><a title="Apache ANT" href="http://ant.apache.org/" target="_blank">http://ant.apache.org/</a></p>
+  </li>
+  <li>
+    <p><strong>ant-contrib</strong>: Some steps described later will need the support of some extensions to ANT that are included in ant-contrib.</p>
+
+    <p><a title="ant-contrib" href="http://ant-contrib.sourceforge.net/" target="_blank">http://ant-contrib.sourceforge.net/</a></p>
+  </li>
+  <li>
+    <p><strong>Java JDK</strong>: Although a JRE (Java Runtime Environment) would be sufficient I recommend installing the JDK on a server since it contains additional tools you may or may not need and includes the JRE.</p>
+
+    <p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="Java JDK">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+  </li>
+  <li>
+    <p><strong>Git client:</strong> We will need this client to check out your code from Github and also check out some other projects we are going to need. Make sure you install the client following the <a href="https://help.github.com/articles/set-up-git">instructions from Github</a>. You should generate and add your keys to your Github account in order for Jenkins to check out code.</p>
+
+    <p><a href="http://www.git-scm.com/" title="Git SCM">http://www.git-scm.com/</a></p>
+  </li>
+</ul>
+
+<div id="stb-container-5084" class="stb-container-css stb-alert-container stb-no-caption stb-image-big stb-ltr stb-side-none">
+  <aside class="stb-icon"><img src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/alert.png" /></aside>
+  
+  <div id="stb-box-5084" class="stb-alert_box stb-box">
+    If you didn&#8217;t use the Flex installer to download the Flex and AIR SDK, make sure you select the Original SDK without the new compiler, since the new Falcon compiler does not support MXML files, which are used by Flex!
+  </div>
+</div>
+
+<h1 id="step-1-setting-up-the-server">Step 1: Setting up the server</h1>
+
+<p>Your CI server <strong>must run on Windows</strong> since Adobe AIR is not supported on Linux anymore. Although running the scripts on a Unix server may work for Android deploys to some extent, <strong>you will not be able to release iOS-Versions of your app under Linux</strong>.</p>
+
+<h2 id="folder-structure"><span style="line-height: 1.3;">Folder structure</span></h2>
+
+<p>I recommend the following folder structure. Of course you are free to install the tools in the locations of your choice, but the rest of this tutorial relies on the files lying in the following folders:</p>
+
+<ul>
+  <li>Root folder (in my case it’s the D:/ drive)
+    <ul>
+      <li>jenkins (this folder contains the Jenkins installation and nothing else)</li>
+      <li>sdk (this folder will host any SDKs you have on your machine, including Flex SDKs)
+        <ul>
+          <li>flex (sub-folder for the different Flex/AIR-SDKs
+            <ul>
+              <li>4.11.0_AIR4.0</li>
+              <li>4.11.0_AIR3.9</li>
+              <li>… (one folder for each Flex/AIR combination</li>
+            </ul>
+          </li>
+          <li>… (any other SDKs you may have, e.g. in case you are building native Android applications on the same server)</li>
+        </ul>
+      </li>
+      <li>tools
+        <ul>
+          <li>ant (your installation of Ant, including ant-contrib)</li>
+          <li>… (other tools you may have, such as Maven, which is not needed in this tutorial)</li>
+        </ul>
+      </li>
+      <li>cert (this folder contains all the certificate and mobileprovisioning profiles)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Please note the naming pattern for the Flex-SDK folders. It is always build up as</p>
+
+<p><code class="highlighter-rouge">Flex-Version + "_AIR" + AIR-Version</code></p>
+
+<p>This is a convention I have come to use  which lets me build my app using different versions of Flex or AIR with the same job, without having separate build scripts or different jobs.</p>
+
+<h2 id="setting-the-paths"><span style="line-height: 1.3;">Setting the paths</span></h2>
+
+<p>After you have installed the tools, you need to set some environment variables on your machine. This step is not explicitly required to run a build script with jenkins since Jenkins comes with the option to define the paths directly over the web interface.  However, you may want to test your script on your local machine before uploading it to GitHub or make the tools globally accessible for any other tool you might want. For this you need to set the following environment variables to make sure your scripts will find the executables for each tool:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">%ANT_HOME%</code>: path to your ant installation folder (e.g. <code class="highlighter-rouge">D:\tools\ant</code>)</li>
+  <li><code class="highlighter-rouge">%JAVA_HOME%</code>: path to your JDK installation folder (e.g. <code class="highlighter-rouge">C:\Program Files (x86)\Java\jdk1.8.0</code>)</li>
+  <li><code class="highlighter-rouge">%GIT_HOME%</code>: path to your Git installation folder (e.g. <code class="highlighter-rouge">C:\Program Files (x86)\Git</code>)</li>
+  <li><code class="highlighter-rouge">%HOME%</code>: path to the directory, where you have your<code class="highlighter-rouge">.ssh</code>-Folder (usually your user home path, e.g. <code class="highlighter-rouge">C:\Users\Daniel</code>)</li>
+</ul>
+
+<p>Next: add the following paths to your system environmental variables:</p>
+
+<p><code class="highlighter-rouge">%ANT_HOME%\bin;%JAVA_HOME%\bin;%GIT_HOME%\bin</code></p>
+
+<h1 id="step-2-installing-jenkins">Step 2: Installing Jenkins</h1>
+
+<p>This should also not be a problem since Jenkins comes with its own installer. Just make sure you install it as a service (which should be done automatically on Windows) so you don’t have to start it manually each time you restart your server. Install Jenkins into the directory specified above.</p>
+
+<h2 id="plugins">Plugins</h2>
+
+<p>Jenkins should be able to run the ANT-scripts without the need of additional plugins. However, for convenience purposes I recommend the installation of the following plugins (if not installed by default):</p>
+
+<ul>
+  <li><a title="Jenkins Ant Plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/Ant+Plugin" target="_blank">Ant plugin</a></li>
+  <li><a title="Jenkins GitHub plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/GitHub+Plugin" target="_blank">GitHub plugin</a></li>
+  <li><a title="Jenkins Git plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin" target="_blank"><span style="line-height: 1.5;">Git Plugin</span></a><span style="line-height: 1.5;"> if you host your code on your own server</span></li>
+  <li><a title="Jenkins FTP-Publisher plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/FTP-Publisher+Plugin" target="_blank">FTP-publisher plugin</a></li>
+  <li><a title="Jenkins Javadoc plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/Javadoc+Plugin" target="_blank">Javadoc plugin</a></li>
+  <li><a title="Jenkins GreenBalls plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/Green+Balls" target="_blank">Green Balls</a> and <a title="Jenkins ChuckNorris plugin" href="https://wiki.jenkins-ci.org/display/JENKINS/ChuckNorris+Plugin" target="_blank">ChuckNorris</a> plugin 🙂</li>
+</ul>
+
+<h2 id="configuring-jenkins">Configuring Jenkins</h2>
+
+<p><span style="font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 16px; line-height: 1.5;">Your Jenkins Server should be accessible under its url (<em>http://YourServerName:8080</em>). After you installed the plugins, some minimal configuration is neccessary to get started. Go to Jenkins &gt; Manage Jenkins &gt; Configure System.</span></p>
+
+<h3 id="configuring-git">Configuring Git</h3>
+
+<p>For Jenkins to be able to check out your code, it must know where your Git client is located. For this we have to specify a Git installation with the path to the executable.</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/948.png" alt="" /></p>
+
+<p>Unter the section <em>Git</em> enter the full path to your <em>git.exe</em>:</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/320.png" alt="" /></p>
+
+<h3 id="jenkins-environment-variables">Jenkins environment variables</h3>
+
+<p>Next, you need to set two environmental variables which will be available in any job:</p>
+
+<ul>
+  <li><em>sdk_dir</em>: This variable specifies the directory, where Jenkins will look for Flex SDKs</li>
+  <li><em>cert_dir</em>: This variable specifies the directory, where Jenkins will look for certificates or provisioning profiles.</li>
+</ul>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/466.png" alt="" /></p>
+
+<p>It is also possible to set it individually for each job (read below where we set up the job parameters), but since it is unlikely that you have different locations for your SDK, this doesn’t make much sense.</p>
+
+<p><span style="line-height: 1.5;">That’s it. That should be enough for jenkins to get ready and check out your code.</span></p>
+
+<h1 id="step-3-preparing-the-job">Step 3: Preparing the job</h1>
+
+<p>To run the whole CI process we need to create a new job in Jenkins. You can easily do this from the start page of Jenkins by .</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/721.png" alt="" /></p>
+
+<p>Next, choose a name for your project. Any name will do. Just make sure you selected “Build a free-style software project” as your option and then click OK.</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/790.png" alt="" /></p>
+
+<p>This will take you to the job configuration page, where we will set some parameters used by our job and/or build script.</p>
+
+<h2 id="job-parameters">Job parameters</h2>
+
+<p>Since we’re building a GitHub project, enter the URL (the one you would use for cloning with your client) into the field provided:</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/817.png" alt="" /></p>
+
+<p>I recommend using a parameterized job with the following parameters. You can do this by checking the following parameter in your job configuration on Jenkins.</p>
+
+<p><img class="aligncenter" style="line-height: 1.5;" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/687.png" alt="" /></p>
+
+<p>This will allow us to run certain steps conditionally by querying the environmental parameters in the script file. Like this we can specify the steps being executed in each run or just use the defaults.  This makes our job extremely flexible and easy to test, since you may not want to run the whole script if you only made changes to a single step. I found the following parameters to be useful:</p>
+
+<ul>
+  <li>
+    <p><em>flex_version</em> (choice parameter): Prepare a list of Flex versions available on your server (in the C:\tools\sdk\flex directory). Make sure you don’t have any typos here and that only versions are listed that are actually installed on your machine since the build script we are going to build relies on the SDK versions lying in folders following a specific naming pattern (see above).</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/977.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>air_version</em> (choice parameter): Likewise, prepare a list of AIR versions that you have the SDK of</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/437.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>generate_asdoc</em> (boolean parameter): A parameter to specify whether the ASDOC should be built or not</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/970.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>run_unittests</em> (boolean parameter): A parameter to specify whether the FlexUnit-Tests should be run or not</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/266.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>package_ipa</em> (boolean parameter): Whether an IPA-file should be created for installation on iOS-Devices (this comes in handy if you just want to test your job quickly, because this step requires by far the most time).</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/737.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>package_apk</em> (boolean parameter): Whether an APK-File should be created for installation on Android-Devices (you can check this to see if your package-task is generally set up correctly, since packaging an APK is much faster than packaging an IPA and the differences in the script are only minimal).</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/394.png" alt="" /></p>
+  </li>
+  <li>
+    <p><em>output_dir</em> (Text parameter): Where the artifacts (SWF File, APK/IPA-File, Documentation, Test Report, …) should be written to. All files will be inside this directory or a subfolder of it.</p>
+
+    <p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/858.png" alt="" /></p>
+  </li>
+</ul>
+
+<h2 id="source-code-management">Source Code Management</h2>
+
+<p><span style="line-height: 1.5;">Under “Source Code Management” and “Build Triggers” set checkboxes as follows. You can leave away the credentials, since you stored your credentials within your Git authentication agent. If you created your keys, added them to your GitHub project and were able to check out your source code using the Git client on your server, checkout should also work when checking out with Jenkins since Jenkins will use the same client.</span></p>
+
+<p><img src="http://www.tiefenauer.info/wp-content/uploads/2014/04/270.png" alt="" /></p>
+
+<h2 id="our-first-build-step">Our first build step</h2>
+
+<p><span style="line-height: 1.5;">As a final step in this first part you have to add “Invoke Ant” as a build step:</span><img style="line-height: 1.5;" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/838.png" alt="" /></p>
+
+<p>We are  goint to add more steps later. This first steps just makes sure our build.xml build script is going to be executed by Jenkins.</p>
+
+<p>After all is set, save your changes and you’ll have your build job ready for execution – almost. Since we don’t have a build script yet, the build step “Invoke Ant” will fail, because it will not find a build script ready for execution. So let’s get this done quickly.</p>
+
+<h2 id="preparing-the-build-script">Preparing the build script</h2>
+
+<p>By default, Ant will look for a file called <em>build.xml</em> in the root folder. Our build script will continue of this file and two more parts. You also need to place two files into the source directory of your codebase</p>
+
+<ul>
+  <li><strong>build.xml</strong>: This is the main script-file containing the different ANT targets (compilation, packaging, testing, documentation, …). Each target will be explained in the following chapters. To get started, I’ll provide you with a scaffolding, which will do nothing excep print out some information.</li>
+  <li><strong>build.properties</strong>: This separate file contains platform specific properties that can be used to configure the script-file mentioned above. The file contains for example all the platform and project specific attributes and will be loaded by the build-script and is a simple way of externalizing variable values that are used in the build script. If the build-script does not contain any project specific attributes, you can re-use the <em>build.xml</em> for any project you have, simply by replacing the <em>build.properties</em>-file with another version containing the appropriate values.</li>
+  <li><strong>build.init.xml:</strong> To make the main build file a bit more readable, I outsourced the script part for initialization (run at the beginning of the script) to a separate file.</li>
+</ul>
+
+<p>Below you’ll find a scaffolding of the <em>build.xml</em> and the <em>build.init.xml</em> together with a <em>build.properties</em> file where you only have to fill in/change your server specific data. We will expand thescaffolding in the following steps.</p>
+
+<p><span style="line-height: 1.5;"></span></p>
+
+<div id="stb-container-7479" class="stb-container-css stb-info-container stb-no-caption stb-image-big stb-ltr stb-side-none">
+  <aside class="stb-icon"><img src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/info.png" /></aside>
+  
+  <div id="stb-box-7479" class="stb-info_box stb-box">
+    You should adjust at least the following parameters:&lt;/p&gt; 
+    
+    <ul>
+      <li>
+        <code>META.name</code>: Name of your project (can be any value)
+      </li>
+      <li>
+        <code>META.author.name</code>: Your name
+      </li>
+      <li>
+        <code>META.author.email</code>: Your e-mail address
+      </li>
+      <li>
+        <code>META.copyright</code>: Any copyright information
+      </li>
+      <li>
+        <code>OUTPUT.name.android</code>: Name of your APK file (should not contain spaces or extra characters)
+      </li>
+      <li>
+        <code>OUTPUT.name.ios</code>: Name of your IPA file (should not contain spaces or extra characters)
+      </li>
+      <li>
+        <code>PROJECT.app.name</code>: Name of your app (must correspond with the *.mxml file in the main source folder)
+      </li>
+    </ul>
+  </div>
+</div>
+
+<p>After you created the files locally, don’t forget to add and push them to your GitHub repository project.</p>
+
+<h1 id="step-4-test-everything-out">Step 4: Test everything out</h1>
+
+<h2 id="checking-the-paths">Checking the paths</h2>
+
+<p>To check whether your paths are correctly set, open a command line and type the following commands:</p>
+
+<p><code class="highlighter-rouge">&lt;img src="http://www.tiefenauer.info/wp-content/uploads/2014/03/157.png" alt="" /&gt;</code></p>
+
+<p>This should produce some output as seen in the screenshot above. If you get an error saying Windows can’t find the command, you have to check your paths.</p>
+
+<p><span style="line-height: 1.5;"></span></p>
+
+<div id="stb-container-5971" class="stb-container-css stb-info-container stb-caption stb-collapsible stb-visible stb-image-big stb-ltr">
+  <div id="stb-caption-box-5971" class="stb-info-caption_box stb_caption stb-caption-box">
+    <aside class="stb-caption-icon"><img src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/info.png" /></aside><span>Setting environment variables in Windows</span>
+    
+    <div id="stb-tool-5971" class="stb-tool">
+      <img id="stb-toolimg-5971" src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/minus.png" title="Hide" />
+    </div>
+  </div>
+  
+  <div id="stb-body-box-5971" class="stb-info-body_box stb_body stb-body-box">
+    Windows may require you to log off and on again in order for the environment variables to become active.
+  </div>
+</div>
+<p>&lt;/span&gt;</p>
+
+<div id="stb-container-6726" class="stb-container-css stb-info-container stb-caption stb-collapsible stb-visible stb-image-big stb-ltr">
+  <div id="stb-caption-box-6726" class="stb-info-caption_box stb_caption stb-caption-box">
+    <aside class="stb-caption-icon"><img src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/info.png" /></aside><span>Setting an environmental Variable for Flex</span>
+    
+    <div id="stb-tool-6726" class="stb-tool">
+      <img id="stb-toolimg-6726" src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/minus.png" title="Hide" />
+    </div>
+  </div>
+  
+  <div id="stb-body-box-6726" class="stb-info-body_box stb_body stb-body-box">
+    You can set an environment variable pointing to the root directory of a Flex distribution if you like. Just make sure you add the %Flex_HOME%\bin to the path as descripbed above. That way, you will be able to run any command line tools that come with Flex/AIR (such as the MXMLC-Compiler, which is used in the next chapter) directly without specifying the full path to the executable. However, this is optional, since we will be using Ant scripts rather than shell scripts.
+  </div>
+</div>
+
+<h2 id="checking-your-git-client-by-cloning-your-repository">Checking your Git client by cloning your repository</h2>
+
+<p>To check if your Git client is all set up, you should try and check out your project to some arbitrary folder to see if this works. If it doesn’t, it won’t work with Jenkins either! If it works, you can delete the newly created folder with the checked out code immediately afterwards, because the cloning/pulling will be part of the Jenkins job afterwards.</p>
+
+<div id="stb-container-7353" class="stb-container-css stb-alert-container stb-no-caption stb-image-big stb-ltr stb-side-none">
+  <aside class="stb-icon"><img src="http://www.tiefenauer.info/wp-content/plugins/wp-special-textboxes/themes/stb-metro/alert.png" /></aside>
+  
+  <div id="stb-box-7353" class="stb-alert_box stb-box">
+    You can&#8217;t continue unless your paths are correct, since Jenkins needs to find the executables for each tool and be able to check out your code!
+  </div>
+</div>
+
+<h2 id="running-your-jenkins-job-for-the-first-time">Running your Jenkins job for the first time</h2>
+
+<p>To see if we are ready to continue with the actual tasks (i.e. the build script) just run the job by selecting it from the list on the home page and click “Build with parameters”. This will bring you to the mask where you can set the parameters as defined in the job configuration page previously. The first value is selected by default, so make sure the most recent Flex/AIR version is on top of your list in the job configuration page.</p>
+
+<p><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/03/568.png" alt="" /><img class="aligncenter" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/617.png" alt="" /></p>
+
+<p>If everything works out as expected, you should get a green ball (or a blue one, if you haven’t installed the GreenBalls plugin) which means everything is ok. We haven’t done anything useful to the code yet, but that’s part of the next chapter.</p>
+
+<h1 id="what-we-have-done-so-far">What we have done so far</h1>
+
+<p>In this part of the tutorial, we have installed the tools required for building our app on a Windows server. We also have set up Jenkins as our CI server and created a parameterized job, whose main part consists of executing the <em>build.xml</em> build script which we created as a stub and which is on our GitHub repository.</p>
+
+<p>If you’re all set, continue with <a href="http://www.tiefenauer.info/ci-for-flex-mobile-applications-part-1-compiling-your-code/" title="CI for Flex Mobile Applications – Part 1: Compiling your code">Part 1: Compiling your code</a>.</p>
+
+
+    <!-- POST NAVIGATION -->
+      <div class="postNav clearfix">
+     
+      <a class="prev" href="/generic-as3-functions-to-xml-to-object-and-vice-versa/"><span>&laquo;&nbsp;Generic AS3-functions to convert XML to Object and vice versa</span>
+      
+    </a>
+      
+      
+      <a class="next" href="/ci-for-flex-mobile-applications-part-1-compiling-your-code/"><span>CI for Flex Mobile Applications – Part 1&nbsp;&raquo;</span>
+       
+      </a>
+     
+    
+    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "/ci-for-flex-mobile-applications-part-0-the-setup/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+  
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
+      </p>
+
+      <div class="footer-links"> 
+         <ul class="noList"> 
+            
+            <li><a href="https://www.facebook.com/daniel.tiefenauer">
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://twitter.com/danitiefenauer">
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://github.com/tiefenauer">
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
+                  </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.linkedin.com/in/danieltiefenauer">
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                </svg>
+            </a></li>
+                         
+            
+            <li><a href="mailto:daniel@tiefenauer.info">
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
+                  </svg>
+            </a></li>
+            
+         </ul>
+      </div>
+   </div>
+</div><!-- end .footer -->
+
+
+   <!-- Add jQuery and other scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
+
+<!-- Bootstrap scripts-->
+<script>
+    $('.alert').alert()
+</script>
+
+</body>
+
+</html>
