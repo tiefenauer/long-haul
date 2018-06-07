@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>Dani's Braindump</title>
+    <title>Bözingerberg and Taubenlochschlucht</title>
 
     <!-- Open Graph Meta -->
     <meta content="Dani's Braindump" property="og:site_name">
     
-      <meta content="Dani's Braindump" property="og:title">
+      <meta content="Bözingerberg and Taubenlochschlucht" property="og:title">
     
     
       <meta content="article" property="og:type">
@@ -21,8 +21,11 @@
       <meta content="My thoughts about the world" property="og:description">
     
     
-      <meta content="http://localhost:4000/" property="og:url">
+      <meta content="http://localhost:4000/blog/boezingerberg/" property="og:url">
     
+    
+      <meta content="2018-06-02T00:00:00+02:00" property="article:published_time">
+      <meta content="http://localhost:4000/about/" property="article:author">
     
     
       <meta content="http://localhost:4000/assets/img/touring.jpg" property="og:image">
@@ -33,10 +36,10 @@
     <meta name="twitter:site" content="@danitiefenauer">
     <meta name="twitter:creator" content="@danitiefenauer">
     
-      <meta name="twitter:title" content="Dani's Braindump">
+      <meta name="twitter:title" content="Bözingerberg and Taubenlochschlucht">
     
     
-      <meta name="twitter:url" content="http://localhost:4000/">
+      <meta name="twitter:url" content="http://localhost:4000/blog/boezingerberg/">
     
     
       <meta name="twitter:description" content="My thoughts about the world">
@@ -63,9 +66,8 @@
     <!-- custom styles -->
     <link rel="stylesheet" href="/assets/css/custom.css">
 
-    <!--[if IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
-    <link rel="canonical" href="http://localhost:4000/">
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="http://localhost:4000/blog/boezingerberg/">
 
     <!-- Modernizr -->
     <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
@@ -84,6 +86,170 @@ ga('send', 'pageview');
 
 </script>
  
+<script type='text/javascript'>
+  /* global google */
+/* global MarkerClusterer */
+// eslint-disable-next-line no-unused-vars
+var jekyllMaps = (function() {
+  'use strict'
+  var clusterSettings = {}
+  var clusterReady = false
+  var mapReady = false
+  var options = {}
+  var data = []
+  var maps = []
+
+  return {
+    initializeMap: initializeMap,
+    initializeCluster: initializeCluster,
+    register: register
+  }
+
+  /**
+   * Setup Google Maps options and call renderer.
+   */
+  function initializeMap() {
+    options = {
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      center: new google.maps.LatLng(0, 0)
+    }
+    mapReady = true
+    render()
+  }
+
+  /**
+   * Register map data to be rendered once Google Maps API is loaded.
+   *
+   * @param string id
+   * @param Array locations
+   * @param Object settings
+   */
+  function register(id, locations, options) {
+    data.push({ id: id, locations: locations, options: options })
+    render()
+  }
+
+  /**
+   * Render maps data if Google Maps API is loaded.
+   */
+  function render() {
+    if (!mapReady) return
+
+    while (data.length > 0) {
+      var item = data.pop()
+      var bounds = new google.maps.LatLngBounds()
+      var mapOptions = Object.assign({}, options, item.options)
+      var map = new google.maps.Map(
+        document.getElementById(item.id),
+        mapOptions
+      )
+      var infoWindow = new google.maps.InfoWindow()
+      var markers = item.locations.map(createMarker)
+
+      map.fitBounds(bounds)
+      google.maps.event.addListenerOnce(map, 'idle', function() {
+        if (this.customZoom) this.setZoom(this.customZoom)
+      })
+      if (mapOptions.useCluster) {
+        maps.push({ map: map, markers: markers })
+        processCluster()
+      }
+    }
+
+    function createMarker(location) {
+      var position = new google.maps.LatLng(
+        location.latitude,
+        location.longitude
+      )
+      bounds.extend(position)
+      if (!mapOptions.showMarker) return false
+
+      var marker = new google.maps.Marker({
+        position: position,
+        title: location.title,
+        image: location.image,
+        icon: location.icon || mapOptions.markerIcon,
+        url: markerUrl(mapOptions.baseUrl, location.url),
+        url_text: location.url_text,
+        map: map
+      })
+      if (mapOptions.showMarkerPopup) marker.addListener('click', markerPopup)
+
+      return marker
+    }
+
+    function markerUrl(baseUrl, url) {
+      if (/^(https?|\/\/)/.test(url)) return url
+
+      return url.length > 0 ? baseUrl + url : ''
+    }
+
+    function markerPopup() {
+      var content = '<div class="map-info-window"><h5>' + this.title + '</h5>'
+      var imageTag =
+        this.image.length > 0 &&
+        '<img src="' + this.image + '" alt="' + this.title + '"/>'
+      if (this.url.length > 0) {
+        var linkContent = imageTag || this.url_text || 'View'
+        content += '<a href="' + this.url + '">' + linkContent + '</a>'
+      } else if (imageTag) {
+        content += imageTag
+      }
+      content += '</div>'
+      infoWindow.setContent(content)
+      infoWindow.open(map, this)
+    }
+  }
+
+  function initializeCluster(settings) {
+    clusterReady = true
+    clusterSettings = settings || {}
+    processCluster()
+  }
+
+  function processCluster() {
+    if (!clusterReady) return
+
+    while (maps.length > 0) {
+      var obj = maps.pop()
+      // eslint-disable-next-line no-new
+      new MarkerClusterer(obj.map, obj.markers, {
+        gridSize: clusterSettings.grid_size || 25,
+        imagePath:
+          'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+      })
+    }
+  }
+})()
+/* Object.assign polyfill */
+if (typeof Object.assign !== 'function') {
+  Object.assign = function(target) {
+    'use strict'
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object')
+    }
+
+    target = Object(target)
+    for (var index = 1; index < arguments.length; index++) {
+      var source = arguments[index]
+      if (source != null) {
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+    }
+    return target
+  }
+}
+
+</script>
+<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCZVdrcBRuum7_QAIrsU1Ph726_-jX9rok&callback=jekyllMaps.initializeMap'></script>
+
+<script async defer src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'
+        onload='jekyllMaps.initializeCluster({})'></script>
+
 </head>
 
 
@@ -95,7 +261,7 @@ ga('send', 'pageview');
          <nav class="nav-collapse">
              <ul class="noList">
                  
-                 <li class="element first current ">
+                 <li class="element first  ">
                      <a href="/index.html">Home</a>
                  </li> 
                  
@@ -124,56 +290,98 @@ ga('send', 'pageview');
 
    <div class="content">
       <div class="container">
-         <div class="home" id="home">
-  <h1 class="pageTitle">Recent Posts</h1>
-  <ul class="posts noList">
-    
-      <li>
-        <span class="date">June 02, 2018</span>
-        <h3><a class="post-link" href="/blog/boezingerberg">Bözingerberg and Taubenlochschlucht</a></h3>
-        <p>This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.
+         <div class="post editable">
 
-</p>
-      </li>
+    <!-- Frenzy layout: dynamically set title image -->
     
-      <li>
-        <span class="date">May 13, 2018</span>
-        <h3><a class="post-link" href="/blog/wireless-charger-for-motorcycle">Charging your phone wirelessly on your motorbike</a></h3>
-        <p>Since the weather was not terribly good on ascension this year, I tried to make maximal use of my time by starting a little crafting project.
 
-</p>
-      </li>
+    <!-- Overrides frenzy image if set -->
     
-      <li>
-        <span class="date">February 22, 2018</span>
-        <h3><a class="post-link" href="/blog/bye-bye-wordpress-hello-jekyll">Bye bye, Wordpress. Hello Jekyll!</a></h3>
-        <p>I have hosted my personal blog using Wordpress on my beloved Synology 109+ NAS for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…
 
-</p>
-      </li>
     
-      <li>
-        <span class="date">October 02, 2017</span>
-        <h3><a class="post-link" href="/blog/new-series-machine-learning">Machine Learning</a></h3>
-        <p>It has been a looong time since my last post… <img class="emoji" title=":frowning:" alt=":frowning:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f626.png" height="20" width="20">
+        <div class="featuredImage">
+            <img src="/assets/img/switzerland/2018-06-02-boezingerberg/title.jpg" alt="">
+        </div>
+    
 
+    <h1 class="postTitle">Bözingerberg and Taubenlochschlucht</h1>
+    <p class="meta">June 02, 2018 | <span class="time">1</span> Minute Read</p>
+
+    <p>
+    
+    <a href="/assets/img/switzerland/2018-06-02-boezingerberg/map.pdf" role="button" class="btn btn-primary btn-lg btn-block">
+        <i class="fas fa-map-signs" aria-hidden="true"></i> Download map
+    </a>
 </p>
-      </li>
+
+<p>This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.</p>
+
+<p>The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which was good considering the hot and humid weather. The path leads you through a small park where you can have a picnic and watch/feed domestic animals (deer, ibex, marmots and the like). On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good <img class="emoji" title=":stuck_out_tongue:" alt=":stuck_out_tongue:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f61b.png" height="20" width="20">). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps.</p>
+
+<p>The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (<em>Pigeon Hole Gorge</em>). Back in Biel you can relax in the public seaside bath, which is very nice.</p>
+
+<h2 id="facts-and-figures">Facts and Figures</h2>
+
+<ul>
+  <li>Trip length: 3-4 hours</li>
+  <li>climbing distance: 500m</li>
+  <li>Highest point: 929m</li>
+  <li>Best season: April - November</li>
+</ul>
+
+<h2 id="where-to-park">Where to park</h2>
+
+<h2 id="what-to-do-and-see">What to do and see</h2>
+
+<h2 id="what-to-bring">What to bring</h2>
+
+<h2 id="pictures">Pictures</h2>
+
+<div id="97737fd6-e301-41d6-80e0-628ab1245cc9" style="width:100%;height:400px;"></div>
+<script type="text/javascript">
+  jekyllMaps.register(
+    '97737fd6-e301-41d6-80e0-628ab1245cc9',
+    [{"latitude":47.1721091,"longitude":7.2754052,"title":"Bözingerberg and Taubenlochschlucht","icon":null,"url":"/blog/boezingerberg/","url_text":null,"image":""}],
+    {"baseUrl":"","useCluster":true,"showMarker":true,"showMarkerPopup":true,"markerIcon":null}
+  );
+</script>
+
+
+
+    <!-- POST NAVIGATION -->
+      <div class="postNav clearfix">
+     
+      <a class="prev" href="/blog/wireless-charger-for-motorcycle/"><span>« Charging your phone wirelessly on your motorbike</span>
+      
+    </a>
+      
+     
     
-      <li>
-        <span class="date">December 08, 2015</span>
-        <h3><a class="post-link" href="/blog/bdd-with-jbehave-advanced-tests">BDD with JBehave (2/2): Advanced tests</a></h3>
-        <p>Second part on my tutorial on BDD</p>
-      </li>
     
-  </ul>
-  <!-- Pagination links -->
-  <div class="pagination">
-    
-    
-      <a href="/blog/page2" class="next button__outline">Older Posts</a>
-    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = "/blog/boezingerberg/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
   </div>
+  
 </div>
 
       </div>
