@@ -5,6 +5,7 @@ gem "jekyll-paginate"
 gem "support-for"
 gem "jemoji"
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'jekyll-maps'
 # group :jekyll_plugins do
 #    gem 'jekyll-livereload'
 # end

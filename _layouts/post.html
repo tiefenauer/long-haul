@@ -3,17 +3,29 @@ layout: default
 comments: true
 ---
 <div class="post editable">
-  {% if page.image %}
-    <div class="featuredImage">
-        <img src="{{ '/assets/img/' | prepend: site.baseurl | append: page.image }}" alt="" />
-      </div>
-  {% endif %}
-  <h1 class="postTitle">{{ page.title }}</h1>
-  <p class="meta">{{ page.date | date: '%B %d, %Y' }} | <span class="time">{{ page.content | number_of_words | divided_by:180 }}</span> Minute Read</p>
-  
-  {{ content }}
 
-  <!-- POST NAVIGATION -->
-  {% include navigation.html %}
+    <!-- Frenzy layout: dynamically set title image -->
+    {% if layout.name == 'frenzy' %}
+        {% assign title_image = page.path | remove: '_posts/' | replace_first: '.md', '/title.jpg' %}
+    {% endif %}
+
+    <!-- Overrides frenzy image if set -->
+    {% if page.image %}
+        {% assign title_image = page.image %}
+    {% endif %}
+
+    {% if title_image %}
+        <div class="featuredImage">
+            <img src="{{ '/assets/img/' | prepend: site.baseurl | append: title_image }}" alt="" />
+        </div>
+    {% endif %}
+
+    <h1 class="postTitle">{{ page.title }}</h1>
+    <p class="meta">{{ page.date | date: '%B %d, %Y' }} | <span class="time">{{ page.content | number_of_words | divided_by:180 }}</span> Minute Read</p>
+
+    {{ content }}
+
+    <!-- POST NAVIGATION -->
+    {% include navigation.html %}
   
 </div>
