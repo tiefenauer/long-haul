@@ -169,8 +169,8 @@ if (typeof Object.assign !== 'function') {
     <description>My thoughts about the world</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 07 Jun 2018 13:12:24 +0200</pubDate>
-    <lastBuildDate>Thu, 07 Jun 2018 13:12:24 +0200</lastBuildDate>
+    <pubDate>Thu, 07 Jun 2018 13:19:49 +0200</pubDate>
+    <lastBuildDate>Thu, 07 Jun 2018 13:19:49 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       
@@ -199,10 +199,10 @@ if (typeof Object.assign !== 'function') {
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
 
-&lt;div id=&quot;e2cebf28-05cf-427a-83e6-1405d96cf17a&quot; style=&quot;width:100%;height:400px;&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;5d0096c6-4756-492b-94fc-ae07e49ea4a2&quot; style=&quot;width:100%;height:400px;&quot;&gt;&lt;/div&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
   jekyllMaps.register(
-    'e2cebf28-05cf-427a-83e6-1405d96cf17a',
+    '5d0096c6-4756-492b-94fc-ae07e49ea4a2',
     [{&quot;latitude&quot;:47.1721091,&quot;longitude&quot;:7.2754052,&quot;title&quot;:&quot;Bözingerberg and Taubenlochschlucht&quot;,&quot;icon&quot;:null,&quot;url&quot;:&quot;/blog/boezingerberg/&quot;,&quot;url_text&quot;:null,&quot;image&quot;:&quot;&quot;}],
     {&quot;baseUrl&quot;:&quot;&quot;,&quot;useCluster&quot;:true,&quot;showMarker&quot;:true,&quot;showMarkerPopup&quot;:true,&quot;markerIcon&quot;:null}
   );
