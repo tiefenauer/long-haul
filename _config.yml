@@ -1,0 +1,66 @@
+title: Dani's Braindump
+description: My thoughts about the world
+
+url: https://tiefenauer.github.io
+baseurl: ""
+paginate_path: "blog/page:num/"
+permalink: blog/:title/
+future: true
+
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-paginate
+  - jemoji
+  - jekyll-maps
+paginate: 5
+
+#kramdown:
+#  parse_block_html: true
+
+navigation:
+ - title: Home
+   url: /index.html
+ - title: About
+   url: /about
+ - title: Machine Learning
+   url: /ml
+ - title: Swiss Frenzy
+   url: /switzerland
+ - title: Contact
+   url: /contact
+
+# http://damonbauer.me/organizing-jekyll-pages/
+include: ["_pages"]
+
+# https://jekyllrb.com/docs/configuration/#front-matter-defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# plugins:
+#   - jemoji
+ 
+social:
+   github: tiefenauer
+   twitter: danitiefenauer
+   facebook: daniel.tiefenauer
+   linkedin: danieltiefenauer
+   xing: Daniel_Tiefenauer
+   email: daniel@tiefenauer.info
+      
+google_analytics: "UA-56931568-3"
+
+maps:
+    google:
+      api_key: AIzaSyCZVdrcBRuum7_QAIrsU1Ph726_-jX9rok
