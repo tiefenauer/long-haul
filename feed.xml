@@ -5,9 +5,30 @@
     <description>My thoughts about the world</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Jun 2018 09:57:17 +0200</pubDate>
-    <lastBuildDate>Fri, 08 Jun 2018 09:57:17 +0200</lastBuildDate>
+    <pubDate>Fri, 08 Jun 2018 15:12:55 +0200</pubDate>
+    <lastBuildDate>Fri, 08 Jun 2018 15:12:55 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
+    
+      
+      <item>
+        <title>Haldensteiner Calanda</title>
+        <description>&lt;p&gt;The Calanda is the landmark mountain of the city of Chur. From Haldenstein it goes uphill for 2500 meters. You can either do the tour in one day and have sore legs the next day. Or you can stay in the Calanda hut (reservation needed!). The hill is very steep and the ascent is constant without any flat parts in between so make sure you bring enough water, food and wear good shoes! But the hassle is worth it: From up there you have a fantastic view over the various surrounding valleys.&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;The Calanda is the landmark mountain of the city of Chur. From Haldenstein it goes uphill for 2500 meters. You can either do the tour in one day and have sore legs the next day. Or you can stay in the Calanda hut (reservation needed!). The hill is very steep and the ascent is constant without any flat parts in between so make sure you bring enough water, food and wear good shoes! But the hassle is worth it: From up there you have a fantastic view over the various surrounding valleys.&lt;/p&gt;
+</description>
+        
+        <pubDate>Sun, 26 Aug 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/calanda/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/calanda/</guid>
+        
+        
+        <category>travel</category>
+        
+        <category>frenzy</category>
+        
+      </item>
+      
     
       
       <item>
@@ -269,6 +290,51 @@
     
       
       <item>
+        <title>Saut du Doubs</title>
+        <description>&lt;p&gt;The Saut du Doubs is a waterfall in the Doubs, a river which separates Switzerland from France. The waterfall is easy accessible from Les Brenets, where you can board a boat. The boat ride will only take 30 minutes and drop you off only minutes away from the waterfall. You can either choose to stay there for an hour or so and take the same boat back. Or you can walk along the Doubs. The border region is a national park and perfect for hiking.&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;The Saut du Doubs is a waterfall in the Doubs, a river which separates Switzerland from France. The waterfall is easy accessible from Les Brenets, where you can board a boat. The boat ride will only take 30 minutes and drop you off only minutes away from the waterfall. You can either choose to stay there for an hour or so and take the same boat back. Or you can walk along the Doubs. The border region is a national park and perfect for hiking.&lt;/p&gt;
+</description>
+        
+        <pubDate>Sun, 22 Apr 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/saut-du-doubs/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/saut-du-doubs/</guid>
+        
+        
+        <category>travel</category>
+        
+        <category>frenzy</category>
+        
+      </item>
+      
+    
+      
+      <item>
+        <title>Faux d'Enson</title>
+        <description>&lt;p&gt;The Faux-d’Enson is a hill with a tower from which you havae a pretty decent view of the Jura. It is located only minutes away from the village of Roche-d’Or but I suggest you start near Réclère where you will find enough parking and at the &lt;a href=&quot;http://www.prehisto.ch&quot;&gt;Prehistoric Park&lt;/a&gt; which includes some caves. The caves are only open for a fee and only accessible in guided tours with commentary in French and German. Those take place only twice a day (except for Sunday) so make sure to get some information about the schedule beforehand.&lt;/p&gt;
+
+&lt;p&gt;The park also includes a camground if you are into camping. From there, the path leads you uphill through Roche-d’Or. After 1-2 hours you will reach the tower. Have a snack, enjoy the view but beware the cows who graze in the open field around the tower. Since the Tower is situated pretty much exactly on the border to France, you can continue your journey on the French side. However, the area is pretty remote and there are not many signposts, so make sure you bring a map.&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;The Faux-d’Enson is a hill with a tower from which you havae a pretty decent view of the Jura. It is located only minutes away from the village of Roche-d’Or but I suggest you start near Réclère where you will find enough parking and at the &lt;a href=&quot;http://www.prehisto.ch&quot;&gt;Prehistoric Park&lt;/a&gt; which includes some caves. The caves are only open for a fee and only accessible in guided tours with commentary in French and German. Those take place only twice a day (except for Sunday) so make sure to get some information about the schedule beforehand.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 21 Apr 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/faux-d-enson/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/faux-d-enson/</guid>
+        
+        
+        <category>travel</category>
+        
+        <category>frenzy</category>
+        
+      </item>
+      
+    
+      
+      <item>
         <title>New section: Swiss Frenzy</title>
         <description>&lt;p&gt;I added a new section in the main menu: &lt;a href=&quot;/frenzy&quot;&gt;Swiss Frenzy&lt;/a&gt;. The section provides tips and ideas for short trips inside Switzerland. It is not meant for tourists who only want to see the major attractions, but rather for locals who want to explore some nice spots off the beaten track in their own country.&lt;/p&gt;
 </description>
@@ -280,238 +346,6 @@
         <link>http://localhost:4000/blog/swiss-frenzy/</link>
         <guid isPermaLink="true">http://localhost:4000/blog/swiss-frenzy/</guid>
         
-        
-      </item>
-      
-    
-      
-      <item>
-        <title>Bye bye, Wordpress. Hello Jekyll!</title>
-        <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;img src=&quot;/assets/img/posts/synology_109_nas.jpg&quot; alt=&quot;&quot; /&gt; 
-	&lt;figcaption&gt;My devoted workhorse which has been hosting my blog until now...&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;To make things worse, Synology has stopped shipping major software updates for my NAS. It hasn’t received any update (apart from security patches) for a long time and still runs DiskStation 4.2 at the time, which includes an outdated PHP version.&lt;/p&gt;
-
-&lt;h1 id=&quot;exit-wordpress&quot;&gt;Exit Wordpress&lt;/h1&gt;
-
-&lt;p&gt;Apart from the long page loadsall I didn’t deem this to be much of a problem for me. Especially considering I use this blog as my personal braindump which has only got small attention (although I did receive some comments or E-Mails from all around the world). Until recently, when warnings started to pile up in the Wordpress Admin-Dashboard, urging me to update to the newest PHP version. I wasn’t even able to install or upgrade certain plugins anymore since they require a higher version of PHP. Upgrading the PHP version would be possible in theory, but this would mean fiddling with the internals of the DiskStation software and potentially running into compatibility issues. Not my idea of fun. So I had to decide between two paths: Staying with the current state (with the danger of the site becoming inoperable due to deprecated software) or going for the radical path and migrating everything to a new host. I went for the latter.&lt;/p&gt;
-
-&lt;p&gt;Since I didn’t find any solutions for free Wordpress Hosting that met my requirements I looked around for something simpler, less resource hungry, without a zillion plugins. Something lightweight and sleek. At the same time it should support some key features that I often use:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Syntax highlighting for various languages&lt;/li&gt;
-  &lt;li&gt;support for LaTeX&lt;/li&gt;
-  &lt;li&gt;support for advanced text formatting&lt;/li&gt;
-  &lt;li&gt;customizable design (without having to handcraft everything)&lt;/li&gt;
-  &lt;li&gt;open and extendable (to some point)&lt;/li&gt;
-  &lt;li&gt;Possibility to write online or offline&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To make the search harder, it all should be free (as hosting on my own NAS is). And yeah, the page speed should also be higher. Dear Santa Clause…&lt;/p&gt;
-
-&lt;h1 id=&quot;enter-jekyll&quot;&gt;Enter Jekyll&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/posts/jekyll_logo.png&quot; alt=&quot;Jekyll logo&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then came &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Jekyll is a static site generator and the underlying technology used by &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;. It does not need a database and you can write your content using &lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot;&gt;Markdown&lt;/a&gt;. Jekyll uses the &lt;a href=&quot;http://shopify.github.io/liquid/&quot;&gt;Liquid Templating Language&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/frontmatter/&quot;&gt;Front Matter&lt;/a&gt; that you can use to add some logic to your site. Your files are then compiled by GH Pages and served as plain old HTML pages. And since all the files reside in a normal GitHub repository, I don’t have to worry about things like backup or versioning anymore. I can even apply the same workflow for blogging like I apply for coding (or as Tom Preston-Warner expressed it: &lt;a href=&quot;http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html&quot;&gt;Blogging Like a Hacker&lt;/a&gt;). The few dynamic features I used, like comments, can easily be replaced by third-party services like &lt;a href=&quot;disqus.com&quot;&gt;Disqus&lt;/a&gt;. Having never used Jekyll before, I found &lt;a href=&quot;https://www.smashingmagazine.com/2014/08/build-blog-jekyll-github-pages/&quot;&gt;this tutorial&lt;/a&gt; insightful. I don’t have any long-term experience yet. Time will show how it all turns out, but what I have seen so far looks promising.&lt;/p&gt;
-
-&lt;h1 id=&quot;migrating-from-wp-to-gh-pages&quot;&gt;Migrating from WP to GH Pages&lt;/h1&gt;
-&lt;p&gt;Migration is never an easy endeavour, especially considering all the assets (text, images, code blocks, CSS,…). So I tried to automate as much as possible. Jekyll is really trying to help out here by providing a &lt;a href=&quot;http://import.jekyllrb.com/&quot;&gt;wide range of available importers&lt;/a&gt;. Alas, the provided Wordpress-Importer was only able to generate HTML files, not Markdown. And it only imports posts and pages, no assets!&lt;/p&gt;
-
-&lt;p&gt;Luckily I found a &lt;a href=&quot;https://github.com/benbalter/wordpress-to-jekyll-exporter&quot;&gt;WP plugin&lt;/a&gt; which did a fantastic job of converting all my posts and pages to Markdown files (including all the images in them). Unfortunately, the images are linked with their absolute paths (i.e. an URL pointing to the old location of the image). The pages also do not always look as expected when displayed in the new blog, but this is not neccessarily the plugin’s fault. Some content like automatic table of contents (TOC) on pages is generated on the fly by a plugin and can not be migrated easily. So there still is a lot of work do be done by hand. But at least I was able to move moste of the content in one go without major hiccups.&lt;/p&gt;
-
-&lt;p&gt;Next step was the site’s new design. I was looking for something sleek and minimal. Luckily, Jekyll is themeable and there are a &lt;a href=&quot;http://jekyllthemes.org/&quot;&gt;lot of readily available themes&lt;/a&gt; out there. I went for the &lt;a href=&quot;https://github.com/brianmaierjr/long-haul&quot;&gt;Long-Haul&lt;/a&gt; theme by Brian Maier Jr., which seems to be a goot compromise between focus on the content while still being visually appealing. I had to touch up on the CSS, the Layouts and the Gems a bit to fit the appearance my needs, but I was able to keep the theme in its original design without too much tweaking.&lt;/p&gt;
-
-&lt;p&gt;Since the new Jekyll Blog is basically just a bunch of Markdown files blogging can be done locally by creating/updating the Markdown files and/or fiddling with the configuration files. The changes can be tested locally and then be pushed to GitHub. Testing the pages locally requires you to install &lt;a href=&quot;https://www.ruby-lang.org/de/&quot;&gt;Ruby&lt;/a&gt; and a few gems. But since Windows &lt;a href=&quot;https://jekyllrb.com/docs/windows/&quot;&gt;is not officially supported by Jekyll&lt;/a&gt; and I sometimes only want to make a few quick changes (typos or the like) I looked for an alternative solutions which lets me edit the content online without having to install anything. Of course I can always edit the files directly on GitHub, but I was looking for something more practical, maybe even something WYSIWYG. I found two alternatives:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://prose.io/&quot;&gt;Prose.io&lt;/a&gt;, a free which is explicitly targeted at Jekyll sites and lets you edit your content with a simple online editor.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://cloudcannon.com/&quot;&gt;CloudCannon&lt;/a&gt; which is a somewhat more sophisticated solution targeted for professional CMS providers.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I am currently using CloudCannon, which is free for basic use and a bit more powerful than Prose.io. It even features nice things like shortcuts while editing (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL + D &lt;/code&gt; to delete a line). Let’s see if I stick with it.&lt;/p&gt;
-
-&lt;p&gt;The aftermath of the migration is not over. There is still a lot to do, especially in making sure all the links work, the images all show up and the content is properly aligned. But so far I’m quite happy with my decision to move to GH Pages. I’m still trying to migrate all the comments to Disqus, but that might take a bit longer than expected…&lt;/p&gt;
-
-&lt;!--
----
-**Update**
-Migration is over and I hope everything is in its right place now. The Simplicity of Jekyll/GitHub makes blogging is a breeze, so I don't miss my old Wordpress-Setup at all. I guess I should rename this post's title to _&quot;Bye bye, sluggish performance, security issues, database administration, data backup, plugin incompabilities, ... Hello Markdown, integrated version control, statelessness, ...&quot;_, but I guess that would be a bit too long... ;)
---&gt;
-</description>
-        
-          <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Thu, 22 Feb 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</guid>
-        
-        
-      </item>
-      
-    
-      
-      <item>
-        <title>Machine Learning</title>
-        <description>&lt;p&gt;It has been a looong time since my last post… :frowning:&lt;/p&gt;
-
-&lt;p&gt;Meanwhile, I have started my master’s degree with a focus on Machine Learning. For preparation I have finished &lt;a href=&quot;https://www.coursera.org/learn/machine-learning/&quot;&gt;Andrew Ng’s course in ML&lt;/a&gt;. If you have never heard of this course and want to break into ML I think this is a fantastic starting point. The explanations are concise and clear even without prior knowledge. The course consists of a series of videos and accompanying programming assignments, for which you’ll need &lt;a href=&quot;https://www.mathworks.com/products/matlab.html&quot;&gt;Matlab&lt;/a&gt; (or its open-source twin &lt;a href=&quot;https://www.gnu.org/software/octave/&quot;&gt;Octave&lt;/a&gt;).&lt;/p&gt;
-
-&lt;p&gt;To be able to come back to what I have learned and revisit individual topics I decided to write a summary in my own words. This also helped me to get my thoughts straight and memorize the content better. I figured someone else might be interested in it too, so I put it all online for you to read.&lt;/p&gt;
-
-&lt;p&gt;You can find the summary &lt;a href=&quot;http://www.tiefenauer.info/ml_de&quot;&gt;here&lt;/a&gt;. Note it’s only available in German. Maybe I will translate it to English someday if I have the time.&lt;/p&gt;
-
-&lt;p&gt;Please drop me a comment if you find anything unclear or (god forbid!) you find a mistake. :thumbsup:&lt;/p&gt;
-</description>
-        
-          <description>&lt;p&gt;It has been a looong time since my last post… :frowning:&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Mon, 02 Oct 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/new-series-machine-learning/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/new-series-machine-learning/</guid>
-        
-        <category>coursera</category>
-        
-        <category>machine learning</category>
-        
-        
-        <category>Machine Learning</category>
-        
-      </item>
-      
-    
-      
-      <item>
-        <title>BDD with JBehave (2/2): Advanced tests</title>
-        <description>&lt;p&gt;This entry is part 2 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;In the previous article about BDD with JBehave, we learned about how to create a test using the JBehave story pattern that describes preconditions, events and the expected behavior. Due to its natural language, the story can even be understood by non-technical users. The test described the behavior of a digital radio when the on/off switch is being pressed.&lt;/p&gt;
-
-&lt;p&gt;This test was very basic, but sufficient to illustrate the basic functionality. More often however, it is neccessary to describe behavior in a more complex manner, e.g. by specifying and evaluating parameters, chaining preconditions and so on.&lt;/p&gt;
-
-&lt;p&gt;In this second part of the article series about BDD and JBehave we will explore some of the more advanced functionalities of JBehave to create more sophisticated behavior driven tests.&lt;/p&gt;
-
-&lt;h1 id=&quot;parameterized-tests&quot;&gt;Parameterized Tests&lt;/h1&gt;
-
-&lt;p&gt;When describing events and expected behavior, it is often useful to evaluate certain parts of the expectation description in the story. We did this implicitly before by stating the following expectation&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Then the radio should be turned on&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;and evaluating the expecation in Java to a boolean:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;But what if we wanted to evaluate the expectation in a more complex manner, e.g. by specifying the following test:&lt;/p&gt;
-
-&lt;p&gt;For this test we need to evaluate a part of the &lt;code class=&quot;highlighter-rouge&quot;&gt;When...&lt;/code&gt; part of the story in Java to use it to set the frequency (&lt;code class=&quot;highlighter-rouge&quot;&gt;103.8&lt;/code&gt;) of the radio. We also have to evaluate a part of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Then...&lt;/code&gt; part of the story in Java to assert the fulfillment of our expectation (displayed value should be &lt;code class=&quot;highlighter-rouge&quot;&gt;103.80 FM&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;Luckily, extracting parameters from textual descriptions is not hard at all with JBehave. As you remember from part 1 of the series, it is important that the String handed over to the annotation matches the string in the story. JBehave finds the annotated Java method for a textual description by &lt;a href=&quot;http://jbehave.org/reference/stable/annotations.html&quot; target=&quot;_blank&quot;&gt;regex-matching this string &lt;/a&gt;with the one found in the story file. Since a regex is used for matching, the annotation string can contain special characters that will translate to parameter names. The parameter values can be injected in Java by specifying method arguments of the same name:&lt;/p&gt;
-
-&lt;p&gt;Parameters are defined as Strings in the story file, but can be any other type in Java, including object types. Type conversion is done automatically by JBehave, where possible using &lt;a href=&quot;http://jbehave.org/reference/stable/parameter-converters.html&quot; target=&quot;_blank&quot;&gt;built-in parameter converters&lt;/a&gt;. If this is not possible, you can write your own parameter converter, but this is not in scope for this article.&lt;/p&gt;
-
-&lt;p&gt;Usually, the method parameters carry the same names and occur in the same order as specified in the annotation string. This is good practice but there may be cases where naming and/or order of parameters in Java may be different. That’s why JBehave includes the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Named&lt;/code&gt;-annotation for parameter values:&lt;/p&gt;
-
-&lt;p&gt;Using the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Named&lt;/code&gt;-annotation both name and/or order of parameter can become independent of the description in the story. However, having parameter names and order the same is good practice and also less verbose. I suggest keeping them in sync unless there’s absolutely no way to avoid it.&lt;/p&gt;
-
-&lt;p&gt;Let’s update our Radio so that the user can tune to a frequency by adding the following code:&lt;/p&gt;
-
-&lt;p&gt;Now run your test and voilà: The test succeeds! 🙂&lt;/p&gt;
-
-&lt;h1 id=&quot;example-tables&quot;&gt;Example tables&lt;/h1&gt;
-
-&lt;p&gt;In certain cases it can become necessary to feed different parameter values to the test in order to check different behaviour. For example: Let’s assume our radio has a display which can display the current station name, but which is limited to 10 characters. If a station name is longer than 10 characters, the name should be truncated down to 7 characters and appended with three dots.&lt;/p&gt;
-
-&lt;p&gt;This is actually an extension of a parameterized test and can be formulated similarly in the story by using an example table:&lt;/p&gt;
-
-&lt;p&gt;The test will then be executed once for each row in the example table, having the parameter values set to their respective value from the table.&lt;/p&gt;
-
-&lt;p&gt;Let’s try this out and extend our &lt;code class=&quot;highlighter-rouge&quot;&gt;RadioSteps.java&lt;/code&gt; with appropriate methods to match the story:&lt;/p&gt;
-
-&lt;p&gt;Also add the following methods to &lt;code class=&quot;highlighter-rouge&quot;&gt;Radio.java&lt;/code&gt;:&lt;/p&gt;
-
-&lt;p&gt;If we run our test now, it will fail with the following message:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;org.junit.ComparisonFailure: 
-Expected :A reall...
-Actual :A really long station name which will definitely not fit into the display&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts – all in the name of test-driven development. 🙂 So let’s change the previously added &lt;code class=&quot;highlighter-rouge&quot;&gt;getDisplay()&lt;/code&gt;-method to the following:&lt;/p&gt;
-
-&lt;p&gt;Now run the test again! It should become green like a cucumber.&lt;/p&gt;
-
-&lt;h1 id=&quot;composite-steps&quot;&gt;Composite steps&lt;/h1&gt;
-
-&lt;p&gt;Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let’s revisit our first test:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given a digital radio
-When I press the on/off switch
-Then the radio should be turned on&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now let’s assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given a digital radio
-And the radio is already turned on
-When I press the on/off switch
-Then the radio should be turned off&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Let’s also extend our RadioSteps.java with an additional method:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;nd&quot;&gt;@Given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;the radio is already turned on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;theRadioIsTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;aDigitalRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The two preconditions are now chained together i.e. executed in sequence in the order given by the story file. Composition of steps can also be achieved by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;@Composite&lt;/code&gt;-annotation in Java. We could use the following test&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Given the radio is already turned on
-When I press the on/off switch
-Then the radio should be turned off&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;with the following step:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;    &lt;span class=&quot;nd&quot;&gt;@Given&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;the radio is already turned on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Composite&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;s&quot;&gt;&quot;Given a digital radio&quot;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;})&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;theRadioIsTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;aDigitalRadio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isTurnedOn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;radio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;switchOnOff&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The result would be identical.&lt;/p&gt;
-</description>
-        
-          <description>&lt;p&gt;This entry is part 2 of 2 in the series &lt;em&gt;BDD with JBehave&lt;/em&gt;.&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Tue, 08 Dec 2015 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</guid>
-        
-        <category>BDD</category>
-        
-        <category>Java</category>
-        
-        <category>JBehave</category>
-        
-        <category>TDD</category>
-        
-        
-        <category>Coding</category>
         
       </item>
       
