@@ -5,7 +5,208 @@ hypothesis: true
 eta: false
 toc: false
 hypothesis: false
+icons:
+    sport:
+        icon: badminton-racket-and-feather
+        desc: possibility for sport activities
+    biking:
+        icon: bicycle-rider
+        desc: (Mountain-)Biking possible
+    rafting:
+        icon: boiting
+        desc: Rafting
+    nature:
+        icon: butterfly-catcher
+        desc: Nature
+    camping:
+        icon: camper-caravan
+        desc: caravan-camping possible
+    children:
+        icon: cart-wagon
+        desc: suitable for children
+    climbing:
+        icon: climbing
+        desc: rock-climbing possible
+    hiking:
+        icon: hiking
+        desc: hiking trail (no special prerequisites needed)
+    hiking-bouldering:
+        icon: climbing-with-rope
+        desc: alpine hiking involving some bouldering (bring good shoes)
+    hiking-climbing:
+        icon: climbing-sport
+        desc: alpine hiking involving climbing (only for experienced hikers)
+    barbecue:
+        icon: closed-barbacue
+        desc: official barbecueing area with facilities
+    barbecue-unofficial:
+        icon: food-on-branch
+        desc: inofficial barbecueing area without facilities
+    scenic:
+        icon: digital-camera
+        desc: scenic area
+    open-water-fishing:
+        icon: fishing-fish
+        desc: open-water fishing allowed
+    fishing:
+        icon: fishing-man
+        desc: fishing from waterside allowed
+    accommodation:
+        icon: forester-house
+        desc: accommodation for overnight stay available
+    golf:
+        icon: golf-ball-and-iron
+        desc: golf course
+    riding:
+        icon: horse-riding
+        desc: horse riding possible
+    diving:
+        icon: jumping-to-the-water
+        desc: diving possible
+    kayaking:
+        icon: kayak
+        desc: kayaking possible
+    torch-needed:
+        icon: lantern-on
+        desc: bring a torch
+    kiting:
+        icon: man-flying-a-kite
+        desc: bring a kite
+    canoeing:
+        icon: man-in-canoe
+        desc: canoeing possible
+    lake:
+        icon: man-on-a-boat
+        desc: lake area
+    swimming:
+        icon: man-swimming
+        desc: swimming allowed
+    camping-tent:
+        icon: night-camping
+        desc: tent camping possible
+    treasure-hunting:
+        icon: outdoor-rock
+        desc: treasure hunting for children
+    map-needed:
+        icon: outdoors-map
+        desc: remote area (bring a map!)
+    fenced:
+        icon: picket-fence
+        desc: fenced area
+    picnic:
+        icon: picnic-desk
+        desc: picnic area available
+    quad:
+        icon: quad-bike
+        desc: quad driving possible
+    running:
+        icon: running-man
+        desc: running trail
+    sailing:
+        icon: sailing-boat-sailing
+        desc: sailing possible
+    signposted:
+        icon: signpost
+        desc: trail is signposted (no map needed)
+    skateboarding:
+        icon: skateboard
+        desc: skateboarding possible
+    ski:
+        icon: ski-lift
+        desc: skiing possible
+    sleeping-bag:
+        icon: sleeping-bag
+        desc: bivouacing possible
+    alpine:
+        icon: snowed-mountains
+        desc: alpine area
+    panorama:
+        icon: spyglass
+        desc: panorama
+    park:
+        icon: sunny-park
+        desc: park area
+    surfing:
+        icon: surfer-surfing
+        desc: surfing possible
+    public-bath:
+        icon: swimming-pool-ladder
+        desc: public pool available
+    playground:
+        icon: swings
+        desc: playground for children available
+    knife:
+        icon: swiss-pocket-knife
+        desc: bring a knife
+    forest:
+        icon: two-pines
+        desc: forest area
+    stormy:
+        icon: walking-with-a-storm
+        desc: dangerous in bad weather
+    water-skiing:
+        icon: water-ski
+        desc: water-skiing possible
+    wheelchair:
+        icon: wheelchair-sport
+        desc: accessible by wheelchair
+    deer:
+        icon: wild-deer
+        desc: wild animals
+    compass:
+        icon: wind-rose-compass
+        desc: bring a compass
 ---
+
+<link rel="stylesheet" href="/assets/css/frenzy.css">
+
+<!-- activities -->
+<p align="center">
+    {% for frenzy in page['frenzy'] %}
+        <i class="frenzy frenzy-{{layout.icons[frenzy]['icon']}}" title="{{layout.icons[frenzy]['desc'] | capitalize}}"></i>
+    {% endfor %}
+</p>
+
+<!-- facts and figures -->
+<p>
+    {% if page.duration %}
+    <span class="cell">
+        <span class="fas fa-stopwatch"></span>
+        {{page.duration}}
+    </span>
+    {% endif %}
+
+    {% if page.distance %}
+    <span class="cell">
+        <span class="fas fa-shoe-prints"></span>
+        {{page.distance}}
+    </span>
+    {% endif %}
+
+    {% if page.altitude %}
+    <span class="cell">
+        <span class="fas fa-chart-area"></span>
+        {{page.altitude}}
+    </span>
+    {% endif %}
+
+    {% if page.season %}
+    <span class="cell">
+        <span class="fas fa-calendar-alt"></span>
+        {{page.season}}
+    </span>
+    {% endif %}
+</p>
+
+<p>
+    {% if page.parking %}
+    <span class="cell" style="float: clear">
+        <span class="fas fa-parking"></span>
+        {{page.parking}}
+    </span>
+    {% endif %}
+</p>
+
 <p>
     {% assign map_url = page.path | replace_first: '_posts/', '/assets/img/' | replace_first: '.md', '/map.pdf' %}
     <a href="{{map_url}}" role="button" class="btn btn-primary btn-lg btn-block">

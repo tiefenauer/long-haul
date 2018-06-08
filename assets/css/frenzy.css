@@ -1,0 +1,267 @@
+.cell {
+    /*float: left;*/
+    margin-right: 1.5em;
+    /*margin-bottom: .25em;*/
+    width: 17em;
+    overflow: hidden;
+}
+
+.cell span {
+    margin-right: .25em;
+}
+
+.frenzy {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-image: url(/assets/css/frenzy.svg);
+}
+.frenzy-badminton-racket-and-feather {
+    width: 32px;
+    height: 32px;
+    background-position: 0 0;
+}
+.frenzy-bicycle-rider {
+    width: 32px;
+    height: 32px;
+    background-position: -48px 0;
+}
+.frenzy-boiting {
+    width: 32px;
+    height: 32px;
+    background-position: -96px 0;
+}
+.frenzy-butterfly-catcher {
+    width: 32px;
+    height: 32px;
+    background-position: -144px 0;
+}
+.frenzy-camper-caravan {
+    width: 32px;
+    height: 32px;
+    background-position: -192px 0;
+}
+.frenzy-cart-wagon {
+    width: 32px;
+    height: 32px;
+    background-position: -240px 0;
+}
+.frenzy-climbing {
+    width: 32px;
+    height: 32px;
+    background-position: -288px 0;
+}
+.frenzy-climbing-sport {
+    width: 32px;
+    height: 32px;
+    background-position: -336px 0;
+}
+.frenzy-climbing-with-rope {
+    width: 32px;
+    height: 32px;
+    background-position: -384px 0;
+}
+.frenzy-closed-barbacue {
+    width: 32px;
+    height: 32px;
+    background-position: -432px 0;
+}
+.frenzy-digital-camera {
+    width: 32px;
+    height: 32px;
+    background-position: -480px 0;
+}
+.frenzy-fishing-fish {
+    width: 32px;
+    height: 32px;
+    background-position: -528px 0;
+}
+.frenzy-fishing-man {
+    width: 32px;
+    height: 32px;
+    background-position: -576px 0;
+}
+.frenzy-food-on-branch {
+    width: 32px;
+    height: 32px;
+    background-position: -624px 0;
+}
+.frenzy-forester-house {
+    width: 32px;
+    height: 32px;
+    background-position: -672px 0;
+}
+.frenzy-golf-ball-and-iron {
+    width: 32px;
+    height: 32px;
+    background-position: -720px 0;
+}
+.frenzy-hiking {
+    width: 32px;
+    height: 32px;
+    background-position: 0 -48px;
+}
+.frenzy-horse-riding {
+    width: 32px;
+    height: 32px;
+    background-position: -48px -48px;
+}
+.frenzy-jumping-to-the-water {
+    width: 32px;
+    height: 32px;
+    background-position: -96px -48px;
+}
+.frenzy-kayak {
+    width: 32px;
+    height: 32px;
+    background-position: -144px -48px;
+}
+.frenzy-lantern-on {
+    width: 32px;
+    height: 32px;
+    background-position: -192px -48px;
+}
+.frenzy-man-flying-a-kite {
+    width: 32px;
+    height: 32px;
+    background-position: -240px -48px;
+}
+.frenzy-man-in-canoe {
+    width: 32px;
+    height: 32px;
+    background-position: -288px -48px;
+}
+.frenzy-man-on-a-boat {
+    width: 32px;
+    height: 32px;
+    background-position: -336px -48px;
+}
+.frenzy-man-swimming {
+    width: 32px;
+    height: 32px;
+    background-position: -384px -48px;
+}
+.frenzy-night-camping {
+    width: 32px;
+    height: 32px;
+    background-position: -432px -48px;
+}
+.frenzy-outdoor-rock {
+    width: 32px;
+    height: 32px;
+    background-position: -480px -48px;
+}
+.frenzy-outdoors-map {
+    width: 32px;
+    height: 32px;
+    background-position: -528px -48px;
+}
+.frenzy-picket-fence {
+    width: 32px;
+    height: 32px;
+    background-position: -576px -48px;
+}
+.frenzy-picnic-desk {
+    width: 32px;
+    height: 32px;
+    background-position: -624px -48px;
+}
+.frenzy-quad-bike {
+    width: 32px;
+    height: 32px;
+    background-position: -672px -48px;
+}
+.frenzy-running-man {
+    width: 32px;
+    height: 32px;
+    background-position: -720px -48px;
+}
+.frenzy-sailing-boat-sailing {
+    width: 32px;
+    height: 32px;
+    background-position: 0 -96px;
+}
+.frenzy-signpost {
+    width: 32px;
+    height: 32px;
+    background-position: -48px -96px;
+}
+.frenzy-skateboard {
+    width: 32px;
+    height: 32px;
+    background-position: -96px -96px;
+}
+.frenzy-ski-lift {
+    width: 32px;
+    height: 32px;
+    background-position: -144px -96px;
+}
+.frenzy-sleeping-bag {
+    width: 32px;
+    height: 32px;
+    background-position: -192px -96px;
+}
+.frenzy-snowed-mountains {
+    width: 32px;
+    height: 32px;
+    background-position: -240px -96px;
+}
+.frenzy-spyglass {
+    width: 32px;
+    height: 32px;
+    background-position: -288px -96px;
+}
+.frenzy-sunny-park {
+    width: 32px;
+    height: 32px;
+    background-position: -336px -96px;
+}
+.frenzy-surfer-surfing {
+    width: 32px;
+    height: 32px;
+    background-position: -384px -96px;
+}
+.frenzy-swimming-pool-ladder {
+    width: 32px;
+    height: 32px;
+    background-position: -432px -96px;
+}
+.frenzy-swings {
+    width: 32px;
+    height: 32px;
+    background-position: -480px -96px;
+}
+.frenzy-swiss-pocket-knife {
+    width: 32px;
+    height: 32px;
+    background-position: -528px -96px;
+}
+.frenzy-two-pines {
+    width: 32px;
+    height: 32px;
+    background-position: -576px -96px;
+}
+.frenzy-walking-with-a-storm {
+    width: 32px;
+    height: 32px;
+    background-position: -624px -96px;
+}
+.frenzy-water-ski {
+    width: 32px;
+    height: 32px;
+    background-position: -672px -96px;
+}
+.frenzy-wheelchair-sport {
+    width: 32px;
+    height: 32px;
+    background-position: -720px -96px;
+}
+.frenzy-wild-deer {
+    width: 32px;
+    height: 32px;
+    background-position: 0 -144px;
+}
+.frenzy-wind-rose-compass {
+    width: 32px;
+    height: 32px;
+    background-position: -48px -144px;
+}

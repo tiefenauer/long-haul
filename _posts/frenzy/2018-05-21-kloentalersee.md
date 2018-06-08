@@ -2,6 +2,59 @@
 title: Klöntalersee
 layout: frenzy
 category: [travel, frenzy]
+frenzy:
+    # - sport
+    - biking
+    # - rafting
+    - nature
+    - camping
+    - camping-tent
+    - children
+    # - climbing
+    - hiking
+    - hiking-bouldering
+    # - hiking-climbing
+    - barbecue
+    - barbecue-unofficial
+    - scenic
+    - open-water-fishing
+    - fishing
+    - accommodation
+    # - golf
+    # - riding
+    # - diving
+    - kayaking
+    # - torch-needed
+    # - kiting
+    - canoeing
+    - lake
+    - swimming
+    # - treasure-hunting
+    # - map-needed
+    # - fenced
+    - picnic
+    # - quad
+    # - running
+    # - sailing
+    # - signposted
+    # - skateboarding
+    # - ski
+    # - sleeping-bag
+    # - alpine
+    # - panorama
+    # - park
+    - surfing
+    # - public-bath
+    # - playground
+    # - knife
+    # - forest
+    # - stormy
+    # - water-skiing
+    # - wheelchair
+    # - deer
+    # - compass
+season: June-October
+parking: There is enough parking near the campground restaurant
 location:
     latitude: 47.0290875
     longitude: 8.9584802
