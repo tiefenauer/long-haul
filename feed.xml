@@ -3,10 +3,10 @@
   <channel>
     <title>Dani's Braindump</title>
     <description>My thoughts about the world</description>
-    <link>https://tiefenauer.github.io/</link>
-    <atom:link href="https://tiefenauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 07 Jun 2018 18:24:17 +0200</pubDate>
-    <lastBuildDate>Thu, 07 Jun 2018 18:24:17 +0200</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 08 Jun 2018 09:57:17 +0200</pubDate>
+    <lastBuildDate>Fri, 08 Jun 2018 09:57:17 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       
@@ -61,8 +61,8 @@
 </description>
         
         <pubDate>Thu, 07 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/gh-pages-plugins/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/gh-pages-plugins/</guid>
+        <link>http://localhost:4000/blog/gh-pages-plugins/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/gh-pages-plugins/</guid>
         
         
       </item>
@@ -71,55 +71,25 @@
       
       <item>
         <title>Bözingerberg and Taubenlochschlucht</title>
-        <description>&lt;p&gt;This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.&lt;/p&gt;
+        <description>&lt;p&gt;For the locals of Biel the Bözingerberg is a popular destination to get out of the city for a while. Biel lies exactly on a language border and is famous for its watch industry and it is not uncommon to hear German and French in equal parts.&lt;/p&gt;
 
-&lt;p&gt;The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which was good considering the hot and humid weather. The path leads you through a small park (&lt;a href=&quot;https://tierpark-biel.ch/&quot;&gt;Tierpark Biel&lt;/a&gt;) where you can watch/feed domestic animals (deer, ibex, marmots and the like) and have a picnic. On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good :stuck_out_tongue:). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps. If you get bored you can always watch the paragliders take of, since the Bözingerberg is a popular (even official) starting place.&lt;/p&gt;
+&lt;p&gt;The hike starts with a passage of 90 minutes uphill. A lot of path is in the forest, which is good especially in hot and humid weather. The Bözingerberg is actually accessible by car on a tarmaced road. That’s why the mountain is also popular for mountain bikers who take the easy way up. You are likely to encounter some downhill riders on your way up. The path leads you through a small park (&lt;a href=&quot;https://tierpark-biel.ch/&quot;&gt;Tierpark Biel&lt;/a&gt;) where you can watch/feed domestic animals (deer, ibex, marmots and the like) and have a picnic. On top there is a restaurant where you can have an ice cream or something (the Rösti also looked good :stuck_out_tongue:). You get a stunning view down to the Lake Biel and the Mittelland (flat region of Switzerland). On a clear day you can see the Alps. If you get bored you can always watch the paragliders take of, since the Bözingerberg is a popular (even official) starting place.&lt;/p&gt;
 
-&lt;p&gt;The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (&lt;em&gt;Pigeon Hole Gorge&lt;/em&gt;). Note that the gorge is rather short, but still offers some stunning views and a pretty decent waterfall. There are also many caves (the pigeon wholes), which some of them you can explore (be aware that in some of them there are actually live pigeons!. Also note that bathing is prohibited since there is a hydro station upstream which might open its gates suddenly. However, judging from   Back in Biel you can relax in the public seaside bath, which is very nice.&lt;/p&gt;
-
-&lt;h2 id=&quot;facts-and-figures&quot;&gt;Facts and Figures&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Trip length: 3-4 hours&lt;/li&gt;
-  &lt;li&gt;climbing distance: 500m&lt;/li&gt;
-  &lt;li&gt;Highest point: 929m&lt;/li&gt;
-  &lt;li&gt;Best season: April - November&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;where-to-park&quot;&gt;Where to park&lt;/h2&gt;
-&lt;p&gt;There is parking in Biel or (if you want to get out of the city a bit) near the park which is along the way. You can also try and find a parking spot in the nearby town of Frinvillier which is at the north entrance of the gorge.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-to-do-and-see&quot;&gt;What to do and see&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Relax in the Tierpark Biel&lt;/li&gt;
-  &lt;li&gt;enjoy the view from Restaurant Bözingerberg&lt;/li&gt;
-  &lt;li&gt;Explore the Taubenlochschlucht&lt;/li&gt;
-  &lt;li&gt;Hang out in the &lt;a href=&quot;http://www.ctsbiel-bienne.ch/&quot;&gt;Seebad Biel&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;what-to-bring&quot;&gt;What to bring&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;something to grill&lt;/li&gt;
-  &lt;li&gt;binoculars&lt;/li&gt;
-  &lt;li&gt;cash to buy food to feed the animals&lt;/li&gt;
-  &lt;li&gt;bathing gear&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;The way back is also through the forest for the greater part. The hike culminates in the last passage that takes you through the Taubenlochschlucht (&lt;em&gt;Pigeon Hole Gorge&lt;/em&gt;) along a creek. Note that the gorge is rather short, but still offers some stunning views and a pretty decent waterfall. There are also many caves (the pigeon wholes), some of which you can explore. But be aware that in some of them there are actually full of pigeons!. Also note that bathing in the creek is prohibited since there is a hydro station upstream which might open its gates suddenly. Back in Biel you can relax in the public seaside bath (&lt;a href=&quot;http://www.ctsbiel-bienne.ch/&quot;&gt;Seebad Biel&lt;/a&gt;), which is very nice.&lt;/p&gt;
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
 
 </description>
         
-          <description>&lt;p&gt;This weekend we made a motorcycle trip to Biel, a city that lies exactly on a language border. The city is famous for its watch industry and it is not uncommon to hear German and French in equal parts. For the locals the Bözingerberg is a popular destination.&lt;/p&gt;
+          <description>&lt;p&gt;For the locals of Biel the Bözingerberg is a popular destination to get out of the city for a while. Biel lies exactly on a language border and is famous for its watch industry and it is not uncommon to hear German and French in equal parts.&lt;/p&gt;
 
 </description>
         
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/boezingerberg/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/boezingerberg/</guid>
+        <link>http://localhost:4000/blog/boezingerberg/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/boezingerberg/</guid>
         
         
         <category>travel</category>
@@ -142,8 +112,8 @@
 </description>
         
         <pubDate>Sun, 27 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/seleger-moor/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/seleger-moor/</guid>
+        <link>http://localhost:4000/blog/seleger-moor/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/seleger-moor/</guid>
         
         
         <category>travel</category>
@@ -166,8 +136,8 @@
 </description>
         
         <pubDate>Mon, 21 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/kloentalersee/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/kloentalersee/</guid>
+        <link>http://localhost:4000/blog/kloentalersee/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/kloentalersee/</guid>
         
         
         <category>travel</category>
@@ -256,8 +226,8 @@
 </description>
         
         <pubDate>Sun, 13 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</guid>
+        <link>http://localhost:4000/blog/wireless-charger-for-motorcycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/wireless-charger-for-motorcycle/</guid>
         
         
       </item>
@@ -268,21 +238,16 @@
         <title>Belchenflue</title>
         <description>&lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Belchenflue&quot;&gt;Belchenflue&lt;/a&gt; is a summit located on the border between the canton of Basel-Land and Solothurn. There is a twisting road over the Chilchzimmersattel nearby leading from Eptingen to Langenbruck that I have driven several times by motorbike without noticing the peak. From the road it is only 15 minutes to the top but I recommend you start in the quiet town of Langenbruck.&lt;/p&gt;
 
-&lt;p&gt;The path is well signed and leads you uphill for 2 hours. Some of the rout leads through forest and there are some nice spots to rest. If you prefer a restaurant there is the &lt;em&gt;Dürstel&lt;/em&gt; pretty much in the middle. On the summit you get a mind-blowing view of the Jura and the Mittelland. There are also some caves called Drachenloch (&lt;em&gt;dragon hole&lt;/em&gt;) you can explore.&lt;/p&gt;
+&lt;p&gt;I suggest you start in Langenbruck and walk up from there. The path is well signed and leads you uphill for 2 hours. Some of the rout leads through forest and there are some nice spots to rest. If you prefer a restaurant there is the &lt;em&gt;Dürstel&lt;/em&gt; pretty much in the middle. On the summit you get a mind-blowing view of the Jura and the Mittelland. But be warned if you are afraid of heights: the summit ends in a vertical drop of some 100m. There is a handrail, but if you are afraid of heights, you might not feel well on the very top. There are also some caves called Drachenloch (&lt;em&gt;dragon hole&lt;/em&gt;) you can explore.&lt;/p&gt;
 
 &lt;p&gt;From there you have the option for a small detour to the restaurant &lt;em&gt;Berghaus Oberbölchen&lt;/em&gt;, which is popular with motorcyclists especially in summer.&lt;/p&gt;
 
 &lt;p&gt;The way back leads you along the Geissflue back to Langenbruck. There are again plenty of picnic places along the path where you can roast a sausage or explore the ancient ruins of fortifications built during WW1. If you’re lucky you might even spot some chamois who roam there. Back in Langenbruck there is a Kneipp path where you can refresh your feet.&lt;/p&gt;
 
-&lt;h2 id=&quot;how-to-get-there&quot;&gt;How to get there&lt;/h2&gt;
-&lt;p&gt;Coming from Olten or Solothurn on the crossing of Härkingen take the A2 in direction of Basel and then right afterwards exit 14 (Egerkingen). Then continue to Langenbruck.&lt;/p&gt;
-
-&lt;p&gt;Coming from Basel it is probably easiest if you take exit 13 (Eptingen) and start somewhere in Eptingen. There is only limited parking on the Chilchzimmersattel.&lt;/p&gt;
-
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -291,8 +256,8 @@
 </description>
         
         <pubDate>Sat, 12 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/belchenflue/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/belchenflue/</guid>
+        <link>http://localhost:4000/blog/belchenflue/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/belchenflue/</guid>
         
         
         <category>travel</category>
@@ -312,8 +277,8 @@
 </description>
         
         <pubDate>Tue, 03 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/swiss-frenzy/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/swiss-frenzy/</guid>
+        <link>http://localhost:4000/blog/swiss-frenzy/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/swiss-frenzy/</guid>
         
         
       </item>
@@ -384,8 +349,8 @@ Migration is over and I hope everything is in its right place now. The Simplicit
 </description>
         
         <pubDate>Thu, 22 Feb 2018 00:00:00 +0100</pubDate>
-        <link>https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</guid>
+        <link>http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</guid>
         
         
       </item>
@@ -410,8 +375,8 @@ Migration is over and I hope everything is in its right place now. The Simplicit
 </description>
         
         <pubDate>Mon, 02 Oct 2017 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/new-series-machine-learning/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/new-series-machine-learning/</guid>
+        <link>http://localhost:4000/blog/new-series-machine-learning/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/new-series-machine-learning/</guid>
         
         <category>coursera</category>
         
@@ -534,8 +499,8 @@ Then the radio should be turned off&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         
         <pubDate>Tue, 08 Dec 2015 00:00:00 +0100</pubDate>
-        <link>https://tiefenauer.github.io/blog/bdd-with-jbehave-advanced-tests/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/bdd-with-jbehave-advanced-tests/</guid>
+        <link>http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bdd-with-jbehave-advanced-tests/</guid>
         
         <category>BDD</category>
         
