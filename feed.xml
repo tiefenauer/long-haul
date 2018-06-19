@@ -3,10 +3,10 @@
   <channel>
     <title>Dani's Braindump</title>
     <description>My thoughts about the world</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Jun 2018 14:57:10 +0200</pubDate>
-    <lastBuildDate>Mon, 11 Jun 2018 14:57:10 +0200</lastBuildDate>
+    <link>https://tiefenauer.github.io/</link>
+    <atom:link href="https://tiefenauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 19 Jun 2018 20:23:06 +0200</pubDate>
+    <lastBuildDate>Tue, 19 Jun 2018 20:23:06 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       
@@ -61,8 +61,8 @@
 </description>
         
         <pubDate>Thu, 07 Jun 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/gh-pages-plugins/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/gh-pages-plugins/</guid>
+        <link>https://tiefenauer.github.io/blog/gh-pages-plugins/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/gh-pages-plugins/</guid>
         
         
       </item>
@@ -79,7 +79,7 @@
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -88,8 +88,8 @@
 </description>
         
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/boezingerberg/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/boezingerberg/</guid>
+        <link>https://tiefenauer.github.io/blog/boezingerberg/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/boezingerberg/</guid>
         
         
         <category>travel</category>
@@ -112,8 +112,8 @@
 </description>
         
         <pubDate>Sun, 27 May 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/seleger-moor/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/seleger-moor/</guid>
+        <link>https://tiefenauer.github.io/blog/seleger-moor/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/seleger-moor/</guid>
         
         
         <category>travel</category>
@@ -136,8 +136,8 @@
 </description>
         
         <pubDate>Mon, 21 May 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/kloentalersee/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/kloentalersee/</guid>
+        <link>https://tiefenauer.github.io/blog/kloentalersee/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/kloentalersee/</guid>
         
         
         <category>travel</category>
@@ -150,20 +150,20 @@
       
       <item>
         <title>Charging your phone wirelessly on your motorbike</title>
-        <description>&lt;p&gt;Since the weather was not terribly good on ascension this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
+        <description>&lt;p&gt;Since the weather was not terribly good during Ascension Day this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
 
-&lt;p&gt;I often go for shorter or longer rides with &lt;a href=&quot;https://www.yamaha-motor.eu/ch/de/produkte/motorrad/sport-touring/tracer-900.aspx&quot;&gt;my motorbike&lt;/a&gt; using a &lt;a href=&quot;https://en.wikipedia.org/wiki/Moto_G4&quot;&gt;mobile phone&lt;/a&gt; for navigation or tracking my rout (I have grown fond of &lt;a href=&quot;http://calimoto.eu&quot;&gt;Calimoto&lt;/a&gt; btw. which I can heartily recommend). For the ride I usually attach my phone to the  motorbike using the &lt;a href=&quot;https://www.rammount.com/products/x-grip&quot;&gt;Ram Mount X-Grip&lt;/a&gt;, which is rock solid and holds the phone in position no matter the speed or terrain.&lt;/p&gt;
+&lt;p&gt;I often go for shorter or longer rides with &lt;a href=&quot;https://www.yamaha-motor.eu/ch/de/produkte/motorrad/sport-touring/tracer-900.aspx&quot;&gt;my motorbike&lt;/a&gt; using a &lt;a href=&quot;https://en.wikipedia.org/wiki/Moto_G4&quot;&gt;mobile phone&lt;/a&gt; for navigation or tracking my route (I have grown fond of &lt;a href=&quot;http://calimoto.eu&quot;&gt;Calimoto&lt;/a&gt; btw. which I can only recommend). For the ride I usually attach my phone to the  motorbike using the &lt;a href=&quot;https://www.rammount.com/products/x-grip&quot;&gt;Ram Mount X-Grip&lt;/a&gt;, which holds the phone in position no matter the speed or terrain - rock solid stuff.&lt;/p&gt;
 
-&lt;p&gt;However, the problem with using GPS on your phone to do so is that it can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. But since I am a lazy rider I got tired of having to unplug the phone everytime I parked the bike only to plug it in again when I continue my ride. I looked for a more time-saving option thad didn’t involve wrapping cables around the handlebar or fiddling with the tiny USB ports on the phone. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well, even if your phone does not support wireless charging (like mine).&lt;/p&gt;
+&lt;p&gt;However, the problem with using your phone as a navigation device is that having GPS constantly turned on can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. Alas, since I am a lazy rider I got tired of having to unplug the phone everytime I park the bike only to plug it in again when I resuming my ride. I looked for a more time-saving option thad didn’t involve wrapping cables around the handlebar or fiddling with finding the tiny USB ports on the phone. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well - even if your phone does not support wireless charging (like mine).&lt;/p&gt;
 
 &lt;h2 id=&quot;shopping-list&quot;&gt;Shopping list&lt;/h2&gt;
 
-&lt;p&gt;I used the following parts, most of which can be purchased from your trused &lt;del&gt;local&lt;/del&gt; &lt;a href=&quot;http://wish.com&quot;&gt;Chinese wholesale store&lt;/a&gt;. Click on the links to see exactly which parts I used.&lt;/p&gt;
+&lt;p&gt;I used the following parts for my project. Most of them can be purchased from your trused &lt;del&gt;local&lt;/del&gt; &lt;a href=&quot;http://wish.com&quot;&gt;Chinese wholesale store&lt;/a&gt;. Click on the links to see exactly which parts I used.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;a &lt;a href=&quot;https://www.wish.com/product/5a449a3adaa5c75cc80b8efa&quot;&gt;wireless charger&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;a &lt;a href=&quot;https://www.wish.com/product/55bb70799e42592de0f327e0&quot;&gt;USB car charger&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;some &lt;a href=&quot;https://www.wish.com/product/59928e978d28360ab7e8a51c&quot;&gt;Shrink-Wrap tubes&lt;/a&gt; to&lt;/li&gt;
+  &lt;li&gt;(optional) some &lt;a href=&quot;https://www.wish.com/product/59928e978d28360ab7e8a51c&quot;&gt;Shrink-Wrap tubes&lt;/a&gt; to insulate the connectors&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://plastidip-sale.com/&quot;&gt;Plasti Dip&lt;/a&gt; to make everything wateproof&lt;/li&gt;
   &lt;li&gt;(optional) a &lt;a href=&quot;https://www.wish.com/product/5991599991c5c93d55d942bf&quot;&gt;wireless adapter&lt;/a&gt; if your phone does not support wireless charging out of the box (like mine)&lt;/li&gt;
   &lt;li&gt;(optional) a USB cable to attach to your motorbike permanently (you can use the one that came with your phone if you can spare it)&lt;/li&gt;
@@ -179,7 +179,7 @@
 	&lt;figcaption&gt;The opened wireless charger&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;I first removed the round plastic sticker which covered the base plate of the mount. I then first glued the metal plate to the mount and then the inductor to it. The sizes matched perfectly, so it almost looked like the parts were made for exactly this mount :smile:.&lt;/p&gt;
+&lt;p&gt;I first removed the round plastic sticker which covered the base plate of the mount. Then I first glued the metal plate to the mount and then the inductor on top. The sizes matched perfectly. It almost looked like the parts were made specifically for this mount :smile:.&lt;/p&gt;
 
 &lt;figure&gt;
     &lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/ram_mount_collage.png&quot; alt=&quot;&quot; /&gt; 
@@ -191,11 +191,11 @@
     &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). A small test run indicated that everything worked as expected. This was important to know before I would make the whole thing waterproof.&lt;/p&gt;
+&lt;p&gt;After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). I did a small test run before covering everything with PlastiDip. Everything worked as expected. Let’s make it waterproof!&lt;/p&gt;
 
 &lt;h2 id=&quot;making-it-waterproof&quot;&gt;Making it waterproof&lt;/h2&gt;
 
-&lt;p&gt;Since the modified mount will be permanently attached to the motorcycle (including the cable, circuit board and inductor, but without the USB charger) I had to make sure the damn thing won’t be affected by the weather. To protect the connections I used the shrink wrap tube (be sure not to let it get too hot as the electronics may be quite sensitive). The circuit board was covered with three layers of Plasti Dip which (apart from being waterproof) has the nice property of also acting as an insulator. I also covered the shrink wrap tube, the cable between circuit board and inductor and the area between plasic lid and inductor with some Plasti Dip to make sure it is absolutely weather-proof.&lt;/p&gt;
+&lt;p&gt;Since the modified mount will be permanently attached to the motorcycle (including the cable, circuit board and inductor, but without the USB charger) I had to make sure the damn thing won’t be affected by the weather. To protect the connections I used the shrink wrap tube (be sure not to let it get too hot as the electronics may be quite sensitive). The circuit board was covered with three layers of Plasti Dip which (apart from being waterproof) has the nice property of also acting as an insulator. I also covered the shrink wrap tube, the cable between circuit board and inductor and the area between plasic lid and inductor with some Plasti Dip to make sure absolutely no water can get to it.&lt;/p&gt;
 
 &lt;figure&gt;
     &lt;img src=&quot;/assets/img/posts/motorcycle_wireless_charging/plasti-dip.png&quot; alt=&quot;&quot; /&gt; 
@@ -218,16 +218,16 @@
 
 &lt;h2 id=&quot;bottom-line&quot;&gt;Bottom line&lt;/h2&gt;
 
-&lt;p&gt;After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn’t go on a ride with an almost empty battery though. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that’s not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you’re done! :thumbsup:&lt;/p&gt;
+&lt;p&gt;After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn’t go on a ride with an almost empty battery though. You can probably get a bit more juice out of the charger by removing the RamMount-Sticker and bringing the phone a bit closer to the inductor coil. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that’s not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you’re done! :thumbsup:&lt;/p&gt;
 </description>
         
-          <description>&lt;p&gt;Since the weather was not terribly good on ascension this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
+          <description>&lt;p&gt;Since the weather was not terribly good during Ascension Day this year, I tried to make maximal use of my time by starting a little crafting project.&lt;/p&gt;
 
 </description>
         
         <pubDate>Sun, 13 May 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/wireless-charger-for-motorcycle/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/wireless-charger-for-motorcycle/</guid>
+        <link>https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</guid>
         
         
       </item>
@@ -245,9 +245,9 @@
 &lt;p&gt;The way back leads you along the Geissflue back to Langenbruck. There are again plenty of picnic places along the path where you can roast a sausage or explore the ancient ruins of fortifications built during WW1. If you’re lucky you might even spot some chamois who roam there. Back in Langenbruck there is a Kneipp path where you can refresh your feet.&lt;/p&gt;
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -256,8 +256,8 @@
 </description>
         
         <pubDate>Sat, 12 May 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/belchenflue/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/belchenflue/</guid>
+        <link>https://tiefenauer.github.io/blog/belchenflue/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/belchenflue/</guid>
         
         
         <category>travel</category>
@@ -277,8 +277,8 @@
 </description>
         
         <pubDate>Sun, 22 Apr 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/saut-du-doubs/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/saut-du-doubs/</guid>
+        <link>https://tiefenauer.github.io/blog/saut-du-doubs/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/saut-du-doubs/</guid>
         
         
         <category>travel</category>
@@ -301,8 +301,8 @@
 </description>
         
         <pubDate>Sat, 21 Apr 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/faux-d-enson/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/faux-d-enson/</guid>
+        <link>https://tiefenauer.github.io/blog/faux-d-enson/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/faux-d-enson/</guid>
         
         
         <category>travel</category>
@@ -322,8 +322,8 @@
 </description>
         
         <pubDate>Tue, 03 Apr 2018 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/blog/swiss-frenzy/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/swiss-frenzy/</guid>
+        <link>https://tiefenauer.github.io/blog/swiss-frenzy/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/swiss-frenzy/</guid>
         
         
       </item>
@@ -394,8 +394,8 @@ Migration is over and I hope everything is in its right place now. The Simplicit
 </description>
         
         <pubDate>Thu, 22 Feb 2018 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/bye-bye-wordpress-hello-jekyll/</guid>
+        <link>https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</guid>
         
         
       </item>
