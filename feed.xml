@@ -3,11 +3,37 @@
   <channel>
     <title>Dani's Braindump</title>
     <description>My thoughts about the world</description>
-    <link>https://tiefenauer.github.io/</link>
-    <atom:link href="https://tiefenauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 19 Jun 2018 20:29:47 +0200</pubDate>
-    <lastBuildDate>Tue, 19 Jun 2018 20:29:47 +0200</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 19 Jun 2018 20:52:30 +0200</pubDate>
+    <lastBuildDate>Tue, 19 Jun 2018 20:52:30 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
+    
+      
+      <item>
+        <title>Türlersee</title>
+        <description>&lt;p&gt;The Türlersee is a small lake (more a pond) near Zurich and popular for locals who want to get out in the green during the weekend. I often come here to relax, enjoy the sun and go swimming. Because of its size the water warms up faster than in big lakes, which makes it swimmable already early in summer season. There’s also usually a guy renting out stand up paddles. If you are not into water sports theres a walking trail which takes you around the lake in approximately one hour.&lt;/p&gt;
+
+&lt;p&gt;There is a very nice public bath, which costs 5.- per person, not including the parking. Come by motorbike if you can: the parking is free and you won’t have to search a parking spot. Due to its proximity to Zurich it fills up quite fast sunny days, so make sure you come early. The bath belongs to a campground where you can also buy ice cream, all kinds of food and drinks.&lt;/p&gt;
+
+&lt;p&gt;If you don’t want to pay there are some spots arount the lake where you can access the water for free. However, you won’t be alone there either :) However, be aware that the lake is surrounded by a nature reserve so be sure to enter the water only at the designated spots.&lt;/p&gt;
+</description>
+        
+          <description>&lt;p&gt;The Türlersee is a small lake (more a pond) near Zurich and popular for locals who want to get out in the green during the weekend. I often come here to relax, enjoy the sun and go swimming. Because of its size the water warms up faster than in big lakes, which makes it swimmable already early in summer season. There’s also usually a guy renting out stand up paddles. If you are not into water sports theres a walking trail which takes you around the lake in approximately one hour.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 16 Jun 2018 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/blog/tuerlersee/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/tuerlersee/</guid>
+        
+        
+        <category>travel</category>
+        
+        <category>frenzy</category>
+        
+      </item>
+      
     
       
       <item>
@@ -61,8 +87,8 @@
 </description>
         
         <pubDate>Thu, 07 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/gh-pages-plugins/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/gh-pages-plugins/</guid>
+        <link>http://localhost:4000/blog/gh-pages-plugins/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/gh-pages-plugins/</guid>
         
         
       </item>
@@ -79,7 +105,7 @@
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -88,8 +114,8 @@
 </description>
         
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/boezingerberg/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/boezingerberg/</guid>
+        <link>http://localhost:4000/blog/boezingerberg/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/boezingerberg/</guid>
         
         
         <category>travel</category>
@@ -112,8 +138,8 @@
 </description>
         
         <pubDate>Sun, 27 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/seleger-moor/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/seleger-moor/</guid>
+        <link>http://localhost:4000/blog/seleger-moor/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/seleger-moor/</guid>
         
         
         <category>travel</category>
@@ -136,8 +162,8 @@
 </description>
         
         <pubDate>Mon, 21 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/kloentalersee/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/kloentalersee/</guid>
+        <link>http://localhost:4000/blog/kloentalersee/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/kloentalersee/</guid>
         
         
         <category>travel</category>
@@ -226,8 +252,8 @@
 </description>
         
         <pubDate>Sun, 13 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</guid>
+        <link>http://localhost:4000/blog/wireless-charger-for-motorcycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/wireless-charger-for-motorcycle/</guid>
         
         
       </item>
@@ -245,9 +271,9 @@
 &lt;p&gt;The way back leads you along the Geissflue back to Langenbruck. There are again plenty of picnic places along the path where you can roast a sausage or explore the ancient ruins of fortifications built during WW1. If you’re lucky you might even spot some chamois who roam there. Back in Langenbruck there is a Kneipp path where you can refresh your feet.&lt;/p&gt;
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -256,8 +282,8 @@
 </description>
         
         <pubDate>Sat, 12 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/belchenflue/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/belchenflue/</guid>
+        <link>http://localhost:4000/blog/belchenflue/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/belchenflue/</guid>
         
         
         <category>travel</category>
@@ -277,8 +303,8 @@
 </description>
         
         <pubDate>Sun, 22 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/saut-du-doubs/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/saut-du-doubs/</guid>
+        <link>http://localhost:4000/blog/saut-du-doubs/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/saut-du-doubs/</guid>
         
         
         <category>travel</category>
@@ -301,8 +327,8 @@
 </description>
         
         <pubDate>Sat, 21 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/faux-d-enson/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/faux-d-enson/</guid>
+        <link>http://localhost:4000/blog/faux-d-enson/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/faux-d-enson/</guid>
         
         
         <category>travel</category>
@@ -322,80 +348,8 @@
 </description>
         
         <pubDate>Tue, 03 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/swiss-frenzy/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/swiss-frenzy/</guid>
-        
-        
-      </item>
-      
-    
-      
-      <item>
-        <title>Bye bye, Wordpress. Hello Jekyll!</title>
-        <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;img src=&quot;/assets/img/posts/synology_109_nas.jpg&quot; alt=&quot;&quot; /&gt; 
-	&lt;figcaption&gt;My devoted workhorse which has been hosting my blog until now...&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;To make things worse, Synology has stopped shipping major software updates for my NAS. It hasn’t received any update (apart from security patches) for a long time and still runs DiskStation 4.2 at the time, which includes an outdated PHP version.&lt;/p&gt;
-
-&lt;h1 id=&quot;exit-wordpress&quot;&gt;Exit Wordpress&lt;/h1&gt;
-
-&lt;p&gt;Apart from the long page loadsall I didn’t deem this to be much of a problem for me. Especially considering I use this blog as my personal braindump which has only got small attention (although I did receive some comments or E-Mails from all around the world). Until recently, when warnings started to pile up in the Wordpress Admin-Dashboard, urging me to update to the newest PHP version. I wasn’t even able to install or upgrade certain plugins anymore since they require a higher version of PHP. Upgrading the PHP version would be possible in theory, but this would mean fiddling with the internals of the DiskStation software and potentially running into compatibility issues. Not my idea of fun. So I had to decide between two paths: Staying with the current state (with the danger of the site becoming inoperable due to deprecated software) or going for the radical path and migrating everything to a new host. I went for the latter.&lt;/p&gt;
-
-&lt;p&gt;Since I didn’t find any solutions for free Wordpress Hosting that met my requirements I looked around for something simpler, less resource hungry, without a zillion plugins. Something lightweight and sleek. At the same time it should support some key features that I often use:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Syntax highlighting for various languages&lt;/li&gt;
-  &lt;li&gt;support for LaTeX&lt;/li&gt;
-  &lt;li&gt;support for advanced text formatting&lt;/li&gt;
-  &lt;li&gt;customizable design (without having to handcraft everything)&lt;/li&gt;
-  &lt;li&gt;open and extendable (to some point)&lt;/li&gt;
-  &lt;li&gt;Possibility to write online or offline&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To make the search harder, it all should be free (as hosting on my own NAS is). And yeah, the page speed should also be higher. Dear Santa Clause…&lt;/p&gt;
-
-&lt;h1 id=&quot;enter-jekyll&quot;&gt;Enter Jekyll&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/img/posts/jekyll_logo.png&quot; alt=&quot;Jekyll logo&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then came &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Jekyll is a static site generator and the underlying technology used by &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;. It does not need a database and you can write your content using &lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot;&gt;Markdown&lt;/a&gt;. Jekyll uses the &lt;a href=&quot;http://shopify.github.io/liquid/&quot;&gt;Liquid Templating Language&lt;/a&gt; and &lt;a href=&quot;https://jekyllrb.com/docs/frontmatter/&quot;&gt;Front Matter&lt;/a&gt; that you can use to add some logic to your site. Your files are then compiled by GH Pages and served as plain old HTML pages. And since all the files reside in a normal GitHub repository, I don’t have to worry about things like backup or versioning anymore. I can even apply the same workflow for blogging like I apply for coding (or as Tom Preston-Warner expressed it: &lt;a href=&quot;http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html&quot;&gt;Blogging Like a Hacker&lt;/a&gt;). The few dynamic features I used, like comments, can easily be replaced by third-party services like &lt;a href=&quot;disqus.com&quot;&gt;Disqus&lt;/a&gt;. Having never used Jekyll before, I found &lt;a href=&quot;https://www.smashingmagazine.com/2014/08/build-blog-jekyll-github-pages/&quot;&gt;this tutorial&lt;/a&gt; insightful. I don’t have any long-term experience yet. Time will show how it all turns out, but what I have seen so far looks promising.&lt;/p&gt;
-
-&lt;h1 id=&quot;migrating-from-wp-to-gh-pages&quot;&gt;Migrating from WP to GH Pages&lt;/h1&gt;
-&lt;p&gt;Migration is never an easy endeavour, especially considering all the assets (text, images, code blocks, CSS,…). So I tried to automate as much as possible. Jekyll is really trying to help out here by providing a &lt;a href=&quot;http://import.jekyllrb.com/&quot;&gt;wide range of available importers&lt;/a&gt;. Alas, the provided Wordpress-Importer was only able to generate HTML files, not Markdown. And it only imports posts and pages, no assets!&lt;/p&gt;
-
-&lt;p&gt;Luckily I found a &lt;a href=&quot;https://github.com/benbalter/wordpress-to-jekyll-exporter&quot;&gt;WP plugin&lt;/a&gt; which did a fantastic job of converting all my posts and pages to Markdown files (including all the images in them). Unfortunately, the images are linked with their absolute paths (i.e. an URL pointing to the old location of the image). The pages also do not always look as expected when displayed in the new blog, but this is not neccessarily the plugin’s fault. Some content like automatic table of contents (TOC) on pages is generated on the fly by a plugin and can not be migrated easily. So there still is a lot of work do be done by hand. But at least I was able to move moste of the content in one go without major hiccups.&lt;/p&gt;
-
-&lt;p&gt;Next step was the site’s new design. I was looking for something sleek and minimal. Luckily, Jekyll is themeable and there are a &lt;a href=&quot;http://jekyllthemes.org/&quot;&gt;lot of readily available themes&lt;/a&gt; out there. I went for the &lt;a href=&quot;https://github.com/brianmaierjr/long-haul&quot;&gt;Long-Haul&lt;/a&gt; theme by Brian Maier Jr., which seems to be a goot compromise between focus on the content while still being visually appealing. I had to touch up on the CSS, the Layouts and the Gems a bit to fit the appearance my needs, but I was able to keep the theme in its original design without too much tweaking.&lt;/p&gt;
-
-&lt;p&gt;Since the new Jekyll Blog is basically just a bunch of Markdown files blogging can be done locally by creating/updating the Markdown files and/or fiddling with the configuration files. The changes can be tested locally and then be pushed to GitHub. Testing the pages locally requires you to install &lt;a href=&quot;https://www.ruby-lang.org/de/&quot;&gt;Ruby&lt;/a&gt; and a few gems. But since Windows &lt;a href=&quot;https://jekyllrb.com/docs/windows/&quot;&gt;is not officially supported by Jekyll&lt;/a&gt; and I sometimes only want to make a few quick changes (typos or the like) I looked for an alternative solutions which lets me edit the content online without having to install anything. Of course I can always edit the files directly on GitHub, but I was looking for something more practical, maybe even something WYSIWYG. I found two alternatives:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://prose.io/&quot;&gt;Prose.io&lt;/a&gt;, a free which is explicitly targeted at Jekyll sites and lets you edit your content with a simple online editor.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://cloudcannon.com/&quot;&gt;CloudCannon&lt;/a&gt; which is a somewhat more sophisticated solution targeted for professional CMS providers.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I am currently using CloudCannon, which is free for basic use and a bit more powerful than Prose.io. It even features nice things like shortcuts while editing (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL + D &lt;/code&gt; to delete a line). Let’s see if I stick with it.&lt;/p&gt;
-
-&lt;p&gt;The aftermath of the migration is not over. There is still a lot to do, especially in making sure all the links work, the images all show up and the content is properly aligned. But so far I’m quite happy with my decision to move to GH Pages. I’m still trying to migrate all the comments to Disqus, but that might take a bit longer than expected…&lt;/p&gt;
-
-&lt;!--
----
-**Update**
-Migration is over and I hope everything is in its right place now. The Simplicity of Jekyll/GitHub makes blogging is a breeze, so I don't miss my old Wordpress-Setup at all. I guess I should rename this post's title to _&quot;Bye bye, sluggish performance, security issues, database administration, data backup, plugin incompabilities, ... Hello Markdown, integrated version control, statelessness, ...&quot;_, but I guess that would be a bit too long... ;)
---&gt;
-</description>
-        
-          <description>&lt;p&gt;I have hosted my personal blog using &lt;a href=&quot;https://wordpress.org/&quot;&gt;Wordpress&lt;/a&gt; on my beloved &lt;a href=&quot;https://www.synology.com/de-de/support/download/DS109+#utilities&quot;&gt;Synology 109+ NAS&lt;/a&gt; for a long time. The site has been running 24/7 on this hardware for many years now. But after adding content over the years, adding more and more plugins and upgrading PHP a few times I begann noticing performance deteriorate more and more. I never put it to test, but it seemed to me like the pages took longer and longer to load. In the end, page speed was sluggish at best. All the plugins and DB accesses (and PHP’s hunger for resources) took their toll on the performance. It looked like my NAS was not such a good fit for a PHP/MySQL-backed Wordpress blog anymore…&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Thu, 22 Feb 2018 00:00:00 +0100</pubDate>
-        <link>https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/bye-bye-wordpress-hello-jekyll/</guid>
+        <link>http://localhost:4000/blog/swiss-frenzy/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/swiss-frenzy/</guid>
         
         
       </item>
