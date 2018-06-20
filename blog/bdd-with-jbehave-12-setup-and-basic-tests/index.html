@@ -74,9 +74,9 @@
     <!-- Modernizr -->
     <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
 
+    <!-- Google Analytics -->
 
-
-     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -87,7 +87,48 @@ ga('create', 'UA-56931568-3', 'auto');
 ga('send', 'pageview');
 
 </script>
- 
+
+
+
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- UniteGallery: http://unitegallery.net/index.php?page=documentation#changing_theme -->
+<!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
+<script src="/assets/js/unitegallery/unitegallery.min.js"></script>
+<script src="/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js"></script>
+<link rel='stylesheet' href="/assets/css/unitegallery/unite-gallery.css" type='text/css' />
+<link rel='stylesheet' href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type='text/css' />
+
+<!-- Unite Gallery-->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#gallery").unitegallery({
+            // http://unitegallery.net/index.php?page=tiles-justified-options
+            gallery_theme: "tiles",
+            tiles_type: "justified"
+            // ,gallery_width:"75%"
+        });
+    });
+</script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
 </head>
 
 
@@ -138,11 +179,31 @@ ga('send', 'pageview');
     
 
     <h1 class="postTitle">BDD with JBehave (1/2): Setup and basic tests</h1>
-    <p class="meta">October 29, 2015 | <span class="time">10</span> Minute Read</p>
+    <p class="meta">October 29, 2015 | <span class="time">11</span> Minute Read</p>
 
     <p>This entry is part 1 of 2 in the series <em>BDD with JBehave</em>.</p>
 
 <p>In an earlier article series I showed how to use Mockito together with JUnit in order to write good unit tests. While this tool is good for <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development (TDD)</a>, it falls short when it comes to <a href="https://en.wikipedia.org/wiki/Behavior-driven_development">Behavior Driven Development (BDD)</a>. In this article, I’m going to introduce another tool that has caught my attention and leverages your testing facilities to make use of the BDD-paradigms. But first, let’s see what we mean when we talk about BDD.</p>
+
+<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
+
+<ul id="markdown-toc">
+  <li><a href="#preface" id="markdown-toc-preface">Preface</a></li>
+  <li><a href="#a-short-introduction-into-bdd-and-jbehave" id="markdown-toc-a-short-introduction-into-bdd-and-jbehave">A short introduction into BDD and JBehave</a></li>
+  <li><a href="#getting-started-with-jbehave" id="markdown-toc-getting-started-with-jbehave">Getting started with JBehave</a>    <ul>
+      <li><a href="#include-jbehave-as-a-dependency" id="markdown-toc-include-jbehave-as-a-dependency">Include JBehave as a dependency</a></li>
+      <li><a href="#our-first-jbehave-test" id="markdown-toc-our-first-jbehave-test">Our first JBehave test</a>        <ul>
+          <li><a href="#the-story" id="markdown-toc-the-story">The story</a></li>
+          <li><a href="#the-steps" id="markdown-toc-the-steps">The Steps</a></li>
+          <li><a href="#the-mapping" id="markdown-toc-the-mapping">The Mapping</a></li>
+          <li><a href="#all-set" id="markdown-toc-all-set">All set</a></li>
+          <li><a href="#good-to-know" id="markdown-toc-good-to-know">Good to know</a></li>
+        </ul>
+      </li>
+      <li><a href="#congratulations" id="markdown-toc-congratulations">Congratulations!</a></li>
+    </ul>
+  </li>
+</ul>
 
 <h2 id="preface">Preface</h2>
 
@@ -190,7 +251,7 @@ ga('send', 'pageview');
 
 <p>Setup your project with Maven (or directly in the IDE). Of course, in order to use the functionalities of JBehave, we must add JBehave as a dependency:</p>
 
-<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.jbehave<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>jbehave-core<span class="nt">&lt;/artifactId&gt;</span>
@@ -201,7 +262,8 @@ ga('send', 'pageview');
         <span class="nt">&lt;artifactId&gt;</span>hamcrest-all<span class="nt">&lt;/artifactId&gt;</span>
         <span class="nt">&lt;version&gt;</span>1.3<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span></code></pre></figure>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
 
 <p>Note I have also included a dependency to <a href="http://hamcrest.org/">Hamcrest</a> in order to use their really useful matchers. This should be enough for now to write our first JBehave test.</p>
 
@@ -357,7 +419,7 @@ Then the radio should be turned on</code></pre></figure>
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">
      
-      <a class="prev" href="/mobile-app-development-with-xamarin-and-mvvmcross-part-6-ios-ui-with-storyboard/"><span>&laquo;&nbsp;Mobile App Development with Xamarin and MvvmCross &#8211; Part 6: iOS UI with Storyboard</span>
+      <a class="prev" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-5-ios-ui-with-storyboard/"><span>&laquo;&nbsp;Mobile App Development with Xamarin and MvvmCross – Part 5: iOS UI with Storyboard</span>
       
     </a>
       
@@ -452,27 +514,7 @@ Then the radio should be turned on</code></pre></figure>
 </div><!-- end .footer -->
 
 
-   <!-- Add jQuery and other scripts -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src=""><\/script>')</script>
-<script src="/assets/js/dropcap.min.js"></script>
-<script src="/assets/js/responsive-nav.min.js"></script>
-<script src="/assets/js/scripts.js"></script>
-
-<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
-<script src="/assets/js/bootstrap.bundle.min.js"></script>
-
-<!-- MathJax: https://www.mathjax.org/ -->
-<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
-<script type="text/x-mathjax-config">
-        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-<!-- Hypothes.is (https://web.hypothes.is/) -->
-
-
-<!-- Bootstrap scripts-->
+   <!-- Bootstrap scripts-->
 <script>
     $('.alert').alert()
 </script>
