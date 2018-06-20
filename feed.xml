@@ -3,10 +3,10 @@
   <channel>
     <title>Dani's Braindump</title>
     <description>My thoughts about the world</description>
-    <link>https://tiefenauer.github.io/</link>
-    <atom:link href="https://tiefenauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 20 Jun 2018 14:41:24 +0200</pubDate>
-    <lastBuildDate>Wed, 20 Jun 2018 14:41:24 +0200</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 20 Jun 2018 16:24:26 +0200</pubDate>
+    <lastBuildDate>Wed, 20 Jun 2018 16:24:26 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       
@@ -24,8 +24,8 @@
 </description>
         
         <pubDate>Sat, 16 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/tuerlersee/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/tuerlersee/</guid>
+        <link>http://localhost:4000/blog/tuerlersee/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/tuerlersee/</guid>
         
         
         <category>travel</category>
@@ -87,8 +87,8 @@
 </description>
         
         <pubDate>Thu, 07 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/gh-pages-plugins/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/gh-pages-plugins/</guid>
+        <link>http://localhost:4000/blog/gh-pages-plugins/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/gh-pages-plugins/</guid>
         
         
       </item>
@@ -105,7 +105,7 @@
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-06-02-boezingerberg/view.jpg&quot; alt=&quot;ice cream with a view&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -114,8 +114,8 @@
 </description>
         
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/boezingerberg/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/boezingerberg/</guid>
+        <link>http://localhost:4000/blog/boezingerberg/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/boezingerberg/</guid>
         
         
         <category>travel</category>
@@ -138,8 +138,8 @@
 </description>
         
         <pubDate>Sun, 27 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/seleger-moor/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/seleger-moor/</guid>
+        <link>http://localhost:4000/blog/seleger-moor/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/seleger-moor/</guid>
         
         
         <category>travel</category>
@@ -162,8 +162,8 @@
 </description>
         
         <pubDate>Mon, 21 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/kloentalersee/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/kloentalersee/</guid>
+        <link>http://localhost:4000/blog/kloentalersee/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/kloentalersee/</guid>
         
         
         <category>travel</category>
@@ -252,8 +252,8 @@
 </description>
         
         <pubDate>Sun, 13 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/wireless-charger-for-motorcycle/</guid>
+        <link>http://localhost:4000/blog/wireless-charger-for-motorcycle/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/wireless-charger-for-motorcycle/</guid>
         
         
       </item>
@@ -271,9 +271,9 @@
 &lt;p&gt;The way back leads you along the Geissflue back to Langenbruck. There are again plenty of picnic places along the path where you can roast a sausage or explore the ancient ruins of fortifications built during WW1. If you’re lucky you might even spot some chamois who roam there. Back in Langenbruck there is a Kneipp path where you can refresh your feet.&lt;/p&gt;
 
 &lt;h2 id=&quot;pictures&quot;&gt;Pictures&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/tree.jpg&quot; alt=&quot;weird tree on the road&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://tiefenauer.github.io/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/img/frenzy/2018-05-12-belchenflue/landscape.jpg&quot; alt=&quot;pittoresque landscape&quot; /&gt;&lt;/p&gt;
 
 </description>
         
@@ -282,8 +282,8 @@
 </description>
         
         <pubDate>Sat, 12 May 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/belchenflue/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/belchenflue/</guid>
+        <link>http://localhost:4000/blog/belchenflue/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/belchenflue/</guid>
         
         
         <category>travel</category>
@@ -303,8 +303,8 @@
 </description>
         
         <pubDate>Sun, 22 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/saut-du-doubs/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/saut-du-doubs/</guid>
+        <link>http://localhost:4000/blog/saut-du-doubs/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/saut-du-doubs/</guid>
         
         
         <category>travel</category>
@@ -327,8 +327,8 @@
 </description>
         
         <pubDate>Sat, 21 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/faux-d-enson/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/faux-d-enson/</guid>
+        <link>http://localhost:4000/blog/faux-d-enson/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/faux-d-enson/</guid>
         
         
         <category>travel</category>
@@ -348,8 +348,8 @@
 </description>
         
         <pubDate>Tue, 03 Apr 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/swiss-frenzy/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/swiss-frenzy/</guid>
+        <link>http://localhost:4000/blog/swiss-frenzy/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/swiss-frenzy/</guid>
         
         
       </item>
