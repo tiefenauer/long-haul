@@ -1,0 +1,21 @@
+<!-- Google Analytics -->
+{% if site.google_analytics %}
+    {% include scripts/ga.html %}
+{% endif %}
+
+<!-- jQuery -->
+{% include scripts/jquery.html %}
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+{% include scripts/bootstrap.html %}
+
+<!-- UniteGallery: http://unitegallery.net/index.php?page=documentation#changing_theme -->
+{% include scripts/unitegallery.html %}
+
+<!-- MathJax: https://www.mathjax.org/ -->
+{%include scripts/mathjax.html %}
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+{% if layout.hypothesis %}
+    {% include scripts/hypothesis.html %}
+{% endif %}

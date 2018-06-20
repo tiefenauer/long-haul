@@ -1,0 +1,10 @@
+{% assign dir = 'posts' %}
+{% assign slug = page.path | replace_first: '_posts/', '' | replace_first: '.md', '' %}
+{% assign path = 'assets/img/' | append: dir | append: '/' | append: slug %}
+
+<div id="gallery" >
+    <!-- https://github.com/sillylogger/jekyll-directory -->
+    {% directory path: path %}
+        <img src="{{file.url}}" data-image="{{file.url}}" alt="{{file.name}}" data-description="{{file.name}}" />
+    {% enddirectory %}
+</div>

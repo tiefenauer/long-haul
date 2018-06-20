@@ -73,7 +73,7 @@ $$
 \end{equation}
 $$
 
-The **cost function** calculates the average los (i.e. _cost_) over all $$m$$ training instances classified with the current parameters:
+The **cost function** calculates the average loss (i.e. _cost_) over all $$m$$ training instances classified with the current parameters:
 
 $$
 \begin{equation}
@@ -109,7 +109,7 @@ We can represent the weights as an $$(n \times 1)$$ vector $$(w_1, w_2)$$ and th
 |---|---|---|
 |$$n$$|number of features|scalar|
 |$$m$$|number of training samples|scalar|
-|$$X$$|training sample matrix (one feature vector oer training sample)|$$(n \times m)$$|
+|$$X$$|training sample matrix (one feature vector per training sample)|$$(n \times m)$$|
 |$$y$$|training label vector|$$(1 \times m)$$|
 |$$w$$|weight vector (one weight per feature)|$$(n \times 1)$$|
 |$$b$$|bias (threshold)|scalar|

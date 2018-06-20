@@ -5,7 +5,6 @@ date: 2013-10-27T14:34:51+00:00
 author: admin
 layout: post
 guid: http://www.tiefenauer.info/?p=100
-permalink: /galaxy-s4-google-edition/
 cleanretina_sidebarlayout:
   - default
 frutiful_posts_template:

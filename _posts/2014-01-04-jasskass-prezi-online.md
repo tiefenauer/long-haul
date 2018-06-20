@@ -5,7 +5,6 @@ date: 2014-01-04T16:06:32+00:00
 author: admin
 layout: post
 guid: http://www.tiefenauer.info/?p=109
-permalink: /jasskass-prezi-online/
 cleanretina_sidebarlayout:
   - default
 frutiful_posts_template:
@@ -13,7 +12,7 @@ frutiful_posts_template:
 categories:
   - Projects
 ---
-I created a Prezi for JassKass (in German) to show the features of the final app, as well as why I&#8217;m building the app in the first place.
+I created a Prezi for JassKass (in German) to show the features of the final app, as well as why I'm building the app in the first place.
 
 
 

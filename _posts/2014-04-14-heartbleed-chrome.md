@@ -5,7 +5,6 @@ date: 2014-04-14T07:17:18+00:00
 author: admin
 layout: post
 guid: http://www.tiefenauer.info/?p=395
-permalink: /heartbleed-chrome/
 frutiful_posts_template:
   - "2"
 categories:
@@ -18,11 +17,17 @@ tags:
 ---
 # The Solution
 
-Heartbleed has made quite some headlines recently. If you&#8217;re using Chrome as your preferred browser (like me) you should check your settings for the following entry:
+Heartbleed has made quite some headlines recently. If you're using Chrome as your preferred browser (like me) you should check your settings for the following entry:
 
-<p style="text-align: center;">
-  <img alt="" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/433.png" /><br /> <img style="line-height: 1.5;" alt="" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/712.png" /><br /> <img style="line-height: 1.5;" alt="" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/790.png" /><br /> <img style="line-height: 1.5;" alt="" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/201.png" /><br /> <img alt="" src="http://www.tiefenauer.info/wp-content/uploads/2014/04/606.png" />
-</p>
+![](/assets/img/wp-content/uploads/2014/04/433.png)
+
+![](/assets/img/wp-content/uploads/2014/04/712.png)
+
+![](/assets/img/wp-content/uploads/2014/04/790.png)
+
+![](/assets/img/wp-content/uploads/2014/04/201.png)
+
+![](/assets/img/wp-content/uploads/2014/04/606.png)
 
 # The Problem
 

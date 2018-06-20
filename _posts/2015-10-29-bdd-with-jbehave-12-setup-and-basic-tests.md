@@ -17,6 +17,8 @@ This entry is part 1 of 2 in the series *BDD with JBehave*.
 
 In an earlier article series I showed how to use Mockito together with JUnit in order to write good unit tests. While this tool is good for [Test Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development), it falls short when it comes to [Behavior Driven Development (BDD)](https://en.wikipedia.org/wiki/Behavior-driven_development). In this article, I’m going to introduce another tool that has caught my attention and leverages your testing facilities to make use of the BDD-paradigms. But first, let’s see what we mean when we talk about BDD.
 
+{% include toc.md %}
+
 ## Preface
 
 There are a lot of posts and tutorials about JBehave, but none have satisfied my expectations so far. If you’ve never heard of JBehave before, it might be a bit hard to start out as a complete beginner, since most of the magic is happening under the hood and not transparent to the user.
@@ -59,7 +61,7 @@ The radio will be implemented in a single class `Radio.java`, which will be test
 
 Setup your project with Maven (or directly in the IDE). Of course, in order to use the functionalities of JBehave, we must add JBehave as a dependency:
 
-{% highlight xml %}
+```xml
 <dependencies>
     <dependency>
         <groupId>org.jbehave</groupId>
@@ -72,7 +74,7 @@ Setup your project with Maven (or directly in the IDE). Of course, in order to u
         <version>1.3</version>
     </dependency>
 </dependencies>
-{% endhighlight %}
+```
 
 Note I have also included a dependency to [Hamcrest](http://hamcrest.org/) in order to use their really useful matchers. This should be enough for now to write our first JBehave test.
 

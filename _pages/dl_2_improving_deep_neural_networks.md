@@ -82,7 +82,7 @@ The following table shows the different combinations of high/low bias and varian
 |train set error **high**| high bias and variance | you got lucky (unrealistic case) |
 |train set error **low**| high bias | your model performs well |
 
-If your model suffers of high bias, you could train a bigger network, train loner (i.e. more iterations) or choose a different architecture. If your model suffers of high variance you should try to get more training data or apply some of the regularization techniques presented below.
+If your model suffers of high bias, you could train a bigger network, train longer (i.e. more iterations) or choose a different architecture. If your model suffers of high variance you should try to get more training data or apply some of the regularization techniques presented below.
 
 To assess the quality of a model the **difference** between bias and variance is relevant. Generally, we try to keep this difference as small as possible.
 
@@ -118,7 +118,7 @@ $$
 
 #### Regularization term for NN
 
-We have seen now how we can regularize the cost in Logistic Regression by using a regularization term (see $$\ref{regularization_lr}$$). We can regularize the cost in a a NN with several hidden layers (and therefore several weight matrices $$W^{[l]}$$) the same way using a similar regularization term:
+We have seen now how we can regularize the cost in Logistic Regression by using a regularization term (see $$\ref{regularization_lr}$$). We can regularize the cost in a NN with several hidden layers (and therefore several weight matrices $$W^{[l]}$$) the same way using a similar regularization term:
 
 $$
 \require{color}
@@ -216,7 +216,7 @@ There are tools and libraries to help with data augmentation (e.g. [Agumentor](h
 Another very simple method to prevent overfitting is to abort training as soon as we observe the test error increasing again. However, this is problematic because we prevent the model from exploring the whole label space. It also violates the principle of orthogonalization.
 
 ## Input normalization
-A very useful technique to speed up the learning process is to normalize the NN's input. We can do this in three steps:
+A very useful technique to speed up the learning process is to normalize the NN's input. We can do this in two steps:
 
 * subtract the **mean**:
 $$
@@ -229,7 +229,7 @@ $$
 x = \frac{x}{\sigma}^2
 $$
 
-Normalizing the inputs leads to the input features being on a similar scale and the cost function converge more quickly. However, when performing input normalization this way you should make sure to use **the same values** for $$\mu$$ and $$\sigma$$ to normalize the training and the test set!
+Subtracting the mean will center the values around their average value, meaning that samples with feature values close to the mean vector will have values close to zero. Dividing by the variance will put the feature values on a similar scale, meaning that big differences between values in skewed data will be reduced. Normalizing the inputs leads to the cost function converging more quickly. However, when performing input normalization this way you should make sure to use **the same values** for $$\mu$$ and $$\sigma$$ to normalize the training and the test set!
 
 <figure>
 	<img src="{% link assets/img/articles/ml/dl_2/input_normalization.png %}" alt="Cost convergence with and without input normalization">

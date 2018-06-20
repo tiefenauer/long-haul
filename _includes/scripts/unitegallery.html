@@ -1,0 +1,17 @@
+<!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
+<script src="{{ '/assets/js/unitegallery/unitegallery.min.js' | prepend: site.baseurl }}"></script>
+<script src="{{ '/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js' | prepend: site.baseurl }}"></script>
+<link rel='stylesheet' href="{{ '/assets/css/unitegallery/unite-gallery.css' | prepend: site.baseurl }}" type='text/css' />
+<link rel='stylesheet' href="{{ '/assets/js/unitegallery/themes/default/ug-theme-default.css' | prepend: site.baseurl }}" type='text/css' />
+
+<!-- Unite Gallery-->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#gallery").unitegallery({
+            // http://unitegallery.net/index.php?page=tiles-justified-options
+            gallery_theme: "tiles",
+            tiles_type: "justified"
+            // ,gallery_width:"75%"
+        });
+    });
+</script>

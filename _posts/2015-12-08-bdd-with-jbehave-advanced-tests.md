@@ -44,21 +44,21 @@ Parameters are defined as Strings in the story file, but can be any other type i
 
 Usually, the method parameters carry the same names and occur in the same order as specified in the annotation string. This is good practice but there may be cases where naming and/or order of parameters in Java may be different. That's why JBehave includes the `@Named`-annotation for parameter values:
 
-Using the `@Named`-annotation both name and/or order of parameter can become independent of the description in the story. However, having parameter names and order the same is good practice and also less verbose. I suggest keeping them in sync unless there&#8217;s absolutely no way to avoid it.
+Using the `@Named`-annotation both name and/or order of parameter can become independent of the description in the story. However, having parameter names and order the same is good practice and also less verbose. I suggest keeping them in sync unless there's absolutely no way to avoid it.
 
-Let&#8217;s update our Radio so that the user can tune to a frequency by adding the following code:
+Let's update our Radio so that the user can tune to a frequency by adding the following code:
 
-Now run your test and voilà: The test succeeds! 🙂
+Now run your test and voilà: The test succeeds! :smile:
 
 # Example tables
 
-In certain cases it can become necessary to feed different parameter values to the test in order to check different behaviour. For example: Let&#8217;s assume our radio has a display which can display the current station name, but which is limited to 10 characters. If a station name is longer than 10 characters, the name should be truncated down to 7 characters and appended with three dots.
+In certain cases it can become necessary to feed different parameter values to the test in order to check different behaviour. For example: Let's assume our radio has a display which can display the current station name, but which is limited to 10 characters. If a station name is longer than 10 characters, the name should be truncated down to 7 characters and appended with three dots.
 
 This is actually an extension of a parameterized test and can be formulated similarly in the story by using an example table:
 
 The test will then be executed once for each row in the example table, having the parameter values set to their respective value from the table.
 
-Let&#8217;s try this out and extend our `RadioSteps.java` with appropriate methods to match the story:
+Let's try this out and extend our `RadioSteps.java` with appropriate methods to match the story:
 
 Also add the following methods to `Radio.java`:
 
@@ -70,13 +70,13 @@ Expected :A reall...
 Actual :A really long station name which will definitely not fit into the display
 {% endhighlight %}
 
-Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts &#8211; all in the name of test-driven development. 🙂 So let&#8217;s change the previously added `getDisplay()`-method to the following:
+Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts – all in the name of test-driven development. :smile: So let's change the previously added `getDisplay()`-method to the following:
 
 Now run the test again! It should become green like a cucumber.
 
 # Composite steps
 
-Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let&#8217;s revisit our first test:
+Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let's revisit our first test:
 
 {% highlight bash %}
 Given a digital radio
@@ -84,7 +84,7 @@ When I press the on/off switch
 Then the radio should be turned on
 {% endhighlight %}
 
-Now let&#8217;s assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:
+Now let's assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:
 
 {% highlight bash %}
 Given a digital radio
@@ -93,7 +93,7 @@ When I press the on/off switch
 Then the radio should be turned off
 {% endhighlight %}
 
-Let&#8217;s also extend our RadioSteps.java with an additional method:
+Let's also extend our RadioSteps.java with an additional method:
 
 {% highlight java %}
     @Given("the radio is already turned on")
