@@ -1,7 +1,15 @@
+<!--
+Include a gallery with all pictures from the current post. The images must be in a subfolder under /assets/img/ that
+matches the path of the blog-post. E.g. if the path of the blog-post is '/_posts/2012-12-31-my_post_with_a_gallery.md'
+then the corresponding images must reside in ^/assets/img/2012-12-31-my_post_with_a_gallery'
+
+All images in this folder will be used. It is not possiblte to filter out certain images.
+-->
 {% assign dir = 'posts' %}
 {% assign slug = page.path | replace_first: '_posts/', '' | replace_first: '.md', '' %}
 {% assign path = 'assets/img/' | append: dir | append: '/' | append: slug %}
 
+<!-- UniteGallery: http://unitegallery.net/index.php?page=documentation#changing_theme -->
 <div id="gallery" >
     <!-- https://github.com/sillylogger/jekyll-directory -->
     {% directory path: path %}

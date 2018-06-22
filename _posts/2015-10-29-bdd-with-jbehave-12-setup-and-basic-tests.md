@@ -90,11 +90,11 @@ JBehave needs three things to run a test:
 
 Let’s start with the most simple use case. Let’s say I have a digital radio, which I want to turn on to listen to music. The expected behavior could be decribed as follows:
 
-{% highlight bash %}
+```bash
 Given a digital radio
 When I turn on the radio
 Then the radio should be turned on
-{% endhighlight %}
+```
 
 Easy to read, huh? This is not a free text. It is acutally code being executed by JBehave! That’s the good thing about BDD: Since the behavior is language agnostic, expectations can be formulated almost entirely in natural language. You only have to follow a basic [syntax pattern](http://jbehave.org/) with the following keywords:
 
@@ -108,7 +108,7 @@ Of course there’s more and the descriptions can also be parameterized. But thi
 
 As said, JBehave needs the steps corresponding with the story description. This can be done using a POJO with some JBehave-annotated methods:
 
-{% highlight java %}
+```java
 public class RadioSteps {
 
     private Radio radio;
@@ -128,13 +128,13 @@ public class RadioSteps {
         assertTrue(radio.isTurnedOn());
     }
 }
-{% endhighlight %}
+```
 
 As you can see, the annotations carry the same namings like keywords described above. It is important that the string passed in as an argument matches the text following the keyword.
 
 The more perceptive of you might have noted that we’re still missing a radio that contains the actual behavior to be tested, so let’ts add that, too:
 
-{% highlight java %}
+```java
 public class Radio {
 
     private String stationName;
@@ -152,13 +152,13 @@ public class Radio {
         return turnedOn;
     }
 }
-{% endhighlight %}
+```
 
 ### The Mapping
 
 Now, in order for JBehave to know what steps to execute for what parts of the story, we must provide it with some basic configuration. I won’t dig into the details of what else could be configured, but this should be enough for the moment.
 
-{% highlight java %}
+```java
 public class TurnRadioOn extends JUnitStory {
 
     @Override
@@ -178,7 +178,7 @@ public class TurnRadioOn extends JUnitStory {
     }
 
 }
-{% endhighlight %}
+```
 
 What this code does is tell JBehave the classpath to load stories from and write the results to the console in text format.
 
@@ -186,7 +186,7 @@ What this code does is tell JBehave the classpath to load stories from and write
 
 Now let’s try it out. Right click on the mapping class (`TurnRadioOn.java`) and run it as a Unit Test. You should get the following output:
 
-{% highlight bash %}
+```
 java.lang.AssertionError
  at org.junit.Assert.fail(Assert.java:86)
  at org.junit.Assert.assertTrue(Assert.java:41)
@@ -196,15 +196,15 @@ java.lang.AssertionError
  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
  at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 ...
-{% endhighlight %}
+```
 
 Uh-oh. Our test has failed. But that’s actually a good thing, since we can fix it now and will immediately know whether our fix has produced the expected behavior. So let’s complete the `switchOnOff`-Method to simulate the radio’s behavior:
 
-{% highlight java %}
+```java
     public void switchOnOff(){
         turnedOn = !turnedOn;
     }
-{% endhighlight %}
+```
 
 Let’s run our test again and we should see the following test result:
 
@@ -218,7 +218,7 @@ Also, JBehave will run all your stories as a single unit test by default. if you
 
 After that you can update your test file to be run with the custom test runner:
 
-{% highlight java %}
+```java
     public void switchOnOff(){
         turnedOn = !turnedOn;
     }
@@ -226,7 +226,7 @@ After that you can update your test file to be run with the custom test runner:
 public class TurnRadioOn extends JUnitStory {
 ...
 }
-{% endhighlight %}
+```
 
 ## Congratulations!
 

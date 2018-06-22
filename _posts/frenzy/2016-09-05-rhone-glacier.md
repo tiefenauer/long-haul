@@ -2,6 +2,7 @@
 title: Rhone Glacier Caves
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking

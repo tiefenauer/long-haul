@@ -24,15 +24,15 @@ In this second part of the article series about BDD and JBehave we will explore 
 
 When describing events and expected behavior, it is often useful to evaluate certain parts of the expectation description in the story. We did this implicitly before by stating the following expectation
 
-{% highlight bash %}
+```java
 Then the radio should be turned on
-{% endhighlight %}
+```
 
 and evaluating the expecation in Java to a boolean:
 
-{% highlight java %}
+```java
 assertTrue(radio.isTurnedOn());
-{% endhighlight %}
+```
 
 But what if we wanted to evaluate the expectation in a more complex manner, e.g. by specifying the following test:
 
@@ -64,11 +64,11 @@ Also add the following methods to `Radio.java`:
 
 If we run our test now, it will fail with the following message:
 
-{% highlight bash %}
+```bash
 org.junit.ComparisonFailure: 
 Expected :A reall...
 Actual :A really long station name which will definitely not fit into the display
-{% endhighlight %}
+```
 
 Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts – all in the name of test-driven development. :smile: So let's change the previously added `getDisplay()`-method to the following:
 
@@ -78,44 +78,44 @@ Now run the test again! It should become green like a cucumber.
 
 Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let's revisit our first test:
 
-{% highlight bash %}
+```bash
 Given a digital radio
 When I press the on/off switch
 Then the radio should be turned on
-{% endhighlight %}
+```
 
 Now let's assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:
 
-{% highlight bash %}
+```java
 Given a digital radio
 And the radio is already turned on
 When I press the on/off switch
 Then the radio should be turned off
-{% endhighlight %}
+```
 
 Let's also extend our RadioSteps.java with an additional method:
 
-{% highlight java %}
-    @Given("the radio is already turned on")
-    public void theRadioIsTurnedOn(){
-        if (radio == null)
-            aDigitalRadio();
-        if(!radio.isTurnedOn())
-            radio.switchOnOff();
-    }
-{% endhighlight %}
+```java
+@Given("the radio is already turned on")
+public void theRadioIsTurnedOn(){
+    if (radio == null)
+        aDigitalRadio();
+    if(!radio.isTurnedOn())
+        radio.switchOnOff();
+}
+```
 
 The two preconditions are now chained together i.e. executed in sequence in the order given by the story file. Composition of steps can also be achieved by using the `@Composite`-annotation in Java. We could use the following test
 
-{% highlight bash %}
+```bash
 Given the radio is already turned on
 When I press the on/off switch
 Then the radio should be turned off
-{% endhighlight %}
+```
 
 with the following step:
 
-{% highlight java %}
+```java
     @Given("the radio is already turned on")
     @Composite(steps = {
             "Given a digital radio"
@@ -126,6 +126,6 @@ with the following step:
         if(!radio.isTurnedOn())
             radio.switchOnOff();
     }
-{% endhighlight %}
+```
 
 The result would be identical.

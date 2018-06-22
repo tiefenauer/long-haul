@@ -2,6 +2,7 @@
 title: Rafting from Bremgarten to Gebenstorf
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking

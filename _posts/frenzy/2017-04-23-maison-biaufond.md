@@ -2,6 +2,7 @@
 title: Maison Biaufond
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking

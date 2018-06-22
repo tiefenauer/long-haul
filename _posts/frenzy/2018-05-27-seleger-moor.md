@@ -2,6 +2,7 @@
 title: Seleger Moor
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking

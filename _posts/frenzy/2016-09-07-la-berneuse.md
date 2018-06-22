@@ -2,6 +2,7 @@
 title: La Berneuse
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     - biking

@@ -2,6 +2,7 @@
 title: Faux d'Enson
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking

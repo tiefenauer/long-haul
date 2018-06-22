@@ -2,6 +2,7 @@
 title: St. Leonard
 layout: frenzy
 category: [travel, frenzy]
+hidden: true
 frenzy:
     # - sport
     # - biking
