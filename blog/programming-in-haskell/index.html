@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Programming in Haskell - Solutions to slides</title>
+
+    <!-- Open Graph Meta -->
+    <meta content="Dani's Braindump" property="og:site_name">
+    
+      <meta content="Programming in Haskell - Solutions to slides" property="og:title">
+    
+    
+      <meta content="article" property="og:type">
+    
+    
+      <meta content="My thoughts about the world" property="og:description">
+    
+    
+      <meta content="https://tiefenauer.github.io/blog/programming-in-haskell/" property="og:url">
+    
+    
+      <meta content="2018-06-28T00:00:00+02:00" property="article:published_time">
+      <meta content="https://tiefenauer.github.io/about/" property="article:author">
+    
+    
+      <meta content="https://tiefenauer.github.io/assets/img/header_image.jpg" property="og:image">
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@danitiefenauer">
+    <meta name="twitter:creator" content="@danitiefenauer">
+    
+      <meta name="twitter:title" content="Programming in Haskell - Solutions to slides">
+    
+    
+      <meta name="twitter:url" content="https://tiefenauer.github.io/blog/programming-in-haskell/">
+    
+    
+      <meta name="twitter:description" content="My thoughts about the world">
+    
+    
+      <meta name="twitter:image:src" content="https://tiefenauer.github.io/assets/img/header_image.jpg">
+    
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+
+    <!-- Come and get me RSS readers -->
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml" />
+
+    <!-- Bootstrap: include before theme CSS so styles are overridden -->
+    <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- custom styles -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!--[if IE 8]><link rel="stylesheet" href="/assets/css/ie.css"><![endif]-->
+    <link rel="canonical" href="https://tiefenauer.github.io/blog/programming-in-haskell/">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.custom.15390.js" type="text/javascript"></script>
+
+    <!-- Google Analytics -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-56931568-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src=""><\/script>')</script>
+<script src="/assets/js/dropcap.min.js"></script>
+<script src="/assets/js/responsive-nav.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Bootstrap: http://getbootstrap.com/docs/4.1/components/alerts/ -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- UniteGallery: http://unitegallery.net/index.php?page=documentation#changing_theme -->
+<!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
+<script src="/assets/js/unitegallery/unitegallery.min.js"></script>
+<script src="/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js"></script>
+<link rel='stylesheet' href="/assets/css/unitegallery/unite-gallery.css" type='text/css' />
+<link rel='stylesheet' href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type='text/css' />
+
+<!-- Unite Gallery-->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#gallery").unitegallery({
+            // http://unitegallery.net/index.php?page=tiles-justified-options
+            gallery_theme: "tiles",
+            tiles_type: "justified"
+            // ,gallery_width:"75%"
+        });
+    });
+</script>
+
+<!-- MathJax: https://www.mathjax.org/ -->
+<!-- Turn on equation numbering: http://docs.mathjax.org/en/latest/tex.html#automatic-equation-numbering -->
+<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<!-- Hypothes.is (https://web.hypothes.is/) -->
+
+</head>
+
+
+<body>
+
+    <div class="header">
+     <div class="container">
+         <h1 class="logo"><a href="/">Dani's Braindump</a></h1>
+         <nav class="nav-collapse">
+             <ul class="noList">
+                 
+                 <li class="element first  ">
+                     <a href="/index.html">Home</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/about">About</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/ml">Machine Learning</a>
+                 </li> 
+                 
+                 <li class="element   ">
+                     <a href="/frenzy">Swiss Frenzy</a>
+                 </li> 
+                 
+                 <li class="element   last">
+                     <a href="/contact">Contact</a>
+                 </li> 
+                 
+             </ul>
+         </nav>
+     </div>
+ </div><!-- end .header -->
+
+
+   <div class="content">
+      <div class="container">
+         <div class="post editable">
+
+    <!-- Frenzy layout: dynamically set title image -->
+    
+
+    <!-- Overrides frenzy image if set -->
+    
+
+    
+
+    <h1 class="postTitle">Programming in Haskell - Solutions to slides</h1>
+    <p class="meta">June 28, 2018 | <span class="time">19</span> Minute Read</p>
+
+    <p>I attended a course about Advanced Programming Paradigms for my master studies (MSE course TSM_AdvPrPa) which introduces programming in a purely functional language by example of Haskell. We use the book <a href="http://www.cs.nott.ac.uk/~pszgmh/pih.html">Programming in Haskell</a> by Graham Hutton. Although the book itself is not free, it comes with slides which can be downloaded for free and contain some exercises for each chapter. Since have not found a complete set of solutions for those exercises, I put my own solutions online (chapter 2 - 10 only, note that chapter 1 does not contain any exercises). You can download the code for each chapter by clicking the link below each caption. The files can be imported in GHCi.</p>
+
+<p>I also removed the blue background from the PowerPoint slides for printability and exported to PDF. You can download the printable slides by clicking the link below each caption.</p>
+
+<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
+
+<ul id="markdown-toc">
+  <li><a href="#chapter-1-introduction" id="markdown-toc-chapter-1-introduction">Chapter 1: Introduction</a></li>
+  <li><a href="#chapter-2-first-steps" id="markdown-toc-chapter-2-first-steps">Chapter 2: First Steps</a></li>
+  <li><a href="#chapter-3-types-and-classes" id="markdown-toc-chapter-3-types-and-classes">Chapter 3: Types and Classes</a></li>
+  <li><a href="#chapter-4-defining-functions" id="markdown-toc-chapter-4-defining-functions">Chapter 4: Defining Functions</a></li>
+  <li><a href="#chapter-5-list-comprehensions" id="markdown-toc-chapter-5-list-comprehensions">Chapter 5: List Comprehensions</a></li>
+  <li><a href="#chapter-6-recursive-functions" id="markdown-toc-chapter-6-recursive-functions">Chapter 6: Recursive Functions</a></li>
+  <li><a href="#chapter-7-higher-order-functions" id="markdown-toc-chapter-7-higher-order-functions">Chapter 7: Higher-Order Functions</a></li>
+  <li><a href="#chapter-8-declaring-types-and-classes" id="markdown-toc-chapter-8-declaring-types-and-classes">Chapter 8: Declaring Types and Classes</a></li>
+  <li><a href="#chapter-9-the-countdown-problem" id="markdown-toc-chapter-9-the-countdown-problem">Chapter 9: The Countdown Problem</a></li>
+  <li><a href="#chapter-10-interactive-programming" id="markdown-toc-chapter-10-interactive-programming">Chapter 10: Interactive programming</a></li>
+</ul>
+
+<h2 id="chapter-1-introduction">Chapter 1: Introduction</h2>
+
+<p>(no script) / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch1.pdf">printable slides</a></p>
+
+<h2 id="chapter-2-first-steps">Chapter 2: First Steps</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch2.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch2.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) Try out slides 2-7 and 13-16 using GHCi.</span>
+<span class="c1">-- no solution</span>
+
+<span class="c1">-- (2) Fix the syntax errors in the program below, and test your solution using GHCi.</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">a</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="n">length</span> <span class="n">xs</span> <span class="c1">-- lowercase n, backticks instead of single quotes</span>
+  <span class="kr">where</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">-- fix indentation</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1">-- (3) Show how the library function last that selects the last element of a list can be defined using the functions introduced in this lecture.</span>
+<span class="n">last'</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">head</span> <span class="p">(</span><span class="n">reverse</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="c1">-- (4) Can you think of another possible definition?</span>
+<span class="n">last''</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">drop</span> <span class="p">(</span><span class="n">length</span> <span class="n">xs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">xs</span> <span class="o">!!</span> <span class="mi">0</span>
+
+<span class="c1">-- (5) Similarly, show how the library function init that removes the last element from a list can be defined in two different ways.</span>
+<span class="n">init'</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">take</span> <span class="p">(</span><span class="n">length</span> <span class="n">xs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">xs</span>
+<span class="n">init''</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">reverse</span> <span class="p">(</span><span class="n">tail</span> <span class="p">(</span><span class="n">reverse</span> <span class="n">xs</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="chapter-3-types-and-classes">Chapter 3: Types and Classes</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch3.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch3.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) What are the types of the following values?</span>
+<span class="c1">-- ['a','b','c'] :: [Char]</span>
+<span class="c1">-- ('a','b','c') :: (Char, Char, Char)</span>
+<span class="c1">-- [(False,'0'),(True,'1')] :: [(Bool, Char]</span>
+<span class="c1">-- ([False,True],['0','1']) :: ([Bool], [CHar])</span>
+<span class="c1">-- [tail,init,reverse] :: [[a] -&gt; [a]]</span>
+
+<span class="c1">-- (2) What are the types of the following functions?</span>
+<span class="n">second</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">second</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">head</span> <span class="p">(</span><span class="n">tail</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="n">swap</span> <span class="o">::</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="n">swap</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">pair</span> <span class="o">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">pair</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">double</span> <span class="o">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">double</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+
+<span class="n">palindrome</span> <span class="o">::</span> <span class="kt">Eq</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">palindrome</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">reverse</span> <span class="n">xs</span> <span class="o">==</span> <span class="n">xs</span>
+
+<span class="n">twice</span> <span class="o">::</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">twice</span> <span class="n">f</span> <span class="n">x</span> <span class="o">=</span> <span class="n">f</span> <span class="p">(</span><span class="n">f</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1">-- (3) Check your answers using GHCi.</span>
+<span class="c1">-- see results above</span>
+</code></pre></div></div>
+
+<h2 id="chapter-4-defining-functions">Chapter 4: Defining Functions</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch4.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch4.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) Consider a function safetail that behaves in the same way as tail, except that safetail maps the empty list to the empty list, whereas tail gives an error in this case.  Define safetail using:</span>
+<span class="c1">--     (a) a conditional expression</span>
+<span class="n">safetail</span> <span class="n">xs</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">xs</span> <span class="o">==</span> <span class="kt">[]</span> <span class="kr">then</span> <span class="kt">[]</span> <span class="kr">else</span> <span class="n">tail</span> <span class="n">xs</span>
+<span class="c1">--     (b) guarded equations</span>
+<span class="n">safetail'</span> <span class="n">xs</span> <span class="o">|</span> <span class="n">xs</span> <span class="o">==</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">[]</span>
+             <span class="o">|</span> <span class="n">otherwise</span> <span class="o">=</span> <span class="n">tail</span> <span class="n">xs</span>
+<span class="c1">--     (c) pattern matching</span>
+<span class="n">safetail''</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">[]</span>
+<span class="n">safetail''</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">tail</span> <span class="n">xs</span>
+
+<span class="c1">-- (2) Give three possible definitions for the logical or operator (||) using pattern matching.</span>
+<span class="n">or'</span> <span class="kt">True</span> <span class="kt">True</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">or'</span> <span class="kt">True</span> <span class="kt">False</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">or'</span> <span class="kt">False</span> <span class="kt">True</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">or'</span> <span class="kt">False</span> <span class="kt">False</span> <span class="o">=</span> <span class="kt">False</span>
+
+<span class="c1">--or''</span>
+<span class="n">or''</span> <span class="kt">True</span> <span class="kr">_</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">or''</span> <span class="kr">_</span> <span class="kt">True</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">or''</span> <span class="kr">_</span> <span class="kr">_</span> <span class="o">=</span> <span class="kt">False</span>
+
+<span class="c1">--or'''</span>
+<span class="n">or'''</span> <span class="kt">False</span> <span class="kt">False</span> <span class="o">=</span> <span class="kt">False</span>
+<span class="n">or'''</span> <span class="kr">_</span> <span class="kr">_</span> <span class="o">=</span> <span class="kt">True</span>
+
+<span class="c1">-- (3) Redefine the following version of (&amp;&amp;) using conditionals rather than patterns:</span>
+<span class="n">and'</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">x</span> <span class="kr">then</span> <span class="kr">if</span> <span class="n">y</span> <span class="kr">then</span> <span class="kt">True</span> <span class="kr">else</span> <span class="kt">False</span> <span class="kr">else</span> <span class="kt">False</span>
+
+<span class="c1">-- (4) Do the same for the following version</span>
+<span class="n">and''</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">not</span> <span class="n">x</span> <span class="kr">then</span> <span class="kt">False</span> <span class="kr">else</span> <span class="kr">if</span> <span class="n">y</span> <span class="kr">then</span> <span class="kt">True</span> <span class="kr">else</span> <span class="kt">False</span>
+</code></pre></div></div>
+
+<h2 id="chapter-5-list-comprehensions">Chapter 5: List Comprehensions</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch5.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch5.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) A triple (x,y,z) of positive integers is called pythagorean if x2 + y2 = z2.  Using a list comprehension, define a function</span>
+<span class="n">pyths</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">],</span> <span class="n">y</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">],</span> <span class="n">z</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">],</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="p">]</span>
+
+<span class="c1">-- (2) A positive integer is perfect if it equals the sum of all of its factors, excluding the number itself.  Using a list comprehension, define a function</span>
+<span class="n">factors</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">/=</span> <span class="n">n</span><span class="p">]</span>
+<span class="n">perfects</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">],</span> <span class="n">sum</span> <span class="p">(</span><span class="n">factors</span> <span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="c1">-- (3) The scalar product of two lists of integers xs and ys of length n is give by the sum of the products of the corresponding integers:</span>
+<span class="n">scalar</span> <span class="n">xs</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">sum</span> <span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">zip</span> <span class="n">xs</span> <span class="n">ys</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="chapter-6-recursive-functions">Chapter 6: Recursive Functions</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch6.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch6.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) Without looking at the standard prelude, define the following library functions using recursion:</span>
+<span class="c1">--     (a) Decide if all logical values in a list are true:</span>
+<span class="n">and'</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">and'</span> <span class="p">(</span><span class="n">b</span><span class="o">:</span><span class="n">bs</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">and'</span> <span class="n">bs</span>
+
+<span class="c1">--     (b) Concatenate a list of lists:</span>
+<span class="n">concat'</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">[]</span>
+<span class="n">concat'</span> <span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="n">xs</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">++</span> <span class="n">concat</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+
+<span class="c1">--     (c) Produce a list with n identical elements:</span>
+<span class="n">replicate'</span> <span class="mi">0</span> <span class="kr">_</span> <span class="o">=</span> <span class="kt">[]</span>
+<span class="n">replicate'</span> <span class="n">n</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">++</span> <span class="n">replicate'</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">a</span>
+
+<span class="c1">--     (d) Select the nth element of a list:</span>
+<span class="n">select'</span> <span class="p">(</span><span class="n">a</span><span class="o">:</span><span class="n">as</span><span class="p">)</span> <span class="mi">0</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">select'</span> <span class="p">(</span><span class="n">a</span><span class="o">:</span><span class="n">as</span><span class="p">)</span> <span class="n">i</span> <span class="o">=</span> <span class="n">select'</span> <span class="n">as</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">--      (e) Decide if a value is an element of a list:</span>
+<span class="n">elem'</span> <span class="kr">_</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">False</span>
+<span class="n">elem'</span> <span class="n">x</span> <span class="p">(</span><span class="n">a</span><span class="o">:</span><span class="n">as</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">==</span> <span class="n">a</span> <span class="o">||</span> <span class="n">elem'</span> <span class="n">x</span> <span class="n">as</span>
+
+<span class="c1">-- (2) Define a recursive function that merges two sorted lists of values to give a single sorted list.  For example</span>
+<span class="n">merge</span> <span class="n">xs</span> <span class="kt">[]</span> <span class="o">=</span> <span class="n">xs</span>
+<span class="n">merge</span> <span class="kt">[]</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">ys</span>
+<span class="n">merge</span> <span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="n">xs</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="o">:</span><span class="n">ys</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="kr">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="kr">then</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">]</span> <span class="kr">else</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span> <span class="o">++</span> <span class="n">merge</span> <span class="n">xs</span> <span class="n">ys</span>
+
+<span class="c1">-- (3) Define a recursive function that implements merge sort, which can be specified by the following two rules:</span>
+<span class="c1">--      - Lists of length &lt;= 1 are already sorted;</span>
+<span class="c1">--      - Other lists can be sorted by sorting the two halves and merging the resulting lists.</span>
+<span class="n">msort</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">[]</span>
+<span class="n">msort</span> <span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="kt">[]</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="n">msort</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">merge</span> <span class="p">(</span><span class="n">msort</span> <span class="p">(</span><span class="n">take</span> <span class="p">(</span><span class="n">length</span> <span class="n">xs</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="mi">2</span><span class="p">)</span> <span class="n">xs</span><span class="p">))</span> <span class="p">(</span><span class="n">msort</span> <span class="p">(</span><span class="n">drop</span> <span class="p">(</span><span class="n">length</span> <span class="n">xs</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="mi">2</span><span class="p">)</span> <span class="n">xs</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<h2 id="chapter-7-higher-order-functions">Chapter 7: Higher-Order Functions</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch7.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch7.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- (1) What are higher-order functions that return functions as results better known as?</span>
+<span class="c1">-- curried functions (?)</span>
+
+<span class="c1">-- (2) Express the comprehension [f x | x &lt;- xs, p x] using the functions map and filter.</span>
+<span class="n">comprehension</span> <span class="n">xs</span> <span class="n">f</span> <span class="n">p</span> <span class="o">=</span> <span class="n">map</span> <span class="n">f</span> <span class="p">(</span><span class="n">filter</span> <span class="n">p</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="c1">-- (3) Redefine map f and filter p using foldr.</span>
+<span class="n">map'</span> <span class="n">f</span> <span class="o">=</span> <span class="n">foldr</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="n">acc</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="o">:</span> <span class="n">acc</span><span class="p">)</span> <span class="kt">[]</span>
+<span class="n">filter'</span> <span class="n">p</span> <span class="o">=</span> <span class="n">foldr</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="n">acc</span> <span class="o">-&gt;</span> <span class="kr">if</span> <span class="n">p</span> <span class="n">x</span> <span class="kr">then</span> <span class="n">x</span><span class="o">:</span><span class="n">acc</span> <span class="kr">else</span> <span class="n">acc</span><span class="p">)</span> <span class="kt">[]</span>
+
+<span class="c1">-- test</span>
+<span class="n">res3a</span> <span class="o">=</span> <span class="n">map</span> <span class="n">f</span> <span class="n">xs</span>
+<span class="n">res3b</span> <span class="o">=</span> <span class="n">filter</span> <span class="n">p</span> <span class="n">xs</span>
+
+<span class="n">res3a'</span> <span class="o">=</span> <span class="n">map'</span> <span class="n">f</span> <span class="n">xs</span>
+<span class="n">res3b'</span> <span class="o">=</span> <span class="n">filter'</span> <span class="n">p</span> <span class="n">xs</span>
+</code></pre></div></div>
+
+<h2 id="chapter-8-declaring-types-and-classes">Chapter 8: Declaring Types and Classes</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch8.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch8.pdf">printable slides</a></p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">data</span> <span class="kt">Nat</span> <span class="o">=</span> <span class="kt">Zero</span> <span class="o">|</span> <span class="kt">Succ</span> <span class="kt">Nat</span>
+
+<span class="n">nat2int</span> <span class="o">::</span> <span class="kt">Nat</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">nat2int</span> <span class="kt">Zero</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">nat2int</span> <span class="p">(</span><span class="kt">Succ</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">nat2int</span> <span class="n">n</span>
+
+<span class="kr">instance</span> <span class="kt">Show</span> <span class="kt">Nat</span> <span class="kr">where</span>
+    <span class="n">show</span> <span class="n">n</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">nat2int</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1">-- (1) Using recursion and the function add, define a function that multiplies two natural numbers.</span>
+<span class="n">add</span> <span class="o">::</span> <span class="kt">Nat</span> <span class="o">-&gt;</span> <span class="kt">Nat</span> <span class="o">-&gt;</span> <span class="kt">Nat</span>
+<span class="n">add</span> <span class="kt">Zero</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+<span class="n">add</span> <span class="p">(</span><span class="kt">Succ</span> <span class="n">m</span><span class="p">)</span> <span class="n">n</span> <span class="o">=</span> <span class="kt">Succ</span> <span class="p">(</span><span class="n">add</span> <span class="n">m</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">mul</span> <span class="o">::</span> <span class="kt">Nat</span> <span class="o">-&gt;</span> <span class="kt">Nat</span> <span class="o">-&gt;</span> <span class="kt">Nat</span>
+<span class="n">mul</span> <span class="kt">Zero</span> <span class="kr">_</span>  <span class="o">=</span> <span class="kt">Zero</span>
+<span class="n">mul</span> <span class="kr">_</span> <span class="kt">Zero</span> <span class="o">=</span> <span class="kt">Zero</span>
+<span class="n">mul</span> <span class="n">m</span> <span class="p">(</span><span class="kt">Succ</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">add</span> <span class="n">m</span> <span class="p">(</span><span class="n">mul</span> <span class="n">m</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1">-- example: 3 * 4 = 12</span>
+<span class="n">three</span> <span class="o">=</span> <span class="kt">Succ</span> <span class="p">(</span><span class="kt">Succ</span> <span class="p">(</span><span class="kt">Succ</span> <span class="kt">Zero</span><span class="p">))</span> <span class="c1">-- 3</span>
+<span class="n">four</span> <span class="o">=</span> <span class="kt">Succ</span> <span class="p">(</span><span class="kt">Succ</span> <span class="p">(</span><span class="kt">Succ</span> <span class="p">(</span><span class="kt">Succ</span> <span class="kt">Zero</span><span class="p">)))</span> <span class="c1">-- 4</span>
+<span class="n">res1</span> <span class="o">=</span> <span class="n">mul</span> <span class="n">three</span> <span class="n">four</span> <span class="c1">-- 12</span>
+
+<span class="c1">-- (2) Define a suitable function folde for expressions, and give a few examples of its use.</span>
+<span class="kr">data</span> <span class="kt">Expr</span> <span class="o">=</span> <span class="kt">Val</span> <span class="kt">Int</span>
+          <span class="o">|</span> <span class="kt">Add</span> <span class="kt">Expr</span> <span class="kt">Expr</span>
+          <span class="o">|</span> <span class="kt">Mul</span> <span class="kt">Expr</span> <span class="kt">Expr</span>
+
+<span class="c1">-- evaluation function from slide 19</span>
+<span class="n">eval</span> <span class="o">::</span> <span class="kt">Expr</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">eval</span> <span class="p">(</span><span class="kt">Val</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">n</span>
+<span class="n">eval</span> <span class="p">(</span><span class="kt">Add</span> <span class="n">m</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">m</span> <span class="o">+</span> <span class="n">eval</span> <span class="n">n</span>
+<span class="n">eval</span> <span class="p">(</span><span class="kt">Mul</span> <span class="n">m</span> <span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">m</span> <span class="o">*</span> <span class="n">eval</span> <span class="n">n</span>
+
+<span class="c1">-- folde function</span>
+<span class="c1">-- 1st param (Int -&gt; a): ID-operation that maps an (Integer-)Value of a Value-Expression to an arbitrary return type</span>
+<span class="c1">-- 2nd param (a -&gt; a -&gt; a): operation that adds two Expressions (add)</span>
+<span class="c1">-- 3rd param (a -&gt; a -&gt; a): operation that multiplies two Expressions (mul)</span>
+<span class="c1">-- 4th param Expr: an expresion to fold</span>
+<span class="c1">-- returns a: arbitrary return type</span>
+<span class="n">folde</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Int</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Expr</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">folde</span> <span class="n">id</span> <span class="kr">_</span> <span class="kr">_</span> <span class="p">(</span><span class="kt">Val</span> <span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">id</span> <span class="n">x</span>
+<span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="p">(</span><span class="kt">Add</span> <span class="n">x</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">add</span> <span class="p">(</span><span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="p">(</span><span class="kt">Mul</span> <span class="n">x</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">mul</span> <span class="p">(</span><span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">folde</span> <span class="n">id</span> <span class="n">add</span> <span class="n">mul</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1">-- evaluation function with folde: return type =Int</span>
+<span class="n">evalToInt</span> <span class="o">::</span> <span class="kt">Expr</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">evalToInt</span> <span class="n">e</span> <span class="o">=</span> <span class="n">folde</span> <span class="n">id</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">e</span>
+
+<span class="c1">-- evaluation function with folde: return type = Double</span>
+<span class="n">evalToDouble</span> <span class="o">::</span> <span class="kt">Expr</span> <span class="o">-&gt;</span> <span class="kt">Double</span>
+<span class="n">evalToDouble</span> <span class="n">e</span> <span class="o">=</span> <span class="n">folde</span> <span class="n">fromIntegral</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">e</span>
+
+<span class="c1">-- evaluation function with folde that maps each value to a value twice the size in th expression (for demonstration purposes only): return type=Int</span>
+<span class="n">evalToTwice</span> <span class="o">::</span> <span class="kt">Expr</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">evalToTwice</span> <span class="n">e</span> <span class="o">=</span> <span class="n">folde</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">e</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="kt">Mul</span> <span class="p">(</span><span class="kt">Add</span> <span class="p">(</span><span class="kt">Val</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="kt">Val</span> <span class="mi">4</span><span class="p">))</span> <span class="p">(</span><span class="kt">Val</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">res2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e</span> <span class="c1">-- 35</span>
+<span class="n">res2Int</span> <span class="o">=</span> <span class="n">evalToInt</span> <span class="n">e</span> <span class="c1">-- 35</span>
+<span class="n">res2Double</span> <span class="o">=</span> <span class="n">evalToDouble</span> <span class="n">e</span> <span class="c1">-- 35.0</span>
+<span class="n">res2Twice</span> <span class="o">=</span> <span class="n">evalToTwice</span> <span class="n">e</span> <span class="c1">-- 140 = (3*2 + 4*2) * 5*2 = (6 + 8) * 10</span>
+
+<span class="c1">-- (3) A binary tree is complete if the two sub-trees of every node are of equal size.  Define a function that decides if a binary tree is complete.</span>
+<span class="kr">data</span> <span class="kt">Tree</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">Leaf</span> <span class="n">a</span>
+            <span class="o">|</span> <span class="kt">Node</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span> <span class="n">a</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="c1">-- example Tree from slide 21</span>
+<span class="n">t</span> <span class="o">=</span> <span class="kt">Node</span> <span class="p">(</span><span class="kt">Node</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">3</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">4</span><span class="p">))</span> <span class="mi">5</span> <span class="p">(</span><span class="kt">Node</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">6</span><span class="p">)</span> <span class="mi">7</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">9</span><span class="p">))</span>
+<span class="c1">-- imperfect Tree (additional leaves under node 9)</span>
+<span class="n">t'</span> <span class="o">=</span> <span class="kt">Node</span> <span class="p">(</span><span class="kt">Node</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">3</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">4</span><span class="p">))</span> <span class="mi">5</span> <span class="p">(</span><span class="kt">Node</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">6</span><span class="p">)</span> <span class="mi">7</span> <span class="p">(</span><span class="kt">Node</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">8</span><span class="p">)</span> <span class="mi">9</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="mi">10</span><span class="p">)))</span>
+
+<span class="n">treeDepth</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">treeDepth</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">treeDepth</span> <span class="p">(</span><span class="kt">Node</span> <span class="n">l</span> <span class="n">a</span> <span class="n">r</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">max</span> <span class="p">(</span><span class="n">treeDepth</span> <span class="n">l</span><span class="p">)</span> <span class="p">(</span><span class="n">treeDepth</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="n">isComplete</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Tree</span> <span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isComplete</span> <span class="p">(</span><span class="kt">Leaf</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="kt">True</span>
+<span class="n">isComplete</span> <span class="p">(</span><span class="kt">Node</span> <span class="n">l</span> <span class="n">a</span> <span class="n">r</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">treeDepth</span> <span class="n">l</span> <span class="o">==</span> <span class="n">treeDepth</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="n">res3</span> <span class="o">=</span> <span class="n">isComplete</span> <span class="n">t</span> <span class="c1">-- True</span>
+<span class="n">res3'</span> <span class="o">=</span> <span class="n">isComplete</span> <span class="n">t'</span> <span class="c1">-- False</span>
+</code></pre></div></div>
+
+<h2 id="chapter-9-the-countdown-problem">Chapter 9: The Countdown Problem</h2>
+
+<p>(no script) / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch9.pdf">printable slides</a></p>
+
+<h2 id="chapter-10-interactive-programming">Chapter 10: Interactive programming</h2>
+
+<p><a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch10.hs">script</a> / <a href="/assets/img/posts/2018-06-28-programming-in-haskell/ch10.pdf">printable slides</a></p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Game of nim (without input validation)</span>
+<span class="n">starLn</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">starLn</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="sc">'*'</span> <span class="o">|</span> <span class="n">i</span> <span class="o">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">]]</span>
+
+<span class="n">showBoard</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">showBoard</span> <span class="n">xs</span> <span class="o">=</span> <span class="kr">do</span> <span class="n">mapM_</span> <span class="n">putStrLn</span> <span class="p">[</span><span class="n">starLn</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="n">xs</span><span class="p">]</span>
+
+<span class="n">removeStars</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">removeStars</span> <span class="n">xs</span> <span class="n">l</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="kr">if</span> <span class="n">i</span><span class="o">==</span><span class="n">l</span> <span class="kr">then</span> <span class="n">x</span><span class="o">-</span><span class="n">n</span> <span class="kr">else</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">zip</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">(</span><span class="n">length</span> <span class="n">xs</span><span class="p">)]</span> <span class="n">xs</span><span class="p">]</span>
+
+<span class="n">play</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">play</span> <span class="n">board</span> <span class="o">=</span> <span class="kr">do</span>
+    <span class="n">showBoard</span> <span class="n">board</span>
+    <span class="kr">if</span> <span class="n">sum</span> <span class="n">board</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span>
+        <span class="n">putStrLn</span> <span class="s">"finished!"</span>
+    <span class="kr">else</span> <span class="kr">do</span>
+        <span class="n">putStrLn</span> <span class="s">"Enter line number: "</span>
+        <span class="n">line</span> <span class="o">&lt;-</span> <span class="n">getLine</span>
+        <span class="kr">let</span> <span class="n">l</span> <span class="o">=</span> <span class="p">(</span><span class="n">read</span> <span class="n">line</span> <span class="o">::</span> <span class="kt">Int</span><span class="p">)</span>
+        <span class="n">putStrLn</span> <span class="s">"Enter number of stars to remove: "</span>
+        <span class="n">stars</span> <span class="o">&lt;-</span> <span class="n">getLine</span>
+        <span class="kr">let</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">read</span> <span class="n">stars</span> <span class="o">::</span> <span class="kt">Int</span><span class="p">)</span>
+        <span class="n">play</span> <span class="p">(</span><span class="n">removeStars</span> <span class="n">board</span> <span class="n">l</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1">-- main function: n=number of lines</span>
+<span class="n">nim</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="n">nim</span> <span class="n">n</span> <span class="o">=</span> <span class="n">play</span> <span class="p">(</span><span class="n">reverse</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="n">n</span><span class="p">])</span>
+</code></pre></div></div>
+
+
+    <!-- POST NAVIGATION -->
+      <div class="postNav clearfix">
+     
+      <a class="prev" href="/blog/tuerlersee/"><span>&laquo;&nbsp;Türlersee</span>
+      
+    </a>
+      
+     
+    
+    
+    <p id="disqus_thread"></p>
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        var disqus_config = function () {
+            this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.title = "Programming in Haskell - Solutions to slides"
+            this.page.identifier = "/blog/programming-in-haskell/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tiefenauer.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+  
+</div>
+
+      </div>
+   </div><!-- end .content -->
+
+   <div class="footer">
+   <div class="container">
+      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
+      </p>
+
+      <div class="footer-links"> 
+         <ul class="noList"> 
+            
+            <li><a href="https://www.facebook.com/daniel.tiefenauer">
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://twitter.com/danitiefenauer">
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
+                  </svg>
+            </a></li>
+            
+            
+            <li><a href="https://github.com/tiefenauer">
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
+                  </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.linkedin.com/in/danieltiefenauer">
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+            </a></li>
+             
+            
+            <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                </svg>
+            </a></li>
+                         
+            
+            <li><a href="mailto:daniel@tiefenauer.info">
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
+                  </svg>
+            </a></li>
+            
+         </ul>
+      </div>
+   </div>
+</div><!-- end .footer -->
+
+
+   <!-- Bootstrap scripts-->
+<script>
+    $('.alert').alert()
+</script>
+
+</body>
+
+</html>

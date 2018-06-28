@@ -192,11 +192,13 @@ ga('send', 'pageview');
 
 <p>When describing events and expected behavior, it is often useful to evaluate certain parts of the expectation description in the story. We did this implicitly before by stating the following expectation</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Then the radio should be turned on</code></pre></figure>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Then</span> <span class="n">the</span> <span class="n">radio</span> <span class="n">should</span> <span class="n">be</span> <span class="n">turned</span> <span class="n">on</span>
+</code></pre></div></div>
 
 <p>and evaluating the expecation in Java to a boolean:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">assertTrue</span><span class="o">(</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">());</span></code></pre></figure>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">assertTrue</span><span class="o">(</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">());</span>
+</code></pre></div></div>
 
 <p>But what if we wanted to evaluate the expectation in a more complex manner, e.g. by specifying the following test:</p>
 
@@ -228,9 +230,10 @@ ga('send', 'pageview');
 
 <p>If we run our test now, it will fail with the following message:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">org.junit.ComparisonFailure: 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>org.junit.ComparisonFailure: 
 Expected :A reall...
-Actual :A really long station name which will definitely not fit into the display</code></pre></figure>
+Actual :A really long station name which will definitely not fit into the display
+</code></pre></div></div>
 
 <p>Failure of this test is actually a good thing, since it gives us a chance to fix this and immediately check the result of our efforts – all in the name of test-driven development. <img class="emoji" title=":smile:" alt=":smile:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" height="20" width="20"> So let’s change the previously added <code class="highlighter-rouge">getDisplay()</code>-method to the following:</p>
 
@@ -240,36 +243,40 @@ Actual :A really long station name which will definitely not fit into the displa
 
 <p>Sometimes it can be useful to chain certain preconditions together to formulate a test. For example, let’s revisit our first test:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Given a digital radio
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given a digital radio
 When I press the on/off switch
-Then the radio should be turned on</code></pre></figure>
+Then the radio should be turned on
+</code></pre></div></div>
 
 <p>Now let’s assume if the radio is already turned on, it should be turned off by pressing the on/off switch again. We can write another test, which is similar to the above, but with an additional precondition:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Given a digital radio
-And the radio is already turned on
-When I press the on/off switch
-Then the radio should be turned off</code></pre></figure>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Given</span> <span class="n">a</span> <span class="n">digital</span> <span class="n">radio</span>
+<span class="n">And</span> <span class="n">the</span> <span class="n">radio</span> <span class="n">is</span> <span class="n">already</span> <span class="n">turned</span> <span class="n">on</span>
+<span class="n">When</span> <span class="n">I</span> <span class="n">press</span> <span class="n">the</span> <span class="n">on</span><span class="o">/</span><span class="n">off</span> <span class="k">switch</span>
+<span class="n">Then</span> <span class="n">the</span> <span class="n">radio</span> <span class="n">should</span> <span class="n">be</span> <span class="n">turned</span> <span class="n">off</span>
+</code></pre></div></div>
 
 <p>Let’s also extend our RadioSteps.java with an additional method:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the radio is already turned on"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">theRadioIsTurnedOn</span><span class="o">(){</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">radio</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-            <span class="n">aDigitalRadio</span><span class="o">();</span>
-        <span class="k">if</span><span class="o">(!</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">())</span>
-            <span class="n">radio</span><span class="o">.</span><span class="na">switchOnOff</span><span class="o">();</span>
-    <span class="o">}</span></code></pre></figure>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Given</span><span class="o">(</span><span class="s">"the radio is already turned on"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">theRadioIsTurnedOn</span><span class="o">(){</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">radio</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">aDigitalRadio</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(!</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">())</span>
+        <span class="n">radio</span><span class="o">.</span><span class="na">switchOnOff</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
 <p>The two preconditions are now chained together i.e. executed in sequence in the order given by the story file. Composition of steps can also be achieved by using the <code class="highlighter-rouge">@Composite</code>-annotation in Java. We could use the following test</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Given the radio is already turned on
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given the radio is already turned on
 When I press the on/off switch
-Then the radio should be turned off</code></pre></figure>
+Then the radio should be turned off
+</code></pre></div></div>
 
 <p>with the following step:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the radio is already turned on"</span><span class="o">)</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the radio is already turned on"</span><span class="o">)</span>
     <span class="nd">@Composite</span><span class="o">(</span><span class="n">steps</span> <span class="o">=</span> <span class="o">{</span>
             <span class="s">"Given a digital radio"</span>
     <span class="o">})</span>
@@ -278,7 +285,8 @@ Then the radio should be turned off</code></pre></figure>
             <span class="n">aDigitalRadio</span><span class="o">();</span>
         <span class="k">if</span><span class="o">(!</span><span class="n">radio</span><span class="o">.</span><span class="na">isTurnedOn</span><span class="o">())</span>
             <span class="n">radio</span><span class="o">.</span><span class="na">switchOnOff</span><span class="o">();</span>
-    <span class="o">}</span></code></pre></figure>
+    <span class="o">}</span>
+</code></pre></div></div>
 
 <p>The result would be identical.</p>
 
@@ -306,7 +314,7 @@ Then the radio should be turned off</code></pre></figure>
         var disqus_config = function () {
             this.page.url = "https://tiefenauer.github.io";  // Replace PAGE_URL with your page's canonical URL variable
             this.page.title = "BDD with JBehave (2/2): Advanced tests"
-            this.page.identifier = "https://tiefenauer.github.io/blog/bdd-with-jbehave-advanced-tests/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            this.page.identifier = "/blog/bdd-with-jbehave-advanced-tests/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
         };
 
         (function() { // DON'T EDIT BELOW THIS LINE
