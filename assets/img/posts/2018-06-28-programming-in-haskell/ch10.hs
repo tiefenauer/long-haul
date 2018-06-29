@@ -1,12 +1,9 @@
 -- Game of nim (without input validation
-starLn :: Int -> String
-starLn n = ['*' | i <- [1..n]]
-
 showBoard :: [Int] -> IO ()
-showBoard xs = do mapM_ putStrLn [starLn x | x <- xs]
+showBoard xs = do mapM_ putStrLn [replicate x '*' | x <- xs]
 
 removeStars :: [Int] -> Int -> Int -> [Int]
-removeStars xs l n = [if i==l then x-n else x | (i,x) <- zip [1..(length xs)] xs]
+removeStars xs l n = [if i==l then x-n else x | (i,x) <- zip [1..] xs]
 
 play :: [Int] -> IO ()
 play board = do

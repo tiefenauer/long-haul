@@ -14,12 +14,10 @@ or' True False = True
 or' False True = True
 or' False False = False
 
---or''
 or'' True _ = True
 or'' _ True = True
 or'' _ _ = False
 
---or'''
 or''' False False = False
 or''' _ _ = True
 

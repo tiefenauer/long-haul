@@ -9,17 +9,17 @@ concat' (x:xs) = x ++ concat(xs)
 
 --     (c) Produce a list with n identical elements:
 replicate' 0 _ = []
-replicate' n a = [a] ++ replicate' (n-1) a
+replicate' n x = [x] ++ replicate' (n-1) x
 
 --     (d) Select the nth element of a list:
-select' (a:as) 0 = a
-select' (a:as) i = select' as (i-1)
+select' (x:xs) 0 = x
+select' (x:xs) i = select' xs (i-1)
 
 --      (e) Decide if a value is an element of a list:
 elem' _ [] = False
-elem' x (a:as) = x == a || elem' x as
+elem' v (x:xs) = v == x || elem' v xs
 
--- (2) Define a recursive function that merges two sorted lists of values to give a single sorted list.  For example
+-- (2) Define a recursive function that merges two sorted lists of values to give a single sorted list.  For example: merge [2,5,6] [1,3,4] == [1,2,3,4,5,6]
 merge xs [] = xs
 merge [] ys = ys
 merge (x:xs) (y:ys) = (if x > y then [y,x] else [x,y]) ++ merge xs ys
