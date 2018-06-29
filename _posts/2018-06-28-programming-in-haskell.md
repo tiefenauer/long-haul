@@ -278,9 +278,9 @@ res3' = isComplete t' -- False
 [script](/assets/img/posts/2018-06-28-programming-in-haskell/ch10.hs) / [printable slides](/assets/img/posts/2018-06-28-programming-in-haskell/ch10.pdf)
 
 ```haskell
--- Game of nim (without input validation
+-- Game of nim (without input validation)
 showBoard :: [Int] -> IO ()
-showBoard xs = do mapM_ putStrLn [replicate x '*' | x <- xs]
+showBoard xs = mapM_ putStrLn [replicate x '*' | x <- xs]
 
 removeStars :: [Int] -> Int -> Int -> [Int]
 removeStars xs l n = [if i==l then x-n else x | (i,x) <- zip [1..] xs]
