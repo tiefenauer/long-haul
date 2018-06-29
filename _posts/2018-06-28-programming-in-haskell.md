@@ -299,8 +299,7 @@ play board = do
         let n = (read stars :: Int)
         play (removeStars board l n)
 
-nim :: IO ()
-nim = do
-    let board = reverse [1..5]
-    play board
+-- n :: Int == number of lines
+nim :: Int -> IO ()
+nim n = play (reverse [1..n])
 ```
