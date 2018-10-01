@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
-<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
-<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" <![endif]--><!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
 
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,10 +47,10 @@
 
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
 
     <!-- Come and get me RSS readers -->
-    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml">
 
     <!-- Bootstrap: include before theme CSS so styles are overridden -->
     <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
@@ -102,8 +100,8 @@ ga('send', 'pageview');
 <!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
 <script src="/assets/js/unitegallery/unitegallery.min.js"></script>
 <script src="/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js"></script>
-<link rel='stylesheet' href="/assets/css/unitegallery/unite-gallery.css" type='text/css' />
-<link rel='stylesheet' href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type='text/css' />
+<link rel="stylesheet" href="/assets/css/unitegallery/unite-gallery.css" type="text/css">
+<link rel="stylesheet" href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type="text/css">
 
 <!-- Unite Gallery-->
 <script type="text/javascript">
@@ -160,7 +158,8 @@ ga('send', 'pageview');
              </ul>
          </nav>
      </div>
- </div><!-- end .header -->
+ </div>
+<!-- end .header -->
 
 
    <div class="content">
@@ -170,10 +169,91 @@ ga('send', 'pageview');
   <ul class="posts noList">
     
       <li>
+        <span class="date">September 27, 2018</span>
+        <h3><a class="post-link" href="/blog/german-n-gram-lm/">Creating a n-gram Language Model using Wikipedia</a></h3>
+        <p>
+  TLDR: This article describes how to train a n-gram Language Model of any order using Wikipedia articles. The code used is available from my GitHub repo.
+
+
+</p>
+      </li>
+    
+      <li>
         <span class="date">July 13, 2018</span>
         <h3><a class="post-link" href="/blog/smith-waterman/">Smith-Waterman algorithm in Python</a></h3>
         <p>Because I am currently working with Local Sequence Alignment (LSA) in a project I decided to use the Smith-Waterman algorithm to find a partially matching substring  in a longer substring . Since I am coding in Python, I was sure there were dozens of implementations already, ready to be used. I found a few indeed, namely here and here. However, the first implementation is incomplete, because it only includes calculating the scoring matrix and not the backtracing. I did not test the second implementation because it seemed overly complicated and apparently contained bugs (judging from the comments).
 
+I therefore went for my own implementation. What I wanted was some easy to use function with a slim signature, something like
+
+start, end = smith_waterman(string_a, string_b)
+
+to find out where some version of string_b (including gaps and deletions) starts and ends within string_a.
+
+Step 1: Scoring matrix
+
+To find the local alignment of  with  the Smith-Waterman calculates a scoring matrix first. The following code calculates this matrix for two strings a and b with linear gap costs. For performance reasons I went for an implementation with NumPy arrays. Values for match scores and gap costs can be changed. The default values correspond to the example from Wikipedia:
+
+import itertools
+import numpy as np
+
+def matrix(a, b, match_score=3, gap_cost=2):
+    H = np.zeros((len(a) + 1, len(b) + 1), np.int)
+
+    for i, j in itertools.product(range(1, H.shape[0]), range(1, H.shape[1])):
+        match = H[i - 1, j - 1] + (match_score if a[i - 1] == b[j - 1] else - match_score)
+        delete = H[i - 1, j] - gap_cost
+        insert = H[i, j - 1] - gap_cost
+        H[i, j] = max(match, delete, insert, 0)
+    return H
+
+
+Step 2: Backtracing
+
+The second step is backtracing from the calculated scoring matrix to calculate the optimal alignment of b with a. Since b will not simply be a substring of a in most cases, some version of b that includes gaps and deletions needs to be calculated.
+I had to juggle with the NumPy arrays a bit because numpy.argmax() will only find the first indexes of a maximum value inside an array and backtracing involves starting with the last occurrence of the maximum value.
+
+def traceback(H, b, b_='', old_i=0):
+    # flip H to get index of **last** occurrence of H.max() with np.argmax()
+    H_flip = np.flip(np.flip(H, 0), 1)
+    i_, j_ = np.unravel_index(H_flip.argmax(), H_flip.shape)
+    i, j = np.subtract(H.shape, (i_ + 1, j_ + 1))  # (i, j) are **last** indexes of H.max()
+    if H[i, j] == 0:
+        return b_, j
+    b_ = b[j - 1] + '-' + b_ if old_i - i &gt; 1 else b[j - 1] + b_
+    return traceback(H[0:i, 0:j], b, b_, i)
+
+
+
+Step 3: Calculating start- and end-index
+
+Finally, the implementation for the top-level function simply performs these two steps by calling above functions. Since the LSA should not be case sensitive in my project, I normalized the strings beforehand by converting them to uppercase. Start and end index of string b in a are calculated from the result of the backtracing step.
+
+def smith_waterman(a, b, match_score=3, gap_cost=2):
+    a, b = a.upper(), b.upper()
+    H = matrix(a, b, match_score, gap_cost)
+    b_, pos = traceback(H, b)
+    return pos, pos + len(b_)
+
+
+Usage and tests
+
+To see if everything worked I wrote a few test with printouts:
+
+    # prints correct scoring matrix from Wikipedia example
+    print(matrix('GGTTGACTA', 'TGTTACGG'))
+
+    a, b = 'ggttgacta', 'tgttacgg'
+    H = matrix(a, b)
+    print(traceback(H, b)) # ('gtt-ac', 1)
+
+    a, b = 'GGTTGACTA', 'TGTTACGG'
+    start, end = smith_waterman(a, b)
+    print(a[start:end])     # GTTGAC
+
+
+Resources
+
+For the implementation I found the Wikipedia article and an Online-Tool to interactively perform the calculations very useful.
 </p>
       </li>
     
@@ -181,6 +261,308 @@ ga('send', 'pageview');
         <span class="date">June 28, 2018</span>
         <h3><a class="post-link" href="/blog/programming-in-haskell/">Programming in Haskell - Solutions to slides</a></h3>
         <p>I attended a course about Advanced Programming Paradigms for my master studies (MSE course TSM_AdvPrPa) which introduces programming in a purely functional language by example of Haskell. We use the book Programming in Haskell by Graham Hutton. Although the book itself is not free, it comes with slides which can be downloaded for free and contain some exercises for each chapter. Since have not found a complete set of solutions for those exercises, I put my own solutions online (chapter 2 - 10 only, note that chapter 1 does not contain any exercises). You can download the code for each chapter by clicking the link below each caption. The files can be imported in GHCi.
+
+I also removed the blue background from the PowerPoint slides for printability and exported to PDF. You can download the printable slides by clicking the link below each caption.
+
+Table of Contents
+
+
+  Chapter 1: Introduction
+  Chapter 2: First Steps
+  Chapter 3: Types and Classes
+  Chapter 4: Defining Functions
+  Chapter 5: List Comprehensions
+  Chapter 6: Recursive Functions
+  Chapter 7: Higher-Order Functions
+  Chapter 8: Declaring Types and Classes
+  Chapter 9: The Countdown Problem
+  Chapter 10: Interactive programming
+
+
+Chapter 1: Introduction
+
+(no script) / printable slides
+
+Chapter 2: First Steps
+
+script / printable slides
+
+-- (1) Try out slides 2-7 and 13-16 using GHCi.
+-- no solution
+
+-- (2) Fix the syntax errors in the program below, and test your solution using GHCi.
+n = a `div` length xs -- lowercase n, backticks instead of single quotes
+  where
+    a = 10 -- fix indentation
+    xs = [1,2,3,4,5]
+
+-- (3) Show how the library function last that selects the last element of a list can be defined using the functions introduced in this lecture.
+last' xs = head (reverse xs)
+
+-- (4) Can you think of another possible definition?
+last'' xs = drop (length xs - 1) xs !! 0
+
+-- (5) Similarly, show how the library function init that removes the last element from a list can be defined in two different ways.
+init' xs = take (length xs - 1) xs
+init'' xs = reverse (tail (reverse xs))
+
+
+Chapter 3: Types and Classes
+
+script / printable slides
+
+-- (1) What are the types of the following values?
+-- ['a','b','c'] :: [Char]
+-- ('a','b','c') :: (Char, Char, Char)
+-- [(False,'0'),(True,'1')] :: [(Bool, Char]
+-- ([False,True],['0','1']) :: ([Bool], [CHar])
+-- [tail,init,reverse] :: [[a] -&gt; [a]]
+
+-- (2) What are the types of the following functions?
+second :: [a] -&gt; a
+second xs = head (tail xs)
+
+swap :: (a,b) -&gt; (b,a)
+swap (x,y) = (y,x)
+
+pair :: a -&gt; b -&gt; (a,b)
+pair x y = (x,y)
+
+double :: Num a =&gt; a -&gt; a
+double x = x*2
+
+palindrome :: Eq a =&gt; [a] -&gt; Bool
+palindrome xs = reverse xs == xs
+
+twice :: (a -&gt; a) -&gt; a -&gt; a
+twice f x = f (f x)
+
+-- (3) Check your answers using GHCi.
+-- see results above
+
+
+Chapter 4: Defining Functions
+
+script / printable slides
+
+-- (1) Consider a function safetail that behaves in the same way as tail, except that safetail maps the empty list to the empty list, whereas tail gives an error in this case.  Define safetail using:
+--     (a) a conditional expression
+safetail xs = if xs == [] then [] else tail xs
+--     (b) guarded equations
+safetail' xs | xs == [] = []
+             | otherwise = tail xs
+--     (c) pattern matching
+safetail'' [] = []
+safetail'' xs = tail xs
+
+-- (2) Give three possible definitions for the logical or operator (||) using pattern matching.
+or' True True = True
+or' True False = True
+or' False True = True
+or' False False = False
+
+or'' True _ = True
+or'' _ True = True
+or'' _ _ = False
+
+or''' False False = False
+or''' _ _ = True
+
+-- (3) Redefine the following version of (&amp;&amp;) using conditionals rather than patterns:
+and' x y = if x then if y then True else False else False
+
+-- (4) Do the same for the following version
+and'' x y = if not x then False else if y then True else False
+
+
+Chapter 5: List Comprehensions
+
+script / printable slides
+
+-- (1) A triple (x,y,z) of positive integers is called pythagorean if x2 + y2 = z2.  Using a list comprehension, define a function
+pyths n = [(x,y,z) | x &lt;- [1..n], y &lt;- [1..n], z &lt;- [1..n], x*x + y*y == z*z]
+
+-- (2) A positive integer is perfect if it equals the sum of all of its factors, excluding the number itself.  Using a list comprehension, define a function
+factors n = [x | x &lt;- [1..n], n `mod` x == 0 &amp;&amp; x /= n]
+perfects n = [x | x &lt;- [1..n], sum (factors x) == x]
+
+-- (3) The scalar product of two lists of integers xs and ys of length n is give by the sum of the products of the corresponding integers:
+scalar xs ys = sum [x*y | (x,y) &lt;- zip xs ys]
+
+
+Chapter 6: Recursive Functions
+
+script / printable slides
+
+-- (1) Without looking at the standard prelude, define the following library functions using recursion:
+--     (a) Decide if all logical values in a list are true:
+and' [] = True
+and' (b:bs) = b &amp;&amp; and' bs
+
+--     (b) Concatenate a list of lists:
+concat' [] = []
+concat' (x:xs) = x ++ concat(xs)
+
+--     (c) Produce a list with n identical elements:
+replicate' 0 _ = []
+replicate' n x = [x] ++ replicate' (n-1) x
+
+--     (d) Select the nth element of a list:
+select' (x:xs) 0 = x
+select' (x:xs) i = select' xs (i-1)
+
+--      (e) Decide if a value is an element of a list:
+elem' _ [] = False
+elem' v (x:xs) = v == x || elem' v xs
+
+-- (2) Define a recursive function that merges two sorted lists of values to give a single sorted list.  For example: merge [2,5,6] [1,3,4] == [1,2,3,4,5,6]
+merge xs [] = xs
+merge [] ys = ys
+merge (x:xs) (y:ys) = (if x &gt; y then [y,x] else [x,y]) ++ merge xs ys
+
+-- (3) Define a recursive function that implements merge sort, which can be specified by the following two rules:
+--      - Lists of length &lt;= 1 are already sorted;
+--      - Other lists can be sorted by sorting the two halves and merging the resulting lists.
+msort [] = []
+msort (x:[]) = [x]
+msort xs = merge (msort (take (length xs `div` 2) xs)) (msort (drop (length xs `div` 2) xs))
+
+
+Chapter 7: Higher-Order Functions
+
+script / printable slides
+
+-- (1) What are higher-order functions that return functions as results better known as?
+-- curried functions (?)
+
+-- (2) Express the comprehension [f x | x &lt;- xs, p x] using the functions map and filter.
+comprehension xs f p = map f (filter p xs)
+
+-- (3) Redefine map f and filter p using foldr.
+map' f = foldr (\x acc -&gt; f x : acc) []
+filter' p = foldr (\x acc -&gt; if p x then x:acc else acc) []
+
+
+Chapter 8: Declaring Types and Classes
+
+script / printable slides
+data Nat = Zero | Succ Nat
+
+nat2int :: Nat -&gt; Int
+nat2int Zero = 0
+nat2int (Succ n) = 1 + nat2int n
+
+instance Show Nat where
+    show n = show (nat2int n)
+
+-- (1) Using recursion and the function add, define a function that multiplies two natural numbers.
+add :: Nat -&gt; Nat -&gt; Nat
+add Zero n = n
+add (Succ m) n = Succ (add m n)
+
+mul :: Nat -&gt; Nat -&gt; Nat
+mul Zero _  = Zero
+mul _ Zero = Zero
+mul m (Succ n) = add m (mul m n)
+
+-- example: 3 * 4 = 12
+three = Succ (Succ (Succ Zero)) -- 3
+four = Succ (Succ (Succ (Succ Zero))) -- 4
+res1 = mul three four -- 12
+
+-- (2) Define a suitable function folde for expressions, and give a few examples of its use.
+data Expr = Val Int
+          | Add Expr Expr
+          | Mul Expr Expr
+
+-- evaluation function from slide 19
+eval :: Expr -&gt; Int
+eval (Val n) = n
+eval (Add m n) = eval m + eval n
+eval (Mul m n) = eval m * eval n
+
+-- folde function
+-- 1st param (Int -&gt; a): ID-operation that maps an (Integer-)Value of a Value-Expression to an arbitrary return type
+-- 2nd param (a -&gt; a -&gt; a): operation that adds two Expressions (add)
+-- 3rd param (a -&gt; a -&gt; a): operation that multiplies two Expressions (mul)
+-- 4th param Expr: an expresion to fold
+-- returns a: arbitrary return type
+folde :: (Int -&gt; a) -&gt; (a -&gt; a -&gt; a) -&gt; (a -&gt; a -&gt; a) -&gt; Expr -&gt; a
+folde id _ _ (Val x) = id x
+folde id add mul (Add x y) = add (folde id add mul x) (folde id add mul y)
+folde id add mul (Mul x y) = mul (folde id add mul x) (folde id add mul y)
+
+-- evaluation function with folde: return type =Int
+evalToInt :: Expr -&gt; Int
+evalToInt e = folde id (+) (*) e
+
+-- evaluation function with folde: return type = Double
+evalToDouble :: Expr -&gt; Double
+evalToDouble e = folde fromIntegral (+) (*) e
+
+-- evaluation function with folde that maps each value to a value twice the size in th expression (for demonstration purposes only): return type=Int
+evalToTwice :: Expr -&gt; Int
+evalToTwice e = folde (\x -&gt; 2*x) (+) (*) e
+
+e = Mul (Add (Val 3) (Val 4)) (Val 5)
+res2 = eval e -- 35
+res2Int = evalToInt e -- 35
+res2Double = evalToDouble e -- 35.0
+res2Twice = evalToTwice e -- 140 = (3*2 + 4*2) * 5*2 = (6 + 8) * 10
+
+-- (3) A binary tree is complete if the two sub-trees of every node are of equal size.  Define a function that decides if a binary tree is complete.
+data Tree a = Leaf a
+            | Node (Tree a) a (Tree a)
+
+-- example Tree from slide 21
+t = Node (Node (Leaf 1) 3 (Leaf 4)) 5 (Node (Leaf 6) 7 (Leaf 9))
+-- imperfect Tree (additional leaves under node 9)
+t' = Node (Node (Leaf 1) 3 (Leaf 4)) 5 (Node (Leaf 6) 7 (Node (Leaf 8) 9 (Leaf 10)))
+
+treeDepth :: (Tree a) -&gt; Int
+treeDepth (Leaf a) = 0
+treeDepth (Node l a r) = 1 + max (treeDepth l) (treeDepth r)
+
+isComplete :: (Tree a) -&gt; Bool
+isComplete (Leaf a) = True
+isComplete (Node l a r) = (treeDepth l == treeDepth r)
+
+res3 = isComplete t -- True
+res3' = isComplete t' -- False
+
+
+Chapter 9: The Countdown Problem
+
+(no script) / printable slides
+
+Chapter 10: Interactive programming
+
+script / printable slides
+
+-- Game of nim (without input validation)
+showBoard :: [Int] -&gt; IO ()
+showBoard xs = mapM_ putStrLn [replicate x '*' | x &lt;- xs]
+
+removeStars :: [Int] -&gt; Int -&gt; Int -&gt; [Int]
+removeStars xs l n = [if i==l then x-n else x | (i,x) &lt;- zip [1..] xs]
+
+play :: [Int] -&gt; IO ()
+play board = do
+    showBoard board
+    if sum board == 0 then
+        putStrLn "finished!"
+    else do
+        putStrLn "Enter line number: "
+        line &lt;- getLine
+        let l = (read line :: Int)
+        putStrLn "Enter number of stars to remove: "
+        stars &lt;- getLine
+        let n = (read stars :: Int)
+        play (removeStars board l n)
+
+-- n :: Int == number of lines
+nim :: Int -&gt; IO ()
+nim n = play (reverse [1..n])
 
 </p>
       </li>
@@ -190,6 +572,46 @@ ga('send', 'pageview');
         <h3><a class="post-link" href="/blog/gh-pages-plugins/">GitHub Pages with custom plugins</a></h3>
         <p>It has been some time since I moved my blog from Wordpress to Jekyll. This blog is now hosted on GH pages and jusing Jekyll. Unfortunately, GH pages only supports a limited subset of the many Jekyll plugins there are out there. This was not a problem until today, where I wanted to use the Jekyll-Maps plugin to display post locations on a map. I need this plugin for my new category  Swiss Frenzy on which I am placing locations from various posts on a map.
 
+Installing the plugin on my computer and running the server locally was no problem - the map showed up and everything else still worked nice too. However, pushing the changes to GH caused the build to break which resulted in the Blog not being updated. The URL under http://www.tiefenauer.info still showed the version before the changes.
+
+Until today I could live with the few plugins that were supported. However, this might only be one of many plugins that I might want to use in the future. So I started looking for ways to mitigate the problem. Of course the easiest solution would be to build the site locally and only push the compiled files to GH. This would work since then GH would not recognize the repository as a Jekyll project, but merely a bunch of static HTML files - no building needed on GitHub.
+
+I started looking for ways to do this and found this post by David Lyons, suggesting keeping source and compiled (site) files in separate directories and manually copying the files over from one directory to the other. However, this would most likely mean keeping the source files also in separate repositories. But I don’t want maintain two repositories for what  actually belongs together. Luckily I found this question (linked from this question) on StackOverflow. In the accepted answer the steps are required to keep both source and compiled files in the same directory and repository. The process is roughly as follows:
+
+
+  Initialize an new repository with a remote pointing to your GH repository. You are now on master branch. Checkout a new branch sources
+  Set up a new Jekyll project. Add some content (blog posts or the like).
+  Build the Jekyll project. A new folder _site is created containing the compiled site ready to be served. Ignore this directory by putting it in a .gitignore file.
+  Commit the files. Since _site is ignored the sources branch will now contain only the source files, but no compiled files. You can now push this branch to GH pages. Since GH pages only serves from the master branch, you will not see anything when navigating to http://username.github.io.
+  Change to the newly created _site folder and initialize another repository with the same remote as in the first step. You are again in the master branch.
+  create a .nojekyll file inside the _site folder preventing GH pages to build anything. While still in the _site folder, commit and push this file together with the compiled source files (already there from the build in step 3). Since nothinng was commited before, the master branch now only contains the compiled files.The site will now be served from http://username.github.io.
+
+
+That way, you can keep working on the source files in your source branch (in the root directory) and push the files from the master branch (in the _site directory). You only have to take care not to switch to the master branch in your root directory and accidentally commit any source files as this might trigger a Jekyll build on GH again.
+
+Although this method involves keeping separate branches of the same repository being checked out in different folder, this seemed the easies method for me. Unfortunately, the steps apply only when setting up a brand new blog with Jekyll. In my case, I already had a lot of source files on the master branch. I therefore had to adjust the steps a bit:
+
+
+  Ignore the _site-folder (if not already done). Checkout a source-branch and push it to GH (no changes made). The master and the source branch in the remote repository are now identical. The master branch might trigger build errors, but we will solve that in the next steps.
+  In the project root directory checkout the master branch again: Trigger a new Jekyll build to update the site files in _site.
+  In the _site directory: add a .nojekyll file but do not initialize a repository here.
+  In the root directory: delete everything except the .gitignore file, the _site folder and some IDE-specific metafiles (which were gitignored in my case)
+  Copy all files from _site one level up to the project root directory. The _site folder should now be empty and can be deleted.
+  Commit the changes (actually we have replaced the entire project) and push them to GitHub. Since the master branch now only contains the compiled files, no builds are made and the newest site version (built in step 2) will be served. Because the build was run locally, there are no problems with unsupported plugins on GH.
+  Copy all the compiled site files including the .git folder to a backup folder on your hard drive. Since we changed the commit history, we must also include the  .git folder.
+  Still in your project root directory: Switch back to the sources branch. All the source files should be there again.
+  Make sure there is no _site folder (delete it, if there is). Create the folder manually and copy the compiled site files including the commit history from your backup folder. You now have the repository on sources branch in your project root folder and the same repository on the master branch in your site folder.
+
+
+The new workflow
+
+Rebuilding the project on sources branch in the project root will update the files in the _site directory and therefore provide changes for the master branch. Those changes can now be committed and pushed by changing to the _site directory and committing/pushing from there. It is not as conveniend as always working in the same directory, but I think this effort is manageable. In detail, when writing new posts, the workflow is as follows from now on:
+
+
+  Create the post, including assets etc.
+  In the project root directory: build the site and commit everything to the sources branch
+  Change to the _site directory and commit/push the changes generated in the previous step to the master branch
+
 </p>
       </li>
     
@@ -198,13 +620,73 @@ ga('send', 'pageview');
         <h3><a class="post-link" href="/blog/wireless-charger-for-motorcycle/">Charging your phone wirelessly on your motorbike</a></h3>
         <p>Since the weather was not terribly good during Ascension Day this year, I tried to make maximal use of my time by starting a little crafting project.
 
-</p>
-      </li>
+I often go for shorter or longer rides with my motorbike using a mobile phone for navigation or tracking my route (I have grown fond of Calimoto btw. which I can only recommend). For the ride I usually attach my phone to the  motorbike using the Ram Mount X-Grip, which holds the phone in position no matter the speed or terrain - rock solid stuff.
+
+However, the problem with using your phone as a navigation device is that having GPS constantly turned on can quickly drain your battery. Luckily my motorcycle has a power outlet which allows me to plug in a USB adapter to charge my phone. Alas, since I am a lazy rider I got tired of having to unplug the phone everytime I park the bike only to plug it in again when I resuming my ride. I looked for a more time-saving option thad didn’t involve wrapping cables around the handlebar or fiddling with finding the tiny USB ports on the phone. The solution was to upgrade my mount with a wireless charging capability which is cheap, easy to do and works surprisingly well - even if your phone does not support wireless charging (like mine).
+
+Shopping list
+
+I used the following parts for my project. Most of them can be purchased from your trused local Chinese wholesale store. Click on the links to see exactly which parts I used.
+
+
+  a wireless charger
+  a USB car charger
+  (optional) some Shrink-Wrap tubes to insulate the connectors
+  Plasti Dip to make everything wateproof
+  (optional) a wireless adapter if your phone does not support wireless charging out of the box (like mine)
+  (optional) a USB cable to attach to your motorbike permanently (you can use the one that came with your phone if you can spare it)
+  (optional) a Y-cable for faster charging if your USB charger has two ports
+
+
+Let the crafting begin
+
+I first snapped open the wireless charger to expose its internal parts. Turned out it only consisted of a inductor which was glued to a thin, round metal plate and a small circuit board, both connected with two short cables. The metal plate was broken (probably when I opened the case), but that did not seem to affect functionality.
+
+
+	 
+	The opened wireless charger
+
+
+I first removed the round plastic sticker which covered the base plate of the mount. Then I first glued the metal plate to the mount and then the inductor on top. The sizes matched perfectly. It almost looked like the parts were made specifically for this mount <img class="emoji" title=":smile:" alt=":smile:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">.
+
+
+     
     
-      <li>
-        <span class="date">April 03, 2018</span>
-        <h3><a class="post-link" href="/blog/swiss-frenzy/">New section: Swiss Frenzy</a></h3>
-        <p>I added a new section in the main menu: Swiss Frenzy. The section provides tips and ideas for short trips inside Switzerland. It is not meant for tourists who only want to see the major attractions, but rather for locals who want to explore some nice spots off the beaten track in their own country.
+        Top left: The mount with the plastic cover removed.
+        Top right: Gluing the metal plate to the mount... 
+        Bottom left: ... then the inductor on top... 
+        Bottom right: Fits like a glove!
+    
+
+
+After reattaching the plastic lid with the Ram Mount the mount looks almost like before the modifications (apart from the cables hanging out). I did a small test run before covering everything with PlastiDip. Everything worked as expected. Let’s make it waterproof!
+
+Making it waterproof
+
+Since the modified mount will be permanently attached to the motorcycle (including the cable, circuit board and inductor, but without the USB charger) I had to make sure the damn thing won’t be affected by the weather. To protect the connections I used the shrink wrap tube (be sure not to let it get too hot as the electronics may be quite sensitive). The circuit board was covered with three layers of Plasti Dip which (apart from being waterproof) has the nice property of also acting as an insulator. I also covered the shrink wrap tube, the cable between circuit board and inductor and the area between plasic lid and inductor with some Plasti Dip to make sure absolutely no water can get to it.
+
+
+     
+    
+        Top left: Plasti Dip bottle.
+        Top right: Circuit board with Plasti Dip partially applied 
+        Bottom left: protecting the connections with s shrink wrap tube
+        Bottom right: the covered circuit board
+    
+
+
+Installation
+
+The modified mount was then reattached to the handlebar and the cables were fixed with some straps. The loose end of the charging cable was covered with a protective cap and the USB charger stoved away unter the socius seat. To get a bit more power from my USB charger I also connected the Y-cable with both ports of the USB charger. I put the wireless adapter under the back cover of my phone and tested it with on a short test ride. Everything looked fine.
+
+
+     
+    The phone mounted on the modified cradle. You can see it's charging <img class="emoji" title=":smile:" alt=":smile:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">
+
+
+Bottom line
+
+After some driving around with the navigation app turned on I can say that the charging power is enough to keep my battery level stable (but not really charging). I wouldn’t go on a ride with an almost empty battery though. You can probably get a bit more juice out of the charger by removing the RamMount-Sticker and bringing the phone a bit closer to the inductor coil. Other people might see other results depending on the bike, the cable, the USB adapter or the phone but for me that’s not much of a problem though since I always returned from a days drive with more than 90% battery left. The mount is now permanently attached to the motorbike and the modifications are barely visible. The usability is now also great: Put your phone into the mount and you’re done! <img class="emoji" title=":thumbsup:" alt=":thumbsup:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" height="20" width="20">
 </p>
       </li>
     
@@ -219,11 +701,12 @@ ga('send', 'pageview');
 </div>
 
       </div>
-   </div><!-- end .content -->
+   </div>
+<!-- end .content -->
 
    <div class="footer">
    <div class="container">
-      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <p class="copy">© 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
       <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
       </p>
 
@@ -231,42 +714,42 @@ ga('send', 'pageview');
          <ul class="noList"> 
             
             <li><a href="https://www.facebook.com/daniel.tiefenauer">
-                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://twitter.com/danitiefenauer">
-                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://github.com/tiefenauer">
-                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
                   </svg>
             </a></li>
              
             
             <li><a href="https://www.linkedin.com/in/danieltiefenauer">
-                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
                 </svg>
             </a></li>
              
             
             <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
-                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"></path>
                 </svg>
             </a></li>
                          
             
             <li><a href="mailto:daniel@tiefenauer.info">
-                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
                   </svg>
             </a></li>
@@ -274,7 +757,8 @@ ga('send', 'pageview');
          </ul>
       </div>
    </div>
-</div><!-- end .footer -->
+</div>
+<!-- end .footer -->
 
 
    <!-- Bootstrap scripts-->

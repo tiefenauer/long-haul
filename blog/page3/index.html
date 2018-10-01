@@ -170,10 +170,538 @@ ga('send', 'pageview');
   <ul class="posts noList">
     
       <li>
+        <span class="date">October 26, 2015</span>
+        <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-5-ios-ui-with-storyboard/">Mobile App Development with Xamarin and MvvmCross – Part 5: iOS UI with Storyboard</a></h3>
+        <p>
+
+In the last article, we saw how to programatically create iOS-Views using nothing but C#-code. However, this way of creating user interfaces is often quite cumbersome and prone to errors. An alternative and much more intuitive approach to design user interfaces for iOS (which is also advertised by Apple as the standard way) is the usage of so-called Storyboards. Storyboards provide a set of UI-Views, which can be populated with other UI elements like buttons, labels, lists and so on by drag’n’dropping them using a visual editor. Transitions between views can be modelled by using Segues. Luckily, Xamarin comes with its own UI designer for iOS in the form of a  Visual Studio plugin. This means you can create your native iOS-UI directly on your Windows machine like in the screenshot above.
+
+In this article we are going to explore various ways of creating beautiful UI views using storyboards while using MvvmCross as the underlying framework at the same time.
+
+Table of Contents
+
+
+  Behind the scenes
+  Getting started with storyboardy
+  Navigation    
+      Variant 1: Binding to ViewModel properties
+      Variant 2: Attaching listeners
+      Variant 3: Using segues
+      Comparison
+    
+  
+  Troubleshooting    
+      Sample code
+    
+  
+  What we have done so far
+
+
+However, there’s (as always) a catch in using storyboards: Navigating with segues (the previewed way of navigating between views when working with storyboards) means navigation is being done in the view layer (i.e. the iOS UI-Project when using Xamarin). This differs fundamentally from the navigation concept of MvvmCross, where navigation is done in the ViewModel layer (i.e. the core project when using Xamarin). Luckily, there are ways to use storyboards and MvvmCross side by side without sacrificing any of the advantages of either.
+
+Behind the scenes
+
+We will see what steps are needed to use storyboards in Xamarin below. However, it may be helpful to gain a certain insight in what’s being done in the background instead of strictly following guides without really knowing what you’re doing or why. This section should provide you with the most important conceptual information.
+
+The iOS designer shipped with Xamarin is basically an extension for VisualStudio that imitates the Interface Builder that comes with Xcode. When using storyboards, the views are designed with this iOS designer ins VisualStudio and are then sent to the iOS build host. This will result in an XML-based .storyboard-file, whose contents should normally never be touched by hand. UI elements that you want to access from your custom can also be defined resulting in so-called outlets. Views defined in a storyboard result in an equivalent C# class where the outlets can be accessed as properties.
+
+As said, Xamarin will automatically create a class for each view defined in the storyboard, as soon as you set the class identifier for the view (you will see later how this is done). This class will inherit from one of the ones included in the Xamarin-SDK, e.g. UIViewController, UITableViewController and so on. Like in Android, there is a C#-equivalent for every view type and UI element trying to mimick what’s being done in the corresponding Objective-C class from the native SDK.
+
+However, MvvmCross comes with its own set of base classes classes for the most important iOS view types (not for every single UI element). The MvX-view classes inherit indirectly from one of the standard Xamarin.iOS-classes, adding framework functionality to it. If you’re using MvX as the framework of your choice, you must use the MvX view classes as base class, not the Xamarin.iOS class if you want to make use of advanced framework features such as data binding between View and ViewModel. This means you will have to change the generated class to inherit from the MvX-class to take advantage of framework functionalities like two-way data binding and ViewModel-navigation. You will see see the details on how to do so below in the next section.
+
+When navigating Views are loaded by MvX using a container, which is responsible for looking up the correct view class by its name, creating (i.e. instantiating or recycling) it and connecting it to its ViewModel. This match between View and ViewModel is normally done automagically in the background by the framework using reflection. However, if the navigation between is not done in the ViewModel layer (i.e. by the framework), MvX is not informed about view changes and can therefore not match the View to its ViewModel. That’s why every MvX-View has a Request-property which can be overridden to tell the framework what ViewModel it wants to be connected to. We will see one case where this must be done in the last section.
+
+Getting started with storyboardy
+
+A storyboard is normally included in every iOS mobile project when starting out with Xamarin and VisualStudio. The following descriptions describe the steps to setup a Xamarin solution from scratch which uses MvvmCross as the framework and storyboards as means of creating the user interface. The individual steps are illustrated with corresponding pictures below.
+
+
+  Create a new project in VisualStudio (e.g. “Blank App Portable”) by choosing File &gt; new &gt; Project or pressing CTRL-Shift-N (picture 1). This will result in a project structure similar to the one in picture 2.
+  Set the iOS project as startup project by right-clicking on the iOS-Project and choosing Set as startup project.
+  Configure the core project to be built together with the iOS project in each desired launch configuration like iPhone, iPhone Simulator, etc. by right-clicking on the solution and choosing Properties (picture 3). If you don’t do this, you will not be able to start your project because the DLL from the core project is missing. This is a bug in VisualStudio which hopefully will be corrected in the near future.
+  Add MvvmCross NuGet-package to both the core project and your iOS project (picture 4). This will result in a bunch of assemblies added as a reference to your projects as well as a number of files automatically generated to illustrate the usage of ViewModels and Views in MvX.
+Delete the following files in each project&lt;/p&gt;
+    
+      Core project: ViewModel-Folder, ToDo-MvvmCross-Folder, MyClass.cs
+      iOS UI project: Views-Folder, ToDo-MvvmCross-Folder, ViewController.cs
+    
+  
+  Create a new class (e.g. named StoryboardContainer) which inherits from MvxTouchViewsContainer. Override the CreateViewOfType function as follows:
+
+
+protected override IMvxTouchView CreateViewOfType(Type viewType, MvxViewModelRequest request)
+{
+	return (IMvxTouchView)UIStoryboard.FromName("Main", null)
+		.InstantiateViewController(viewType.Name);
+}
+
+
+This will result in a new view container loading the views directly from the storyboard. The name of the storyboard is hardcoded here (“Main” for Main.storyboard), so make sure you update this string if you rename your storyboard file.
+
+  Open the Setup.cs class in the iOS project and replace the generated constructor with this one:
+
+
+public Setup(MvxApplicationDelegate appDelegate, IMvxTouchViewPresenter presenter)
+    : base(appDelegate, presenter)
+{
+}
+
+
+Also, override the following method to return the new views container created in the previous step.
+
+protected override IMvxTouchViewsContainer CreateTouchViewsContainer()
+{
+    return new StoryboardContainer();
+}
+
+
+This will result in the newly created views container being constructed and used by the framework during the bootstrapping phase.
+
+  Open AppDelegate.cs in the iOS project and change it so that it inherits from MvxApplicationDelegate:
+
+
+[Register ("AppDelegate")]
+public class AppDelegate : MvxApplicationDelegate
+{
+  // generated code here...
+}
+
+
+Also override the FinishedLaunching function as follows (the other, overloaded FinishedLaunching-function can be deleted):
+
+public override void FinishedLaunching(UIApplication application)
+{
+
+    var presenter = new MvxTouchViewPresenter(this, Window);
+
+    var setup = new Setup(this, presenter);
+    setup.Initialize();
+
+    var startup = Mvx.Resolve&lt;IMvxAppStart&gt;();
+    startup.Start();
+}
+
+
+This will result in the bootstrapping being executed in the correct order.
+
+
+  Add/create your storyboard file in the iOS project (if it doesn’t exist yet). Make sure the file name corresponds to the string hardcoded in step 5. Open this storyboard file with the iOS designer in VisualStudio and layout your views.
+Don’t define any view transitions (i.e. Segues) yet. Just make sure the the root ViewController is set.
+  For each view that you want to be managed by MvX (which should be all in most cases) set the Class property using VisualStudio’s property inspector (picture 6). This will result in a generated class with exactly the same name. Also set the Storyboard ID to the same value like the Class property. The match of Storyboard ID and the class name is crucial or MvX will not be able to load the layout for a view from the storyboard when navigating!If you have UI elements that you want to reference in your C# code (like for example a button that you want to attach a click listener to) you can select the element and set its Name-property to an value (picture 7). The value can be an arbitrary string, however I suggest you use a suffix that indicates the type of the element you’re referencing (i.e. “…Button” for UIButtons).
+The generated class is partial and consists of two generated files (suppose we created a view called MyView) which will be combined to form the actual class:&lt;/p&gt;
+    
+      MyView.cs: This file contains the user defined portion of the view class. Changes to the view like attaching listeners, updating UI elements and so on must be done in this class.
+      MyView.designer.cs: This file contains the generated portion of the view  class. Any changes made in this class will be overwritten when the storyboard is updated, so don’t touch this file.
+    
+  
+  Create a ViewModel by making a class MyViewModel.cs in the core project. Make sure the class name matches the view it will be backing (plus the Model-Suffix) and that it extends MvxViewModel.
+  Change the newly created view class (in the above example: MyView.cs) so that the view inherits from Mvx...ViewController instead of UI...ViewController.  There is a corresponding view class in MvX for each Xamarin SDK class, so replace the dots with the corresponding view types. For example:
+  UIViewController becomes MvxViewController
+  UI&lt;strong&gt;Table&lt;/strong&gt;ViewController becomes Mvx&lt;strong&gt;Table&lt;/strong&gt;viewController
+  UI&lt;strong&gt;TabBar&lt;/strong&gt;ViewController becomes Mvx&lt;strong&gt;TabBar&lt;/strong&gt;ViewController
+  … and so on…
+  Add additional views and (optionally) segues between views by dragging the ViewControllers from the VisualStudio Toolbox onto the storyboard (picture 8) and repeating the steps above (setting Class property, Storyboard-ID, creating ViewModel, defining outlets, …).
+  Set the storyboard file as the main interface under project properties.
+
+
+
+	
+	Creating a blank app project
+
+
+
+	
+	The generated project structure before adding MvX as NuGet package
+
+
+
+	
+	Configuring launch options to build core project together with iOS UI
+
+
+
+	
+	Adding MvX as NuGet package to both core and iOS UI project
+
+
+
+	
+	Setting Main.storyboard as main interface
+
+
+
+	
+	Setting class name and Storyboard ID for our first view
+
+
+
+	
+	Setting the name property on a UI element. This will result in a corresponding outlet.
+
+
+
+	
+	Two sample views connected through a button. The segue will be triggered by clicking the third button.
+
+
+Navigation
+
+With storyboards and MvX combined there are usually three slightly different variants of how navigation can be done between views, which will be described separately in individual sub-sections below:
+
+
+  ViewModel-Properties of type ICommand in the core project can be bound to UI elements in the view project
+  Listeners can be attached to events of UI elements in the view project, which then trigger some action (like navigating between views) on the ViewModel in the core project.
+  Navigation can be done by using segues, skipping the ViewModel-to-ViewModel approach of MvX altogether. MvX must then be informed manually of view changes in the UI.
+
+
+Variant 1: Binding to ViewModel properties
+
+This is the variant that follows the navigation paradigm of MvX the closest. Immediately after loading the view the binding can be made by calling the CreateBinding-method of the MvX base class of the view to bind the default event of an UI element (e.g. a click on a button) to a command property on the ViewModel. This can be done as follows by overriding the ViewDidLoad-method.
+
+public override void ViewDidLoad()
+{
+  base.ViewDidLoad();
+  this.CreateBinding(NavigationMvXButton).To&lt;MainViewModel&gt;(vm =&gt; vm.ShowOtherView);
+}
+``
+
+The command property on the ViewModel could be defined as follows:
+
+```csharp
+private ICommand _showOtherView;
+
+public ICommand ShowOtherView
+{
+    get
+    {
+        if(_showOtherView == null)
+            _showOtherView = new MvxCommand(() =&gt; ShowViewModel&lt;OtherViewModel&gt;()).Apply();
+        return _showOtherView;
+    }
+}
+
+
+Following this variant will allow for binding the default event assumed by MvX to a specific command in the ViewModel. If you want to trigger navigation on a different event type, let’s say’ when double-tapping the button, you will need the next variant.
+
+Variant 2: Attaching listeners
+
+This is actually a sub-variant of the above variant. Navigation is also done in the ViewModel, but instead of directly binding to a property on the ViewModel, an event listener is registered on the UI element which will trigger the corresponding command on the ViewModel programmatically.
+
+partial void NavigateMvXDesignerButton_TouchUpInside(UIButton sender)
+{
+    ViewModel.ShowOtherView.Execute(sender);
+}
+
+
+This variant allows to add some logic between user interaction and view navigation. Event listener can also be defined very easily by double-clicking an UI element of the storyboard in the iOS designer, but the result will also be more verbose because execution of the command must be triggered programmatically and is not done automatically by the framework.
+
+Variant 3: Using segues
+
+This variant follows Apple’s recommendations and makes use of the full potential of storyboards, because not only the views can be visually represented in the storyboard, but also the navigation between them. It is Apple’s recommended way of designing user interfaces and represents a 1:1 match to how UIs are designed in Xcode. On the other hand, it results also in a fundamentally different navigation concept because navigation is done entirely in the view, skipping MvX’ ViewModel layer entirely. Because of this, MvX must be informed of the view change and the corresponding ViewModel of the destination view must be set manually before making the transition. This is done indirectly by setting the Request-Attribute on the destination view as follows:
+
+public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+{
+    if (segue.Identifier == "showOtherView")
+    {
+        var otherView = segue.DestinationViewController as OtherView;
+        if (otherView != null)
+        {
+            otherView.Request = new MvxViewModelRequest&lt;OtherViewModel&gt;(null, null, new MvxRequestedBy());
+        }
+    }
+}
+
+
+This also requires defining a segue between the views by holding CTRL and clicking a UI element on the first view (e.g. a button) and then dragging the segue to the second view. The segue must also be named by setting its Identifier-property to an arbitrary value using VisualStudio’s Property inspector, whereas it is (again) crucial that the name matches the one defined in code (in the above example showOtherView).
+
+Comparison
+
+The following table shows advantages and disadvantages of for variant of navigating between views:
+
+
+  Comparison of pros and cons of variant2: 
+    
+    
+    
+    
+      Pro
+    
+    
+    
+      Contra
+    
+  
+  
+  
+    
+      Variant 1
+    
+    
+    
+      
+        
+          Consistent with MvX programming paradigms
+        
+        
+          Less verbose than variant 2
+        
+      
+    
+    
+    
+      
+        
+          No visual representation of view transitions
+        
+      
+    
+  
+  
+  
+    
+      Variant 2
+    
+    
+    
+      
+        
+          Easier to define in code (double-click on UI element in storyboard)
+        
+        
+          Registration of event types other than the default assumed by MvX
+        
+      
+    
+    
+    
+      
+        
+          Does not make use of data binding functionality of MvX
+        
+        
+          more verbose than variant 1
+        
+      
+    
+  
+  
+  
+    
+      Variant 3
+    
+    
+    
+      
+        
+          Visual representation of transitions in the storyboard
+        
+        
+          Makes full use of the potential of storyboards
+        
+      
+    
+    
+    
+      
+        
+          Link to ViewModel must be done manually before making the transition
+        
+      
+    
+  
+
+
+Troubleshooting
+
+Xamarin’s iOS designer provides a helpful and much more intuitive way for creating iOS interfaces or transitions in a single file. Having said that, unfortunately the iOS designer is far from being bug-free and can be quite a PITA at times. For example exat positioning of UI elements can become damn near impossible depending on the zoom level selected. Further, changes in the Storyboard do not always reflect in the app immediately.
+
+Sources for failures are – as always with Xamarin – manifold and often the time needed to track down a certain error is not worth the effort. Often, it is enough to clean/rebuild the project or the whole solution. Sometimes it is even necessary to restart VisualStudio.
+
+Sample code
+
+If all else fails, you can find the code for a (very basic) sample application in my GitHub-Repository.
+
+What we have done so far
+
+In this chapter we haved learned how to use Storyboards in Xamarin/VisualStudio together with the MvX-Framework. We have also reviewed the differences between a Segue-based navigation in Storyboards and the navigation concept in MvX.
+</p>
+      </li>
+    
+      <li>
         <span class="date">October 11, 2015</span>
         <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-4-android-ui/">Mobile App Development with Xamarin and MvvmCross – Part 4: Android UI</a></h3>
         <p>In this article we are going to create our first Android view. To do this, we will create an AXML file, which will hold the layout of the individual UI components. This AXML file will also create bindings to the ViewModel, so that the view is automatically updated when the data in the ViewModel changes. Additionally, we will create a backing C#-class, which will hold the view logic for our layout.
 
+Table of Contents
+
+
+  Android view layer    
+      AXML files
+    
+  
+  Creating the Activity    
+      Additional Views
+    
+  
+  Navigating between views (activities)
+  What we have done so far
+
+
+Android view layer
+
+Android separates its view layer into two types of assets:
+
+
+  AXML-Files, which will define the layout, size and constraints of the individual UI components with an XML-based syntax
+  Activities, which load AXML-defined layouts, access the contained UI elements and connect them with the application code
+
+
+AXML files
+
+AXML is an XML dialect for files to define both whole views as well as individual, reusable UI components. Android comes with a set of ready-made standard components, which can be extended and combined in order to create new components. Traditionally, AXML files are of static nature, but the contained components can be programmatically changed at runtime e.g. by changing their size, adding or removing components or registering event listeners.
+
+MvX introduces its own tags to include framework functionality such as two-way data binding already in the AXML-layout. However, currently VisualStudio does not support content assist for these tags. To use the tags, their namespace must be imported with an arbitrary name. The following example illustrates using the MvxItemTemplate-Tag by including the MvX-namespace under the local prefix.
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minWidth="25px"
+              android:minHeight="25px"
+              android:id="@+id/myViewController"&gt;
+  &lt;MyListView
+      android:id="@+id/agendaItemList"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fastScrollEnabled="true"
+      android:scrollbarSize="80dp"
+      local:MvxItemTemplate="@layout/my_item"
+      /&gt;
+&lt;/LinearLayout&gt;
+
+
+The following table shows a selection of commonly used MvX-tags in AXML along with a usage example:
+
+
+  
+    
+      TAG
+      USAGE
+      CODE EXAMPLE
+    
+  
+  
+    
+      local:MvxItemTemplate
+      Within a list this tag can be used to load the referenced AXML file to render a single list element.
+      Will load Resource/layout/my_item.axml to render a list element: local:MvxItemTemplate="@layout/my_item"
+    
+    
+      local:MvxBind
+      Within some UI components this tag can be used to create an automated data binding between the ViewModel and the UI component. The UI component will be refreshed when the data in the ViewModel changes and changes in the UI component (e.g. a TextInput element) will be reflected in the ViewModel data.
+      Will use the Items-property on the ViewModel as data source for list elements in a List defined in AXML:local:MvxBind="ItemsSource Items"Will connect a click on a UI element with the ShowDetail-Property (must be of type System.Windows.Input.ICommand) on the ViewModel: local:MvxBind="ItemsClick ShowDetail"Will bind the Text-property on a label with the Title-Property of the underlying element in a list item:local:MvxBind="Text Title"
+    
+  
+
+
+Creating the Activity
+
+In order to use the newly defined AXML-layout we need to create an Activity, which is any class that extends Android.App.Activity. The Activity represents the UI logic of the layout and can be used for example to register event handlers. When using MvX, every Activity must be extended from Cirrious.MvvmCross.Droid.Views.MvxActivity (_which extends _Android.App.Activity) and follow a strict naming convention to be loaded by MvX when navigating to a ViewModel. MvX will load the Android activity based on its class name. That’s why a class must be named like the corresponding ViewModel, without the …Model-suffix (e.g. for MyViewModel.cs the corresponding Android activity must be named MyView.cs).
+
+In Xamarin/MvX, every displayed view in Android can be created by following three simple steps:
+
+
+  Define the view’s layout by creating an AXML file. The AXML file syntax is identical with the one of a standard Android application written in Java with the exception of the special MvX tags.
+  Create an Activity class extending MvxActivity which is annotated with [Activity]. If the view serves as entry point when the app starts, the MainLauncher-attribute must be set to true. This is the case if the view belongs to the ViewModel that was registered with the AppStart (see previous article).
+  Override the onCreate() function to load the layout when the activity is created.
+
+
+The following code snipped shows a very basic implementation of MyView.cs, which can be used as view in the Android UI project for the MyViewModel-ViewModel.
+
+[Activity(Label = "View for MyViewModel", MainLauncher = true, Icon = "@drawable/icon")]
+ public class MyView : MvxActivity&lt;MyViewModel&gt;
+ {
+     protected override void OnCreate(Bundle bundle)
+     {
+         base.OnCreate(bundle);
+         SetContentView(Resource.Layout.MyViewLayout);
+     }
+ }
+
+
+
+	
+	Step 1: Create AXML file for layout
+
+
+
+	
+	Step 2: Create layout using Xamarin toolbox (drag&#038;drop)
+
+
+
+	
+	Step 3: The AXML-representation of the created layout
+
+
+
+	
+	Step 4: Create Activity as ordinary C#-class
+
+
+Additional Views
+
+Any other Android view can be created just the way it was described above. Any activity can have the MainLauncher attribute set to true, whether its ViewModel is registered as main ViewModel upon app start or not. The MainLauncher attribute simply defines that the activity can serve as an entry point (for example when launching from another app via Intent).
+
+Navigating between views (activities)
+
+As stated before, navigation in MvX happens over ViewModels, not views. This is to ensure the navigation logic has to be implemented only once and is consistent across platforms. A view can be changed by calling _ShowView(View)_ on the ViewModel. Because the method is protected, it must be wrapped in an _ICommand_-property which is made public. This _ICommand_ property can be used for data binding with MvX (for example upon a click on a UI element) and will be triggered by MvX when the bound event occurs.
+
+MvX uses reflection also for command binding. The ICommand property name must end in …Command and the bound property in the AXML file must match the name exactly (without the Command-suffix). The following example illustrates binding a navigation from MyViewModel.cs to OtherViewModel.cs upon click on a button in MyViewLayout.axml.
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"&gt;
+    &lt;TextView
+        android:text="MyView"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" /&gt;
+    &lt;Button
+        android:text="Navigate to OtherView"
+        local:MvxBind="Click ShowOtherView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myButton" /&gt;
+&lt;/LinearLayout&gt;
+
+
+public class MyViewModel : MvxViewModel
+{
+    (...)
+
+    private ICommand _showOtherViewCommand;
+    public ICommand ShowOtherView
+    {
+        get
+        {
+            _showOtherViewCommand = _showOtherViewCommand ?? new MvxCommand(() =&gt; ShowViewModel&lt;OtherViewModel&gt;());
+            return _showOtherViewCommand;
+        }
+    }
+
+}
+
+
+What we have done so far
+
+In this chapter we have defined an Android view by defining its layout in AXML and creating the corresponding Activity as a C# class. We have connected some of the displayed data with the data in the ViewModel by using MvX-tags in the layout.
 </p>
       </li>
     
@@ -182,6 +710,27 @@ ga('send', 'pageview');
         <h3><a class="post-link" href="/blog/5-things-i-hate-about-xamarin/">5 things I hate about Xamarin</a></h3>
         <p>While it’s probably not a terribly good idea to rant about Xamarin when you’re in the middle of writing an article series about Xamarin, I just need to get this off my chest.
 
+
+  Its lack of documentation: Sure, there’s the official API reference for Xamarin.Android, Xamarin.iOS, Xamarin.Forms and the rest of the pack. But has anybody ever really been able to use it?  Clicking on some links leads to a 404-page and some of the descriptions are simply missing (see this example). It doesn’t look like the missing parts are ever being delivered at a later stage. Together with the confusing layout it makes the documentation unusable for me. I often found myself searching on Stackoverflow rather than the official documentation, whose best use case is probably the different tutorials and inspect the sample projects found there. But don’t you dare to try something that’s not included there… You may end up with grey hair. All in all not what I expect when signing up for an expensive membership, that has to be renewed yearly.
+  The lack of a proper IDE: Xamarin comes shipped with Xamarin Studio, a kind of reduced version of Visual Studio. Thing is: If you’re (like me) used to working in Windows, it’s not really an option, because it can’t be used to develop iOS apps. For Windows PCs, this is only possible with VS2012+. Visual Studio is a hugely popular among .NET developers (probably the IDE for C#.NET), who won’t stop praising the alleged superiority of VS over other IDEs almost religiously. But don’t you get me started about VS… For my taste it is by far too slow and unresponsive to be used productively (I have VS2013 with Resharper installed). Seeing the different views pop up and populate one after each other after opening a solution is just not what a developer should get used to nowadays. VS has grown too big and complex to be used nowadays. This is also reflected in the disk space consumtion (9.64 GB (!!!) for VS2013) and the startup time (45 seconds on my not-so-old machine, making it the Godzilla of all IDEs I have come to know so far. What on earth are you doing, Microsoft?
+  This little fellow:
+
+
+
+
+I frequently encountered this problem when trying to debug an app in the iOS simulator. Apparently VS keeps waiting until kingdom come for something background operation to finish. The only way to get around this is kill the process in the process explorer. Just one of many examples
+ that make VS2013 crash when developing with Xamarin…
+
+
+  The lack of a mature framework: Sure, there’s MvvmCross and  Xamarin.Forms out there. But while MvvmCross’ documentation is just too rudimentary for a beginner to get started (forcing you to watch an endless series of YouTube videos and digging into the sample projects, hoping to find the solution for your problem there), Xamarin.Forms suffers the disadvantages of a Convention over Configuration framework: You have to make sure the documentation is up to date, complete and easy enough to understand, even for beginners. I’m talking about general concepts here, not sample tutorials that document one specific aspect how to use the framework. And documentation is clearly not one of the points where Xamarin excels (see first point).
+  The cryptic console output: There are endless possibilities that can make your app crash. While most of the time this may be your fault (you probably used the framework the wrong way, because out of pure desperation and in lack of a proper documentation you had to try something out), the console output is neither formatted (syntax highlighting, links to code, …) nor written in a way to easily find out what went wrong. There’s no other way than scrolling through the whole log by hand, trying to make sense what’s relevant and what isn’t. After all, the cause for the crash may be buried deep inside the logged output…&lt;/ol&gt;
+
+
+I have rarely seen a combination of such an immature product with such a high price. Probably FlexBuilder (from my good ol’ days with Apache Flex) is a worthy competitor, considering that Adobe even had the nerve to build its own IDE on top of Eclipse (which is open source) and sell it for more than 700 bucks. Blame it on the developer not being smart enough to handle the tool given, but the learning curve for Xamarin is far too steep for beginners to pick up. I’d rather expect products like Xamarin to be a low-threshold service – and that’s clearly not the case today!
+
+EDIT: Apparently I’m not the only one struggling with Xamarin. According to this post a lot of fellow programmers had expectations way too high for Xamarin to fulfill. After an update, I spent the an entire afternoon trying to get a Xamarin app to work on iOS (that used to work before), without success. There’s simply no efficient way to work with a product that seems to be stuck in pre-beta stadium. Dear Xamarin Developers, please finish Xamarin and do your homework before charging people hundreds of bucks for a SINGLE license (not to speak of Xamarin University, which will only set you back $2000)!!
+
+Conclusion: Buggy as hell, crappy documentation and ridiculously expensive.
 </p>
       </li>
     
@@ -190,6 +739,78 @@ ga('send', 'pageview');
         <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-3-core-project/">Mobile App Development with Xamarin and MvvmCross – Part 3: Core project</a></h3>
         <p>In this article we are going to add some classes to our PCL project. These classes will contain the business logic for our app.
 
+Table of Contents
+
+
+  Create new ViewModel
+  Define app start
+  What we have done so far
+
+
+Create new ViewModel
+
+ViewModels are the foundation for MvX-based apps and represent the connection between the views in the UI projects and the business logic. To do their task, ViewModels often rely on the help of services, which contain shared logic between different ViewModels, such as reading and writing from/to a database. Additionally, ViewModels are at the core of navigation: Navigation in MvX is done over ViewModels, not views (we will see that this can be changed by using Storyboards in a later article). For each view in a UI project there is a corresponding ViewModel. MvX connects these two parts over reflection based on the class name. That means that for each view class called MyView.cs there must be a corresponding ViewModel class called MyViewModel.cs, which must inherid from MvxViewModel. in MvX, a view in a UI project can not be used without corresponding ViewModel.
+
+A new ViewModel can be created by creating a class that extends MvxViewModel. This class can hold additional logic, properties and methods as required. The following class is just an example:
+
+public class MyViewModel : MvxViewModel
+{
+    /// &lt;summary&gt;
+    /// A property
+    /// &lt;/summary&gt;
+    public String MyProperty { get; set; }
+    /// &lt;summary&gt;
+    /// Another Property which will raise an event when changed
+    /// &lt;/summary&gt;
+    private List&lt;string&gt; _myList;
+    public List&lt;string&gt; MyList
+    {
+        get { return _myList; }
+        set
+        {
+            _myList = value;
+            RaisePropertyChanged(() =&gt; _myList);
+        }
+    }
+    /// &lt;summary&gt;
+    /// A public method
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;a return value&lt;/returns&gt;
+    public String Foo()
+    {
+        return "Bar";
+    }
+    /// &lt;summary&gt;
+    /// A private method
+    /// &lt;/summary&gt;
+    /// &lt;returns&gt;a return value&lt;/returns&gt;
+    private int doSomething()
+    {
+        // Code here
+        return -1;
+    }
+
+}
+
+
+Define app start
+
+You can define as many ViewModels as needed. One specific ViewModel however must be defined as the main ViewModel and serve as central point of entry for the first app start. After adding MvvmCross as NuGet package you should have a file called App.cs in your PCL project. In this class you register the ViewModel used when starting the app as follows:
+
+public class App : Cirrious.MvvmCross.ViewModels.MvxApplication
+ {
+     public override void Initialize()
+     {
+         RegisterAppStart&lt;ViewModels.MyViewModel&gt;();
+     }
+ }
+
+
+This will result in MvX selecting MyViewModel.cs as the main ViewModel for the first app start. MvX will load this ViewModel and search for a view called MyView.cs, which must exist in each of the UI projects. Lookup will be done in the MyProject.Droid or MyProject.iOS project, depending on the target platform, but a class with this name must exist, otherways app start will fail. We will see in the following articles, how such a view can be defined in each UI project.
+
+What we have done so far
+
+In this article we have created our first ViewModel and defined it as the main ViewModel for app starts.
 </p>
       </li>
     
@@ -198,14 +819,154 @@ ga('send', 'pageview');
         <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-2-set-up/">Mobile App Development with Xamarin and MvvmCross – Part 2: Set up</a></h3>
         <p>This article helps you with a set up for a project to create a mobile app with Xamarin and MvX. MvX projects/solutions can be created manually or with the help of the NinjaCoder plugin for VisualStudio. The result is the same in both cases.
 
-</p>
-      </li>
-    
-      <li>
-        <span class="date">October 02, 2015</span>
-        <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-1-introduction/">Mobile App Development with Xamarin and MvvmCross – Part 1: Introduction</a></h3>
-        <p>In this article series I will cover the process of creating a mobile application using Xamarin and MvvMCross (MvX). There is a lot to know about both technologies to get started and neither Xamarin nor MvX provide a level of documentation sufficient to enable a total beginner to build apps efficiently. The goal of this series is to faciliate the entry into topic and to mitigate common problems and pitfalls occurring from things you just have to know.
+Table of Contents
 
+
+  Prerequisites    
+      The NinjaCoder plugin        
+          Set up with NinjaCoder plugin
+        
+      
+      Manual setup
+    
+  
+  What we have done so far
+
+
+Prerequisites
+
+Before starting you should have installed the following tools:
+
+
+  Android SDK: With the tools contained in the Android SDK (SDK Manager, Virtual Device Manager, Android Studio) you can download SDK of any version and start building native apps for Android right away. Xamarin does not require you to have a separate installation of the Android SDK (the Xamarin installer will install them if required), but even when developing cross-platform for mobile, it is never a bad idea to have the tools needed for native development in a well-known location.
+  Xamarin with the help of the Xamarin installer: Xamarin will recognize installed Android SDKs automatically. Also, if you have VisualStudio installed, Xamarin will install itself as a plugin into VisualStudio.
+  Visual Studio: Although Xamarin comes with its own IDE (Xamarin Studio, which is basically a reduced version of VisualStudio), I prefer working with VisualStudio as my default IDE, as it offers more possibilities. Also, if you (like me) work on Windows, Visual Studio is the only IDE that supports developing Xamarin.iOS applications, although it still requires a Mac as a build host.
+
+
+The NinjaCoder plugin
+
+NinjaCoder is a plugin which aims at eliminating a lot of the boilerplate code and repetitive steps needed when creating a Xamarin app with MvX (such as creating the view classes with their ViewModel counterpart for each screen). Solutions can be created by following a wizard, which allows selection of the target platforms, MvX plugins, Xamarin Components and so on. NinjaCoder creates a ready-to-start solution with the necessary projects (core project, UI projects, test project) already linked with each other and the required dependencies in place. New views can be added as needed, which will result in new view classes, a new ViewModel and a test class each time, without you having to create each of them manually. The NinjaCoder plugin can be best compared with a generator like Yeoman (if you come from web development).
+
+In my opinion, using the NinjaCoder plugin is of finite benefit, because:
+
+
+  even when using NinjaCoder you often need to make manual changes afterwards (new plugins or components, updating existing components and so on)
+  creating the project structure and linking the projects together is not that much of an effort. NinjaCoder makes most sense at the very beginning of a new app to get you started quickly, but after that you will rarely find yourself using the plugin anymore.
+  The plugin has proved to be very unstable in my case (with VisualStudio 2013) and often led to crashes of VS and left me with a corrupt solution afterwards.
+
+
+For these reasons, I have stopped using the plugin some time ago, but that should not need to stop you from trying it out yourself.
+
+Set up with NinjaCoder plugin
+
+The NinjaCoder plugin is most useful if you know your target platforms in advance and you also have some idea of what your UI is going to look like. After installation the plugin is avaliable under Tool &gt; NinjaCoder for MvvmCross. By selecting Add Projects a new solution is created or a new project is being added to an existing solution. The following steps will result in a solution with a core project (PCL project), two UI projects (one for Android and iOS) and a test project for unit tests. For each step there is an illustrating picture below.
+
+
+  Select your testing and mocking framework
+  select your app framework (we will work with MvvmCross, in the following articles, so make sure you select that one)
+  enter project name and select target platforms
+  if you already know some of your ViewModels and Layouts, you can choose them in this step. For each entry you add to the list there will be a View in each of the UI project, a ViewModel class in the core project and a test class in the test project. Additional views/ViewModels can be added later as required.
+  select your desired MvvmCross-Plugins. Additional plugins may be added via NuGet package manager later.
+  select your desired NuGet packages. Additional packages can be added via NuGet package manager later.
+  Click finish
+
+
+This will start creating the project structure and populate the project with some classes based on your seleciton in step 4. UI projects will be linked with the PCL project and the NuGet packages will be downloaded. The preset project names and directory structures can be changed later, but  will initially be as follows (assuming you have named your project “MyProject” in step 3):
+
+
+  MyProject.Core: PCL-Project for common code
+  MyProject.Core.Tests: Test project for unit tests
+  MyProject.Droid: Android UI project
+  MyProject.iOS: iOS UI project
+
+
+
+	
+	Step 1: Select testing and mocking framework
+
+
+
+	
+	Step 2: Select MvvmCross as framework
+
+
+
+	
+	Step 3: Enter project name and select target platforms
+
+
+
+	
+	Step 4: Define already known ViewModels and View layouts
+
+
+
+	
+	Step 5: Select MvvmCross plugins
+
+
+
+	
+	Step 6: Select additional NuGet packages
+
+
+
+	
+	Step 7: Click finish
+
+
+
+	
+	NinjaCoder is setting up your projects.... this may take some time!
+
+
+
+	
+	The result: a solution ready to start hacking
+
+
+Manual setup
+
+
+	
+	Step 1: Create PCL project
+
+
+
+	
+	Step 2: Select .NET framework and target platforms
+
+
+
+	
+	Step 3: Add project for iOS UI
+
+
+
+	
+	Step 4: Add project for Android UI
+
+
+
+	
+	Step 5: Add test project
+
+
+
+	
+	Step 6: Add MvvmCross and plugins with NuGet
+
+
+
+	
+	Result: Your solution with all the projects in it
+
+
+Unfortunately the NinjaCoder plugin does not always work as expected (at least in my case), that’s why it can make sense to set up the projects yourself by hand. To do this, create a Portable Class Library (PCL) project and add the UI projects to your solution. Afterwards add NuGet packages and MvvmCross manually with the NuGet package  manager. If all is set and done, you need to link the PCL project to your UI projects, so that they have access to the common code in it.
+
+What we have done so far
+
+In this article we have installed the right tools and set up a solution with a PCL project, two UI projects and a test project. This should be enough to get you started to build your own Xamarin app.
 </p>
       </li>
     
