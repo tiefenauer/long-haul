@@ -5,8 +5,8 @@
     <description>My thoughts about the world</description>
     <link>https://tiefenauer.github.io/</link>
     <atom:link href="https://tiefenauer.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 01 Oct 2018 10:25:05 +0200</pubDate>
-    <lastBuildDate>Mon, 01 Oct 2018 10:25:05 +0200</lastBuildDate>
+    <pubDate>Mon, 01 Oct 2018 10:26:45 +0200</pubDate>
+    <lastBuildDate>Mon, 01 Oct 2018 10:26:45 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       
@@ -312,8 +312,8 @@ build_binary trie &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=
 </description>
         
         <pubDate>Thu, 27 Sep 2018 00:00:00 +0200</pubDate>
-        <link>https://tiefenauer.github.io/blog/german-n-gram-lm/</link>
-        <guid isPermaLink="true">https://tiefenauer.github.io/blog/german-n-gram-lm/</guid>
+        <link>https://tiefenauer.github.io/blog/wiki-n-gram-lm/</link>
+        <guid isPermaLink="true">https://tiefenauer.github.io/blog/wiki-n-gram-lm/</guid>
         
         
       </item>
