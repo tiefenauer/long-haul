@@ -179,27 +179,52 @@ ga('send', 'pageview');
     
 
     <h1 class="postTitle">Creating a n-gram Language Model using Wikipedia</h1>
-    <p class="meta">September 27, 2018 | <span class="time">24</span> Minute Read</p>
+    <p class="meta">September 27, 2018 | <span class="time">27</span> Minute Read</p>
 
     <div class="alert alert-primary" role="alert">
   <strong>TLDR</strong>: This article describes how to train a n-gram Language Model of any order using Wikipedia articles. The code used is available from <a href="https://github.com/tiefenauer/wiki-lm" target="_blank">my GitHub repo</a>.
 </div>
 
+<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
+
+<ul id="markdown-toc">
+  <li><a href="#on-the-road-to-asr" id="markdown-toc-on-the-road-to-asr">On the road to ASR</a></li>
+  <li><a href="#creating-a-lm-from-german-wikipedia-articles" id="markdown-toc-creating-a-lm-from-german-wikipedia-articles">Creating a LM from German Wikipedia articles</a>    <ul>
+      <li><a href="#preprocessing-the-wikipedia-dump" id="markdown-toc-preprocessing-the-wikipedia-dump">Preprocessing the Wikipedia dump</a></li>
+      <li><a href="#building-the-corpus" id="markdown-toc-building-the-corpus">Building the corpus</a>        <ul>
+          <li><a href="#step-1-download-the-wikipedia-dump" id="markdown-toc-step-1-download-the-wikipedia-dump">Step 1: Download the Wikipedia dump</a></li>
+          <li><a href="#step-2-extract-text-from-wikipedia-articles" id="markdown-toc-step-2-extract-text-from-wikipedia-articles">Step 2: Extract text from Wikipedia articles</a></li>
+          <li><a href="#step-3-normalizing-the-text-and-creating-the-corpus" id="markdown-toc-step-3-normalizing-the-text-and-creating-the-corpus">Step 3: Normalizing the text and creating the corpus</a>            <ul>
+              <li><a href="#normalizing-the-sentences" id="markdown-toc-normalizing-the-sentences">Normalizing the sentences</a></li>
+              <li><a href="#exploring-the-corpus" id="markdown-toc-exploring-the-corpus">Exploring the corpus:</a></li>
+              <li><a href="#limiting-the-vocabulary" id="markdown-toc-limiting-the-vocabulary">Limiting the vocabulary</a></li>
+            </ul>
+          </li>
+          <li><a href="#step-4-creating-the-arpa-file" id="markdown-toc-step-4-creating-the-arpa-file">Step 4: Creating the ARPA file</a></li>
+          <li><a href="#step-5-building-the-model" id="markdown-toc-step-5-building-the-model">Step 5: Building the model</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#results-and-conclusion" id="markdown-toc-results-and-conclusion">Results and conclusion</a></li>
+  <li><a href="#possible-appliance-using-a-lm-to-build-a-simple-spell-checker" id="markdown-toc-possible-appliance-using-a-lm-to-build-a-simple-spell-checker">Possible appliance: Using a LM to build a simple spell checker</a></li>
+</ul>
+
 <p>For my master thesis at <a href="https://www.fhnw.ch/">FHNW</a> I am building a pipeline for <a href="http://www.voxforge.org/home/docs/faq/faq/what-is-forced-alignment">Forced Alignment</a> (FA). This pipeline requires an <a href="https://en.wikipedia.org/wiki/Speech_recognition">Automatic Speech Recognition</a> (ASR) system in one stage to produce partial transcripts for voiced audio segments that were detected using <a href="https://en.wikipedia.org/wiki/Voice_activity_detection">Voice Activity Detection</a> (VAD) from <a href="https://webrtc.org">WebRTC</a>. Luckily, there is a Python module called <a href="https://github.com/wiseman/py-webrtcvad">webrtcvad</a> containing the C-bindings for the VAD-part of WebRTC and is therefore very fast and accurate. Those partial transcripts are then locally aligned with the (known) full transcript using the <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Smith Waterman</a> (SM) algorithm (see <a href="/blog/smith-waterman/">my blog post</a> for an implementation in Python).</p>
 
 <h2 id="on-the-road-to-asr">On the road to ASR</h2>
 
-<p>A Speech-to-Text (STT) engine is used to implement the ASR stage. Because of time constraints, I just plugged in an API call to <a href="https://cloud.google.com/speech-to-text/">Google Cloud Speech-to-Text</a> engine and used whatever transcript was returned. This worked reasonably well, although even the STT engine from Google was not error free. Using this API I was able to prove the pipeline approch to be generally working. The downside were the costs that were billed by the minutes of audio transcribed and that I was not able to tune the engine to my needs. Concretely I suspected that a STT engine would suffice, that is not able to recognize speech with the same quality like the Google STT, but still well enough to be useful for the pipeline. So I had to try and train my own STT engine, for which I used a <a href="https://keras.io">Keras</a> implementation of a simplified version of the model presented in the <a href="https://arxiv.org/abs/1412.5567">Deep Speech paper</a>. Note that there is already an <a href="https://github.com/mozilla/DeepSpeech">Mozilla implementation</a> of this model for TensorFlow, but that model aims for high accuracy in speech recognition, which is not what I wanted - my model did not need to be best in class, but merely <em>good enough</em>.</p>
+<p>A Speech-to-Text (STT) engine is used to implement the ASR stage. Because of time constraints, I just plugged in an API call to <a href="https://cloud.google.com/speech-to-text/">Google Cloud Speech-to-Text</a> engine and used whatever transcript was returned. This worked reasonably well, although even the STT engine from Google was not error free. Using this API I was able to prove the pipeline approch to be generally working. The downside were the costs that were billed by the minutes of audio transcribed and that I would not able to tune the engine to my needs. Concretely, my hypothesis was that a much simpler STT engine would suffice. That is, a STT engine which is not able to recognize speech with the same quality like the Google STT, but still well enough to be useful for the pipeline. So I had to try and train my own STT engine, for which I used a <a href="https://keras.io">Keras</a> implementation of a simplified version of the model presented in the <a href="https://arxiv.org/abs/1412.5567">Deep Speech paper</a>. Note that there is already an <a href="https://github.com/mozilla/DeepSpeech">Mozilla implementation</a> of this model for TensorFlow, but that model aims for high accuracy in speech recognition, which is not what I wanted - my model did not need to be best in class, but merely <em>good enough</em>.</p>
 
 <p>Although the pipeline has four stages (Preprocessing, VAD, ASR, LSA), the overall quality of the produced alignments will highly depend on the quality of the partial transcriptions and therefore on the LSA stage - meaning it would all come down on my simplified STT engine. The LSA stage is able to handle some errors, but only to a certain degree. This means the STT engine is at the heart of the pipeline and should be able to infer transcripts that are <em>good enough</em> for the downstream local alignment stage. The quality of ASR systems is usually measured with the <a href="https://en.wikipedia.org/wiki/Word_error_rate">Word Error Rate</a> (WER). The WER value of an ASR system can often be improved by using a <a href="https://en.wikipedia.org/wiki/Language_model">Language Model</a> (LM). A LM models the probability of a given sentence. The most widely used types of LM are <a href="https://en.wikipedia.org/wiki/N-gram"><script type="math/tex">n</script>-gram</a> models, where <script type="math/tex">n</script> denotes the order of the model.</p>
 
 <h2 id="creating-a-lm-from-german-wikipedia-articles">Creating a LM from German Wikipedia articles</h2>
 
-<p>Since the ASR stage should also work for German recordings, I needed a LM for German. The only pre-trained <script type="math/tex">n</script>-gram model I found was one from <a href="https://cmusphinx.github.io/wiki/download/">CMUSphinx</a>, which is a 3-gram model. The file <code class="highlighter-rouge">cmusphinx-voxforge-de.lm.gz</code> at the <a href="https://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/German/">SourceForge</a> download center contains an <a href="https://cmusphinx.github.io/wiki/arpaformat/">ARPA</a> file which contains the probabilities and backoff weights for the 1-, 2- and 3-grams. However, what I wanted was a 4-gram model. Luckily I found <a href="https://github.com/kpu/kenlm">KenLM</a> could be used to train n-gram LMs of any order. I only needed a corpus which contained one German sentence per line, words delimited by whitespace (as described in the <a href="https://kheafield.com/code/kenlm/estimation/">Corpus Formatting Notes</a>). I decided to train on articles and pages from German Wikipedia, which can be downloaded as a dump from <a href="https://dumps.wikimedia.org/">Wikipedia dumps</a>. The dump is a <code class="highlighter-rouge">*.bz2</code>-compressed XML file containing the articles in Wiki markup, which means some heavy preprocessing was needed in order to arrive at a raw text corpus in the expected input format.</p>
+<p>Since the ASR stage should also work for German recordings, I needed a LM for German. The only pre-trained <script type="math/tex">n</script>-gram model I found was one from <a href="https://cmusphinx.github.io/wiki/download/">CMUSphinx</a>, which is a 3-gram model. The file <code class="highlighter-rouge">cmusphinx-voxforge-de.lm.gz</code> at the <a href="https://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/German/">SourceForge</a> download center contains an <a href="https://cmusphinx.github.io/wiki/arpaformat/">ARPA</a> file which contains the probabilities and backoff weights for the 1-, 2- and 3-grams. However, what I wanted was a 4-gram model. Luckily I found <a href="https://github.com/kpu/kenlm">KenLM</a> could be used to train n-gram LMs of any order. I only needed a corpus which contained one German sentence per line, words delimited by whitespace (as described in the <a href="https://kheafield.com/code/kenlm/estimation/">Corpus Formatting Notes</a>). I decided to train on articles and pages from German Wikipedia, which can be downloaded as a dump from <a href="https://dumps.wikimedia.org/">Wikipedia dumps</a>. The dump is a <code class="highlighter-rouge">*.bz2</code>-compressed XML file containing the articles in Wiki markup. KenLM however expects the input for the estimation to be one sentence per line, which means some heavy preprocessing was required.</p>
 
 <h3 id="preprocessing-the-wikipedia-dump">Preprocessing the Wikipedia dump</h3>
 
-<p>Creating a corpus is no trivial task, especially if the raw data is contained in XML and the actual raw text contains Wiki markup and other special characters, most (!) of which are not wanted in the corpus. Some Google Research revealed a few options for how to extract the raw text from a Wiki dump:</p>
+<p>Creating a corpus is no trivial task, especially if the raw data is contained in XML and the actual raw text contains Wiki markup and other special characters, most (not all!) of which are not wanted in the corpus. Some Google Research revealed a few options for how to extract the raw text from a Wiki dump:</p>
 
 <ol>
   <li><strong><a href="https://dizzylogic.com/wiki-parser">Wiki Parser</a></strong>: This is a tool written in C++ that seemed to work pretty well. The text extraction is comparably fast (1-2 hours for the whole dump), but the result still needs to be postprocessed by removing special characters and splitting the text into one sentence per line. Unfortunately, this tool only runs on Windows (I’m using Ubuntu) and does not offer functionality over a CLI, which means I cannot include it in a script.</li>
@@ -210,6 +235,8 @@ ga('send', 'pageview');
 <p>After some experimentation, I found that WikiExtractor last option offered the most bang for the buck for my purpose. Unfortunately, WikiExtractor does not write to a text file directly, but rather split the dump file into a bunch of compressed files with similar size. Each of these files contains a number of articles in the <a href="http://medialab.di.unipi.it/wiki/Document_Format">Document Format</a>. This means, the results of WikiExtractor are just an intermediate product that needs further processing. Luckily, I found the amount required for this justifiable, using a combination of Bash and Python scripts to build a raw text corpus. I was able to script the whole process to build the corpus and train the LM on it and will describe the core steps here. You can find the whole implementation in <a href="https://github.com/tiefenauer/wiki-lm">my GitHub repository</a>.</p>
 
 <h3 id="building-the-corpus">Building the corpus</h3>
+
+<p>The next section show how to create a corpus for German and use it to train a 4-gram LM. However, the steps apply to any language and any order LM. <a href="https://github.com/tiefenauer/wiki-lm">My GitHub repository</a> contains some generic   code that can be used to train a LM of any order and any language.</p>
 
 <p>The following bash script will define a few variables that will be used in the following scripts. Note that <a href="http://www.ivarch.com/programs/pv.shtml">Pipeline Viewer</a> is required to show a nice progress bar.</p>
 
@@ -227,17 +254,23 @@ ga('send', 'pageview');
 <span class="nv">lm_binary</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">lm_dir</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">lm_basename</span><span class="k">}</span><span class="s2">.klm"</span> <span class="c"># KenLM binary file (this is the result of the script)</span>
 </code></pre></div></div>
 
+<h4 id="step-1-download-the-wikipedia-dump">Step 1: Download the Wikipedia dump</h4>
+
 <p>The following bash script will download the German Wikipedia dump (~6GB). This will take some time (at least in my case Wiki servers were quite slow when I downloaded the dump).</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget <span class="nt">-O</span> <span class="k">${</span><span class="nv">target_file</span><span class="k">}</span> <span class="k">${</span><span class="nv">download_url</span><span class="k">}</span>
 </code></pre></div></div>
 
-<p>The following bash script will use WikiExtractor split the dump into the directory defined by <code class="highlighter-rouge">$cleaned_dir</code> (about 1.6 GB). This took about 3 hours on my machine.</p>
+<h4 id="step-2-extract-text-from-wikipedia-articles">Step 2: Extract text from Wikipedia articles</h4>
+
+<p>The following bash script will use <a href="https://github.com/attardi/wikiextractor">WikiExtractor</a> split the dump into the directory defined by <code class="highlighter-rouge">$cleaned_dir</code> (about 1.6 GB). This took about 3 hours on my machine.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 ./WikiExtractor.py <span class="nt">-c</span> <span class="nt">-b</span> 25M <span class="nt">-o</span> <span class="k">${</span><span class="nv">cleaned_dir</span><span class="k">}</span> <span class="k">${</span><span class="nv">target_file</span><span class="k">}</span>
 </code></pre></div></div>
 
-<p>The following bash script will read the content of each compresed file and pipe ie to some <a href="http://www.grymoire.com/Unix/Sed.html"><code class="highlighter-rouge">sed</code></a> commands to remove the <code class="highlighter-rouge">&lt;doc&gt;</code>-tag and all kinds of quotation marks. The number of processed articles is counted by <code class="highlighter-rouge">grep</code>ping the number of occurrences of the <code class="highlighter-rouge">&lt;doc&gt;</code>-tag. The result is the normalized and split into lines of sentences by piping it through a Python script called <code class="highlighter-rouge">create_lm.py</code>. This scripts prints its output to stdout and can be written to <code class="highlighter-rouge">$dewiki_txt</code>. This file can then be compressed to save space.</p>
+<h4 id="step-3-normalizing-the-text-and-creating-the-corpus">Step 3: Normalizing the text and creating the corpus</h4>
+
+<p>The following bash script will read the content of each compresed file and pipe it to a bunch of <a href="http://www.grymoire.com/Unix/Sed.html"><code class="highlighter-rouge">sed</code></a> commands to remove the <code class="highlighter-rouge">&lt;doc&gt;</code>-tag and all kinds of quotation marks. The number of processed articles is counted by <code class="highlighter-rouge">grep</code>ping the number of occurrences of the <code class="highlighter-rouge">&lt;doc&gt;</code>-tag. The result is the normalized and split into lines of sentences by piping it through a Python script called <a href="https://github.com/tiefenauer/wiki-lm/blob/master/create_corpus.py"><code class="highlighter-rouge">create_corpus.py</code></a>, which splits the text into sentences and normalizes them. This scripts prints to stdout, which means its output can can be written directly to <code class="highlighter-rouge">$dewiki_txt</code>. This file is the corpus used for estimation and can  be compressed to save space.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">result</span><span class="o">=</span><span class="k">$(</span>find <span class="nv">$cleaned_dir</span> <span class="nt">-name</span> <span class="s1">'*bz2'</span> <span class="nt">-exec</span> bzcat <span class="o">{}</span> <span class="se">\+</span> <span class="se">\</span>
         | pv <span class="se">\</span>
@@ -251,17 +284,21 @@ ga('send', 'pageview');
 bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k">}</span>
 </code></pre></div></div>
 
-<p>The <a href="https://github.com/tiefenauer/wiki-lm/blob/master/create_corpus.py"><code class="highlighter-rouge">create_lm.py</code></a> script processes each line by splitting it into sentences using <a href="https://www.nltk.org/">NLTK</a>. Each sentence is split into a list of word-tokens. Each token is then procesed by removing unwanted characters, replacing numbers by the <code class="highlighter-rouge">&lt;num&gt;</code>-token, trimming whitespaces and replacing each character with an ASCII character (if that is possible), a process called unidecoding. Note that umlauts are very common in German and should therefore not be replaced. I had to write a slightly modified version of the <a href="https://pypi.org/project/Unidecode/"><code class="highlighter-rouge">unidecode</code></a> function from the Python module of the same name. The modified version will not replace umlauts, but the rest of the logic is identical.</p>
+<h5 id="normalizing-the-sentences">Normalizing the sentences</h5>
 
-<p>The processed word-tokens are then concatenated again using a single whitespace and made lowercase. The result is the representation of a sentence that can be used for training a KenLM model and is written to stdout. Since the python script is called in a bash script and its output is written directly to the <code class="highlighter-rouge">$dewiki_txt</code>, <code class="highlighter-rouge">$dewiki_txt</code> will contain the raw text data with one sentence per line.</p>
+<p>The <a href="https://github.com/tiefenauer/wiki-lm/blob/master/create_corpus.py"><code class="highlighter-rouge">create_corpus.py</code></a> script processes some raw text line by line splitting each line into sentences using <a href="https://www.nltk.org/">NLTK</a>. Each sentence is split into a list of word-tokens. Each token is then procesed by removing unwanted characters, replacing numbers by the <code class="highlighter-rouge">&lt;num&gt;</code>-token, trimming whitespaces and replacing each character with its ASCII equivalent (if that is possible), a process called unidecoding. Note that umlauts are very common in German and should therefore not be replaced. I had to write a slightly modified version of the <a href="https://pypi.org/project/Unidecode/"><code class="highlighter-rouge">unidecode</code></a> function from the Python module of the same name. The modified version will not replace umlauts, but the rest of the logic is identical.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<p>The result is a list of processed word-tokens, which are then concatenated again and represent a single sentence in the corpus. This sentence is made lowercased.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
-
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">version_info</span>
-<span class="kn">from</span> <span class="nn">unidecode</span> <span class="kn">import</span> <span class="n">unidecode</span><span class="p">,</span> <span class="n">_warn_if_not_unicode</span><span class="p">,</span> <span class="n">Cache</span>
+
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">unidecode</span> <span class="kn">import</span> <span class="n">Cache</span><span class="p">,</span> <span class="n">_warn_if_not_unicode</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s">'de'</span><span class="p">:</span> <span class="s">'german'</span><span class="p">,</span> <span class="s">'en'</span><span class="p">:</span> <span class="s">'english'</span><span class="p">}</span>
@@ -421,56 +458,108 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
     <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'That</span><span class="se">\'</span><span class="s">s all folks. Thanks for watching.'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Following the steps above I arrived at a corpus, which stored the entire German encyclopedia from Wikipedia in a single corpus text file at <code class="highlighter-rouge">$dewiki_txt</code>. The corpus file is approximately 5GB in size (xxxGB compressed) and contains 42,229,452 sentences (712,167,726 words) from ~2.2 million articles. Here’s an excerpt from the <a href="https://de.wikipedia.org/wiki/Spracherkennung#Sprachmodell">German Wikipedia article about Language Models</a>:</p>
+<h5 id="exploring-the-corpus">Exploring the corpus:</h5>
+<p>Following the steps above I arrived at a corpus, which stored the entire German encyclopedia from Wikipedia in a single corpus text file at <code class="highlighter-rouge">$dewiki_txt</code>. The corpus file is approximately 5.1GB in size (1.4GB compressed) and contains 42,229,452 sentences (712,167,726 words, 8,341,157 unique words) from ~2.2 million articles. Here’s an excerpt from the <a href="https://de.wikipedia.org/wiki/Spracherkennung#Sprachmodell">German Wikipedia article about Language Models</a>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ebenfalls im jahr &lt;num&gt; erschienen zwei bestofalben mit den grössten hits der band best of the braving days und best of the awakening days
-am &lt;num&gt; april &lt;num&gt; stellten galneryus ihr erstes studioprojekt mit sho vor die aus drei tracks bestehende ep beginning of the resurrection
-bei einem der tracks handelt es sich um das abspannlied a faroff distance der animeserie
-am &lt;num&gt; juni wurde das sechste album resurrection veröffentlicht
-die unterschiede zwischen yamab und sho sind hier deutlich wahrnehmbar
-dennoch ist es der band seitdem gelungen eine stilistischklangliche kontinuität zu bewahren und musikalische elemente einzubauen die an die frühen galneryusalben erinnern
-mit phoenix rising veröffentlichte die band am &lt;num&gt; oktober &lt;num&gt; ihr siebtes studio album
-im januar &lt;num&gt; veröffentlichte die band ein minialbum unter dem namen kizuna der gleichnamige song wurde in dem pachinko game pachinko cr first of the blue sky verwendet
-im juli des gleichen jahres folgte eine neue single hunting for your dream welches als abspannlied der anime serie hunter x hunter veröffentlicht wurde
-das lang erwartete achte studio album angel of salvation erschien am &lt;num&gt; oktober &lt;num&gt;
-der namensgebende titel angel of salvation war bis zu diesem zeitpunkt der längste song in der bandgeschichte
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>die grösse des wörterbuchs hängt stark von der sprache ab
+zum einen haben durchschnittliche deutschsprachige sprecher mit circa &lt;unk&gt; wörtern einen deutlich grösseren wortschatz als englischsprachige mit rund &lt;unk&gt; wörtern
+ausserdem ergeben sich durch die flexion in der deutschen sprache in etwa zehnmal so viele wortformen wie in der englischen sprache wo nur viermal so viele wortformen entstehen
+</code></pre></div></div>
+
+<h5 id="limiting-the-vocabulary">Limiting the vocabulary</h5>
+
+<p>Although the corpus we created consists of a vocabulary of more than 8 million unique words, the 500’000 most frequent words make up more than 96% of the whole corpus. The remaining words are words that are either used only in very special contexts or spelling mistakes. We will therefore create a file containing the 500k most frequent words (separated by a single whitespace) that can be used to limit the vocabulary during estimation of the LM and therefore greatly reduce file size of the model and increase estimation performance.</p>
+
+<p>The following script will create a list of words and count the occurrence of each word. The list will be sorted descending by number of occurences and written to a file <code class="highlighter-rouge">${lm_counts}</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="k">${</span><span class="nv">corpus_file</span><span class="k">}</span> |
+        pv <span class="nt">-s</span> <span class="k">$(</span><span class="nb">stat</span> <span class="nt">--printf</span><span class="o">=</span><span class="s2">"%s"</span> <span class="k">${</span><span class="nv">corpus_file</span><span class="k">})</span> | <span class="c"># show progress bar</span>
+        <span class="nb">tr</span> <span class="s1">'[:space:]'</span> <span class="s1">'[\n*]'</span> | <span class="c"># replace space with newline (one word per line)</span>
+        <span class="nb">grep</span> <span class="nt">-v</span> <span class="s2">"^</span><span class="se">\s</span><span class="s2">*$"</span> | <span class="c"># remove empty lines</span>
+        <span class="nb">grep</span> <span class="nt">-v</span> <span class="s1">'#'</span> | <span class="c"># remove words with numbers</span>
+        <span class="nb">awk</span> <span class="s1">'length($0)&gt;1'</span> | <span class="c"># remove words with length 1</span>
+        <span class="nb">sort</span> | <span class="nb">uniq</span> <span class="nt">-c</span> | <span class="nb">sort</span> <span class="nt">-bnr</span> <span class="o">&gt;</span> <span class="k">${</span><span class="nv">lm_counts</span><span class="k">}</span> <span class="c"># sort alphanumeric, count unique words, then sort result</span>
+</code></pre></div></div>
+
+<p>This file can then be used to write the 500k most frequent words to a file <code class="highlighter-rouge">${lm_vocab}</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="k">${</span><span class="nv">lm_counts</span><span class="k">}</span> |
+    <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'[:digit:] '</span> | <span class="c"># remove counts from lines</span>
+    <span class="nb">head</span> <span class="nt">-500000</span> | <span class="c"># keep 500k words</span>
+    <span class="nb">tr</span> <span class="s1">'\n'</span> <span class="s1">' '</span> <span class="o">&gt;</span> <span class="k">${</span><span class="nv">lm_vocab</span><span class="k">}</span> <span class="c"># replace newline with spaces (expected input format for KenLM)</span>
 
 </code></pre></div></div>
 
-<h3 id="training-the-lm">Training the LM</h3>
+<h4 id="step-4-creating-the-arpa-file">Step 4: Creating the ARPA file</h4>
 
-<p>Training the KenLM model requires building the project using cmake and other tools (see the <a href="https://kheafield.com/code/kenlm/">KenLM documentation</a> for more details), which only works on Unix based systems. Make sure, you have the resulting <code class="highlighter-rouge">bin</code> folder on the path to use <code class="highlighter-rouge">lmplz</code> and <code class="highlighter-rouge">build_binary</code>. Also, make sure the temporary directory set with <code class="highlighter-rouge">-T</code> provides enough free storage, otherwise training will fail with a message like <code class="highlighter-rouge">Last element should be poison</code>.</p>
+<p>Using KenLM to make estimations about a corpus requires building the project using cmake and other tools (see the <a href="https://kheafield.com/code/kenlm/">KenLM documentation</a> for more details), which only works on Unix based systems. Make sure, you have the resulting <code class="highlighter-rouge">bin</code> folder on the path to use <code class="highlighter-rouge">lmplz</code> and <code class="highlighter-rouge">build_binary</code>. Also, make sure the temporary directory set with <code class="highlighter-rouge">-T</code> provides enough free storage, otherwise training will fail with a message like <code class="highlighter-rouge">Last element should be poison</code>. The following script will create an ARPA file that contains the estimations for the</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Training </span><span class="nv">$N</span><span class="s2">-gram KenLM model with data from </span><span class="nv">$dewiki_txt</span><span class="s2"> and saving ARPA file to </span><span class="nv">$lm_arpa</span><span class="s2">"</span>
-lmplz <span class="nt">-o</span> <span class="k">${</span><span class="nv">order</span><span class="k">}</span> <span class="nt">-T</span> <span class="k">${</span><span class="nv">tmp_dir</span><span class="k">}</span> <span class="nt">-S</span> 40% <span class="nt">--limit_vocab_file</span> <span class="k">${</span><span class="nv">lm_vocab</span><span class="k">}</span> &lt;<span class="k">${</span><span class="nv">corpus_file</span><span class="k">}</span>.bz2
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lmplz <span class="nt">-o</span> <span class="k">${</span><span class="nv">order</span><span class="k">}</span> <span class="nt">-T</span> <span class="k">${</span><span class="nv">tmp_dir</span><span class="k">}</span> <span class="nt">-S</span> 40% <span class="nt">--limit_vocab_file</span> <span class="k">${</span><span class="nv">lm_vocab</span><span class="k">}</span> &lt;<span class="k">${</span><span class="nv">corpus_file</span><span class="k">}</span>.bz2
 </code></pre></div></div>
 
-<p>After building the ARPA file, this file can be converte to a binary file, which loads faster. Note that KenLM works with any ARPA files, so you could even convert the ARPA file from CMUSphinx mentioned above.</p>
+<h4 id="step-5-building-the-model">Step 5: Building the model</h4>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Building binary file from </span><span class="nv">$lm_arpa</span><span class="s2"> and saving to </span><span class="nv">$lm_binary</span><span class="s2">"</span>
-build_binary trie <span class="k">${</span><span class="nv">lm_arpa</span><span class="k">}</span> <span class="k">${</span><span class="nv">lm_binary</span><span class="k">}</span>
+<p>After building the ARPA file, this file can be converted to a binary file, which loads faster. Note that KenLM works with any ARPA files, so you could even convert the ARPA file from CMUSphinx mentioned above. The following script will create a binary file in <code class="highlighter-rouge">${lm_binary}</code> using the <em>Trie</em> data structure (read the <a href="https://kheafield.com/code/kenlm/structures/">documentation</a> about the possible data structures):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>build_binary trie <span class="k">${</span><span class="nv">lm_arpa</span><span class="k">}</span> <span class="k">${</span><span class="nv">lm_binary</span><span class="k">}</span>
 </code></pre></div></div>
 
-<p>Running all the steps through here will produce an ARPA file at <code class="highlighter-rouge">$lm_arpa</code> and a binary KenLM model in <code class="highlighter-rouge">lm_binary</code>. If a sorted vocabulary of all the unique words is require, this can be obtained by running the following command. Note that the vocabulary is extracted from the corpus the LM was trained on, this works only for unpruned models.</p>
+<h2 id="results-and-conclusion">Results and conclusion</h2>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"(re-)creating vocabulary of </span><span class="nv">$dewiki_txt</span><span class="s2"> and saving it in </span><span class="nv">$lm_vocab</span><span class="s2">"</span>
-<span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'\w+'</span> <span class="nv">$dewiki_txt</span> | pv <span class="nt">-s</span> <span class="k">$(</span><span class="nb">stat</span> <span class="nt">--printf</span><span class="o">=</span><span class="s2">"%s"</span> <span class="nv">$dewiki_txt</span><span class="k">)</span> | <span class="nb">sort</span> <span class="nt">-u</span> <span class="nt">-f</span> <span class="o">&gt;</span> <span class="nv">$lm_vocab</span>
-</code></pre></div></div>
+<p>I used above code to train a 2-gram and a 4-gram KenLM model using my personal Laptop using an i7 processor with 4 cores, 8GB RAM and an SSD hard disk. Creating the raw text corpus from the Wikipedia dump took the most time. After that, it was more or less smooth sailing, apart from some fiddling with the <code class="highlighter-rouge">lmplz</code> parameters <code class="highlighter-rouge">-T</code> (to make sure to use a temporary directory with enough space) and and <code class="highlighter-rouge">-S</code> (to make sure not to use too much memory). The final model uses about 2.3G (2-gram) resp. 6.3G (4-gram) of disk space.</p>
 
-<h2 id="evaluating-the-lm">Evaluating the LM</h2>
-<p>The raw text corpus contains more than 700 million words from 42 million sentences in 2.2 million articles. The vocabulary size (i.e. the number of unique words) is about 8.3 million. I used it to train a 2-gram and a 4-gram KenLM model using my personal Laptop using an i7 processor with 4 cores, 8GB RAM and an SSD hard disk. Creating the raw text corpus from the Wikipedia dump took the most time. After that, it was more or less smooth sailing, apart from some fiddling with the <code class="highlighter-rouge">lmplz</code> parameters <code class="highlighter-rouge">-T</code> (to make sure to use a temporary directory with enough space) and and <code class="highlighter-rouge">-S</code> (to make sure not to use too much memory). The final model uses about 2.3G (2-gram) resp. 18G (4-gram) of disk space.</p>
+<p>According to Dan Jurafsky bible <em><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a></em>, the best way to evaluate a n-gram LM is to embed it in an application and measure how much the application improves (called <em>extrinsic evaluation</em>). <em>Intrinsic evaluation</em> describes measuring the performance of a LM independent from any application and would require scoring sentences on a training set, which were never seen before. The results can then be compared to a reference LM: Whatever model produces higher probabilities (or lower perplexity) to the <script type="math/tex">n</script>-grams in the test set is deemed to perform better.</p>
 
-<p>According to Dan Jurafsky bible <em><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a>_The best way to evaluate a n-gram LM is to embed it in an application and measure how much the application improves (called _extrinsic evaluation</em>). <em>Intrinsic evaluation</em> describes measuring the performance of a LM independent from any application and would require scoring sentences on a training set, which were never seen before. The results can then be compared to a reference LM: Whatever model produces higher probabilities (or lower perplexity) to the <script type="math/tex">n</script>-grams in the test set is deemed to perform better.</p>
+<p>Because of time constraints and because KenLM has already been extensively evaluated on English I refrained from evaluating my German LM intrinsically (although the corpus used for training here is not as big as the 126 billion words corpus used by Ken Heafield). To still get an intuition about how well the model performs, the model’s score on some test sentences were calculated and compared to the scores of shuffled variants of the same sentences. To make sure the sentences could not have been seen during training, the following set of 5 sentences of the current newspaper (a date after creation of the Wikipedia dump) was used. The score was calculated for each sentence. Then the words in each sentence were shuffled and the score was calculated for the shuffled sentences. Comparing the score of the original sentence with the score of the shuffled sentence we can see that the LM can indeed be used to estimate the probability of a sentence: The scores of the shuffled sentences are much lower than the scores of the original sentences. This makes sense because the shuffled sentences are usually just gibberish. The following table contains the scores calculated for 5 sentences (note the scores are log10-based):</p>
 
-<p>Because of time constraints and because KenLM has already been extensively evaluated on English I refrained from evaluating my German LM intrinsically, although the corpus used for training is not as big as the one used by Ken Heafield. To still get an intuition about how well the model performs, the model’s score on some test sentences were calculated. To make sure the sentences could not have been seen during training, the following set of 5 sentences of the current newspaper (a date after creation of the Wikipedia dump) was used:</p>
+<table>
+  <thead>
+    <tr>
+      <th>original sentence (normalized)</th>
+      <th>score</th>
+      <th>shuffled sentence</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>seine pressebeauftragte<br />ist ratlos</td>
+      <td>-17.58</td>
+      <td>ist ratlos<br />pressebeauftragte seine</td>
+      <td>-21.52</td>
+    </tr>
+    <tr>
+      <td>fünf minuten später steht<br />er im eingang des kulturcafes<br />an der zürcher europaallee</td>
+      <td>-40.23</td>
+      <td>des er minuten zürcher kulturcafes<br />steht europaallee eingang<br />fünf im später an der</td>
+      <td>-57.69</td>
+    </tr>
+    <tr>
+      <td>den leuten wird bewusst<br />dass das system des <br /> neoliberalismus nicht<br />länger tragfähig ist</td>
+      <td>-35.52</td>
+      <td>system nicht das ist<br />dass leuten tragfähig des<br />neoliberalismus den<br />bewusst länger wird</td>
+      <td>-51.27</td>
+    </tr>
+    <tr>
+      <td>doch daneben gibt es die<br />beeindruckende zahl von <code class="highlighter-rouge">&lt;num&gt;</code><br />bienenarten die man unter dem<br />begriff wildbienen zusammenfasst</td>
+      <td>-48.36</td>
+      <td>dem gibt wildbienen zahl<br />beeindruckende doch man<br />zusammenfasst es daneben bienenarten<br />von die unter die <code class="highlighter-rouge">num&gt;</code> begriff</td>
+      <td>-75.95</td>
+    </tr>
+    <tr>
+      <td>bereits <code class="highlighter-rouge">&lt;num&gt;</code> plante<br />die usairline pan american<br />touristische weltraumflüge<br />für das jahr <code class="highlighter-rouge">&lt;num&gt;</code></td>
+      <td>-58.04</td>
+      <td>plante touristische für<br />jahr pan american das<br />bereits usairline <code class="highlighter-rouge">&lt;num&gt;</code><br /> <code class="highlighter-rouge">&lt;num&gt;</code> weltraumflüge die</td>
+      <td>-64.02</td>
+    </tr>
+  </tbody>
+</table>
 
-<h2 id="using-a-lm-to-build-a-simple-spell-checker">Using a LM to build a simple spell checker</h2>
+<h2 id="possible-appliance-using-a-lm-to-build-a-simple-spell-checker">Possible appliance: Using a LM to build a simple spell checker</h2>
 
-<p>With my newly built LM I was now able to improve the quality of the transcripts produced by my simplified STT engine by using it as a rudimentary spell checker. The LM will post-process the transcripts by going through it word by word and create a list of possible spellings for each word. To do this, we check if the word is in the vocabulary of the LM. If it is, we can assume the word was correctly inferred i.e. it does not only sound right but is also correctly spelled. If it is not in the vocabulary of the LM, we create a list of words with <a href="https://en.wikipedia.org/wiki/Edit_distance">edit distance</a> (<script type="math/tex">ed</script>) 1. If none of these words are in the vocabulary of the LM, create a list of words with <script type="math/tex">ed(w)=2</script> (can be recursively done from the list of words with <script type="math/tex">ed(w)=1</script>). If none of the words from this list are in the vocabulary of the LM, keep the original word and accept that it might have been incorrectly transcribed (i.e. with an <script type="math/tex">ed(w)>1</script>), the word is completely wrong (i.e. e.g. <em>their</em> instead of <em>they’re</em>) or the word has simply never been seen while training the LM.</p>
+<p>The reason I created a LM in the first place was to improve the results of the ASR stage of my pipeline. With my newly built LM I was now able to improve the quality of the transcripts produced by my simplified STT engine by using it as a rudimentary spell checker. The LM will post-process the transcripts by going through it word by word and create a list of possible spellings for each word. To do this, we check if the word is in the vocabulary of the LM. If it is, we can assume the word was correctly inferred i.e. it does not only sound right but is also correctly spelled. If it is not in the vocabulary of the LM, we create a list of words with <a href="https://en.wikipedia.org/wiki/Edit_distance">edit distance</a> (<script type="math/tex">ed</script>) 1. If none of these words are in the vocabulary of the LM, create a list of words with <script type="math/tex">ed(w)=2</script> (can be recursively done from the list of words with <script type="math/tex">ed(w)=1</script>). If none of the words from this list are in the vocabulary of the LM, keep the original word and accept that it might have been incorrectly transcribed (i.e. with an <script type="math/tex">ed(w)>1</script>), the word is completely wrong (i.e. e.g. <em>their</em> instead of <em>they’re</em>) or the word has simply never been seen while training the LM.</p>
 
 <p>Concatenating the lists of possible spellings gives us a matrix of words. A LM can now assess the probability of each path by calculating the probability of the sentence that is created by concatenating all the words from a path. The sentence can then be corrected by taking the most probable sentence. Note, that the number of paths can become exponentially huge when proceeding as described, requiring dynamic programming and merging paths to calculate the most probable path. I implemented a greedy variant which only keeps the 1.024 most probable sequences after each step (i.e. after adding the list of possible spellings for a word).</p>
-
-<h2 id="results--conclusion">Results &amp; Conclusion</h2>
 
 
 
