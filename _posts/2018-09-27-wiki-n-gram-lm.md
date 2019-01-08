@@ -1,11 +1,10 @@
 ---
 title: Creating a n-gram Language Model using Wikipedia
 layout: post
+tldr: This post describes how to train a n-gram Language Model of any order using Wikipedia articles. The code used is available from <a href="https://github.com/tiefenauer/wiki-lm" target="_blank">my GitHub repo</a>.
 ---
 
-<div class="alert alert-primary" role="alert">
-  <strong>TLDR</strong>: This article describes how to train a n-gram Language Model of any order using Wikipedia articles. The code used is available from <a href="https://github.com/tiefenauer/wiki-lm" target="_blank">my GitHub repo</a>.
-</div>
+{% include toc.md %}
 
 For my master thesis at [FHNW] I am building a pipeline for [Forced Alignment] (FA). This pipeline requires an [Automatic Speech Recognition] (ASR) system in one stage to produce partial transcripts for voiced audio segments that were detected using [Voice Activity Detection] (VAD) from [WebRTC]. Luckily, there is a Python module called [webrtcvad] containing the C-bindings for the VAD-part of WebRTC and is therefore very fast and accurate. Those partial transcripts are then locally aligned with the (known) full transcript using the [Smith Waterman] (SM) algorithm (see [my blog post]({{ site.baseurl }}{% post_url 2018-07-13-smith-waterman %}) for an implementation in Python).
 

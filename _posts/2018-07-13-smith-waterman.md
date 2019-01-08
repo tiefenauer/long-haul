@@ -1,7 +1,10 @@
 ---
 title: Smith-Waterman algorithm in Python
 layout: post
+tldr: Implementation of the Smith-Waterman algorithm in Python using Dynamic Programming.
 ---
+
+{% include toc.md %}
 
 Because I am currently working with [Local Sequence Alignment (LSA)](https://en.wikipedia.org/wiki/Sequence_alignment) in a project I decided to use the [Smith-Waterman algorithm](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm) to find a partially matching substring $$b$$ in a longer substring $$a$$. Since I am coding in Python, I was sure there were dozens of implementations already, ready to be used. I found a few indeed, namely [here](https://gist.github.com/nornagon/6326a643fc30339ece3021013ed9b48c) and [here](https://gist.github.com/radaniba/11019717). However, the first implementation is incomplete, because it only includes calculating the scoring matrix and not the backtracing. I did not test the second implementation because it seemed overly complicated and apparently contained bugs (judging from the comments).
 
