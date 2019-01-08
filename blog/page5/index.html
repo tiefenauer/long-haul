@@ -172,389 +172,51 @@ ga('send', 'pageview');
       <li>
         <span class="date">May 07, 2014</span>
         <h3><a class="post-link" href="/blog/ci-for-flex-mobile-applications-part-6-code-coverage/">CI for Flex Mobile Applications - Part 6: Code coverage</a></h3>
-        <p>Another important step when creating a CI suite for your mobile application is code coverage. Code coverage measures the amout of code covered by unit tests by class and/or by line, giving valuable information on which parts of your application need more unit testing and which are already pretty well covered.
-
-Table of Contents
-
-
-  Step 1: Download FlexUnit with Code Coverage
-  Step 2: Create a new Ant file
-  Step 3: Create the macros    
-      Build the TestRunner
-      Execute the TestRunner
-    
-  
-  Step 4: Adding to the script
-  Step 5: Test everything out
-
-
-To get this step to work we need a modified version of FlexUnit. The process then is as follows:
-
-
-  We compile our TestRunner.mxml application (which we created in Part 3 of this tutorial) using the modified FlexUnit libraries. This enables FlexUnit to record which lines of the code are being executed (and which not).
-  We then run the compiled application using a slightly different (modified) Ant task for FlexUnit providing the source files to compare the whole application code with the code that is executed during the unit tests.
-  The modified FlexUnit Ant task results in the Test-....xml files that we already got when running the regular FlexUnit, but also in some additional files containing the reusults of the code coverage.
-
-
-To get this to work, we need to do some things first.
-
-Step 1: Download FlexUnit with Code Coverage
-
-A guy called Jason developed a modified version of the FlexUnit SWC files. You can get the files along with some description here. You need to at least download the three SWC files found under “Downlaods”. Alternatively you can checkout the code using SVN by entering the following command in your command line:
-
-svn checkout http://flexunit-with-code-coverage.googlecode.com/svn/trunk/ flexunit-with-code-coverage-read-only
-
-
-Store the three SWC files in a subfolder of your tools-folder called “flexcover” (i.e. C:\tools\flexcover).
-
-Step 2: Create a new Ant file
-
-Because this step involves modified libraries of FlexUnit, we keep the Ant step for code coverage separated from our main buildfile (build.xml) to prevent the libraries from interfering with each other (and also to keep our original buildfile a bit simpler). We then call this script from our main build script.
-
-Create a new file called build.coverage.xml at the same level as your original buildfile. Fill it with the following base structure:
-
-&lt;project name="MyApp Code Coverage" default="start" &gt;
-  	&lt;target name="start" depends="test-coverage"/&gt;
-
-	&lt;property environment="env"/&gt;
-	&lt;property file="build.properties" /&gt;
-
-	&lt;property name="FLEX_HOME" value="${FLEX.root}"&gt;&lt;/property&gt;
-
-	&lt;!-- use modified FlexUnit Ant task for code coverage --&gt;
-  	&lt;path id="buildtools.classpath"&gt;
-    		&lt;fileset dir="${TEST.flexcover}" includes="flexTasks.jar" /&gt;
-  	&lt;/path&gt;
-
-	&lt;!-- Taskdef for modified MXMLC --&gt;
-  	&lt;taskdef name="mxmlc" classname="flex.ant.MxmlcTask" classpathref="buildtools.classpath" /&gt;
-
-	&lt;!-- Taskdef for modified FlexUnit --&gt;
-	&lt;taskdef resource="flexUnitTasks.tasks"&gt;
-		&lt;classpath&gt;
-	        	&lt;fileset dir="${TEST.flexcover}"&gt;
-	           		&lt;include name="flexUnitTasks*.jar" /&gt;
-	        	&lt;/fileset&gt;
-	     	&lt;/classpath&gt;
-	&lt;/taskdef&gt;
-
-	&lt;!-- Code-Coverage --&gt;
-	&lt;target name="test-coverage" &gt;
-		&lt;echo&gt;Test Coverage...&lt;/echo&gt;
-		&lt;echo&gt;==========&lt;/echo&gt;
-
-        	&lt;fileset dir="test" id="coverage-classes"&gt;
-             		&lt;include name="**/*Test.*"/&gt;
-             		&lt;include name="**/*TestSuite.*"/&gt;
-        	&lt;/fileset&gt;
-
-		&lt;update-runner testClassesSources="coverage-classes" runner="TestRunner"/&gt;
-		&lt;compile-runner runner="${PROJECT.src}/TestRunner.mxml" swf="${OUTPUT.flexcover.bin}/TestRunner.swf" include="flexunit*flex*.swc" useflex="true" /&gt;
-		&lt;execute-tests swf="${OUTPUT.flexcover.bin}/TestRunner.swf" reportdir="${OUTPUT.flexcover.results}" /&gt;
-
-	&lt;/target&gt;
-
-&lt;/project&gt;
-
-
-This script looks pretty similar to our original build script. However, notice these differences:
-
-
-  instead of the Flex Ant tasks that came with our Flex SDK, we use the modified version downloaded in Step 1.
-  Instead of the original MXMLC Ant task, we create a modified task using taskdef and the modified Ant task.
-  Instead of the original FlexUnit Ant task we use the modified version downloaded in Step 1.
-
-
-This should provide us with a scaffolding that we’re going to fill with some macros and a single target.
-
-Step 3: Create the macros
-
-To build and execute the TestRunner.mxml application we need to create two macros that look almost identical to the ones used to run the unit tests. However, they take into account the features of the modified FlexUnit libraries.
-
-Build the TestRunner
-
-Add the following macro to the build.coverage.xml script.
-
-&lt;!-- = = = = = = = = = = = = = = = = =
-      macro: Compile Cover-Runner
-     = = = = = = = = = = = = = = = = = --&gt;
-&lt;macrodef name="compile-runner"&gt;
-  &lt;attribute name="runner" /&gt;
-  &lt;attribute name="swf" /&gt;
-  &lt;attribute name="include" /&gt;
-  &lt;attribute name="useflex" /&gt;
-  &lt;sequential&gt;
-	    &lt;echo message="Compiling @{runner}" /&gt;
-	    &lt;mxmlc file="@{runner}" output="@{swf}" strict="true" debug="true"
-          		incremental="true" maxmemory="1024m" optimize="true" fork="true"
-			static-link-runtime-shared-libraries="true"&gt;
-		&lt;load-config filename="${FLEX_HOME}/frameworks/airmobile-config.xml" /&gt;
-		&lt;default-frame-rate&gt;24&lt;/default-frame-rate&gt;
-
-		&lt;source-path path-element="${basedir}/src" /&gt;
-		&lt;!-- add more sources here --&gt;
-
-
-		&lt;library-path dir="${PROJECT.libs}" append="true"&gt;
-			&lt;include name="**/*.swc" /&gt;
-		&lt;/library-path&gt;
-		&lt;!-- add more libraries here --&gt;
-
-		&lt;!-- include modified FlexUnit libraries --&gt;
-		&lt;include-libraries dir="${TEST.flexcover}"&gt;
-		&lt;include name="*.swc" /&gt;
-		&lt;/include-libraries&gt;
-
-		&lt;!-- some other compiler options --&gt;
-		&lt;show-unused-type-selector-warnings&gt;false&lt;/show-unused-type-selector-warnings&gt;
-		&lt;compiler.verbose-stacktraces&gt;true&lt;/compiler.verbose-stacktraces&gt;
-		&lt;compiler.headless-server&gt;true&lt;/compiler.headless-server&gt;
-	&lt;/mxmlc&gt;
-  &lt;/sequential&gt;
-&lt;/macrodef&gt;
-
-
-This macro is identical with the one used in the main build script. But since we have overridden the MXMLC Ant task above, we’re using the modified MXMLC to build the application.
-
-Execute the TestRunner
-
-Add the following macro to the build.coverage.xml script.
-
-&lt;!-- = = = = = = = = = = = = = = = = =
-  macro: Execute FlexUnit with Coverage
-       = = = = = = = = = = = = = = = = = --&gt;
-&lt;macrodef name="execute-tests"&gt;
-  &lt;attribute name="swf" /&gt;
-  &lt;attribute name="reportdir" /&gt;
-  &lt;sequential&gt;
-    &lt;flexunit swf="@{swf}" timeout="180000" player="air" toDir="@{reportdir}" haltonfailure="false"
-           verbose="true" workingDir="target/coverage" localTrusted="true" port="1024"&gt;
-      &lt;coverageSource&gt;${basedir}/src/&lt;/coverageSource&gt;
-      &lt;coverageExclude&gt;my.excluded.sources&lt;/coverageExclude&gt;
-    &lt;/flexunit&gt;
-  &lt;/sequential&gt;
-&lt;/macrodef&gt;
-
-
-This macro is almost identical to the one used in the main build script. However, notice the two additional nodes:
-
-
-  &lt;coverageSource&gt;
-  &lt;coverageExclude&gt;
-
-
-These are needed to compare the executed code with the whole application code and will result in a coverage report.
-
-Step 4: Adding to the script
-
-That’s all. Well almost. What we need to do now is to update our TestRunner.mxml with the latest unit tests, compile the TestRunner-application and then execute it with the modified Ant task for FlexUnit. For the first part, we can use the same macro that was already defined in the main build script. For the second and third part we call the macros inside the build.coverage.xml file that we just added.
-
-So all we need to do is add the following script to build.coverage.xml:
-
-&lt;!-- Code-Coverage --&gt;
-&lt;target name="test-coverage" &gt;
-	&lt;echo&gt;Test Coverage...&lt;/echo&gt;
-	&lt;echo&gt;==========&lt;/echo&gt;
-
-	&lt;fileset dir="test" id="coverage-classes"&gt;
-	     &lt;include name="**/*Test.*"/&gt;
-	     &lt;include name="**/*TestSuite.*"/&gt;
-	&lt;/fileset&gt;
-
-	&lt;update-runner testClassesSources="coverage-classes" runner="CoverRunner"/&gt;
-	&lt;compile-runner runner="${PROJECT.src}/CoverRunner.mxml" swf="${OUTPUT.flexcover.bin}/CoverRunner.swf" include="flexunit*flex*.swc" useflex="true" /&gt;
-	&lt;execute-tests swf="${OUTPUT.flexcover.bin}/CoverRunner.swf" reportdir="${OUTPUT.flexcover.results}" /&gt;
-
-&lt;/target&gt;
-
-
-We then only need to call the coverage script by calling the ant file from the main build script. So add the following lines to your build.xml:
-
-&lt;!-- Code Coverage --&gt;
-&lt;target name="test-coverage" if="${env.code_coverage}" &gt;
-	&lt;echo&gt;Test Coverage...&lt;/echo&gt;
-	&lt;echo&gt;==========&lt;/echo&gt;
-	&lt;ant antfile="build.coverage.xml" inheritall="false"&gt;&lt;/ant&gt;
-&lt;/target&gt;
-
-
-This will conditionally run our build.coverage.xml depending on the value of the environmental variable code_coverage.
-
-Step 5: Test everything out
-
-That’s it. All you have to do now is run your build.xml from jenkins with code_coverage set to true.
-
-Part 7 shows some additional tricks that make life easier.
-</p>
+        <p>
+          
+            Another important step when creating a CI suite for your mobile application is code coverage. Code coverage measures ...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">May 05, 2014</span>
         <h3><a class="post-link" href="/blog/introducing-songster/">Introducing Songster</a></h3>
-        <p>I started a new project called Songster. With Songster you can scan your private music and find a specific song for a given topic. The search is made by analyzing each song’s lyrics, so the application also involves automatic download of lyrics.
-
-Check out the new project here!
-</p>
+        <p>
+          
+            I started a new project called Songster. With Songster you can scan your private music and find a specific song for a...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">April 14, 2014</span>
         <h3><a class="post-link" href="/blog/heartbleed-chrome/">Heartbleed + Chrome</a></h3>
-        <p>The Solution
-
-Heartbleed has made quite some headlines recently. If you’re using Chrome as your preferred browser (like me) you should check your settings for the following entry:
-
-
-
-
-
-
-
-
-
-
-
-The Problem
-
-Chrome (by default) does not check with the Certificate Authority (CA) if a certificate has been revoked, but uses an own process called CRLSets instead. In short: Google will push a compiled list of revoked certificates to Chrome, so that the browser does not have to contact the CA to check validity. This may be good for performance, but comes with a risk because the list may or may not be complete.
-
-Background
-
-A lot of website providers that used OpenSSL for encryption have now revoked their certificates (which are used for encryption) and issued new ones, because there might be a chance that their private keys have leaked out. Attackers  having the private key are able to decrypt any past and future traffic and impersonate the service at will, without anyone noticing.
-
-Source: http://heartbleed.com/
-</p>
+        <p>
+          
+            The SolutionHeartbleed has made quite some headlines recently. If you’re using Chrome as your preferred browser (like...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">April 06, 2014</span>
         <h3><a class="post-link" href="/blog/ci-for-flex-mobile-applications-part-8-troubleshooting/">CI for Flex Mobile Applications – Part 7: Troubleshooting</a></h3>
-        <p>Here are some common problems you may run into when trying to set up a CI process for Flex Mobile Applications with Jenkins and Ant.
-
-Table of Contents
-
-
-  My job keeps running and never finishes. After some time I get an Error “ERROR: Timeout after … minutes”
-  In the packaging target I get an error “error 105: application.initialWindow.content contains an invalid value”
-
-
-My job keeps running and never finishes. After some time I get an Error “ERROR: Timeout after … minutes”
-
-This error can happen if your git client is not set up correctly. To fix it follow these steps:
-
-
-  First of all. Try if you can clone/fetch from your Github repository using git bash git clone git@github.com:username/Project.git. If this does not work, you must fix it by creating a new SSH key pair and adding the key to your Github account.
-  If your job still loops infinetely,  make sure, you added the path to your Git executable correctly under Jenkins &gt; Manage Jenkins &gt; Configure System
-3.If your job still fails it is likely that Jenkins does not find the credentials you provided. Although your git client may work from a CLI, Jenkins runs under an own user and hence needs to know where the keys are. To do this you must create an environment variable called HOME pointing to your own Home directory (e.g. C:\Users\Daniel)
-
-
-In the packaging target I get an error “error 105: application.initialWindow.content contains an invalid value”
-
-This is probably because you are using FlashBuilder as an IDE. When debugging or exporting a release package with FlashBuilder, FB replaces the &lt;initialContent&gt;-node in the application descriptor dynamically with the name of the *.SWF file it generated in its internal build process. You can see this when looking at the node in the application descriptor, containing the following value:
-
-&lt;content&gt;[This value will be overwritten by Flash Builder in the output app.xml]&lt;/content&gt;
-
-To get the packaging to work in Jenkins, the node in the application descriptor must contain the same name that is used as output in the compile-step (usually ${PROJECT.name}.swf). Otherwise, ADT won’t know which SWF-File to link with the Application container. Simply change the node content to this value, and the packaging step should also work:
-
-&lt;content&gt;MyApp.swf&lt;/content&gt;
-</p>
+        <p>
+          
+            Here are some common problems you may run into when trying to set up a CI process for Flex Mobile Applications with J...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">April 05, 2014</span>
         <h3><a class="post-link" href="/blog/ci-for-flex-mobile-applications-part-7-tipps-and-tricks/">CI for Flex Mobile Applications – Part 7: Tipps & Tricks</a></h3>
-        <p>In this part of the tutorial I’ll collect some scripts and tipps you might find useful, after you have implemented the build script as described in the last chapters.
-
-Table of Contents
-
-
-  Updating the build label automatically
-  Updating the TestRunner automatically
-
-
-Updating the build label automatically
-
-If you want the &lt;buildLabel&gt; node in your application descriptor to contain the Build-ID used in Jenkins, you can use the following script:
-
-&lt;!-- Automatically set the build label in the app descriptor to the current Build-ID from Jenkins --&gt;
-&lt;target name="editBuildLabel"&gt;
-	&lt;echo&gt;Editing Build Label...&lt;/echo&gt;
-	&lt;property name="versionLabelPattern"&gt;&lt;![CDATA[&lt;versionLabel&gt;(.*?)&lt;/versionLabel&gt;]]&gt;&lt;/property&gt;
-	&lt;property name="substitutionPattern"&gt;&lt;![CDATA[&lt;versionLabel&gt;${env.BUILD_ID}&lt;/versionLabel&gt;]]&gt;&lt;/property&gt;
-	&lt;echo message="Suche nach:  ${versionLabelPattern}" /&gt;
-	&lt;echo message="Ersetze mit: ${substitutionPattern}" /&gt;
-	&lt;loadfile property="desc" srcfile="${PROJECT.src}\\${PROJECT.app.desc}"&gt;
-		&lt;filterchain&gt;
-			&lt;expandproperties/&gt;
-			&lt;tokenfilter&gt;
-				&lt;replaceregex pattern="${versionLabelPattern}" replace="${substitutionPattern}" flags="gs"/&gt;
-			&lt;/tokenfilter&gt;
-		&lt;/filterchain&gt;
-	&lt;/loadfile&gt;
-	&lt;echo file="${PROJECT.src}\\${PROJECT.app.desc}"&gt;${desc}&lt;/echo&gt;
-	&lt;echo&gt;... done!&lt;/echo&gt;
-
-&lt;/target&gt;
-
-
-Updating the TestRunner automatically
-
-In case you have all your test classes in one folder (like me) you might find you wondering whether you could add all those classes to your TestRunner application each time before running the unit tests instead of having them to add manually each time you write a new test class. In short: you can! Just include the following macro in your build script and call it as the first macro before any other macros in your FlexUnit target.
-
-&lt;!-- update TestRunner application with unit classes to include --&gt;
-&lt;macrodef name="update-runner"&gt;
-  &lt;!-- test classes to include --&gt;
-  &lt;attribute name="testClassesSources" /&gt;
-  &lt;sequential&gt;
-	&lt;!-- delete files containing import statements and array.push()-operations --&gt;
-  	&lt;delete file="testsToRun.txt" /&gt;
-  	&lt;delete file="testsToImport.txt" /&gt;
-
-	&lt;!-- create import statements and array.push()-operations --&gt;
-    &lt;for param="file"&gt;
-        &lt;path&gt;
-            &lt;fileset refid="@{testClassesSources}"/&gt;
-        &lt;/path&gt;
-    	&lt;sequential&gt;
-    		&lt;local name="source"/&gt;
-    		&lt;property name="source" value="@{file}"&gt;&lt;/property&gt;
-			&lt;!-- convert path names to class names replacing the slashes with dots and dropping the file ending --&gt;
-    		&lt;propertyregex property="baseDirEscaped" input="${basedir}\test\" regexp="\\" replace="/" global="true" override="true"/&gt;
-    		&lt;propertyregex property="sourceEscaped" input="${source}" regexp="\\" replace="/" global="true" override="true"/&gt;
-    		&lt;propertyregex property="withoutBaseDir" input="${sourceEscaped}" regexp="${baseDirEscaped}" replace="" global="true" override="true"/&gt;
-    		&lt;propertyregex property="withoutFileExtension" input="${withoutBaseDir}" regexp="\.as" replace="" global="true" override="true"/&gt;
-    		&lt;propertyregex property="replacedFile" input="${withoutFileExtension}" regexp="/" replace="." global="true" override="true"/&gt;
-
-			&lt;!-- write import statements and array.push()-operations to separate files --&gt;
-    		&lt;echo file="testsToRun.txt" append="true"&gt;
-    			testsToRun.push(${replacedFile});&lt;/echo&gt;
-    		&lt;echo file="testsToImport.txt" append="true"&gt;
-    			import ${replacedFile};&lt;/echo&gt;
-        &lt;/sequential&gt;
-    &lt;/for&gt;
-	&lt;!-- replace text between markers with generated import statements/array.push()-operations --&gt;
-  	&lt;loadfile property="testsToRunInsert" srcfile="testsToRun.txt"&gt;&lt;/loadfile&gt;
-  	&lt;loadfile property="testsToImportInsert" srcfile="testsToImport.txt"&gt;&lt;/loadfile&gt;
-	&lt;replaceregexp file="src/TestRunner.mxml"
-				   match="//UNIT_TESTS_IMPORT_START(?s)(.*)//UNIT_TESTS_IMPORT_END"
-				   replace="//UNIT_TESTS_IMPORT_START${testsToImportInsert}//UNIT_TESTS_IMPORT_END"
-					/&gt;
-	&lt;replaceregexp file="src/TestRunner.mxml"
-				   match="//UNIT_TESTS_ARRAY_START(?s)(.*)//UNIT_TESTS_ARRAY_END"
-				   replace="//UNIT_TESTS_ARRAY_START${testsToRunInsert}//UNIT_TESTS_ARRAY_END"
-					/&gt;
-  	&lt;delete file="testsToRun.txt" /&gt;
-  	&lt;delete file="testsToImport.txt" /&gt;
-  &lt;/sequential&gt;
-&lt;/macrodef&gt;
-
-
-Just extend your TestRunner application with code comments containing the phrases UNIT_TESTS_IMPORT_START and _UNIT_TESTS_IMPORT_END _to define the start and end section where the import statements will be made.
-
-Likewise, add two comments containing the phrases UNIT_TESTS_ARRAY_START and UNIT_TESTS_ARRAY_END to mark the sections where the test classes will be pushed into the array in the currentRunTestSuite()-function.
-
-Part 8 contains some hints to consider when things go south.
-</p>
+        <p>
+          
+            In this part of the tutorial I’ll collect some scripts and tipps you might find useful, after you have implemented th...
+          
+        </p>
       </li>
     
   </ul>
@@ -574,7 +236,7 @@ Part 8 contains some hints to consider when things go south.
 
    <div class="footer">
    <div class="container">
-      <p class="copy">&copy; 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <p class="copy">&copy; 2019 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
       <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
       </p>
 

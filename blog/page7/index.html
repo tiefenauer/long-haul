@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" <![endif]--><!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,10 +49,10 @@
 
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
 
     <!-- Come and get me RSS readers -->
-    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml" />
 
     <!-- Bootstrap: include before theme CSS so styles are overridden -->
     <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
@@ -100,8 +102,8 @@ ga('send', 'pageview');
 <!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
 <script src="/assets/js/unitegallery/unitegallery.min.js"></script>
 <script src="/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js"></script>
-<link rel="stylesheet" href="/assets/css/unitegallery/unite-gallery.css" type="text/css">
-<link rel="stylesheet" href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type="text/css">
+<link rel='stylesheet' href="/assets/css/unitegallery/unite-gallery.css" type='text/css' />
+<link rel='stylesheet' href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type='text/css' />
 
 <!-- Unite Gallery-->
 <script type="text/javascript">
@@ -158,8 +160,7 @@ ga('send', 'pageview');
              </ul>
          </nav>
      </div>
- </div>
-<!-- end .header -->
+ </div><!-- end .header -->
 
 
    <div class="content">
@@ -171,1045 +172,51 @@ ga('send', 'pageview');
       <li>
         <span class="date">March 04, 2014</span>
         <h3><a class="post-link" href="/blog/ci-for-flex-mobile-applications-part-0-the-setup/">CI for Flex Mobile Applications – Part 0: The Setup</a></h3>
-        <p>This is the first in a series of posts where I’ll describe the process of setting up a Continuous Integration process to build a mobile app created with Flex. I will use Jenkins as a CI server and ANT for my build scripts.
-
-This first article is about getting started and setting up the right tools.
-
-Table of Contents
-
-
-  Getting started
-  Tools used in this tutorial
-  Step 1: Setting up the server    
-      Folder structure
-      Setting the paths
-    
-  
-  Step 2: Installing Jenkins    
-      Plugins
-      Configuring Jenkins        
-          Configuring Git
-          Jenkins environment variables
-        
-      
-    
-  
-  Step 3: Preparing the job    
-      Job parameters
-      Source Code Management
-      Our first build step
-      Preparing the build script
-      Step 4: Test everything out        
-          Checking the paths
-          Checking your Git client by cloning your repository
-          Running your Jenkins job for the first time
-        
-      
-      What we have done so far
-    
-  
-
-
-Getting started
-
-Before you get started you should make sure you have the following ready:
-
-
-  a server running Windows that you have administrator rights to and that you can access over your local network (or over the internet, if you prefer). It is important that your server runs on Windows, since Adobe has abandoned Linux support some time ago. An old PC will do for most cases, although the build process can get quire ressource intensive, especially when having multiple jobs. I used my old P4 with 1GB Ram and 2.53GHz for it, which was just enough.
-  your Code hosted on Github. The steps in this tutorial assume you have your code on GitHub, but you can also host your code on your own Git server. The steps should be similar.
-  An Android certificate in the *.p12 format.
-  An iOS development certificate in the *.p12 format
-  An iOS mobile provisioning profile in the *.mobileprovision format
-
-
-Tools used in this tutorial
-
-To accomplish what is described in the following articles you will need to install the following tools on your server.  I won’t go through the process of installing the tools. Please refer to the official documentation if you need further help with the installation. Make sure you download the latest version in each case (for Flex it is 4.12.0 and for AIR 4.0 as of the time of this writing).
-
-
-  
-    Apache Flex SDK: You need to download the SDK in the version you built your app with on your local machine. If you have multiple apps with different versions of Flex, you need to have a copy  of each version in separate folders (see description below for a proposed folder structure). The easiest way to do this is to use the Flex Installer, which lets you select the AIR version you wish to use (see next point).
-  
-  
-    Adobe AIR SDK: You need to have the AIR ADK in the version you want to build your app with (generally the newest version). As stated above, the easiest way to get it is downloading Flex with the installer available at the Apache Flex homepage. However, should you wish to install the AIR SDK over an existing copy of the Flex SDK (e.g. if you want to build the bleeding edge version of the SDK manually or you have a very old version of Flex, which is not in available for download in the Flex Installer), you can get it from Adobe under the link below. To install the AIR SDK simply unzip the contents of the downloaded ZIP-file into the base folder of your Flex SDK. If you combine the same Flex version with different AIR versions, you need a separate folder for each combination.
-  
-  Jenkins: Jenkins is a CI server which will run all the automated tasks we are going to create later.
-  Apache ANT: We will use ANT as the scripting language to describe the tasks needed to run the automated tasks.
-  ant-contrib: Some steps described later will need the support of some extensions to ANT that are included in ant-contrib.
-  Java JDK: Although a JRE (Java Runtime Environment) would be sufficient I recommend installing the JDK on a server since it contains additional tools you may or may not need and includes the JRE.
-  Git: We will need this client to check out your code from Github and also check out some other projects we are going to need. Make sure you install the client following the instructions from Github. You should generate and add your keys to your Github account in order for Jenkins to check out code.
-
-
-If you didn’t use the Flex installer to download the Flex and AIR SDK, make sure you select the Original SDK without the new compiler, since the new Falcon compiler does not support MXML files, which are used by Flex!
-
-Step 1: Setting up the server
-
-Your CI server must run on Windows since Adobe AIR is not supported on Linux anymore. Although running the scripts on a Unix server may work for Android deploys to some extent, you will not be able to release iOS-Versions of your app under Linux.
-
-Folder structure
-
-I recommend the following folder structure. Of course you are free to install the tools in the locations of your choice, but the rest of this tutorial relies on the files lying in the following folders:
-
-
-  Root folder (in my case it’s the D:/ drive)
-    
-      jenkins (this folder contains the Jenkins installation and nothing else)
-      sdk (this folder will host any SDKs you have on your machine, including Flex SDKs)
-        
-          flex (sub-folder for the different Flex/AIR-SDKs
-            
-              4.11.0_AIR4.0
-              4.11.0_AIR3.9
-              … (one folder for each Flex/AIR combination
-            
+        <p>
           
-          … (any other SDKs you may have, e.g. in case you are building native Android applications on the same server)
-        
-      
-      tools
-        
-          ant (your installation of Ant, including ant-contrib)
-          … (other tools you may have, such as Maven, which is not needed in this tutorial)
-        
-      
-      cert (this folder contains all the certificate and mobileprovisioning profiles)
-    
-  
-
-
-Please note the naming pattern for the Flex-SDK folders. It is always build up as
-
-Flex-Version + "_AIR" + AIR-Version
-
-This is a convention I have come to use  which lets me build my app using different versions of Flex or AIR with the same job, without having separate build scripts or different jobs.
-
-Setting the paths
-
-After you have installed the tools, you need to set some environment variables on your machine. This step is not explicitly required to run a build script with jenkins since Jenkins comes with the option to define the paths directly over the web interface.  However, you may want to test your script on your local machine before uploading it to GitHub or make the tools globally accessible for any other tool you might want. For this you need to set the following environment variables to make sure your scripts will find the executables for each tool:
-
-
-  %ANT_HOME%: path to your ant installation folder (e.g. D:\tools\ant)
-  %JAVA_HOME%: path to your JDK installation folder (e.g. C:\Program Files (x86)\Java\jdk1.8.0)
-  %GIT_HOME%: path to your Git installation folder (e.g. C:\Program Files (x86)\Git)
-  %HOME%: path to the directory, where you have your.ssh-Folder (usually your user home path, e.g. C:\Users\Daniel)
-
-
-Next: add the following paths to your system environmental variables:
-
-%ANT_HOME%\bin;%JAVA_HOME%\bin;%GIT_HOME%\bin
-
-Step 2: Installing Jenkins
-
-This should also not be a problem since Jenkins comes with its own installer. Just make sure you install it as a service (which should be done automatically on Windows) so you don’t have to start it manually each time you restart your server. Install Jenkins into the directory specified above.
-
-Plugins
-
-Jenkins should be able to run the ANT-scripts without the need of additional plugins. However, for convenience purposes I recommend the installation of the following plugins (if not installed by default):
-
-
-  Jenkins Ant Plugin
-  Jenkins GitHub plugin
-  Jenkins Git plugin
-  Jenkins FTP-Publisher plugin
-  Jenkins Javadoc plugin
-  Jenkins GreenBalls plugin and Jenkins ChuckNorris plugin plugin <img class="emoji" title=":smile:" alt=":smile:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">
-
-
-Configuring Jenkins
-
-Your Jenkins Server should be accessible under its url (http://YourServerName:8080). After you installed the plugins, some minimal configuration is neccessary to get started. Go to Jenkins &gt; Manage Jenkins &gt; Configure System.
-
-Configuring Git
-
-For Jenkins to be able to check out your code, it must know where your Git client is located. For this we have to specify a Git installation with the path to the executable.
-
-
-
-Unter the section Git enter the full path to your git.exe:
-
-
-
-Jenkins environment variables
-
-Next, you need to set two environmental variables which will be available in any job:
-
-
-  sdk_dir: This variable specifies the directory, where Jenkins will look for Flex SDKs
-  cert_dir: This variable specifies the directory, where Jenkins will look for certificates or provisioning profiles.
-
-
-
-
-It is also possible to set it individually for each job (read below where we set up the job parameters), but since it is unlikely that you have different locations for your SDK, this doesn’t make much sense.
-
-That’s it. That should be enough for jenkins to get ready and check out your code.
-
-Step 3: Preparing the job
-
-To run the whole CI process we need to create a new job in Jenkins. You can easily do this from the start page of Jenkins by .
-
-
-
-Next, choose a name for your project. Any name will do. Just make sure you selected “Build a free-style software project” as your option and then click OK.
-
-
-
-This will take you to the job configuration page, where we will set some parameters used by our job and/or build script.
-
-Job parameters
-
-Since we’re building a GitHub project, enter the URL (the one you would use for cloning with your client) into the field provided:
-
-
-
-I recommend using a parameterized job with the following parameters. You can do this by checking the following parameter in your job configuration on Jenkins.
-
-
-
-This will allow us to run certain steps conditionally by querying the environmental parameters in the script file. Like this we can specify the steps being executed in each run or just use the defaults.  This makes our job extremely flexible and easy to test, since you may not want to run the whole script if you only made changes to a single step. I found the following parameters to be useful:
-
-
-  flex_version (choice parameter): Prepare a list of Flex versions available on your server (in the C:\tools\sdk\flex directory). Make sure you don’t have any typos here and that only versions are listed that are actually installed on your machine since the build script we are going to build relies on the SDK versions lying in folders following a specific naming pattern (see above).
-
-
-
-
-
-  air_version (choice parameter): Likewise, prepare a list of AIR versions that you have the SDK of
-
-
-
-
-
-  generate_asdoc (boolean parameter): A parameter to specify whether the ASDOC should be built or not
-
-
-
-
-
-  run_unittests (boolean parameter): A parameter to specify whether the FlexUnit-Tests should be run or not
-
-
-
-
-
-  package_ipa (boolean parameter): Whether an IPA-file should be created for installation on iOS-Devices (this comes in handy if you just want to test your job quickly, because this step requires by far the most time).
-
-
-
-
-
-  package_apk (boolean parameter): Whether an APK-File should be created for installation on Android-Devices (you can check this to see if your package-task is generally set up correctly, since packaging an APK is much faster than packaging an IPA and the differences in the script are only minimal).
-
-
-
-
-
-  output_dir (Text parameter): Where the artifacts (SWF File, APK/IPA-File, Documentation, Test Report, …) should be written to. All files will be inside this directory or a subfolder of it.
-
-
-
-
-Source Code Management
-
-Under “Source Code Management” and “Build Triggers” set checkboxes as follows. You can leave away the credentials, since you stored your credentials within your Git authentication agent. If you created your keys, added them to your GitHub project and were able to check out your source code using the Git client on your server, checkout should also work when checking out with Jenkins since Jenkins will use the same client.
-
-
-
-Our first build step
-
-As a final step in this first part you have to add “Invoke Ant” as a build step:
-
-
-We are  goint to add more steps later. This first steps just makes sure our build.xml build script is going to be executed by Jenkins.
-
-After all is set, save your changes and you’ll have your build job ready for execution – almost. Since we don’t have a build script yet, the build step “Invoke Ant” will fail, because it will not find a build script ready for execution. So let’s get this done quickly.
-
-Preparing the build script
-
-By default, Ant will look for a file called build.xml in the root folder. Our build script will continue of this file and two more parts. You also need to place two files into the source directory of your codebase
-
-
-  build.xml: This is the main script-file containing the different ANT targets (compilation, packaging, testing, documentation, …). Each target will be explained in the following chapters. To get started, I’ll provide you with a scaffolding, which will do nothing excep print out some information.
-
-
-&lt;project name="My build script" default="start"&gt;
-	&lt;!-- default target with dependency to all other targets --&gt;
-	&lt;target name="start" depends="init, asdoc, test, compile, package-apk, package-ipa, finish"/&gt;
-	&lt;!-- bind the 'env'-prefix to environment variables --&gt;
-	&lt;property environment="env"/&gt;
-
-	&lt;!-- load previously defined configuration properties file: Exchange this file if necessary (e.g. for one for each job) --&gt;
-	&lt;property file="build.properties" /&gt;
-
-	&lt;!-- Task definition of common Flex Ant tasks --&gt;
-	&lt;taskdef resource="flexTasks.tasks" classpath="${FLEX.root}/ant/lib/flexTasks.jar" /&gt;
-
-	&lt;!-- ant-contrib extensions for advanced scripting --&gt;
-	&lt;taskdef resource="net/sf/antcontrib/antcontrib.properties"&gt;
-		&lt;classpath&gt;
-			&lt;pathelement location="D:\app\apache-ant-1.9.3\lib\ant-contrib-1.0b3.jar"/&gt;
-		&lt;/classpath&gt;
-	&lt;/taskdef&gt;
-
-	&lt;!-- FLEX_HOME must be set in order for some scripts to work --&gt;
-	&lt;property name="FLEX_HOME" value="${FLEX.root}"&gt;&lt;/property&gt;
-
-	&lt;!-- delete and create the target directories again --&gt;
-	&lt;target name="init"&gt;
-		&lt;tstamp&gt;
-			&lt;format property="time.start" pattern="yyyy-MM-dd hh:mm:ss aa" /&gt;
-		&lt;/tstamp&gt;
-
-		&lt;echo level="info"&gt;BUILD STARTED AT ${time.start}&lt;/echo&gt;
-		&lt;echo&gt; &lt;/echo&gt;
-
-		&lt;!-- Perform some initialization tasks (in separate file) --&gt;
-		&lt;ant antfile="build.init.xml" inheritall="true"/&gt;
-
-	&lt;/target&gt;
-
-	&lt;!-- Compile Classes (Stub) --&gt;
-	&lt;target name="compile"&gt;
-		&lt;echo&gt;Compiling...&lt;/echo&gt;
-		&lt;echo&gt;============&lt;/echo&gt;
-
-	&lt;/target&gt;
-
-	&lt;!-- Run Unit Test (Stub) --&gt;
-	&lt;target name="test" if="${env.run_unittests}"&gt;
-		&lt;echo&gt;Testing...&lt;/echo&gt;
-		&lt;echo&gt;==========&lt;/echo&gt;
-	&lt;/target&gt;
-
-	&lt;!-- Package for Android (Stub) --&gt;
-	&lt;target name="package-apk" if="${env.package_android}"&gt;
-		&lt;echo&gt;Packaging for Android...&lt;/echo&gt;
-		&lt;echo&gt;========================&lt;/echo&gt;
-	&lt;/target&gt;
-
-	&lt;!-- Package for iOS (Stub) --&gt;
-	&lt;target name="package-ipa" if="${env.package_ios}"&gt;
-		&lt;echo&gt;Packaging for iOS...&lt;/echo&gt;
-		&lt;echo&gt;====================&lt;/echo&gt;
-	&lt;/target&gt;
-
-	&lt;!-- Generate Documentation (Stub) --&gt;
-	&lt;target name="asdoc" if="${env.create_asdoc}" &gt;
-		&lt;echo&gt;Generating ASDOC...&lt;/echo&gt;
-		&lt;echo&gt;===================&lt;/echo&gt;
-	&lt;/target&gt;
-
-	&lt;!-- Show report --&gt;
-	&lt;target name="finish"&gt;
-		&lt;tstamp&gt;
-			&lt;format property="time.end" pattern="yyyy-MM-dd hh:mm:ss aa" /&gt;
-		&lt;/tstamp&gt;
-		&lt;echo level="info"&gt;BUILD FINISHED AT ${time.start}&lt;/echo&gt;
-	&lt;/target&gt;
-
-&lt;/project&gt;
-
-
-
-  build.properties: This separate file contains platform specific properties that can be used to configure the script-file mentioned above. The file contains for example all the platform and project specific attributes and will be loaded by the build-script and is a simple way of externalizing variable values that are used in the build script. If the build-script does not contain any project specific attributes, you can re-use the build.xml for any project you have, simply by replacing the build.properties-file with another version containing the appropriate values.
-
-
-You should adjust at least the following parameters:
-
-META.name: Name of your project (can be any value)
-META.author.name: Your name
-META.author.email: Your e-mail address
-META.copyright: Any copyright information
-OUTPUT.name.android: Name of your APK file (should not contain spaces or extra characters)
-OUTPUT.name.ios: Name of your IPA file (should not contain spaces or extra characters)
-PROJECT.app.name: Name of your app (must correspond with the *.mxml file in the main source folder)
-
-#--------------------------------------------------------------
-# Metadata
-#--------------------------------------------------------------
-META.name = Your Project Name
-META.author.name = Your name
-META.author.email = Your E-Mail
-META.copyright = some copyright information
-
-#--------------------------------------------------------------
-# Paths and directories
-#--------------------------------------------------------------
-FLEX.root = ${env.sdk_dir}\\${env.flex_version}_AIR${env.air_version}
-FLEX.home = ${FLEX.root}\\frameworks\\libs
-FLEX.tasks = ${FLEX.root}\\ant\\lib\\flexTasks.jar
-FLEX.plugins.root = ${sdk_dir}\\fb_plugins
-FLEX.flexunit = ${FLEX.plugins.root}\\com.adobe.flexbuilder.flexunit_4.7.0.349722
-
-AIR.mxmlc = ${FLEX.root}\\bin\\amxmlc.bat
-AIR.adt = ${FLEX.root}\\bin\\adt.bat
-AIR.adl = ${FLEX.root}\\bin\\adl.exe
-AIR.asdoc = ${FLEX.root}\\bin\\asdoc.bat
-
-#--------------------------------------------------------------
-# Project information
-#--------------------------------------------------------------
-PROJECT.root = ${basedir}\\.
-PROJECT.src.main = ${basedir}\\src\\main\\actionscript
-PROJECT.src.assets = ${basedir}\\src\\main\\assets
-PROJECT.src.skins = ${basedir}\\src\\main\\skins
-PROJECT.libs = ${basedir}\\libs
-PROJECT.libs.ane = ${PROJECT.libs}\\ane
-PROJECT.locale = en_US
-# Name of the App (must correspond to .mxml-File in src-Folder)
-PROJECT.app.name = MyApp
-PROJECT.app.main = ${PROJECT.app.name}.mxml
-PROJECT.app.desc = ${PROJECT.app.name}-app.xml
-
-#--------------------------------------------------------------
-# Output
-#--------------------------------------------------------------
-OUTPUT.root = ${basedir}\\${env.output_dir}
-OUTPUT.build = ${OUTPUT.root}\\build
-OUTPUT.build.ane = ${OUTPUT.build}\\libs\\ane
-OUTPUT.doc = ${OUTPUT.root}\\doc
-OUTPUT.name.android = my-app.apk
-OUTPUT.name.ios = my-app.ipa
-OUTPUT.storetype.android = pkcs12
-OUTPUT.storetype.ios = pkcs12
-OUTPUT.keystore.android = ${env.cert_dir}\\my-android-certificate.p12
-OUTPUT.keystore.ios = ${env.cert_dir}\\my-ios-certificate.p12
-OUTPUT.storepass.android = Pa$$w0rd
-OUTPUT.storepass.ios = $w0rd
-OUTPUT.provisioning.adhoc = ${env.cert_dir}\\myProvisioningProfile.mobileprovision
-
-#--------------------------------------------------------------
-# ASDOC
-#--------------------------------------------------------------
-DOC.title = Some ASDOC title
-DOC.footer = Some ASDOC footer
-
-
-
-  build.init.xml: To make the main build file a bit more readable, I outsourced the script part for initialization (run at the beginning of the script) to a separate file.
-
-
-&lt;!-- Helper Script to perform some initialization tasks --&gt;
-&lt;project name="Build Script for MyApp - initialize" default="initialize"&gt;
-
-	&lt;!-- default target with dependencies to all other targets --&gt;
-	&lt;target name="initialize" depends="editBuildLabel, deleteTargetDirectories, copyResources, prepareANEFiles"/&gt;
-
-	&lt;echo&gt;Initializing...&lt;/echo&gt;
-	&lt;echo&gt;===============&lt;/echo&gt;
-
-	&lt;!-- initialize directories --&gt;
-	&lt;target name="deleteTargetDirectories"&gt;
-		&lt;!-- Delete + recreate target directory root --&gt;
-		&lt;echo level="info"&gt;Initializing target directory...&lt;/echo&gt;
-		&lt;delete dir="${OUTPUT.root}" /&gt;
-		&lt;mkdir dir="${OUTPUT.root}" /&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-		&lt;!-- Delete + recreate old documentation directories --&gt;
-		&lt;echo level="info"&gt;Initialisiere Doc-Verzeichnis...&lt;/echo&gt;
-		&lt;delete dir="${OUTPUT.doc}" /&gt;
-		&lt;mkdir dir="${OUTPUT.doc}" /&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-		&lt;!-- Delete + recreate Unit Test output directory --&gt;
-		&lt;echo level="info"&gt;Initialisiere Doc-Verzeichnis...&lt;/echo&gt;
-		&lt;delete dir="${OUTPUT.root}\flexUnit" /&gt;
-		&lt;mkdir dir="${OUTPUT.root}\flexUnit" /&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-		&lt;!-- Delete + recreate working dir for Compilation --&gt;
-		&lt;echo level="info"&gt;Initialisiere Build-Verzeichnis...&lt;/echo&gt;
-		&lt;delete dir="${OUTPUT.build}" /&gt;
-		&lt;mkdir dir="${OUTPUT.build}" /&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-		&lt;!-- Delete + recreate working dir for native extensions --&gt;
-		&lt;echo level="info"&gt;Initialisiere Verzeichnis für Native Extensions...&lt;/echo&gt;
-		&lt;delete dir="${OUTPUT.build.ane}" /&gt;
-		&lt;mkdir dir="${OUTPUT.build.ane}" /&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-	&lt;/target&gt;
-
-	&lt;!-- Copy additional resources to the target directory --&gt;
-	&lt;target name="copyResources"&gt;
-		&lt;echo&gt;Copying additional resources...&lt;/echo&gt;
-		&lt;copy todir="${OUTPUT.build}"&gt;
-		  &lt;!-- assets folder (if you have one) --&gt;
-			&lt;fileset dir="assets" /&gt;
-			&lt;!-- application descriptor --&gt;
-			&lt;fileset dir="src"&gt;
-				&lt;include name="${PROJECT.app.desc}"/&gt;
-			&lt;/fileset&gt;
-			&lt;!-- include more resources here --&gt;
-		&lt;/copy&gt;
-		&lt;echo&gt;... done!&lt;/echo&gt;
-
-	&lt;/target&gt;
-
-	&lt;!-- rename Native Extensions (*.ane) to SWC-Files (*.swc) or compilation will fail --&gt;
-	&lt;target name="prepareANEFiles"&gt;
-		&lt;echo&gt;Renaming ANE-files...&lt;/echo&gt;
-		&lt;copy todir="${OUTPUT.build.ane}"&gt;
-			&lt;fileset dir="${PROJECT.libs.ane}"&gt;
-				&lt;include name="**/*.ane" /&gt;
-			&lt;/fileset&gt;
-			&lt;globmapper from="*.ane" to="*.swc" /&gt;
-		&lt;/copy&gt;
-	&lt;/target&gt;
-
-&lt;/project&gt;
-
-
-After you created the files locally, don’t forget to add and push them to your GitHub repository project.
-
-Step 4: Test everything out
-
-Checking the paths
-
-To check whether your paths are correctly set, open a command line and type the following commands:
-
-
-
-This should produce some output as seen in the screenshot above. If you get an error saying Windows can’t find the command, you have to check your paths.
-
-
-  Setting environment variables in Windows: Windows may require you to log off and on again in order for the environment variables to become active.
-  Setting an environmental Variable for Flex: You can set an environment variable pointing to the root directory of a Flex distribution if you like. Just make sure you add the %Flex_HOME%\bin to the path as descripbed above. That way, you will be able to run any command line tools that come with Flex/AIR (such as the MXMLC-Compiler, which is used in the next chapter) directly without specifying the full path to the executable. However, this is optional, since we will be using Ant scripts rather than shell scripts.
-
-
-Checking your Git client by cloning your repository
-
-To check if your Git client is all set up, you should try and check out your project to some arbitrary folder to see if this works. If it doesn’t, it won’t work with Jenkins either! If it works, you can delete the newly created folder with the checked out code immediately afterwards, because the cloning/pulling will be part of the Jenkins job afterwards. You can’t continue unless your paths are correct, since Jenkins needs to find the executables for each tool and be able to check out your code!
-
-Running your Jenkins job for the first time
-
-To see if we are ready to continue with the actual tasks (i.e. the build script) just run the job by selecting it from the list on the home page and click “Build with parameters”. This will bring you to the mask where you can set the parameters as defined in the job configuration page previously. The first value is selected by default, so make sure the most recent Flex/AIR version is on top of your list in the job configuration page.
-
-
-
-
-
-If everything works out as expected, you should get a green ball (or a blue one, if you haven’t installed the GreenBalls plugin) which means everything is ok. We haven’t done anything useful to the code yet, but that’s part of the next chapter.
-
-What we have done so far
-
-In this part of the tutorial, we have installed the tools required for building our app on a Windows server. We also have set up Jenkins as our CI server and created a parameterized job, whose main part consists of executing the build.xml build script which we created as a stub and which is on our GitHub repository.
-
-If you’re all set, continue with Part 1: Compiling your code.
-</p>
+            This is the first in a series of posts where I’ll describe the process of setting up a Continuous Integration process...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">February 18, 2014</span>
         <h3><a class="post-link" href="/blog/generic-as3-functions-to-xml-to-object-and-vice-versa/">Generic AS3-functions to convert XML to Object and vice versa</a></h3>
-        <p>Converting an Object in AS3 to XML and vice versa, can be really tricky. Basically you have these three options:
-
-
-  Parse and deserialize yourself, mapping your XML to your own objects.
-  Use a serializer / deserializer from a library.
-  Cast as objects, use a HTTPService.
-
-
-Since the first option is quite cumbersome ant the second and third option requires the use of external libraries or services, I wanted to write a simple function that can be used to convert ANY object to XML and ANY XML to a plain old object.
-
-
-
-Converting XML to Object
-
-The first function (xmltobj) the function to convert an XML String to an Object. It behaves as follows:
-
-
-  Each node in the XML will be converted to an property on the object with the same name
-  The value of the node will become the value of the property
-  If a node contains multiple sub-nodes whereas each sub-node has a numeric name (&lt;0/&gt;, &lt;1/&gt;, etc.) the node will be automatically converted to an array on the object. The order of the sub-nodes wil be reflected in the order in the array, but the node name will not determine the index in the array.
-
-
-package info.tiefenauer.util.global
-{
-	/**
-	 * &lt;p&gt;Helper function to transform any XML to an Object&lt;/p&gt;
-	 * &lt;p&gt;Thisfunction recursively iterates through all child nodes of an XML and converts them to object attributes. The transformation is made as follows&lt;/p&gt;
-	 * &lt;ul&gt;
-	 * 		&lt;li&gt;If the child node value is a &lt;em&gt;simple type&lt;/em&gt; (not another XML), it is added to the object as a new attribute whereas the attribute name is equal
-	 * 			to the child node name and the attribute value is equal to the child node value&lt;/li&gt;
-	 * 		&lt;li&gt;If the child node value is a &lt;em&gt;complex type&lt;/em&gt;, the node value is converted into its object representation and then added to the object as an attribute,
-	 *      whereas the attribute name is equal to the child node name. The attribute value is equal to the object representation of the child node value.&lt;/li&gt;
-	 * 		&lt;li&gt;If the child node name is a numeric value, the child node value is treated as an array element, and the array is added to the object as a new attribute. It is assumed
-	 *      that all sibling nodes also numeric names. This way the arrays which were converted to XMLLists by &lt;code&gt;info.tiefenauer.util.global.obj2xml() can
-	 * 			be transformed back into their array representation&lt;/li&gt;
-	 * &lt;/ul&gt;
-	 * &lt;p&gt;XMLs transformed with this function can afterwards be transformed back to their XML representation using &lt;code&gt;info.tiefenauer.util.global.obj2xml()&lt;/code&gt;.&lt;/p&gt;
-	 * @param xml XML to be converted to an object
-	 * @return Object representation of the XML
-	 * @see info.tiefenauer.util.global#obj2xml()
-	 */
-	public function xml2obj(xml:XML):Object{
-		var obj:Object = new Object();
-		var arr:Array = new Array();
-
-		var add:Function = function(key:String, item:*):void{
-			if (!isNaN(Number(key))){
-				arr.push(item);
-			}
-			else{
-				if (item == 'true')
-					obj[key] = true;
-				else if (item == 'false')
-					obj[key] = false;
-				else
-					obj[key] = item;
-			}
-		}
-
-		// Es wird ein Array (bzw. XMLList)-Element geparst
-		if (!isNaN(xml.localName())){
-			var xmlContent:XML = xml.children()[0];
-			return xml2obj(xmlContent);
-		}
-		else{
-			for each(var node:XML in xml.children()){
-				var key:String = node.localName();
-				if(node.hasComplexContent()){
-					var nestedObj:Object = xml2obj(node);
-					add(key, nestedObj);
-				}
-				else{
-					var value:String = String(node.text());
-					if (isNaN(Number(value))){
-						add(key, value);
-					}
-					else{
-						add(key, parseInt(value));
-					}
-				}
-			}
-		}
-
-		if (arr.length &gt; 0)
-			return arr;
-		return obj;
-	}
-}
-
-
-Converting Object to XML
-
-The counterpart (obj2xml) function to convert an Object to XML. It behaves as follows:
-
-
-  each property on the object will be converted to a corresponding node on the XML
-  Simple types like String, int and Boolean will be directly taken over and no further-sub-nodes are created
-  Complex types (other objects) will be recursively added as sub-nodes
-  Arrays will be converted to XMLLists, where as the single node names will be the index in the array.
-
-
-package info.tiefenauer.util.global
-{
-	/**
-	 * &lt;p&gt;Helper function to transform any object to XML&lt;/p&gt;
-	 * &lt;p&gt;This function recursively iterates through all attributes of an object and transforms them to XML nodes. The transformations are made as follows&lt;/p&gt;
-	 * &lt;ul&gt;
-	 *    &lt;li&gt;The name of the root node is taken from the &lt;em&gt;name&lt;/em&gt; attribute&lt;/li&gt;
-	 * 		&lt;li&gt;If the attribute is of a &lt;em&gt;simple type&lt;/em&gt; (i.e. String, int, Number or Boolean), it is appended as a simple child node to the XML.
-	 * 			In this case, the name of the child node is equal to the name of the attribute. The value of the child node is equal to the value of
-	 *      the attribute. Example: myObject.myAttribute becomes &amp;lt;myObject&amp;gt;&amp;lt;myAttribute&amp;gt;{value}&amp;lt;/myAttribute&amp;gt;&amp;lt;/myObject&amp;gt;&lt;/li&gt;
-	 * 		&lt;li&gt;If the attribute is of a &lt;em&gt;complex type&lt;/em&gt; (i.e. another Object), a new XML is recursively generated and appended to the
-	 *      XML as a complex child node. As with simple types, the node name is equal to the attribute name whereas the node value
-	 *      is the XML representation of the attribute object. &lt;/li&gt;
-	 * 		&lt;li&gt;If the attribute is an Array, it is converted to a XMLList where the single child node names are the indexes and the child node
-	 *      values are the corresponding values in the array. Example: ['value0', 'value1','value2'] becomes &amp;lt;0&amp;gt;value0&amp;lt;/0&amp;gt;&amp;lt;1&amp;gt;value1&amp;lt;/1&amp;gt;&amp;lt;2&amp;gt;value2&amp;lt;/2&amp;gt;&lt;/li&gt;
-	 * &lt;/ul&gt;
-	 * &lt;p&gt;Objects transformed with this function can afterwards be transformed back by using the xml2obj()-function.&lt;/p&gt;
-	 * @param name Name of the root node
-	 * @return XML representation of the object
-	 * @see info.tiefenauer.util.global#xml2obj()
-	 */
-	public function obj2xml(name:String, obj:Object):XML{
-		var xml:XML = &lt;{name}/&gt;;
-		var isSimpleType:Function = function(val:*):Boolean{
-			return (val is String || val is int || val is Number || val is Boolean);
-		};
-		for (var key:String in obj){
-			var value:* = obj[key];
-			if (isSimpleType(value)){
-				xml.appendChild(&lt;{key}&gt;{value}&lt;/{key}&gt;);
-			}
-			else if (value is Array){
-				var arr:Array = value as Array;
-				var node:XML =&lt;{key}/&gt;;
-				var list:XMLList = new XMLList();
-				for (var i:int=0; i&lt;arr.length;i++){
-					if (isSimpleType(arr[i]))
-						list[i] = &lt;{i}&gt;{arr[i]}&lt;/{i}&gt;;
-					else
-						list[i] = obj2xml(key, arr[i]);
-				}
-				node.appendChild(list);
-				xml.appendChild(node);
-			}
-			else{
-				xml.appendChild(obj2xml(key, value));
-			}
-		}
-		return xml;
-	}
-}
-
-
-Test Classes
-
-Below are the sources including Unit Test classes used to test them:
-
-package test.info.tiefenauer.util.global
-{
-	import info.tiefenauer.util.global.obj2xml;
-
-	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.assertTrue;
-
-	public class Obj2XMLTest
-	{
-		/*============================================================================*/
-		/* Private Properties                                                         */
-		/*============================================================================*/
-
-		/*============================================================================*/
-		/* Test Setup and Teardown                                                    */
-		/*============================================================================*/
-		[Before]
-		public function setUp():void
-		{
-		}
-
-		[After]
-		public function tearDown():void
-		{
-		}
-
-		[BeforeClass]
-		public static function setUpBeforeClass():void
-		{
-		}
-
-		[AfterClass]
-		public static function tearDownAfterClass():void
-		{
-		}
-
-		/*============================================================================*/
-		/* Tests                                                                      */
-		/*============================================================================*/
-		[Test(description="Simple, flat object with simple attributes")]
-		public function shouldBeSimpleXML():void{
-			var xml:XML = obj2xml('someObject', {
-				attr1: 'someString',
-				attr2: 42,
-				attr3: true,
-				attr4: new Number(42)
-			});
-			assertEquals('someObject', xml.localName());
-			assertEquals('someString', String(xml.attr1));
-			assertEquals('42', String(xml.attr2));
-			assertEquals('true', String(xml.attr3));
-			assertEquals('42', String(xml.attr4));
-		}
-		[Test(description="Object with a complex attribute of another object")]
-		public function shouldBeComplexXML():void{
-			var xml:XML = obj2xml('someObject', {
-				attr1: 'someString',
-				attr2: 42,
-				attr3: true,
-				attr4: new Number(42),
-				nestedAttr: {
-					nestedAttr1: 'someOtherString',
-					nestedAttr2: 42,
-					nestedAttr3: true,
-					nestedAttr4: new Number(42)
-				}
-			});
-
-			assertEquals('someString', String(xml.attr1));
-			assertEquals('42', String(xml.attr2));
-			assertEquals('true', String(xml.attr3));
-			assertEquals('42', String(xml.attr4));
-
-			assertTrue(xml.nestedAttr is XMLList);
-			assertTrue(XMLList(xml.nestedAttr).hasComplexContent());
-			var nestedXML:XMLList = xml.nestedAttr;
-			assertEquals(nestedXML.nestedAttr1, 'someOtherString');
-			assertEquals(nestedXML.nestedAttr2, '42');
-			assertEquals(nestedXML.nestedAttr3, 'true');
-			assertEquals(nestedXML.nestedAttr4, '42');
-		}
-		[Test(description="An array of simple types should be converted to an XMLList with the array indexes as child node names")]
-		public function shouldBeSimpleXMLList():void{
-			var xml:XML = obj2xml('someObject', {
-				someArray: ['someString', 'someOtherString']
-			});
-			assertTrue(xml.someArray is XMLList);
-			assertTrue(XMLList(xml.someArray).hasComplexContent());
-			var nestedXML:XMLList = xml.someArray;
-			assertEquals(2, nestedXML.children().length());
-			assertEquals('someString', String(nestedXML.children()[0]));
-			assertEquals('0', XML(nestedXML.children()[0]).localName());
-			assertEquals('someOtherString', String(nestedXML.children()[1]));
-			assertEquals('1', XML(nestedXML.children()[1]).localName());
-		}
-		[Test(description="An array of objects should be converted to an XMLList with the indexes as child node names and the XML representation of the objects as child node values")]
-		public function shouldBeComplexXMLList():void{
-			var xml:XML = obj2xml('someObject', {
-				someArray: [
-					{attr1: 'someString', attr2: 'someOtherString' },
-					{simpleAttr: 'simpleAttr', complexAttr: { subSubAttr1: 'subSubAttr', subSubAttr2: 42 }}
-				]
-			});
-			assertTrue(xml.someArray is XMLList);
-			assertTrue(XMLList(xml.someArray).hasComplexContent());
-			var nestedXML:XMLList = xml.someArray;
-			assertEquals(2, nestedXML.children().length());
-			var arrayElem1:XML = nestedXML.children()[0];
-			var arrayElem2:XML = nestedXML.children()[1];
-			// Array Element 1
-			assertTrue(arrayElem1.hasComplexContent());
-			assertEquals('someString', arrayElem1.attr1);
-			assertEquals('someOtherString', arrayElem1.attr2);
-			//Array Element 2
-			assertTrue(arrayElem2.hasComplexContent());
-			var subElem1:XMLList = arrayElem2.simpleAttr;
-			var subElem2:XMLList = arrayElem2.complexAttr;
-			assertTrue(subElem1.hasSimpleContent());
-			assertEquals('simpleAttr', subElem1.text());
-			assertTrue(subElem2.hasComplexContent());
-			var subSubElem1:XMLList = subElem2.subSubAttr1;
-			var subSubElem2:XMLList = subElem2.subSubAttr2;
-			assertTrue(subSubElem1.hasSimpleContent());
-			assertEquals('subSubAttr', subSubElem1.text());
-			assertEquals('42', subSubElem2.text());
-		}
-	}
-}
-
-
-package test.info.tiefenauer.util.global
-{
-	import info.tiefenauer.util.global.xml2obj;
-
-	import org.flexunit.asserts.assertEquals;
-	import org.flexunit.asserts.assertNotNull;
-	import org.flexunit.asserts.assertTrue;
-
-	public class XML2ObjTest
-	{
-		/*============================================================================*/
-		/* Private Properties                                                         */
-		/*============================================================================*/
-
-		/*============================================================================*/
-		/* Test Setup and Teardown                                                    */
-		/*============================================================================*/
-		[Before]
-		public function setUp():void
-		{
-		}
-
-		[After]
-		public function tearDown():void
-		{
-		}
-
-		[BeforeClass]
-		public static function setUpBeforeClass():void
-		{
-		}
-
-		[AfterClass]
-		public static function tearDownAfterClass():void
-		{
-		}
-
-		/*============================================================================*/
-		/* Tests                                                                      */
-		/*============================================================================*/
-		[Test(description="Simple, flat XML with simple nodes")]
-		public function shouldBeSimpleObject():void{
-			var obj:Object = xml2obj(
-				&lt;someObject&gt;
-					&lt;stringAttr&gt;someString&lt;/stringAttr&gt;
-					&lt;booleanAttr&gt;true&lt;/booleanAttr&gt;
-					&lt;intAttr&gt;42&lt;/intAttr&gt;
-				&lt;/someObject&gt;
-			);
-			assertNotNull(obj);
-			assertNotNull(obj['stringAttr']);
-			assertNotNull(obj['booleanAttr']);
-			assertNotNull(obj['intAttr']);
-			assertTrue(obj['stringAttr'] is String);
-			assertTrue(obj['booleanAttr'] is Boolean);
-			assertTrue(obj['intAttr'] is int);
-			assertEquals('someString', obj['stringAttr']);
-			assertEquals(true, obj['booleanAttr']);
-			assertEquals(42, obj['intAttr']);
-		}
-		[Test(description="Flat XML with a complex child node")]
-		public function shouldBeComplexObject():void{
-			var obj:Object = xml2obj(
-				&lt;someObject&gt;
-					&lt;simpleAttr&gt;someString&lt;/simpleAttr&gt;
-					&lt;complexAttr&gt;
-						&lt;nestedAttr1&gt;someOtherString&lt;/nestedAttr1&gt;
-						&lt;nestedAttr2&gt;42&lt;/nestedAttr2&gt;
-					&lt;/complexAttr&gt;
-				&lt;/someObject&gt;
-			);
-			assertNotNull(obj);
-			assertNotNull(obj['simpleAttr']);
-			assertNotNull(obj['complexAttr']);
-			assertTrue(obj['simpleAttr'] is String);
-			assertTrue(obj['complexAttr'] is Object);
-			var nestedObj:Object = obj['complexAttr'];
-			// nested Attribut 1
-			assertNotNull(nestedObj['nestedAttr1']);
-			assertTrue(nestedObj['nestedAttr1'] is String);
-			assertEquals('someOtherString', nestedObj['nestedAttr1']);
-			// nested Attribut 2
-			assertNotNull(nestedObj['nestedAttr2']);
-			assertTrue(nestedObj['nestedAttr2'] is int);
-			assertEquals(42, nestedObj['nestedAttr2']);
-		}
-		[Test(description="XMLLists with numeric child nodes names should be transformed to arrays")]
-		public function shouldBeNestedArray():void{
-			var xml:XML = XML("&lt;someObject&gt;" +
-								"&lt;xmlArray&gt;" +
-									"&lt;0&gt;someString&lt;/0&gt;" +
-									"&lt;1&gt;someOtherString&lt;/1&gt;" +
-									"&lt;2&gt;42&lt;/2&gt;" +
-								"&lt;/xmlArray&gt;" +
-							"&lt;/someObject&gt;");
-			var obj:Object = xml2obj(xml);
-			assertNotNull(obj);
-			assertNotNull(obj['xmlArray']);
-			assertTrue(obj['xmlArray'] is Array);
-			var arr:Array = obj['xmlArray'];
-			assertEquals(3, arr.length);
-			assertEquals('someString', arr[0]);
-			assertEquals('someOtherString', arr[1]);
-			assertEquals(42, arr[2]);
-		}
-		[Test(description="An XMLList with numeric child node names and complex node values should be converted to an array of objects")]
-		public function shouldBeNestedObjectArray():void{
-			var xml:XML = XML("&lt;someObject&gt;" +
-								"&lt;xmlArray&gt;" +
-									"&lt;0&gt;simpleAttribute&lt;/0&gt;" +
-									"&lt;1&gt;" +
-										"&lt;complexAttribute&gt;" +
-											"&lt;stringAttr&gt;someString&lt;/stringAttr&gt;" +
-											"&lt;intAttr&gt;42&lt;/intAttr&gt;" +
-											"&lt;booleanAttr&gt;true&lt;/booleanAttr&gt;" +
-										"&lt;/complexAttribute&gt;" +
-									"&lt;/1&gt;" +
-								"&lt;/xmlArray&gt;" +
-							"&lt;/someObject&gt;");
-			var obj:Object = xml2obj(xml);
-			assertNotNull(obj);
-			assertNotNull(obj['xmlArray']);
-			assertTrue(obj['xmlArray'] is Array);
-			var arr:Array = obj['xmlArray'];
-			assertEquals(2, arr.length);
-			assertEquals('simpleAttribute', arr[0]);
-			assertTrue(arr[1] is Object);
-			var nestedObject:Object = arr[1];
-			assertNotNull(nestedObject['stringAttr']);
-			assertNotNull(nestedObject['intAttr']);
-			assertNotNull(nestedObject['booleanAttr']);
-			assertEquals('someString', nestedObject['stringAttr']);
-			assertEquals(42, nestedObject['intAttr']);
-			assertEquals(true, nestedObject['booleanAttr']);
-		}
-	}
-}
-
-</p>
+        <p>
+          
+            Converting an Object in AS3 to XML and vice versa, can be really tricky. Basically you have these three options:  Par...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">February 16, 2014</span>
         <h3><a class="post-link" href="/blog/updating-wordpress-on-a-synology-nas/">Updating WordPress on a Synology NAS</a></h3>
-        <p>If you are running WordPress on your own Synology NAS (such as this website is) you may encounter problems when trying to update a plugin, theme or WP itself.If your update process hangs during the “unpacking”-step, this may likely have to do with file ownership.
-
-As in my case, I entered my FTP-Credentials correctly and the update process could download the update for a specific plugin. However, the process somehow stopped and never finished (no error, no page update, just somehow stuck in “unpacking update…”).
-
-
-
-This is how I fixed it:
-
-
-  ssh as root into your NAS
-  change file-ownership of your WordPress-instance to ‘nobody’
-
-
-chown -R nobody:nobody /volume1/web/wordpress
-
-
-After that, updating anything worked like a charm:
-
-
-
-The problem is with the file/folder owner. By default the web server software uses ‘nobody’ as the file/folder owner, when you install wordpress using a network share(like I did) the system assumes resets the name of the file owner to that of the login you used to access the share preventing the web server software making any changes, that’s the reason why the automatic update feature doesn’t work, even if you input the correct FTP login information in wordpress.
-</p>
+        <p>
+          
+            If you are running WordPress on your own Synology NAS (such as this website is) you may encounter problems when tryin...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">January 04, 2014</span>
         <h3><a class="post-link" href="/blog/jasskass-prezi-online/">JassKass Prezi online</a></h3>
-        <p>I created a Prezi for JassKass (in German) to show the features of the final app, as well as why I’m building the app in the first place.
-
-Check it out on http://prezi.com/b3h8lloaabkf
-</p>
+        <p>
+          
+            I created a Prezi for JassKass (in German) to show the features of the final app, as well as why I’m building the app...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">December 22, 2013</span>
         <h3><a class="post-link" href="/blog/chrome-for-high-dpi-devices/">Chrome for high-dpi devices</a></h3>
-        <p>Just bought a new laptop with a screen resolution of 1920×1080 (Full-HD). Unfortunately, Chrome is currently not optimized for screen resolutions like this on comparatively small screens like mine (14″), meaning that the UI Components (tabs, navigation buttons, bookmark bar items, …) are tiny and barely readable. Similar issues came up when Apple launched their MacBook series with Retina display: Some apps were simply not optimzied for this pixel density.
-
-Now that more and more laptops are already shipped with screens providing Full-HD resolution even at very small screens, Windows users begin noticing the same effects.
-
-To fix the issue in my specific case for Chrome I had the following choices:
-
-
-  Change the overall DPI-scaling for Windows (see here on how it’s done). Since I have the laptop in a docking station with external displays at home, this was not an option for me, because I would have to readjust the settings everytime I switch from working on the laptop display to the external display and vice versa.
-  Change the screen resolution. Since this would result in everything getting bigger (not just the Chrome UI components), this was not an option. After all I want to make use of the high resolution capabilities of my laptop screen and Windows itself looked just fine.
-  Enable Hight-DPI support for chrome. To do thiss folow these steps:
-    
-      Enter chrome://flags in your URL bar
-      Search for “high-dpi-suppor” to jump to the right setting quickly
-      Set HiDPI-Support to “Enabled”
-    
-
-    
-  
-  Change the DPI-Scaling setting just for chrome and adjusting the content display configuration. To do this follow these steps:
-    
-      Find the Chrome executable in your programs folder
-      Right click and go to the “Compatibility” tab, checking the checkbox saying “Disable display scaling on high DPI setting”
-      Open Chrome and type “chrome://flags”
-      Find (CTRL + F) “#touch-optimized-ui”, make sure that it is set to “Enabled”. This will result in the browser being displayed in a manner optimized for touch devices like tablets.
-        
+        <p>
           
-        
-      
-      If you want you can adjust the zoom factor used for displaying web content generally by going to “Settings” &gt; “Advanced Settings” &gt; “Page Zoom”. This will result in all web content being displayed larger.
-    
-  
-
-
-Unfortunately, even though the last solution proved to be the best for me, it is still only a workaround. The downside is that even if I can get the web content to being displayed reasonably on my laptop screen, it does not look good on external displays. I have a touch-optimized Chrome even when working on the external display. This results in the tab-bar, navigation bar and bookmark bar being much thicker than normal and hence looking unnatural big and taking away space to show HTML content.
-
-It is desirable that Google adjusts its famous browser to support high-res screens ASAP. After all, Google has a notion of being innovative and alway on the bleeding edge with its browser 😉
-</p>
+            Just bought a new laptop with a screen resolution of 1920×1080 (Full-HD). Unfortunately, Chrome is currently not opti...
+          
+        </p>
       </li>
     
   </ul>
@@ -1225,12 +232,11 @@ It is desirable that Google adjusts its famous browser to support high-res scree
 </div>
 
       </div>
-   </div>
-<!-- end .content -->
+   </div><!-- end .content -->
 
    <div class="footer">
    <div class="container">
-      <p class="copy">© 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <p class="copy">&copy; 2019 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
       <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
       </p>
 
@@ -1238,42 +244,42 @@ It is desirable that Google adjusts its famous browser to support high-res scree
          <ul class="noList"> 
             
             <li><a href="https://www.facebook.com/daniel.tiefenauer">
-                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://twitter.com/danitiefenauer">
-                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://github.com/tiefenauer">
-                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
                   </svg>
             </a></li>
              
             
             <li><a href="https://www.linkedin.com/in/danieltiefenauer">
-                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
             </a></li>
              
             
             <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
-                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"></path>
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
                 </svg>
             </a></li>
                          
             
             <li><a href="mailto:daniel@tiefenauer.info">
-                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
                   </svg>
             </a></li>
@@ -1281,8 +287,7 @@ It is desirable that Google adjusts its famous browser to support high-res scree
          </ul>
       </div>
    </div>
-</div>
-<!-- end .footer -->
+</div><!-- end .footer -->
 
 
    <!-- Bootstrap scripts-->

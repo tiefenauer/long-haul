@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" <![endif]--><!--[if gt IE 8]><!--><html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,10 +49,10 @@
 
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
 
     <!-- Come and get me RSS readers -->
-    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="Dani's Braindump" href="https://tiefenauer.github.io/feed.xml" />
 
     <!-- Bootstrap: include before theme CSS so styles are overridden -->
     <!--<link rel="stylesheet" href="/assets/css/bootstrap.css">-->
@@ -100,8 +102,8 @@ ga('send', 'pageview');
 <!-- Final Tiles Gallery: https://www.final-tiles-gallery.com -->
 <script src="/assets/js/unitegallery/unitegallery.min.js"></script>
 <script src="/assets/js/unitegallery/themes/tiles/ug-theme-tiles.js"></script>
-<link rel="stylesheet" href="/assets/css/unitegallery/unite-gallery.css" type="text/css">
-<link rel="stylesheet" href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type="text/css">
+<link rel='stylesheet' href="/assets/css/unitegallery/unite-gallery.css" type='text/css' />
+<link rel='stylesheet' href="/assets/js/unitegallery/themes/default/ug-theme-default.css" type='text/css' />
 
 <!-- Unite Gallery-->
 <script type="text/javascript">
@@ -158,8 +160,7 @@ ga('send', 'pageview');
              </ul>
          </nav>
      </div>
- </div>
-<!-- end .header -->
+ </div><!-- end .header -->
 
 
    <div class="content">
@@ -171,517 +172,51 @@ ga('send', 'pageview');
       <li>
         <span class="date">October 02, 2015</span>
         <h3><a class="post-link" href="/blog/mobile-app-development-with-xamarin-and-mvvmcross-part-1-introduction/">Mobile App Development with Xamarin and MvvmCross – Part 1: Introduction</a></h3>
-        <p>In this article series I will cover the process of creating a mobile application using Xamarin and MvvMCross (MvX). There is a lot to know about both technologies to get started and neither Xamarin nor MvX provide a level of documentation sufficient to enable a total beginner to build apps efficiently. The goal of this series is to faciliate the entry into topic and to mitigate common problems and pitfalls occurring from things you just have to know.
-
-Table of Contents
-
-
-  Xamarin in a nutshell    
-      Xamarin.Forms
-    
-  
-  MvvmCross in a nutshell    
-      Coding by convention
-    
-  
-  Where to go from here
-
-
-The series will consist of the following articles
-
-
-  Part 1: Introduction (this article), giving you a quick overview of Xamarin and MvvmCross (and also introduces Xamarin.Forms briefly)
-  Part 2: Set up, describing the steps required to get you started
-  Part 3: Core project, describing the steps required to add some classes to your core project
-  Part 4: Android UI, describing how to create a beautiful UI for Android
-  Part 5: iOS UI, describing how to create the corresponding UI for iOS
-  Part 6: iOS UI with Storyboard, describing an alternative was of creating iOS UI with the help of a Storyboard-based project
-  Part 7: Final thoughts, in which we will be wrapping it all up and drawing conclusions
-
-
-Xamarin in a nutshell
-
-Xamarin is a commercial product to allow development of cross-platform mobile applications for Android, iOS and Windows Phone (WP8). The app is build using a common set of tools and a single programming language (C#) and runs natively on the target platform. Running natively is a unique feature that sets Xamarin apart from other hybrid solutions such as Ionic or Flex.
-
-There is often confusion about the terms cross-platform and hybrid. This is why I’m gonna explain them briefly:
-
-
-  Hybrid: A hybrid app can be run on different target platforms. In that respect there’s no difference to a cross-platform app. However, with hybrid apps usually both code for business logic and code for the UI of this app lie in a single project. Tthere is usually only one code base for the UI, regardless of the target platform. In consequence, this often means that the UI is required to imitate the native look&amp;feel of the target platform, without really running natively on it. JavaScript is often used as a programming language to be run inside a web-container, which in turn is packaged inside an installable app (.apk for Android or .ipa for iOS).
-The advantage of this approach is that the UI only needs to be implemented once, which can be a huge productivity boost because most of the code can be shared between platforms.
-The downside is that the look&amp;feel can often not live up to the way the user expects it to be, both performance- and appearance-wise. There are often limitations relating to the possibilities for designing the UI.
-There are various technologies and programming languages that follow this approach, such as Ionic (JavaScript) or Apache Flex (AS3).
-  Cross-Platform: In contrast to hybrid apps, cross-platform apps are specifically designed to be run natively on the target platform. This often results in a core project with a common, shared code containing the business logic and several UI projects, one for each target platform.
-The good thing about cross-platform technologies is that the developer can rely on a single technology stack and only has to know one programming language. The end user can’t tell whether the app was made using standard technologies or programming languages (such as Objective-C for iOS or Java for Android). Because the UI is built for a specific target platform, the app’s UI looks and feels like it was built exclusively for the target platfrom, running with native performance.
-The downside of this approach is that only a part of the code can be shared between platforms. The talk is about 60%-80%, but that heavily depends on the used technology and the type of app you want to build.
-Examples for this category of mobile app development are Xamarin (C#) and Appcelerator Titanium (JavaScript).
-
-
-
-  
-    
-       
-      HYBRID
-      CROSS-PLATFORM
-    
-  
-  
-    
-      Framework (example)
-      Ionic
-      MvvmCross
-    
-    
-      Solution structure
-      1 project for business logic and UI (may vary)
-      several projects (usually 1 core project and 1 UI project per target platform)
-    
-    
-      Pros
-      UI only has to be implemented oncesimple solution with only 1 project possible
-      Usage of full UI potential of the target platform possibledifferent UI concepts possible
-    
-    
-      Cons
-      Dependency on the capabilities of Xamarin.Forms when designing UIXamarin.Forms only uses a subset of UI elements on both platforms
-      time-consuming UI implementation for each target platform separatelymore complex project structure
-    
-    
-      Suited for
-      Simple apps with a small set of standard UI components
-      UI-centered apps with complex UI and sophisticated UI elements
-    
-  
-
-
-We will focus on Xamarin as a technology to build apps in the following articles. Xamarin is a commercial product following the cross-platform approach. This means you will be building apps using C# as a programming language and the .NET toolset like VisualStudio (IDE), NuGet (package manager) and NUnit (testing framework).
-
-Xamarin does not dictate the usage of a particular framework. However, because a framework can relieve you of a big part of boilerplate coding, the usage of one is heavily recommended. An example framework for Xamarin is MvvmCross (short: MvX), which propagates the MvvM-Paradigm to the cross-platform development of apps. MvX is not an official product of Xamarin, but has become immensely popular among Xamarin developers. It is described in short in the next chapter.
-
-Xamarin consists mainly of two sub-projects, called Xamarin.Android and Xamarin.iOS. Both projects generally provide an implementation of the native APIs of the target platform, but written in C#. Often, you can find that class and method names of the C# implementations are identical to the ones in the original SDK. This is a huge advantage if you come from one of these technologies and already know the SDK quite well. However, it also means you need to know how to create an app for iOS and/or Android using standard technologies, before you can start with Xamarin.
-
-Xamarin.Forms
-
-Some time ago, Xamarin started developing its own framework, called Xamarin.Forms, following a similar, but still different approach. The idea of Xamarin.Forms is the same as in hybrid technologies: You only have to write the UI only once. In contrast to other hybrid technologies, the resulting app still runs natively on the target platform, conserving the advantages of a cross-platform solution like performance and look&amp;feel. You can still use a single programming language and a common set of UI elements, which will be transformed to their native counterparts for each platform, making it look like a a traditional Xamarin app (i.e. a traditional native app).
-
-However, this benefit comes at a price, which happens to be the same like in other hybrid technologies: You are limited to what Xamarin.Forms gives you when it comes to designing the UI. Xamarin.Forms uses only a subset of the Xamarin.Android/Xamarin.iOS-API. You can create your UI using elements of the Xamarin.Forms API, but you’re somewhat stuck with them. This is no problem as long as your app doesn’t require a very complex UI or some fancy UI elements which exist only for one of the platforms. However, if you want to use the full scope of what the UI has to offer, you’re better off with a normal Xamarin app.
-
-Xamarin.Forms is built ontop of the Xamarin-Tech-stack and is not to be confused with Xamarin.Android or Xamarin.iOS. The following table summarizes the differences between Xamarin and Xamarin.Forms.
-
-
-  
-    
-       
-      XAMARIN
-      XAMARIN.FORMS
-    
-  
-  
-    
-      Type of technology
-      Platform
-      Framework, built ontop of the Xamarin platform
-    
-    
-      Type of resulting app
-      native
-      native
-    
-    
-      UI
-      Full set of Android/iOS UI elements
-      Subset of UI elements common to both Android and iOS
-    
-    
-      Common project structure
-      1 core project, &gt;2 UI-projects (one for each target platform)
-       
-    
-    
-      Suitable use case
-      apps that require specialized interactionsApps with highly polished designApps that use many platform-specific APIsApps where custom UI is more important than code sharing
-      Data entry appsPrototypes and proofs-of-conceptApps that require little platform-specific functionalityApps where code sharing is more important than custom UI
-    
-  
-
-
-MvvmCross in a nutshell
-
-MvvmCross (in short: MvX) is an open source framework, developed specifically for mobile app development with Xamarin. The underlying principle for this framework is MvvM, which is used as architectural pattern over all target platforms. To do so, data binding is often as one of the key features of MvX, resulting in an automated update of the UI when there are changes in the model (i.e. within the common part of the application).
-
-MvX relies heavily on coding by convention. This means that in order to use the framework, a deeper knowledge of how to use it is required. This knowledge can often not be gained exploratively, but must be documented somewhere if the user should not be required to dig into the inner workings of the framework. This approach has significant advantages in terms of efficiency: You can develop at a much faster pace, focusing on your business logic, once you have figured out how to use the framework. In contrast, it is often difficult for beginners to get started with a framework following the coding by convention approach, if the steps and features of how to build an app are not carefully described (and for MvX they’re not IMHO!).
-
-The source code of the framework is open for changes by the community, but in reality its development is heavily driven by Stuart Lodge. Documentation is confined to a few markdown files on GitHub, a blog and a series of videos on YouTube with accompanying sample projects. However, if you want to know more about a specific feature, you are required to watch the whole video and/or download the source code, because the corresponding blog posts are often very short.. The descriptions on GitHub are often not detailed enough to get you started. Stuart uses Stackoverflow for questions and issues.
-
-Coding by convention
-
-Coding by conventions (CBC) aims at reducing complexity by hiding a lot of the internals of a system or framework from the user and having him adhere to certain guidelines.  MvX follows this principle for example by having the developer follow some naming guidelines. This is required so that MvX can resolve classes from different projects by reflection. This becomes especially obvious in the following cases (examples):
-
-
-  Views/ViewModels: Every view called MyView.cs has to be accompanied with a ViewModel called MyViewModel.cs, which must inherit directly or indirectly from MvxViewModel.
-  Converters: Converter classes of any kind, which are used by means of the Swiss-Databinding, must have the ValueConverter suffix (i.e. MyDateValueConverter for example) in order to be recognized by MvX as valid converters.
-
-
-MvX uses reflection a lot. This results in the developer not being completely free as of how to choose class names. On the other hand it also relieves the developer of the struggle of stitching the different parts together – it is all done automagically by the framework.
-
-Unfortunately, MvvmCross is not terribly well documented (at least I’m used to a different level of documentation), which is a very bad thing for a CBC-framework. There may be more conventions of this kind that are not listed here or that I don’t know myself. The thing is: if certain conventions are not or not exactly enough followed, MvX throws an exception which is not always self-explanatory. Often, you are required to use Google or Stackoverflow to find out what you may have done wrong.
-
-Where to go from here
-
-In this article you have learned about the difference between hybrid and cross-platform applications an got to know Xamarin as an example for building cross-platform applications. You have caught a glimpse of two popular Xamarin frameworks, Xamarin.Forms and MvvmCross. MvvmCross seems to be very popular in the Xamarin community, but is also quite hard to learn, not least because of its inofficial nature and rudimentary documentation. Nevertheless, MvX offers some more possibilities when it comes to building the UI, because it does not limit itself to a subset of UI elements but can make use of the full potenttial of the Xamarin platform.
-
-You are now ready to start building your own Xamarin app with the help of the MvX-Framework.
-</p>
+        <p>
+          
+            In this article series I will cover the process of creating a mobile application using Xamarin and MvvMCross (MvX). T...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">March 29, 2015</span>
         <h3><a class="post-link" href="/blog/mockito-powermock-part-2/">Mockito + PowerMock – Part 2: Using Matchers</a></h3>
-        <p>In this chapter you will get to know some advanced techniques of Mockito such as Argument captors, spies, exception handlers and verifying method calls.
-
-</p>
+        <p>
+          
+            In this chapter you will get to know some advanced techniques of Mockito such as Argument captors, spies, exception h...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">March 20, 2015</span>
         <h3><a class="post-link" href="/mockito-powermock-part-1/">Mockito + PowerMock – Part 1: Simple Mocking</a></h3>
-        <p>In this part of the tutorial you will create your first mock objects and stub out some methods so that they return the desired value.
-
-Table of Contents
-
-
-  A word about mocking    
-      Example Set-Up
-    
-  
-  Unstubbed Mocking    
-      Create a mock using annotations
-      Create a mock at runtime
-      Initializing mocks
-      Checking default values
-      Simple Stubbing
-      Stubbing methods without parameters
-    
-  
-  Stubbing methods with arguments    
-      Multiple return values
-    
-  
-  What we have done so far
-
-
-A word about mocking
-
-As described in the introduction, mocks are a hollow shell for a real class. In contrast to the class being mocked, the mock’s behavior can be configured manually. Mocks are therefore a useful means of resolving dependencies of a class under test to other classes, which can contain some complex program logic. Typically, you only want to check your tested class is working as specified, assuming all referenced classes do their job as expected.
-
-Think of a class calculating the price of a product, which has a dependency to another class which loads the product from the database. You now want to write a unit test to check if the calculations meet your expectations. What you want to test is only the calculation part, not the loading from the database. You would assume that loading the products from the database works fine, since it is tested in another class or (probably more often) implemented by a library (e.g. an OR-mapper like Hibernate) that you didn’t write yourself and therefore usually don’t test yourself. Your unit test would depend on a running database instance with some valid data in it. That data would have to be set up before the test and cleaned after every test. If your test fails, it could leave your database in an unknown state, so data cleanup would become a constant pain in the ass.
-
-Wouldn’t it be easier, if your unit test was independent of any class other than the one it tests? Wouldn’t it be nice if your tests was able to run regardless of surrounding libraries and tools used in your project and only focus on the class being tested? Mocking provides a means of achieving all this by replacing the dependency to a real object with a mocked object, which looks like the real object from the outside, but behaves exaclty the way you want it to in the different tests. As for the example above, you would mock out the class which loads the products from a database and tell the mock which Product-Objects (which can also be mocks!) to return in what case.
-
-Example Set-Up
-
-The code snippets in this tutorial are based on three classes:
-
-
-  Foo.java
-  Bar.java
-  FooBar.java (with dependencies to Foo and Bar)
-
-
-The classes can also be found in the accompanying project on GitHub. These classes do not contain any complex program logic and are only here to provide fields and methods to illustrate the concepts of mocking.
-
-Unstubbed Mocking
-
-In its simplest form mocking consists of creating a mock and leaving it this way (i.e. not stubbing it). This means your test class compiles and your mock object has the same method signatures as a real object. However, since you have not defined any behavior, calls to those methos go to Nirvana. You may wonder how this could possibly be useful. But let me tell you that an unstubbed mock is sometimes all it needs to make a good unit test work.
-
-Mocks can be created in two ways:
-
-Create a mock using annotations
-
-Mocks can be created by applying an annotation on a member of your unit test class. The following code snipped for example would provide you with a fresh and clean mock for every single test:
-
-public class MockitoTest {
-  // create a mock of Foo.java that is available in all tests
-  @Mock Foo foo;
-}
-
-
-Create a mock at runtime
-
-Mocks can also be created at runtime using the mock()-method. References to this mock are only visible in the method it is created. This can be convenient if you need a specific mock only in a certain test.
-
-public class MockitoTest {
-
-  @Test
-  public void myTest(){
-    // create a mock at runtime, which is only available inside myTest()
-    Foo foo = mock(Foo.class)
-  }
-}
-
-
-Initializing mocks
-
-Before the mocks can be used, they have to be initialized. This needs to be done because Mockito takes control over the compiled byte-code of the class and creating a child-class with the same method signatures, which works as a wrapper class that can be configured by Mockito.
-
-Initializing the mocks can be done by either calling a static method in the JUnit test setup method:
-
-@Before
-public void setUp() throws Exception {
-  MockitoAnnotations.initMocks(this);
-}
-
-
-Alternatively you can use the custom JUnit test runner that comes built-in with Mockito. To do this you have to prefix the class definition with the following annotation.
-
-@RunWith(MockitoJUnitRunner.class)
-public class MockitoTest {
-
-  // add tests here
-}
-
-
-Checking default values
-
-When leaving the mock un-stubbed, methods will behave as follows per default:
-
-
-  Method with return type void: Calling the method on the mock will do nothing and (of course) return nothing
-  Method with primitive return type int, long or float: Calling the method on the mock will return 0 (zero)
-  Method with primitive return type boolean: Calling the method on the mock will return false
-  Method with object return type: Calling the method on the mock will return null
-
-
-You can check this yourself by creating a mock and then checking the return values of the un-stubbed methods.
-
-assertEquals("default int value should be zero", 0, foo.getInt());
-assertEquals("default long value should be zero", 0l, foo.getLong());
-assertEquals("default float value should be zero", 0f, foo.getFloat(), 0.00001);
-assertFalse("default boolean value should be false", foo.getBoolean());
-assertNull("default Object value should be null", foo.getObject());
-
-
-Simple Stubbing
-
-Leaving the mock as it is can be enough sometimes, more often you want a mock method to return a specific value though. That value can be a real object/primitive type, but it can also be another mock.
-
-Stubbing methods without parameters
-
-Methods without parameter can be set to return a specific value. In the following example, foo is the mock object which is configured to return the bar-Object when calling _getBar() _on it. The stubbing can be done multiple times. The mock object will return the value defined in the last stubbing.
-
-// have foo return bar
-when(foo.getBar()).thenReturn(bar);
-// foo.getBar() will now return bar when being called
-when(foo.getBar()).thenReturn(otherBar);
-// foo.getBar() will now return otherBar when being called
-
-
-Stubbing methods with arguments
-
-If you want to stub a method with arguments, you can do this in a similar way. Take into account that for complex types the comparison of the method parameters is done by reference. This means if you stub a method with an object-parameter, calling the method will only return the configured value when being called with exactly the same object. If you call the method with any other object, the default value (as seen above) is being returned.
-
-// have foo.getBar(String) return bar when being called with the parameter "bar"
-when(foo.getBar("bar")).thenReturn(bar);
-assertEquals("should return mocked value", bar, foo.getBar("bar"));
-assertNull("not stubbed call should return null", foo.getBar("somethingElse"));
-
-
-Multiple return values
-
-Sometimes you may want to have a method return different values for each subsequent call. This is done using the following syntax:
-
-
-// have foo.getBar() return different values for subsequent calls
-when(foo.getBar()).thenReturn(bar1, bar2, bar3);
-assertEquals("should return first stubbed value", bar1, foo.getBar());
-assertEquals("should return second stubbed value", bar2, foo.getBar());
-assertEquals("should return third stubbed value", bar3, foo.getBar());
-assertEquals("should return last stubbed value", bar3, foo.getBar());
-
-
-Please note that the last defined return value will be returned for each call after the number of configured calls has been made.
-
-What we have done so far
-
-In this chapter you have learned what mocking/stubbing is good for and received a short introduction on when to use mocks. You have also seen that mock methods don’t need to be stubbed in order to use them. You have learned how to create and initialize the mocks using two alternative ways for each. Finally, you have seen how to stub methods with and without parameters so that they return one or several specific values when being called
-
-In the next chapter, you will learn how to extend the functionality of stubbing methods with parameters by using matchers.
-</p>
+        <p>
+          
+            In this part of the tutorial you will create your first mock objects and stub out some methods so that they return th...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">March 01, 2015</span>
         <h3><a class="post-link" href="/blog/installing-a-m-2-ssd-in-a-t440s/">Installing a M.2 SSD in a T440s</a></h3>
-        <p>When I recently came to the point of upgrading the storage in my Lenovo T440s, I was looking for ways to do so. Luckliy, the T440s has an additional M.2 slot which allows for inserting various devices, including SSD hard drives. I followed the instructions from a LaptopMag blog post for a large part. Since in my case upgrading storage meant replacing the built-in WWAN adapter, I wrote this blog post as an addendum to the one from LaptopMag.
-
-Table of Contents
-
-
-  Step 1: Choosing the SSD    
-      Unboxing
-    
-  
-  Step 2: Opening the case
-  Step 3: Removing the WWAN adapter and installing the disk
-  Step 4: Formatting
-  Step 5: Measuring performance
-  Conclusion
-  Sources
-
-
-Step 1: Choosing the SSD
-
-The first step – obviously – was buying an appropriate SSD. M.2 SSDs are pretty new to the game yet and therefore not as widely sold as their predecessors, the mSATA-SSDs. M.2-Disks come in various sizes and form factors, the T440s, however, only supports drives of 42mm width. Make sure you choose the right form factor, since 42mm-drives are the only ones supported by the T440s!
-
-After reading various reviews though, it became clear, that MyDigitalSSD would be the disk manufacturer of my trust, not only in terms of reputation or disk speed, but also because the prices were really competitive. I eventually went for the MyDigitalSSD 256GB Super Boot Drive and ordered it on Amazon.
-
-Unboxing
-
-The drive came in a box containing the drive itself along with a tiny screwdriver and a screw (which I didn’t use since the T440s already has a screw inside holding the WWAN adapter). Thinking I’ve seen it all, I was still surprised how small and light the drive actually is. Only slightly larger than an ordinary SD card and weighing only a few grams, you will never notice the drive after updating – apart from the augmented disk space, of course ;-).
-
-Below is a picture of the box the disk came in and a disk ontop of a credit card sized plastic. Unbeliavble how small these things have become…
-
-
-	
-	The unopened box.
-
-
-
-	
-	The opened box and its content
-
-
-
-	
-	Size does not always matter: The M.2 SSD is **tiny**! SD card for comparison.
-
-
-Step 2: Opening the case
-
-Before opening the case, make sure you have disabled the internal battery in the BIOS/UEFI and removed the external battery!
-
-To open the case I had to loosen the six screws indicated in the LaptopMag post.  Opening the case proved to be much harder than expected (“if you feel resistance, make sure all screws are completely loose”). What I didn’t know is that the screws had tiny nuts on the inside of the case. These are meant to  prevent the screws from falling out of their holes and thus staying together with the bottom part of the case. This is actually a good thing meaning you can’t really lose the screws. However, should you (like me) still manage to entirely remove the screws, you can/should re-attach their bolts before continuing. After all, you don’t want to end up missing one of those tiny screws after upgrading your laptop.
-
-
-	
-	One of the screws to loosen...
-
-
-
-	
-	The inner parts of the T440s
-
-
-
-	
-	WWAN adapter next to the WLAN adapter
-
-
-Step 3: Removing the WWAN adapter and installing the disk
-
-After prying open the case, I first had to remove two cables from the WWAN adapter. Luckily, those were not soldered to the device itself, so that I had no problem removing them using a pair of tweezers. I am not sure what the cables are for, but judging from their color (blue and red) I suspect for some sort of power source (or antenna?). So I covered the ends with duct tape for insulation, and stuck them to the black foil, since I didn’t want to have loose power chords dangling around on the inside of my beloved T440s. After loosening one final screw and pulling out the WWAN-adapter I had a free M.2 slot. Installing the SSD was a breeze after that, requiring only inserting the disk into the slot and tightening the screw (the SSD is powered by the M.2 slot). That kind of flexibility is one thing I particularily like about Lenovo T-series laptops.
-
-
-	
-	The M.2 SSD in its slot
-
-
-
-	
-	Make sure you insulate the ends of the cables and stick them to the laptop so they don't hang around freely
-
-
-
-	
-	The removed WWAN adapter
-
-
-Step 4: Formatting
-
-After screwing the cover back to the laptop I came to restarting the computer and see if things worked as expected. I pushed the power button and… nothing happened. The screen stayed black and there was no sign of the computer booting up. I double checked the battery, which I had inserted after screwing everything together. After an initial panic attack (short circuit?)  I decided to put the laptop back into the docking station and booting up from there. To my relief, that did the trick and Windows booted normally. After consulting the UEFI one last time, it became clear that the internal battery would be re-enabled automatically after connecting the charger to the laptop. Seems like the laptop can only boot with the internal battery enabled… Should your laptop remain dead after upgrading storage, plug in the power chord and try booting again by pressing the power button.
-
-Because the disk is brand new and not formatted for a particular file system, I had to do this myself by opening disk management (see this page for instructions how to do so). There it way, the newly installed SSD. Before formatting I had to choose the partitioning style. I choose GPT and one click and two seconds later I was proud owner of a 512GB SSD T400s laptop. *GPT is MBR’s successor and has many advantages. You should choose GPT over MBR under any circumstances, unless you really know you still need MBR. See this post for a more detailed explanations.
-
-
-	
-	Choose GPT in any case!
-
-
-Step 5: Measuring performance
-
-The first thing you want to do after installing a super-fast SSD is of course measuring its real performance and comparing it the the specs printed onto the packaging. The disk showed up as a 223GB drive in windows, so it is 33GB smaller than advertised (in terms of usable disk space) and almost 15GB smaller than the built in SSD  the T440s came with. Reviewing the photos for this post the reason became obvious immediately: They used a 240GB storage chip (as written on the sticker on the back), and not a 256GB one!
-
-Before you start posting comments about the issue: I know that the 256GB on the package are based on measuring using the decimal system. The “real” usable disk space is usually measured in binary, meaning the 256 gigabytes (10-based) equal to approximately 238 gibibytes (2-based). I think manufacturers should really start using the binary system to indicate the disk space of their drives, since the discrepancy between the value on the package and the value shown by the operating system only leads to confusion of a lot of buyers.
-
-I am a bit disappointed by the fact that the usable disk space is more than 6 percent smaller than indicated (and almost 13% smaller than printed on the package, taking that value for granted!).
-
-In terms of speed, however, the disk pretty much lived up to the official measurement values from the Homepage, performing sligthly better with bigger chunks and a bit slower on smaller chunks. Considering I had a few programs open while conducting the measurements, this drive should be blazing fast when reading and perform very well in most laptops. However, the writing speeds were somewhere around 190MB/s, never reaching the 430mB/s for any chunk size. This is also consistent with the official benchmark values from MyDigitalSSD.
-
-
-	
-	Benchmark results from CrystalMark 3.0.3
-
-
-
-	
-	The CrystalMark results of the built-in drive that came with the T440s. In my case it's a Samsung drive (MZ7TD256HAFV-000L9)
-
-
-
-	
-	Official results for the 256GB Super Boot Drive
-
-
-Conclusion
-
-The Super Boot Drive sure is blazing fast when reading and also quite fast when writing, but never even coming close to the advertised 430MB/s writing speed. I don’t know why MyDigitalSSD claim such high speeds when they can’t even prove them in their own benchmarks.
-
-Update: I got a response from the manufacturer. The benchmark results are based on ATTO, not CrystalDiskMark. Considering the fact that the disk was even faster than advertised (see pictures above) using CrystalDiskMark as a benchmark tool, this disk performs as fast as promised.
-
-On the other hand, the built-in Samsung drive that came with the T440s already seems to be reasonably fast, showing generally more balanced writing values over all chunk sizes than the MyDigitalSSD drive, sometimes even surpassing them. However, when writing small chunks the MyDigitalSSD outperforms the built-in drive.
-
-What strikes me the most is the fact that MyDigitalSSD sell a drive as a 256GB when they evidentially attached a 240GB chip on it. Together with the falsy 10-based disk space (which manufacturers should do away with anyway) this leads to a significantly lower usable storage space than expected.
-
-The decreased disk space is the result of a process called overprovisioning, which means a part of the disk is reserved to make up for broken storage cells. According to the manufacturer, this is common across all manufacturers nowadays. I’m still a bit disappointed thought, because I think when you buy a 256GB disk you should also get 256GB of usable disk space (as was the case with the built-in drive).
-
-All in all, the Super Boot Drive is still an interesting option for people who want to upgrade their notebook storage without adding too much to the weight (and without their wallet losing too much weight <img class="emoji" title=":wink:" alt=":wink:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f609.png" height="20" width="20"> ).
-
-Sources
-
-
-  Instructions from LaptopMag
-  MyDigitalSSD homepage
-  Drive on Amazon.com
-  Difference between MBR and GPT
-  How to open disk management in windows
-
-</p>
+        <p>
+          
+            When I recently came to the point of upgrading the storage in my Lenovo T440s, I was looking for ways to do so. Luckl...
+          
+        </p>
       </li>
     
       <li>
         <span class="date">December 16, 2014</span>
         <h3><a class="post-link" href="/blog/mockito-powermock-part-0-introduction/">Mockito + PowerMock – Part 0: Introduction</a></h3>
-        <p>When running Unit Tests, a class under test usually has a lot of dependencies. Since Unit Tests are meant to test a class in isolation, these dependencies often make it hard to test a class, since the dependencies have an influence on the state of an object. In some cases, these dependencies make unit testing impossible alltogether. But what if you could replace these dependencies and have them hehave exactly how you want in each tests? This is where Mockito and its bigger brother PowerMock come in. Both frameworks are described in this series.
-
-Table of Contents
-
-
-The series consists of 6 parts:
-
-
-  Part 1: Simple Stubbing and Mocking
-  Part 2: Using Matchers
-  Part 3: Advanced Stubbing and mocking
-  Part 4: Spying and verifying assumptions
-  Part 5: Mocking final, static and private methods
-  Part 6: Triggering Exceptions
-
-
-Mockito is hosted on GitHub. PowerMock is hosted on Google Code, but is expected to change to GitHub too since Google has decided to shut down their code hosting service.
-
-Some sample code for the steps in this tutorial can be found in my own GitHub repository. It is an Eclipse project with two sample classes that are being tested using Mockito and PowerMock. The project comes with an included distribution of Mockito and PowerMock. This means that tests can be run out-of-the-box, but there may be newer versions of Mockito and/or PowerMock available. Feel free to fork and improve this project. Feedback is always welcome.
-
-All set? Then let’s start with some basic mocking.
-</p>
+        <p>
+          
+            When running Unit Tests, a class under test usually has a lot of dependencies. Since Unit Tests are meant to test a c...
+          
+        </p>
       </li>
     
   </ul>
@@ -697,12 +232,11 @@ All set? Then let’s start with some basic mocking.
 </div>
 
       </div>
-   </div>
-<!-- end .content -->
+   </div><!-- end .content -->
 
    <div class="footer">
    <div class="container">
-      <p class="copy">© 2018 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
+      <p class="copy">&copy; 2019 <a href="http://www.tiefenauer.info">Daniel Tiefenauer</a>
       <!-- Powered by <a href="http://jekyllrb.com">Jekyll</a> with adapted <a href="https://github.com/brianmaierjr/long-haul">Long Haul</a> Theme -->
       </p>
 
@@ -710,42 +244,42 @@ All set? Then let’s start with some basic mocking.
          <ul class="noList"> 
             
             <li><a href="https://www.facebook.com/daniel.tiefenauer">
-                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="facebook-square" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M82.667,1H17.335C8.351,1,1,8.351,1,17.336v65.329c0,8.99,7.351,16.335,16.334,16.335h65.332 C91.652,99.001,99,91.655,99,82.665V17.337C99,8.353,91.652,1.001,82.667,1L82.667,1z M84.318,50H68.375v42.875H50V50h-8.855V35.973 H50v-9.11c0-12.378,5.339-19.739,19.894-19.739h16.772V22.3H72.967c-4.066-0.007-4.57,2.12-4.57,6.078l-0.023,7.594H86.75 l-2.431,14.027V50z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://twitter.com/danitiefenauer">
-                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="twitter" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M99.001,19.428c-3.606,1.608-7.48,2.695-11.547,3.184c4.15-2.503,7.338-6.466,8.841-11.189 c-3.885,2.318-8.187,4-12.768,4.908c-3.667-3.931-8.893-6.387-14.676-6.387c-11.104,0-20.107,9.054-20.107,20.223 c0,1.585,0.177,3.128,0.52,4.609c-16.71-0.845-31.525-8.895-41.442-21.131C6.092,16.633,5.1,20.107,5.1,23.813 c0,7.017,3.55,13.208,8.945,16.834c-3.296-0.104-6.397-1.014-9.106-2.529c-0.002,0.085-0.002,0.17-0.002,0.255 c0,9.799,6.931,17.972,16.129,19.831c-1.688,0.463-3.463,0.71-5.297,0.71c-1.296,0-2.555-0.127-3.783-0.363 c2.559,8.034,9.984,13.882,18.782,14.045c-6.881,5.424-15.551,8.657-24.971,8.657c-1.623,0-3.223-0.096-4.796-0.282 c8.898,5.738,19.467,9.087,30.82,9.087c36.982,0,57.206-30.817,57.206-57.543c0-0.877-0.02-1.748-0.059-2.617 C92.896,27.045,96.305,23.482,99.001,19.428z"></path>
                   </svg>
             </a></li>
             
             
             <li><a href="https://github.com/tiefenauer">
-                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="github" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M79.099,79.099 c-3.782,3.782-8.184,6.75-13.083,8.823c-1.245,0.526-2.509,0.989-3.79,1.387v-7.344c0-3.86-1.324-6.699-3.972-8.517 c1.659-0.16,3.182-0.383,4.57-0.67c1.388-0.287,2.855-0.702,4.402-1.245c1.547-0.543,2.935-1.189,4.163-1.938 c1.228-0.75,2.409-1.723,3.541-2.919s2.082-2.552,2.847-4.067s1.372-3.334,1.818-5.455c0.446-2.121,0.67-4.458,0.67-7.01 c0-4.945-1.611-9.155-4.833-12.633c1.467-3.828,1.308-7.991-0.478-12.489l-1.197-0.143c-0.829-0.096-2.321,0.255-4.474,1.053 c-2.153,0.798-4.57,2.105-7.249,3.924c-3.797-1.053-7.736-1.579-11.82-1.579c-4.115,0-8.039,0.526-11.772,1.579 c-1.69-1.149-3.294-2.097-4.809-2.847c-1.515-0.75-2.727-1.26-3.637-1.532c-0.909-0.271-1.754-0.439-2.536-0.503 c-0.782-0.064-1.284-0.079-1.507-0.048c-0.223,0.031-0.383,0.064-0.478,0.096c-1.787,4.53-1.946,8.694-0.478,12.489 c-3.222,3.477-4.833,7.688-4.833,12.633c0,2.552,0.223,4.889,0.67,7.01c0.447,2.121,1.053,3.94,1.818,5.455 c0.765,1.515,1.715,2.871,2.847,4.067s2.313,2.169,3.541,2.919c1.228,0.751,2.616,1.396,4.163,1.938 c1.547,0.543,3.014,0.957,4.402,1.245c1.388,0.287,2.911,0.511,4.57,0.67c-2.616,1.787-3.924,4.626-3.924,8.517v7.487 c-1.445-0.43-2.869-0.938-4.268-1.53c-4.899-2.073-9.301-5.041-13.083-8.823c-3.782-3.782-6.75-8.184-8.823-13.083 C9.934,60.948,8.847,55.56,8.847,50s1.087-10.948,3.231-16.016c2.073-4.899,5.041-9.301,8.823-13.083s8.184-6.75,13.083-8.823 C39.052,9.934,44.44,8.847,50,8.847s10.948,1.087,16.016,3.231c4.9,2.073,9.301,5.041,13.083,8.823 c3.782,3.782,6.75,8.184,8.823,13.083c2.143,5.069,3.23,10.457,3.23,16.016s-1.087,10.948-3.231,16.016 C85.848,70.915,82.88,75.317,79.099,79.099L79.099,79.099z"></path>
                   </svg>
             </a></li>
              
             
             <li><a href="https://www.linkedin.com/in/danieltiefenauer">
-                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                <svg id="linkedin" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
             </a></li>
              
             
             <li><a href="https://www.xing.com/profile/Daniel_Tiefenauer/cv">
-                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
-                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"></path>
+                <svg id="xing" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(2.0)" d="M14.887 24l-5.324-9.667 8.07-14.333h4.933l-8.069 14.333 5.27 9.667h-4.88zm-7.291-19h-4.939l2.768 4.744-4.115 7.256h4.914l4.117-7.271-2.745-4.729z"/>
                 </svg>
             </a></li>
                          
             
             <li><a href="mailto:daniel@tiefenauer.info">
-                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
+                  <svg id="mail" class="custom-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" style="height: 30px; width: 30px;"><circle class="outer-shape" cx="50" cy="50" r="48" style="opacity: 1;"></circle>
                   <path class="inner-shape" style="opacity: 1;" transform="translate(25,25) scale(0.5)" d="M50,1C22.938,1,1,22.938,1,50s21.938,49,49,49s49-21.938,49-49S77.062,1,50,1z M25.5,25.5h49 c0.874,0,1.723,0.188,2.502,0.542L50,57.544L22.998,26.041C23.777,25.687,24.626,25.499,25.5,25.5L25.5,25.5z M19.375,68.375v-36.75 c0-0.128,0.005-0.256,0.014-0.383l17.96,20.953L19.587,69.958C19.448,69.447,19.376,68.916,19.375,68.375L19.375,68.375z M74.5,74.5 h-49c-0.541,0-1.072-0.073-1.583-0.212l17.429-17.429L50,66.956l8.653-10.096l17.429,17.429C75.572,74.427,75.041,74.5,74.5,74.5 L74.5,74.5z M80.625,68.375c0,0.541-0.073,1.072-0.211,1.583L62.652,52.195l17.96-20.953c0.008,0.127,0.014,0.255,0.014,0.383 L80.625,68.375L80.625,68.375z"></path>
                   </svg>
             </a></li>
@@ -753,8 +287,7 @@ All set? Then let’s start with some basic mocking.
          </ul>
       </div>
    </div>
-</div>
-<!-- end .footer -->
+</div><!-- end .footer -->
 
 
    <!-- Bootstrap scripts-->
