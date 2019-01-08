@@ -303,16 +303,16 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
 <span class="k">def</span> <span class="nf">process_sentence</span><span class="p">(</span><span class="n">sent</span><span class="p">,</span> <span class="n">min_words</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">normalize_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">sent</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">'german'</span><span class="p">)]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min_words</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c"># prevent multiple spaces</span>
-    <span class="k">return</span> <span class="s">''</span>
+        <span class="k">return</span> <span class="s">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># prevent multiple spaces
+</span>    <span class="k">return</span> <span class="s">''</span>
 
 
 <span class="k">def</span> <span class="nf">normalize_word</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
     <span class="n">_token</span> <span class="o">=</span> <span class="n">unidecode_keep_umlauts</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-    <span class="n">_token</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">_token</span><span class="p">)</span>  <span class="c"># remove any special chars</span>
-    <span class="n">_token</span> <span class="o">=</span> <span class="n">replace_numeric</span><span class="p">(</span><span class="n">_token</span><span class="p">,</span> <span class="n">by_single_digit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">_token</span> <span class="o">=</span> <span class="s">'&lt;num&gt;'</span> <span class="k">if</span> <span class="n">_token</span> <span class="o">==</span> <span class="s">'#'</span> <span class="k">else</span> <span class="n">_token</span>  <span class="c"># if token was a number, replace it with &lt;num&gt; token</span>
-    <span class="k">return</span> <span class="n">_token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">_token</span> <span class="o">=</span> <span class="n">remove_punctuation</span><span class="p">(</span><span class="n">_token</span><span class="p">)</span>  <span class="c1"># remove any special chars
+</span>    <span class="n">_token</span> <span class="o">=</span> <span class="n">replace_numeric</span><span class="p">(</span><span class="n">_token</span><span class="p">,</span> <span class="n">by_single_digit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">_token</span> <span class="o">=</span> <span class="s">'&lt;num&gt;'</span> <span class="k">if</span> <span class="n">_token</span> <span class="o">==</span> <span class="s">'#'</span> <span class="k">else</span> <span class="n">_token</span>  <span class="c1"># if token was a number, replace it with &lt;num&gt; token
+</span>    <span class="k">return</span> <span class="n">_token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">punctiation_extended</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span> <span class="o">+</span> <span class="s">""""„“‚‘"""</span><span class="p">):</span>
@@ -329,8 +329,8 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
 
 
 <span class="k">def</span> <span class="nf">unidecode_keep_umlauts</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="c"># modified version from unidecode.unidecode_expect_ascii that does not replace umlauts</span>
-    <span class="n">_warn_if_not_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="c1"># modified version from unidecode.unidecode_expect_ascii that does not replace umlauts
+</span>    <span class="n">_warn_if_not_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">bytestring</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'ASCII'</span><span class="p">)</span>
     <span class="k">except</span> <span class="nb">UnicodeEncodeError</span><span class="p">:</span>
@@ -342,28 +342,28 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
 
 
 <span class="k">def</span> <span class="nf">_unidecode_keep_umlauts</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="c"># modified version from unidecode._unidecode that keeps umlauts</span>
-    <span class="n">retval</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># modified version from unidecode._unidecode that keeps umlauts
+</span>    <span class="n">retval</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
         <span class="n">codepoint</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
 
-        <span class="c"># Basic ASCII, ä/Ä, ö/Ö, ü/Ü</span>
-        <span class="k">if</span> <span class="n">codepoint</span> <span class="o">&lt;</span> <span class="mh">0x80</span> <span class="ow">or</span> <span class="n">codepoint</span> <span class="ow">in</span> <span class="p">[</span><span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">]:</span>
+        <span class="c1"># Basic ASCII, ä/Ä, ö/Ö, ü/Ü
+</span>        <span class="k">if</span> <span class="n">codepoint</span> <span class="o">&lt;</span> <span class="mh">0x80</span> <span class="ow">or</span> <span class="n">codepoint</span> <span class="ow">in</span> <span class="p">[</span><span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">]:</span>
             <span class="n">retval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">char</span><span class="p">))</span>
             <span class="k">continue</span>
 
         <span class="k">if</span> <span class="n">codepoint</span> <span class="o">&gt;</span> <span class="mh">0xeffff</span><span class="p">:</span>
-            <span class="k">continue</span>  <span class="c"># Characters in Private Use Area and above are ignored</span>
-
+            <span class="k">continue</span>  <span class="c1"># Characters in Private Use Area and above are ignored
+</span>
         <span class="k">if</span> <span class="mh">0xd800</span> <span class="o">&lt;=</span> <span class="n">codepoint</span> <span class="o">&lt;=</span> <span class="mh">0xdfff</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">"Surrogate character </span><span class="si">%</span><span class="s">r will be ignored. "</span>
                           <span class="s">"You might be using a narrow Python build."</span> <span class="o">%</span> <span class="p">(</span><span class="n">char</span><span class="p">,),</span>
                           <span class="nb">RuntimeWarning</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">section</span> <span class="o">=</span> <span class="n">codepoint</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>  <span class="c"># Chop off the last two hex digits</span>
-        <span class="n">position</span> <span class="o">=</span> <span class="n">codepoint</span> <span class="o">%</span> <span class="mi">256</span>  <span class="c"># Last two hex digits</span>
-
+        <span class="n">section</span> <span class="o">=</span> <span class="n">codepoint</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>  <span class="c1"># Chop off the last two hex digits
+</span>        <span class="n">position</span> <span class="o">=</span> <span class="n">codepoint</span> <span class="o">%</span> <span class="mi">256</span>  <span class="c1"># Last two hex digits
+</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">[</span><span class="n">section</span><span class="p">]</span>
         <span class="k">except</span> <span class="nb">KeyError</span><span class="p">:</span>
@@ -371,8 +371,8 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
                 <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s">'unidecode.x</span><span class="si">%03</span><span class="s">x'</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span><span class="p">),</span> <span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="p">(),</span> <span class="p">[</span><span class="s">'data'</span><span class="p">])</span>
             <span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
                 <span class="n">Cache</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-                <span class="k">continue</span>  <span class="c"># No match: ignore this character and carry on.</span>
-
+                <span class="k">continue</span>  <span class="c1"># No match: ignore this character and carry on.
+</span>
             <span class="n">Cache</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">data</span>
 
         <span class="k">if</span> <span class="n">table</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">position</span><span class="p">:</span>
@@ -426,8 +426,8 @@ bzip2 <span class="k">${</span><span class="nv">corpus_file</span><span class="k
             <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'</span><span class="se">\t</span><span class="s">{w}</span><span class="se">\t\t</span><span class="s">{s}'</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s">'.'</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'score for sentence </span><span class="se">\"</span><span class="s">{sentence}</span><span class="se">\"</span><span class="s">:</span><span class="se">\t</span><span class="s"> {total_score}"'</span><span class="p">)</span>  <span class="c"># same as model.score(sentence)!</span>
-            <span class="n">sentence</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'score for sentence </span><span class="se">\"</span><span class="s">{sentence}</span><span class="se">\"</span><span class="s">:</span><span class="se">\t</span><span class="s"> {total_score}"'</span><span class="p">)</span>  <span class="c1"># same as model.score(sentence)!
+</span>            <span class="n">sentence</span> <span class="o">=</span> <span class="s">''</span>
             <span class="n">state_in</span><span class="p">,</span> <span class="n">state_out</span> <span class="o">=</span> <span class="n">kenlm</span><span class="o">.</span><span class="n">State</span><span class="p">(),</span> <span class="n">kenlm</span><span class="o">.</span><span class="n">State</span><span class="p">()</span>
             <span class="n">model</span><span class="o">.</span><span class="n">BeginSentenceWrite</span><span class="p">(</span><span class="n">state_in</span><span class="p">)</span>
             <span class="n">total_score</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -500,6 +500,10 @@ build_binary trie <span class="k">${</span><span class="nv">lm_arpa</span><span 
       
     </a>
       
+      
+      <a class="next" href="/blog/stt-engine-for-forced-alignment/"><span>STT-Engine for Forced Alignment&nbsp;&raquo;</span>
+       
+      </a>
      
     
     
