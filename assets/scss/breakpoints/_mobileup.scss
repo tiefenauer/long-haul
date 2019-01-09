@@ -46,6 +46,10 @@ img,video,audio,iframe,object{
 	margin-right: auto;
 }
 
+.dropcap {
+	color: $primary-color;
+	margin-right: .45rem;
+}
 
 /***************
 LINK STYLING
@@ -279,11 +283,6 @@ POST STYLING
 	.highlight {
 		clear: both;
 		margin-bottom: 2rem;
-	}
-
-	.dropcap {
-		color: $primary-color;
-		margin-right: .45rem;
 	}
 
 	.featuredImage {

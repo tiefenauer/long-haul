@@ -18,3 +18,12 @@ title: Contact Me
     <input type="submit" value="Send" class="button">
   </form>
 </div>
+
+
+<script>
+$( document ).ready(function() {
+	// DropCap.js
+	var dropcaps = document.querySelectorAll(".dropcap");
+	window.Dropcap.layout(dropcaps, 2);
+});
+</script>

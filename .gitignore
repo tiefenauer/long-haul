@@ -4,4 +4,3 @@ _site
 .ruby-version
 node_modules
 .idea
-/.jekyll-metadata

@@ -1,4 +1,4 @@
 <p class="intro">
     <span class="dropcap">{{ page.intro | slice: 0}}</span>
-    {{ page.intro | slice: 1, page.intro.size | markdownify }}
+    {{ page.intro | markdownify | slice: 4, page.intro.size }}
 </p>

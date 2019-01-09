@@ -390,7 +390,7 @@ body {
   line-height: 1.45;
   /* equivalent to 20px */ }
   body .intro {
-    font-size: 1.25em;
+    font-size: 1em;
     line-height: 1.7; }
 
 @media (min-width: 43.75em) {
@@ -880,7 +880,7 @@ POST STYLING
   clear: both;
   margin-bottom: 2rem; }
 
-.post .dropcap {
+.dropcap {
   color: seagreen;
   margin-right: .45rem; }
 
