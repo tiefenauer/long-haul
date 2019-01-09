@@ -20,12 +20,11 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true
 ---
 In this part of the tutorial we are going to package the compiled classes together with other external, non-compiling assets (e.g. image, audio, configuration files, ...) to get a package that is ready to be installed on mobile devices such as smartphones or tablets.
 
 If you haven't done already, follow the steps described in [the first part of the tutorial]({% post_url 2014-03-18-ci-for-flex-mobile-applications-part-1-compiling-your-code%}) to get the compiled classes as an *.swf-File.
-
-{% include toc.md %}
 
 ## The ADT Tool
 

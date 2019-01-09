@@ -31,7 +31,13 @@ comments: true
 
     <p class="meta">{{ page.date | date: '%B %d, %Y' }} | <span class="time">{{ page.content | number_of_words | divided_by:180 }}</span> Minute Read</p>
 
-    {{ content }}
+    {% if page.toc %}
+        {% include toc.html html=content %}
+    {% endif %}
+    <p>
+        <span class="dropcap">{{ content | slice: 3}}</span>
+        {{ content | markdownify | slice: 4, content.size }}
+    </p>
 
     <!-- POST NAVIGATION -->
     {% include navigation.html %}

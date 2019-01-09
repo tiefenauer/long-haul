@@ -17,11 +17,10 @@ tags:
   - Xamarin
 series:
   - Mobile App Development with Xamarin and MvvMCross
+toc: true  
 ---
 
 In this article we are going to add some classes to our PCL project. These classes will contain the business logic for our app.
-
-{% include toc.md %}
 
 ## Create new ViewModel
 

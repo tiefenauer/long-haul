@@ -17,14 +17,13 @@ tags:
   - Xamarin
 series:
   - Mobile App Development with Xamarin and MvvMCross
+toc: true  
 ---
 ![](/assets/img/wp-content/uploads/2015/10/example_storyboard-224x300.png)
 
 In the last article, we saw how to programatically create iOS-Views using nothing but C#-code. However, this way of creating user interfaces is often quite cumbersome and prone to errors. An alternative and much more intuitive approach to design user interfaces for iOS (which is also advertised by Apple as the standard way) is the usage of so-called _Storyboards_. Storyboards provide a set of UI-Views, which can be populated with other UI elements like buttons, labels, lists and so on by drag'n'dropping them using a visual editor. Transitions between views can be modelled by using _Segues_. Luckily, Xamarin comes with its own UI designer for iOS in the form of a  Visual Studio plugin. This means you can create your native iOS-UI directly on your Windows machine like in the screenshot above.
 
 In this article we are going to explore various ways of creating beautiful UI views using storyboards while using MvvmCross as the underlying framework at the same time.
-
-{% include toc.md %}
 
 However, there's (as always) a catch in using storyboards: Navigating with segues (the previewed way of navigating between views when working with storyboards) means navigation is being done in the view layer (i.e. the iOS UI-Project when using Xamarin). This differs fundamentally from the navigation concept of MvvmCross, where navigation is done in the ViewModel layer (i.e. the core project when using Xamarin). Luckily, there are ways to use storyboards and MvvmCross side by side without sacrificing any of the advantages of either.
 

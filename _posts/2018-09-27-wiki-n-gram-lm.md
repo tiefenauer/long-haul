@@ -2,9 +2,10 @@
 title: Creating a n-gram Language Model using Wikipedia
 layout: post
 tldr: This post describes how to train a n-gram Language Model of any order using Wikipedia articles. The code used is available from <a href="https://github.com/tiefenauer/wiki-lm" target="_blank">my GitHub repo</a>.
+toc: true
 ---
 
-{% include toc.md %}
+A lot of NLP-related tasks require the use of a Language Model (LM). A well-known form of LMs are _n_-grams, which estimate the probability for a given sequence of words with length _n_. While much research is done in training such models as Neural Networks, _n_-gram models are still widely used, even though their use is somewhat limited. Because of combinatorial explosion, the value for the context size _n_ is currently limited to values around only 5 or 6, meaning that any word that lies outside this short context are not considered for probability estimation. 
 
 For my master thesis at [FHNW] I am building a pipeline for [Forced Alignment] (FA). This pipeline requires an [Automatic Speech Recognition] (ASR) system in one stage to produce partial transcripts for voiced audio segments that were detected using [Voice Activity Detection] (VAD) from [WebRTC]. Luckily, there is a Python module called [webrtcvad] containing the C-bindings for the VAD-part of WebRTC and is therefore very fast and accurate. Those partial transcripts are then locally aligned with the (known) full transcript using the [Smith Waterman] (SM) algorithm (see [my blog post]({{ site.baseurl }}{% post_url 2018-07-13-smith-waterman %}) for an implementation in Python).
 

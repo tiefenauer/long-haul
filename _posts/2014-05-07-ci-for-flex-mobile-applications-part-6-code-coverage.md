@@ -21,10 +21,9 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 Another important step when creating a CI suite for your mobile application is code coverage. Code coverage measures the amout of code covered by unit tests by class and/or by line, giving valuable information on which parts of your application need more unit testing and which are already pretty well covered.
-
-{% include toc.md %}
 
 To get this step to work we need a modified version of FlexUnit. The process then is as follows:
 

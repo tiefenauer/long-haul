@@ -20,10 +20,9 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 Here are some common problems you may run into when trying to set up a CI process for Flex Mobile Applications with Jenkins and Ant.
-
-{% include toc.md %}
 
 # My job keeps running and never finishes. After some time I get an Error "ERROR: Timeout after ... minutes"
 

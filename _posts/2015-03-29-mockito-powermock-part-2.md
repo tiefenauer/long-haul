@@ -15,10 +15,9 @@ tags:
   - powermock
 series:
   - Mockito
+toc: true  
 ---
 In this chapter you will get to know some advanced techniques of Mockito such as Argument captors, spies, exception handlers and verifying method calls.
-
-{% include toc.md %}
 
 ## Simple matchers
 

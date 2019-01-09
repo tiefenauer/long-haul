@@ -1,13 +1,12 @@
 ---
 title: Programming in Haskell - Solutions to slides
 layout: post
+toc: true
 ---
 
 I attended a course about Advanced Programming Paradigms for my master studies (MSE course TSM_AdvPrPa) which introduces programming in a purely functional language by example of Haskell. We use the book [Programming in Haskell](http://www.cs.nott.ac.uk/~pszgmh/pih.html) by Graham Hutton. Although the book itself is not free, it comes with slides which can be downloaded for free and contain some exercises for each chapter. Since have not found a complete set of solutions for those exercises, I put my own solutions online (chapter 2 - 10 only, note that chapter 1 does not contain any exercises). You can download the code for each chapter by clicking the link below each caption. The files can be imported in GHCi.
 
 I also removed the blue background from the PowerPoint slides for printability and exported to PDF. You can download the printable slides by clicking the link below each caption.
-
-{% include toc.md %}
 
 ## Chapter 1: Introduction
 

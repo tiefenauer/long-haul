@@ -22,12 +22,11 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 Now that we have compiled, packaged and tested our app, it is high time we create a documentation for our app – automatically of course. For this step to work you should have commented your classes, functions and variables with the ASDOC syntax. Otherwise, the ASDOC-compiler will not recognize the comments and not be able to produce the documentation.
 
 The good thing is that if you dutifully described your code with ASDOC comments, you get the documentation virtually for free – and it's also **very** similar to compiling the code as we did in [the first part]({%post_url 2014-03-18-ci-for-flex-mobile-applications-part-1-compiling-your-code%}) of this tutorial, since it's only a special way of compiling the code not into a \*.swf or \*.swc file but in a set of HTML documents to put in a directory (or Jenkins in our case). That's the reason why this part of the tutorial is the shortest of all.
-
-{% include toc.md %}
 
 ## The ASDOC command line tool
 

@@ -15,10 +15,9 @@ tags:
   - powermock
 series:
   - Mockito
+toc: true  
 ---
 When running Unit Tests, a class under test usually has a lot of dependencies. Since Unit Tests are [meant to test a class in isolation](http://en.wikipedia.org/wiki/Unit_testing "Wikipedia: Unit Tests"), these dependencies often make it hard to test a class, since the dependencies have an influence on the state of an object. In some cases, these dependencies make unit testing impossible alltogether. But what if you could replace these dependencies and have them hehave exactly how you want in each tests? This is where Mockito and its bigger brother PowerMock come in. Both frameworks are described in this series.
-
-{% include toc.md %}
 
 The series consists of 6 parts:
 

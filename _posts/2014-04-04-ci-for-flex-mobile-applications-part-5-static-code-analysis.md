@@ -22,6 +22,7 @@ tags:
   - testing
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 In this part of the tutorial I'm going to show you how to integrate steps for Static Code Analysis (SCA). The quality of your code can easily be checked by using the following tools:
 
@@ -31,8 +32,6 @@ In this part of the tutorial I'm going to show you how to integrate steps for St
 * **CLOC** reports languages used in your project and counts the single lines of code (LOC) used for each language (omitting comments of course)
 
 Unfortunately, there is no tool to check test coverage. There used to be a tool called FlexCover, but it has not been maintained in a long time and I haven't brought it to work. Cobertura, a popular tool to measure test coverage, does not support ActionScript (afaik), which leaves us with nothing to check the amount and location of untested code, which in my opinion is a pity.
-
-{% include toc.md %}
 
 Nevertheless, let's get started with the setup of the four tools mentioned above!
 

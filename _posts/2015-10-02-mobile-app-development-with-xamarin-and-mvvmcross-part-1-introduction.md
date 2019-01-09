@@ -17,11 +17,10 @@ tags:
   - Xamarin
 series:
   - Mobile App Development with Xamarin and MvvMCross
+toc: true  
 ---
 
 In this article series I will cover the process of creating a mobile application using [Xamarin](https://xamarin.com/) and MvvMCross (MvX). There is a lot to know about both technologies to get started and neither [Xamarin](https://xamarin.com/) nor MvX provide a level of documentation sufficient to enable a total beginner to build apps efficiently. The goal of this series is to faciliate the entry into topic and to mitigate common problems and pitfalls occurring from things you just have to know.
-
-{% include toc.md %}
 
 The series will consist of the following articles
 

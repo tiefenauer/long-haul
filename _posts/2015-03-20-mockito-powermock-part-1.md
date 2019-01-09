@@ -17,10 +17,9 @@ tags:
   - powermock
 series:
   - Mockito
+toc: true  
 ---
 In this part of the tutorial you will create your first mock objects and stub out some methods so that they return the desired value.
-
-{% include toc.md %}
 
 ## A word about mocking
 

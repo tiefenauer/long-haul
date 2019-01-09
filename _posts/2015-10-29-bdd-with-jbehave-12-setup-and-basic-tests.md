@@ -11,13 +11,12 @@ tags:
   - TDD
 series:
   - BDD with JBehave
+toc: true  
 ---
 
 This entry is part 1 of 2 in the series *BDD with JBehave*.
 
 In an earlier article series I showed how to use Mockito together with JUnit in order to write good unit tests. While this tool is good for [Test Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development), it falls short when it comes to [Behavior Driven Development (BDD)](https://en.wikipedia.org/wiki/Behavior-driven_development). In this article, I’m going to introduce another tool that has caught my attention and leverages your testing facilities to make use of the BDD-paradigms. But first, let’s see what we mean when we talk about BDD.
-
-{% include toc.md %}
 
 ## Preface
 

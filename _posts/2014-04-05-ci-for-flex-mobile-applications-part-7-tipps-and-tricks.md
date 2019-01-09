@@ -20,10 +20,9 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 In this part of the tutorial I'll collect some scripts and tipps you might find useful, after you have implemented the build script as described in the last chapters.
-
-{% include toc.md %}
 
 ## Updating the build label automatically
 

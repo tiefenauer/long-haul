@@ -17,10 +17,9 @@ tags:
   - Xamarin
 series:
   - Mobile App Development with Xamarin and MvvMCross
+toc: true  
 ---
 In this article we are going to create our first Android view. To do this, we will create an AXML file, which will hold the layout of the individual UI components. This AXML file will also create bindings to the ViewModel, so that the view is automatically updated when the data in the ViewModel changes. Additionally, we will create a backing C#-class, which will hold the view logic for our layout.
-
-{% include toc.md %}
 
 # Android view layer
 

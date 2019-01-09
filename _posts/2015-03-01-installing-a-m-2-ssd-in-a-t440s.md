@@ -14,10 +14,9 @@ tags:
   - storage
   - t440s
   - upgrade
+toc: true  
 ---
 When I recently came to the point of upgrading the storage in my Lenovo T440s, I was looking for ways to do so. Luckliy, the T440s has an additional M.2 slot which allows for inserting various devices, including SSD hard drives. I followed [the instructions from a LaptopMag blog post](http://blog.laptopmag.com/install-m2-ssd-lenovo-t440s) for a large part. Since in my case upgrading storage meant replacing the built-in WWAN adapter, I wrote this blog post as an addendum to the one from LaptopMag.
-
-{% include toc.md %}
 
 ## Step 1: Choosing the SSD
 

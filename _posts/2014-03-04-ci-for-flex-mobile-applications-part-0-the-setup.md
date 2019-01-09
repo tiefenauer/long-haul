@@ -26,8 +26,6 @@ This is the first in a series of posts where I'll describe the process of settin
 
 This first article is about getting started and setting up the right tools.
 
-{% include toc.md %}
-
 ## Getting started
 
 Before you get started you should make sure you have the following ready:

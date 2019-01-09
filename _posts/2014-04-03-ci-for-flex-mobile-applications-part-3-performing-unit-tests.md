@@ -22,11 +22,10 @@ tags:
   - testing
 series:
   - Continuous Integration for Flex Apps
+toc: true  
 ---
 
 In this third part of the tutorial we are going to set up our build process to perform automated unit tests. The results are the transformed into a readable format in HTML and can also be included in your job dashboard to see the status of the last build at a glance.
-
-{% include toc.md %}
 
 # Some background
 

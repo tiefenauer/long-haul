@@ -17,10 +17,9 @@ tags:
   - Xamarin
 series:
   - Mobile App Development with Xamarin and MvvMCross
+toc: true  
 ---
 This article helps you with a set up for a project to create a mobile app with Xamarin and MvX. MvX projects/solutions can be created manually or with the help of the NinjaCoder plugin for VisualStudio. The result is the same in both cases.
-
-{% include toc.md %}
 
 # Prerequisites
 

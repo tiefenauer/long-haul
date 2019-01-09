@@ -20,12 +20,11 @@ tags:
   - mobile
 series:
   - Continuous Integration for Flex Apps
+toc: true
 ---
 In this first part of my tutorial on how to set up a CI process for your mobile app written with Flex I will show you how to compile your code. If you haven't already followed the steps described in [Part 0]({% post_url 2014-03-04-ci-for-flex-mobile-applications-part-0-the-setup %}) you should do so now before you start.
 
 As a result of this second part we should get our compiled code in form of a *.swf-File which will contain the compiled classes (i.e. your application logic). This file can later be bundled together with other assets you may have (images, audio, config-files ...) as well as the AIR runtime, resulting in an *.ipa (iOS) or *.apk (Android) file for publication in the AppStore resp. PlayStore.
-
-{% include toc.md %}
 
 ## The MXML-Compiler
 
