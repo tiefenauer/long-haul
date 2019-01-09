@@ -181,20 +181,24 @@ ga('send', 'pageview');
 
     <p class="meta">September 27, 2018 | <span class="time">25</span> Minute Read</p>
 
-    <h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#on-the-road-to-asr" id="markdown-toc-on-the-road-to-asr">On the road to ASR</a></li>
-  <li><a href="#creating-a-lm-from-german-wikipedia-articles" id="markdown-toc-creating-a-lm-from-german-wikipedia-articles">Creating a LM from German Wikipedia articles</a>    <ul>
-      <li><a href="#preprocessing-the-wikipedia-dump" id="markdown-toc-preprocessing-the-wikipedia-dump">Preprocessing the Wikipedia dump</a></li>
-      <li><a href="#building-the-corpus" id="markdown-toc-building-the-corpus">Building the corpus</a></li>
-      <li><a href="#training-the-lm" id="markdown-toc-training-the-lm">Training the LM</a></li>
+    
+        <ul>
+  <li><a href="#on-the-road-to-asr">On the road to ASR</a></li>
+  <li><a href="#creating-a-lm-from-german-wikipedia-articles">Creating a LM from German Wikipedia articles</a>
+    <ul>
+      <li><a href="#preprocessing-the-wikipedia-dump">Preprocessing the Wikipedia dump</a></li>
+      <li><a href="#building-the-corpus">Building the corpus</a></li>
+      <li><a href="#training-the-lm">Training the LM</a></li>
     </ul>
   </li>
-  <li><a href="#evaluating-the-lm" id="markdown-toc-evaluating-the-lm">Evaluating the LM</a></li>
-  <li><a href="#using-a-lm-to-build-a-simple-spell-checker" id="markdown-toc-using-a-lm-to-build-a-simple-spell-checker">Using a LM to build a simple spell checker</a></li>
-  <li><a href="#results--conclusion" id="markdown-toc-results--conclusion">Results &amp; Conclusion</a></li>
+  <li><a href="#evaluating-the-lm">Evaluating the LM</a></li>
+  <li><a href="#using-a-lm-to-build-a-simple-spell-checker">Using a LM to build a simple spell checker</a></li>
+  <li><a href="#results--conclusion">Results &amp; Conclusion</a></li>
 </ul>
+    
+    <p>
+        <span class="dropcap">A</span>
+         lot of NLP-related tasks require the use of a Language Model (LM). A well-known form of LMs are <em>n</em>-grams, which estimate the probability for a given sequence of words with length <em>n</em>. While much research is done in training such models as Neural Networks, <em>n</em>-gram models are still widely used, even though their use is somewhat limited. Because of combinatorial explosion, the value for the context size <em>n</em> is currently limited to values around only 5 or 6, meaning that any word that lies outside this short context are not considered for probability estimation.</p>
 
 <p>For my master thesis at <a href="https://www.fhnw.ch/">FHNW</a> I am building a pipeline for <a href="http://www.voxforge.org/home/docs/faq/faq/what-is-forced-alignment">Forced Alignment</a> (FA). This pipeline requires an <a href="https://en.wikipedia.org/wiki/Speech_recognition">Automatic Speech Recognition</a> (ASR) system in one stage to produce partial transcripts for voiced audio segments that were detected using <a href="https://en.wikipedia.org/wiki/Voice_activity_detection">Voice Activity Detection</a> (VAD) from <a href="https://webrtc.org">WebRTC</a>. Luckily, there is a Python module called <a href="https://github.com/wiseman/py-webrtcvad">webrtcvad</a> containing the C-bindings for the VAD-part of WebRTC and is therefore very fast and accurate. Those partial transcripts are then locally aligned with the (known) full transcript using the <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Smith Waterman</a> (SM) algorithm (see <a href="/blog/smith-waterman/">my blog post</a> for an implementation in Python).</p>
 
@@ -484,6 +488,7 @@ build_binary trie <span class="k">${</span><span class="nv">lm_arpa</span><span 
 <h2 id="results--conclusion">Results &amp; Conclusion</h2>
 
 
+    </p>
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">

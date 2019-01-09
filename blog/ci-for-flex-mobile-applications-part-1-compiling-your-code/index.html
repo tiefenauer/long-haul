@@ -177,19 +177,20 @@ ga('send', 'pageview');
 
     <p class="meta">March 18, 2014 | <span class="time">4</span> Minute Read</p>
 
-    <p>In this first part of my tutorial on how to set up a CI process for your mobile app written with Flex I will show you how to compile your code. If you haven’t already followed the steps described in <a href="/blog/ci-for-flex-mobile-applications-part-0-the-setup/">Part 0</a> you should do so now before you start.</p>
+    
+        <ul>
+  <li><a href="#the-mxml-compiler">The MXML-Compiler</a></li>
+  <li><a href="#step-1-getting-the-ant-task-definitions">Step 1: Getting the Ant Task Definitions</a></li>
+  <li><a href="#step-2-implementing-the-ant-script">Step 2: Implementing the ANT-Script</a></li>
+  <li><a href="#step-3-test-everything-out">Step 3: Test everything out</a></li>
+  <li><a href="#what-we-have-done-in-this-chapter">What we have done in this chapter</a></li>
+</ul>
+    
+    <p>
+        <span class="dropcap">I</span>
+        n this first part of my tutorial on how to set up a CI process for your mobile app written with Flex I will show you how to compile your code. If you haven’t already followed the steps described in <a href="/blog/ci-for-flex-mobile-applications-part-0-the-setup/">Part 0</a> you should do so now before you start.</p>
 
 <p>As a result of this second part we should get our compiled code in form of a *.swf-File which will contain the compiled classes (i.e. your application logic). This file can later be bundled together with other assets you may have (images, audio, config-files …) as well as the AIR runtime, resulting in an *.ipa (iOS) or *.apk (Android) file for publication in the AppStore resp. PlayStore.</p>
-
-<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#the-mxml-compiler" id="markdown-toc-the-mxml-compiler">The MXML-Compiler</a></li>
-  <li><a href="#step-1-getting-the-ant-task-definitions" id="markdown-toc-step-1-getting-the-ant-task-definitions">Step 1: Getting the Ant Task Definitions</a></li>
-  <li><a href="#step-2-implementing-the-ant-script" id="markdown-toc-step-2-implementing-the-ant-script">Step 2: Implementing the ANT-Script</a></li>
-  <li><a href="#step-3-test-everything-out" id="markdown-toc-step-3-test-everything-out">Step 3: Test everything out</a></li>
-  <li><a href="#what-we-have-done-in-this-chapter" id="markdown-toc-what-we-have-done-in-this-chapter">What we have done in this chapter</a></li>
-</ul>
 
 <h2 id="the-mxml-compiler">The MXML-Compiler</h2>
 
@@ -322,6 +323,7 @@ ga('send', 'pageview');
 
 <p>When you’re all set, continue with <a href="/blog/ci-for-flex-mobile-applications-part-2-packaging-your-app/">Part 2: Packaging your app</a>.</p>
 
+    </p>
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">

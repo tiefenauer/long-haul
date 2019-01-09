@@ -177,30 +177,33 @@ ga('send', 'pageview');
 
     <p class="meta">October 26, 2015 | <span class="time">17</span> Minute Read</p>
 
-    <p><img src="/assets/img/wp-content/uploads/2015/10/example_storyboard-224x300.png" alt="" /></p>
+    
+        <ul>
+  <li><a href="#behind-the-scenes">Behind the scenes</a></li>
+  <li><a href="#getting-started-with-storyboardy">Getting started with storyboardy</a></li>
+  <li><a href="#navigation">Navigation</a>
+    <ul>
+      <li><a href="#variant-1-binding-to-viewmodel-properties">Variant 1: Binding to ViewModel properties</a></li>
+      <li><a href="#variant-2-attaching-listeners">Variant 2: Attaching listeners</a></li>
+      <li><a href="#variant-3-using-segues">Variant 3: Using segues</a></li>
+      <li><a href="#comparison">Comparison</a></li>
+    </ul>
+  </li>
+  <li><a href="#troubleshooting">Troubleshooting</a>
+    <ul>
+      <li><a href="#sample-code">Sample code</a></li>
+    </ul>
+  </li>
+  <li><a href="#what-we-have-done-so-far">What we have done so far</a></li>
+</ul>
+    
+    <p>
+        <span class="dropcap"><</span>
+        img src="/assets/img/wp-content/uploads/2015/10/example_storyboard-224x300.png" alt="" /></p>
 
 <p>In the last article, we saw how to programatically create iOS-Views using nothing but C#-code. However, this way of creating user interfaces is often quite cumbersome and prone to errors. An alternative and much more intuitive approach to design user interfaces for iOS (which is also advertised by Apple as the standard way) is the usage of so-called <em>Storyboards</em>. Storyboards provide a set of UI-Views, which can be populated with other UI elements like buttons, labels, lists and so on by drag’n’dropping them using a visual editor. Transitions between views can be modelled by using <em>Segues</em>. Luckily, Xamarin comes with its own UI designer for iOS in the form of a  Visual Studio plugin. This means you can create your native iOS-UI directly on your Windows machine like in the screenshot above.</p>
 
 <p>In this article we are going to explore various ways of creating beautiful UI views using storyboards while using MvvmCross as the underlying framework at the same time.</p>
-
-<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#behind-the-scenes" id="markdown-toc-behind-the-scenes">Behind the scenes</a></li>
-  <li><a href="#getting-started-with-storyboardy" id="markdown-toc-getting-started-with-storyboardy">Getting started with storyboardy</a></li>
-  <li><a href="#navigation" id="markdown-toc-navigation">Navigation</a>    <ul>
-      <li><a href="#variant-1-binding-to-viewmodel-properties" id="markdown-toc-variant-1-binding-to-viewmodel-properties">Variant 1: Binding to ViewModel properties</a></li>
-      <li><a href="#variant-2-attaching-listeners" id="markdown-toc-variant-2-attaching-listeners">Variant 2: Attaching listeners</a></li>
-      <li><a href="#variant-3-using-segues" id="markdown-toc-variant-3-using-segues">Variant 3: Using segues</a></li>
-      <li><a href="#comparison" id="markdown-toc-comparison">Comparison</a></li>
-    </ul>
-  </li>
-  <li><a href="#troubleshooting" id="markdown-toc-troubleshooting">Troubleshooting</a>    <ul>
-      <li><a href="#sample-code" id="markdown-toc-sample-code">Sample code</a></li>
-    </ul>
-  </li>
-  <li><a href="#what-we-have-done-so-far" id="markdown-toc-what-we-have-done-so-far">What we have done so far</a></li>
-</ul>
 
 <p>However, there’s (as always) a catch in using storyboards: Navigating with segues (the previewed way of navigating between views when working with storyboards) means navigation is being done in the view layer (i.e. the iOS UI-Project when using Xamarin). This differs fundamentally from the navigation concept of MvvmCross, where navigation is done in the ViewModel layer (i.e. the core project when using Xamarin). Luckily, there are ways to use storyboards and MvvmCross side by side without sacrificing any of the advantages of either.</p>
 
@@ -530,6 +533,7 @@ The generated class is partial and consists of two generated files (suppose we c
 
 <p>In this chapter we haved learned how to use Storyboards in Xamarin/VisualStudio together with the MvX-Framework. We have also reviewed the differences between a Segue-based navigation in Storyboards and the navigation concept in MvX.</p>
 
+    </p>
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">

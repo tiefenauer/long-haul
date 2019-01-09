@@ -179,19 +179,20 @@ ga('send', 'pageview');
         </div>
     
 
-    <p class="meta">July 13, 2018 | <span class="time">6</span> Minute Read</p>
+    <p class="meta">July 13, 2018 | <span class="time">5</span> Minute Read</p>
 
-    <h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#step-1-scoring-matrix" id="markdown-toc-step-1-scoring-matrix">Step 1: Scoring matrix</a></li>
-  <li><a href="#step-2-backtracing" id="markdown-toc-step-2-backtracing">Step 2: Backtracing</a></li>
-  <li><a href="#step-3-calculating-start--and-end-index" id="markdown-toc-step-3-calculating-start--and-end-index">Step 3: Calculating start- and end-index</a></li>
-  <li><a href="#usage-and-tests" id="markdown-toc-usage-and-tests">Usage and tests</a></li>
-  <li><a href="#resources" id="markdown-toc-resources">Resources</a></li>
+    
+        <ul>
+  <li><a href="#step-1-scoring-matrix">Step 1: Scoring matrix</a></li>
+  <li><a href="#step-2-backtracing">Step 2: Backtracing</a></li>
+  <li><a href="#step-3-calculating-start--and-end-index">Step 3: Calculating start- and end-index</a></li>
+  <li><a href="#usage-and-tests">Usage and tests</a></li>
+  <li><a href="#resources">Resources</a></li>
 </ul>
-
-<p>Because I am currently working with <a href="https://en.wikipedia.org/wiki/Sequence_alignment">Local Sequence Alignment (LSA)</a> in a project I decided to use the <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Smith-Waterman algorithm</a> to find a partially matching substring <script type="math/tex">b</script> in a longer substring <script type="math/tex">a</script>. Since I am coding in Python, I was sure there were dozens of implementations already, ready to be used. I found a few indeed, namely <a href="https://gist.github.com/nornagon/6326a643fc30339ece3021013ed9b48c">here</a> and <a href="https://gist.github.com/radaniba/11019717">here</a>. However, the first implementation is incomplete, because it only includes calculating the scoring matrix and not the backtracing. I did not test the second implementation because it seemed overly complicated and apparently contained bugs (judging from the comments).</p>
+    
+    <p>
+        <span class="dropcap">B</span>
+        ecause I am currently working with <a href="https://en.wikipedia.org/wiki/Sequence_alignment">Local Sequence Alignment (LSA)</a> in a project I decided to use the <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Smith-Waterman algorithm</a> to find a partially matching substring <script type="math/tex">b</script> in a longer substring <script type="math/tex">a</script>. Since I am coding in Python, I was sure there were dozens of implementations already, ready to be used. I found a few indeed, namely <a href="https://gist.github.com/nornagon/6326a643fc30339ece3021013ed9b48c">here</a> and <a href="https://gist.github.com/radaniba/11019717">here</a>. However, the first implementation is incomplete, because it only includes calculating the scoring matrix and not the backtracing. I did not test the second implementation because it seemed overly complicated and apparently contained bugs (judging from the comments).</p>
 
 <p>I therefore went for my own implementation. What I wanted was some easy to use function with a slim signature, something like</p>
 
@@ -265,6 +266,7 @@ I had to juggle with the NumPy arrays a bit because <a href="https://docs.scipy.
 
 <p>For the implementation I found the <a href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">Wikipedia article</a> and an <a href="http://rna.informatik.uni-freiburg.de/Teaching/index.jsp?toolName=Smith-Waterman">Online-Tool to interactively perform the calculations</a> very useful.</p>
 
+    </p>
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">

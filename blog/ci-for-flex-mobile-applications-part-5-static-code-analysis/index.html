@@ -177,7 +177,39 @@ ga('send', 'pageview');
 
     <p class="meta">April 04, 2014 | <span class="time">8</span> Minute Read</p>
 
-    <p>In this part of the tutorial I’m going to show you how to integrate steps for Static Code Analysis (SCA). The quality of your code can easily be checked by using the following tools:</p>
+    
+        <ul>
+  <li><a href="#step-1-getting-the-tools">Step 1: Getting the tools</a>
+    <ul>
+      <li><a href="#flexpmd-flexcpd-flexmetrics">FlexPMD, FlexCPD, FlexMetrics</a></li>
+      <li><a href="#cloc">CLOC</a></li>
+      <li><a href="#saxon">Saxon</a>
+        <ul>
+          <li><a href="#xml-translation">XML translation</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#step-2-defining-the-ant-tasks">Step 2: Defining the Ant-Tasks</a>
+    <ul>
+      <li><a href="#expanding-the-build-properties">Expanding the build properties</a></li>
+    </ul>
+  </li>
+  <li><a href="#step-3-adding-to-our-build-script">Step 3: Adding to our build script</a>
+    <ul>
+      <li><a href="#flexpmd-ant-task">FlexPMD Ant-task</a></li>
+      <li><a href="#flexcpd-ant-task">FlexCPD Ant-task</a></li>
+      <li><a href="#flexmetrics-ant-task">FlexMetrics Ant-task</a></li>
+      <li><a href="#clocsloccount-ant-task">CLOC/SLOCCount  Ant-task</a></li>
+    </ul>
+  </li>
+  <li><a href="#step-4-testing-everything-out">Step 4: Testing everything out</a></li>
+  <li><a href="#what-we-did-so-far">What we did so far</a></li>
+</ul>
+    
+    <p>
+        <span class="dropcap">I</span>
+        n this part of the tutorial I’m going to show you how to integrate steps for Static Code Analysis (SCA). The quality of your code can easily be checked by using the following tools:</p>
 
 <ul>
   <li><strong>FlexPMD</strong> checks your code for violations of common conventions, such as unused variables, empty catch-blocks and so on.</li>
@@ -187,33 +219,6 @@ ga('send', 'pageview');
 </ul>
 
 <p>Unfortunately, there is no tool to check test coverage. There used to be a tool called FlexCover, but it has not been maintained in a long time and I haven’t brought it to work. Cobertura, a popular tool to measure test coverage, does not support ActionScript (afaik), which leaves us with nothing to check the amount and location of untested code, which in my opinion is a pity.</p>
-
-<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#step-1-getting-the-tools" id="markdown-toc-step-1-getting-the-tools">Step 1: Getting the tools</a>    <ul>
-      <li><a href="#flexpmd-flexcpd-flexmetrics" id="markdown-toc-flexpmd-flexcpd-flexmetrics">FlexPMD, FlexCPD, FlexMetrics</a></li>
-      <li><a href="#cloc" id="markdown-toc-cloc">CLOC</a></li>
-      <li><a href="#saxon" id="markdown-toc-saxon">Saxon</a>        <ul>
-          <li><a href="#xml-translation" id="markdown-toc-xml-translation">XML translation</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li><a href="#step-2-defining-the-ant-tasks" id="markdown-toc-step-2-defining-the-ant-tasks">Step 2: Defining the Ant-Tasks</a>    <ul>
-      <li><a href="#expanding-the-build-properties" id="markdown-toc-expanding-the-build-properties">Expanding the build properties</a></li>
-    </ul>
-  </li>
-  <li><a href="#step-3-adding-to-our-build-script" id="markdown-toc-step-3-adding-to-our-build-script">Step 3: Adding to our build script</a>    <ul>
-      <li><a href="#flexpmd-ant-task" id="markdown-toc-flexpmd-ant-task">FlexPMD Ant-task</a></li>
-      <li><a href="#flexcpd-ant-task" id="markdown-toc-flexcpd-ant-task">FlexCPD Ant-task</a></li>
-      <li><a href="#flexmetrics-ant-task" id="markdown-toc-flexmetrics-ant-task">FlexMetrics Ant-task</a></li>
-      <li><a href="#clocsloccount-ant-task" id="markdown-toc-clocsloccount-ant-task">CLOC/SLOCCount  Ant-task</a></li>
-    </ul>
-  </li>
-  <li><a href="#step-4-testing-everything-out" id="markdown-toc-step-4-testing-everything-out">Step 4: Testing everything out</a></li>
-  <li><a href="#what-we-did-so-far" id="markdown-toc-what-we-did-so-far">What we did so far</a></li>
-</ul>
 
 <p>Nevertheless, let’s get started with the setup of the four tools mentioned above!</p>
 
@@ -396,6 +401,7 @@ TOOLS.cloc2sloccount = ${env.tools_dir}\\cloc\\cloc2sloccount.xsl
 
 <p><a href="/blog/ci-for-flex-mobile-applications-part-6-code-coverage/">Part 6</a> will tackle the problem of measuring how well your code is covered by tests.</p>
 
+    </p>
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">

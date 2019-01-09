@@ -175,51 +175,46 @@ ga('send', 'pageview');
     <!-- adds a TDLR alert -->
     
 
-    <p class="meta">March 04, 2014 | <span class="time">22</span> Minute Read</p>
+    <p class="meta">March 04, 2014 | <span class="time">21</span> Minute Read</p>
 
-    <p>This is the first in a series of posts where I’ll describe the process of setting up a Continuous Integration process to build a mobile app created with Flex. I will use Jenkins as a CI server and ANT for my build scripts.</p>
+    
+        <ul>
+  <li><a href="#getting-started">Getting started</a></li>
+  <li>
+<a href="#tools-used-in-this-tutorial">Tools used in this tutorial</a>
+    <ul>
+      <li><a href="#folder-structure">Folder structure</a></li>
+      <li><a href="#setting-the-paths">Setting the paths</a></li>
+    </ul>
+  </li>
+  <li><a href="#plugins">Plugins</a></li>
+  <li>
+<a href="#configuring-jenkins">Configuring Jenkins</a>
+    <ul>
+      <li><a href="#configuring-git">Configuring Git</a></li>
+      <li><a href="#jenkins-environment-variables">Jenkins environment variables</a></li>
+    </ul>
+  </li>
+  <li><a href="#job-parameters">Job parameters</a></li>
+  <li><a href="#source-code-management">Source Code Management</a></li>
+  <li><a href="#our-first-build-step">Our first build step</a></li>
+  <li><a href="#preparing-the-build-script">Preparing the build script</a></li>
+  <li>
+<a href="#step-4-test-everything-out">Step 4: Test everything out</a>
+    <ul>
+      <li><a href="#checking-the-paths">Checking the paths</a></li>
+      <li><a href="#checking-your-git-client-by-cloning-your-repository">Checking your Git client by cloning your repository</a></li>
+      <li><a href="#running-your-jenkins-job-for-the-first-time">Running your Jenkins job for the first time</a></li>
+    </ul>
+  </li>
+  <li><a href="#what-we-have-done-so-far">What we have done so far</a></li>
+</ul>
+    
+    <p>
+        <span class="dropcap">T</span>
+        his is the first in a series of posts where I’ll describe the process of setting up a Continuous Integration process to build a mobile app created with Flex. I will use Jenkins as a CI server and ANT for my build scripts.</p>
 
 <p>This first article is about getting started and setting up the right tools.</p>
-
-<h4 class="no_toc" id="table-of-contents">Table of Contents</h4>
-
-<ul id="markdown-toc">
-  <li><a href="#getting-started" id="markdown-toc-getting-started">Getting started</a></li>
-  <li><a href="#tools-used-in-this-tutorial" id="markdown-toc-tools-used-in-this-tutorial">Tools used in this tutorial</a></li>
-  <li>
-<a href="#step-1-setting-up-the-server" id="markdown-toc-step-1-setting-up-the-server">Step 1: Setting up the server</a>    <ul>
-      <li><a href="#folder-structure" id="markdown-toc-folder-structure">Folder structure</a></li>
-      <li><a href="#setting-the-paths" id="markdown-toc-setting-the-paths">Setting the paths</a></li>
-    </ul>
-  </li>
-  <li>
-<a href="#step-2-installing-jenkins" id="markdown-toc-step-2-installing-jenkins">Step 2: Installing Jenkins</a>    <ul>
-      <li><a href="#plugins" id="markdown-toc-plugins">Plugins</a></li>
-      <li>
-<a href="#configuring-jenkins" id="markdown-toc-configuring-jenkins">Configuring Jenkins</a>        <ul>
-          <li><a href="#configuring-git" id="markdown-toc-configuring-git">Configuring Git</a></li>
-          <li><a href="#jenkins-environment-variables" id="markdown-toc-jenkins-environment-variables">Jenkins environment variables</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>
-<a href="#step-3-preparing-the-job" id="markdown-toc-step-3-preparing-the-job">Step 3: Preparing the job</a>    <ul>
-      <li><a href="#job-parameters" id="markdown-toc-job-parameters">Job parameters</a></li>
-      <li><a href="#source-code-management" id="markdown-toc-source-code-management">Source Code Management</a></li>
-      <li><a href="#our-first-build-step" id="markdown-toc-our-first-build-step">Our first build step</a></li>
-      <li><a href="#preparing-the-build-script" id="markdown-toc-preparing-the-build-script">Preparing the build script</a></li>
-      <li>
-<a href="#step-4-test-everything-out" id="markdown-toc-step-4-test-everything-out">Step 4: Test everything out</a>        <ul>
-          <li><a href="#checking-the-paths" id="markdown-toc-checking-the-paths">Checking the paths</a></li>
-          <li><a href="#checking-your-git-client-by-cloning-your-repository" id="markdown-toc-checking-your-git-client-by-cloning-your-repository">Checking your Git client by cloning your repository</a></li>
-          <li><a href="#running-your-jenkins-job-for-the-first-time" id="markdown-toc-running-your-jenkins-job-for-the-first-time">Running your Jenkins job for the first time</a></li>
-        </ul>
-      </li>
-      <li><a href="#what-we-have-done-so-far" id="markdown-toc-what-we-have-done-so-far">What we have done so far</a></li>
-    </ul>
-  </li>
-</ul>
 
 <h2 id="getting-started">Getting started</h2>
 
@@ -736,6 +731,7 @@ DOC.footer = Some ASDOC footer
 
 <p>If you’re all set, continue with <a href="/blog/ci-for-flex-mobile-applications-part-1-compiling-your-code/">Part 1: Compiling your code</a>.</p>
 
+    
 
     <!-- POST NAVIGATION -->
       <div class="postNav clearfix">
