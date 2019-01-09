@@ -3,8 +3,7 @@ layout: article
 title: Machine Learning
 image: ml_title.jpg
 intro: | 
-    Machine Learning has fascinated me since I first heard about it. The idea of being able to teach my computer something without having to explicitly program it is electrifying.
-    A lot of what I know I have learned from the following sources:
+    Machine Learning has fascinated me since I first heard about it. The idea of being able to teach my computer something without having to explicitly program it is electrifying. A lot of what I know I have learned from the following sources:
     
     - Free and paid courses on [Coursera](https://www.coursera.org/), especially the [basic course about ML](https://www.coursera.org/learn/machine-learning) and the [DL specialization by deeplearning.ai](https://www.coursera.org/specializations/deep-learning)
     - free lecture videos of [Stanford University](http://cs231n.stanford.edu/)

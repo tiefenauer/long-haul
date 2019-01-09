@@ -19,14 +19,14 @@ paginate: 5
 #  parse_block_html: true
 
 navigation:
- - title: Home
+ - title: Blog
    url: /index.html
- - title: About
-   url: /about
+# - title: About
+#   url: /about
  - title: Machine Learning
    url: /ml
- - title: Swiss Frenzy
-   url: /frenzy
+# - title: Swiss Frenzy
+#   url: /frenzy
  - title: Contact
    url: /contact
 

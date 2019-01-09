@@ -6,7 +6,7 @@ title: Contact Me
 <div id="contact">
   <h1 class="pageTitle">Contact Me</h1>
   <div class="contactContent">
-    <p class="intro">Praise? Criticism? Feedback? Something else? Drop me a line!</p>
+    <p class="intro"><span class="dropcap">H</span>owdy, fellow traveller! Through the wondrous ways of the world wide web you have found your way to my blog. Want to get in touch? Drop me a line!</p>
   </div>
   <form action="http://formspree.io/daniel@tiefenauer.info" method="POST">
     <label for="name">Name</label>
